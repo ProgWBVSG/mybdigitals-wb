@@ -3,23 +3,28 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { 
-  ArrowRight, 
-  Bot, 
-  Zap, 
-  Network, 
-  Code2,
-  Cpu,
-  Globe,
-  CheckCircle2,
-  ChevronDown,
-  Sparkles,
-  ChevronRight,
-  Send,
-  Loader2
+  ArrowRight, Bot, Network, Code2, Cpu, Globe,
+  ChevronDown, Sparkles, Send, Workflow, Activity,
+  Clock, LineChart, MessageSquare, Briefcase, Zap, Shield, CheckCircle2
 } from "lucide-react";
 import Image from "next/image";
 
+// Importación dinámica del componente 3D para evitar errores de hidratación SSR (Server-Side Rendering)
+const Spline = dynamic(() => import('@splinetool/react-spline'), { 
+  ssr: false, 
+  loading: () => (
+    <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-[-1]">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+        <p className="text-primary/70 text-xs tracking-[0.2em] font-medium uppercase animate-pulse">Cargando Ecosistema 3D...</p>
+      </div>
+    </div>
+  )
+});
+
+// Animations
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" as const } }
@@ -29,189 +34,293 @@ const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.15
-    }
+    transition: { staggerChildren: 0.15 }
   }
 };
 
 // FAQS DATA
 const faqs = [
   {
-    question: "¿Cuánto tardan en implementar un Asistente de IA?",
-    answer: "Dependiendo de la complejidad y los canales (WhatsApp, Web, CRM), un agente básico operativo puede estar listo en 7-14 días con entrenamiento personalizado sobre los datos de tu empresa."
+    question: "¿Esto reemplazará a mi equipo actual?",
+    answer: "No. La IA se encarga de lo repetitivo (responder FAQs, filtrar clientes, tareas operativas), permitiendo que tu equipo se enfoque en el trabajo estratégico y en el cierre de ventas de alto valor."
   },
   {
-    question: "¿Necesito conocimientos técnicos para usar estos servicios?",
-    answer: "Absolutamente no. Nosotros diseñamos, integramos y conectamos todo. Te entregamos un dashboard llave en mano y un asistente funcionando de forma autónoma."
+    question: "¿Cuánto tardan en implementar el Asistente o la Web?",
+    answer: "Nuestra metodología es ágil. Un producto digital (Landing o Agente Básico) puede estar activo en 10 a 14 días. Sistemas complejos o ecosistemas integrados conllevan entre 3 a 5 semanas de desarrollo y testing."
   },
   {
-    question: "¿Esto reemplazará a mi equipo de ventas?",
-    answer: "La IA filtra prospectos, responde FAQS 24/7 y cualifica leads. Tu equipo de ventas solo intervendrá cuando el cliente ya esté listo para pagar o agendar, ahorrando 80% de horas operativas."
+    question: "¿Mis clientes sabrán que hablan con una IA?",
+    answer: "Diseñamos la IA con una personalidad adaptada a tu marca. Puedes elegir transparentarlo, o bien configurarlo con una 'voz' tan humana (human-like) que la transición sea completamente natural y fluida."
   },
   {
-    question: "¿Qué tecnologías usan para desarrollo Web?",
-    answer: "Desarrollamos con el ecosistema más moderno y rápido del mundo: Next.js, React, Tailwind CSS y Framer Motion, garantizando SEO técnico perfecto y velocidades de carga instantáneas."
+    question: "¿Necesito conocimientos técnicos?",
+    answer: "Absolutamente ninguno. Nosotros diseñamos, integramos y conectamos todo nuestro stack. Te entregamos un ecosistema llave en mano y el mantenimiento activo se encarga de todo el soporte técnico futuro."
   }
 ];
 
 export default function Home() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
-  const [chatStep, setChatStep] = useState(0);
-
-  // Chatbot Simulation Logic
-  useEffect(() => {
-    const timer1 = setTimeout(() => setChatStep(1), 2000);
-    const timer2 = setTimeout(() => setChatStep(2), 4500);
-    const timer3 = setTimeout(() => setChatStep(3), 6000);
-    return () => { clearTimeout(timer1); clearTimeout(timer2); clearTimeout(timer3); };
-  }, []);
+  const { scrollYProgress } = useScroll();
+  const yElement = useTransform(scrollYProgress, [0, 1], [0, 300]);
 
   return (
     <main className="flex min-h-[200vh] flex-col overflow-hidden bg-background text-foreground bg-mesh">
       
-      {/* Navbar moved to Layout */}
+      {/* SECCIÓN 1: HERO 3D + WOW EFFECT */}
+      <section className="relative w-full h-[100vh] min-h-[800px] flex items-center justify-center overflow-hidden">
+        {/* Fondo 3D interactivo - Spline */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background z-10 pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
+          {/* Un modelo Spline ultra moderno, que simula partículas o anillos futuristas (ID genérico muy popular en Next-Gen UI) */}
+          <Spline scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode" className="w-full h-full object-cover scale-110" />
+        </div>
 
-      {/* Hero Section OVERSİZED & BENTO */}
-      <section className="relative w-full pt-44 pb-20 px-4 md:px-10 flex flex-col items-center justify-start min-h-[95vh]">
         <motion.div 
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-          className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center"
+          initial="hidden" animate="visible" variants={staggerContainer}
+          className="relative z-20 w-full max-w-7xl mx-auto px-4 md:px-10 text-center flex flex-col items-center mt-[-5%]"
         >
-          <motion.div variants={fadeIn} className="inline-flex items-center gap-3 mb-8 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
-            <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
-            </span>
-            <span className="text-xs font-semibold text-gray-300 tracking-wider">AGENCIA NEXT-GEN IA & WEB</span>
+          <motion.div variants={fadeIn} className="inline-flex items-center gap-3 mb-6 px-5 py-2 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md shadow-[0_0_15px_rgba(195,216,9,0.2)]">
+            <Sparkles className="w-4 h-4 text-primary animate-pulse" />
+            <span className="text-xs font-bold text-primary tracking-widest uppercase">Ecosistemas Digitales Inteligentes</span>
           </motion.div>
           
-          <motion.h1 
-            variants={fadeIn} 
-            className="text-6xl md:text-[7rem] font-bold tracking-tighter mb-6 text-center text-balance leading-[0.95] text-white"
-          >
-            Escalamos negocios <br className="hidden md:block"/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic font-medium pr-4">con IA y Software.</span>
+          <motion.h1 variants={fadeIn} className="text-5xl md:text-8xl font-black tracking-tighter mb-6 text-balance text-white leading-[1.05]">
+            Transformamos marcas <br className="hidden md:block"/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-gray-500 font-medium">manuales en </span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic">máquinas.</span>
           </motion.h1>
           
-          <motion.p variants={fadeIn} className="text-lg md:text-xl text-gray-400 max-w-2xl text-center mb-16 text-balance leading-relaxed">
-            Sistemas automatizados por IA y experiencias web de vanguardia. Diseñado para empresas que buscan dejar atrás las operaciones manuales y multiplicar su facturación.
+          <motion.p variants={fadeIn} className="text-lg md:text-2xl text-gray-300/80 max-w-3xl text-center mb-10 text-balance leading-relaxed font-light">
+            Creamos web de alto rendimiento y automatizaciones con IA que eliminan tus cuellos de botella, escalan tus ventas y construyen una presencia digital imbatible.
           </motion.p>
           
-          {/* Bento Grid Preview Hero */}
-          <motion.div variants={fadeIn} className="w-full grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-min max-w-5xl">
-             
-             {/* Main Hero Card - Virtual Assistant Mockup */}
-             <div className="md:col-span-2 md:row-span-2 rounded-[2rem] bg-gradient-to-br from-white/5 to-white/[0.01] border border-white/10 overflow-hidden relative p-8 flex flex-col justify-end min-h-[350px] group shadow-2xl">
-               <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-primary/20 blur-[100px] group-hover:bg-primary/30 transition-all rounded-full pointer-events-none" />
-               <div className="mb-auto z-10 flex justify-between items-start">
-                 <div>
-                   <h3 className="text-white text-2xl font-bold tracking-tight mb-2 flex items-center gap-2"><Bot className="text-primary"/> Agente de Cierre IA</h3>
-                   <p className="text-gray-400 text-sm max-w-sm">Este asistente convierte leads en WhatsApp mientras duermes. Integración 100% autónoma.</p>
-                 </div>
-                 <Link href="/servicios/automatizaciones" className="hidden md:flex items-center gap-2 text-xs font-bold text-primary hover:text-white transition-colors bg-white/5 border border-white/10 px-4 py-2 rounded-full backdrop-blur-md">
-                   Ver Servicio <ArrowRight size={14}/>
-                 </Link>
-               </div>
-               
-               {/* Chat UI Mockup */}
-               <div className="relative z-10 w-full bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col gap-3 mt-8 backdrop-blur-md">
-                 <div className="flex gap-3 items-end">
-                   <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                     <Bot size={16} className="text-primary"/>
-                   </div>
-                   <div className="bg-white/10 rounded-tr-2xl rounded-br-2xl rounded-tl-2xl p-3 text-sm text-gray-300 w-fit">
-                     ¡Hola! ¿Buscás automatizar tu negocio o hacer una web?
-                   </div>
-                 </div>
-                 <AnimatePresence>
-                   {chatStep >= 1 && (
-                     <motion.div initial={{opacity:0, y:10}} animate={{opacity:1,y:0}} className="flex gap-3 justify-end items-end">
-                       <div className="bg-primary text-black rounded-tl-2xl rounded-bl-2xl rounded-tr-2xl p-3 text-sm font-medium w-fit">
-                         Me interesa la automatización de WhatsApp.
-                       </div>
-                     </motion.div>
-                   )}
-                   {chatStep >= 2 && (
-                     <motion.div initial={{opacity:0, y:10}} animate={{opacity:1,y:0}} className="flex gap-3 items-end">
-                        <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                          <Bot size={16} className="text-primary"/>
-                        </div>
-                        {chatStep === 2 ? (
-                          <div className="bg-white/10 rounded-tr-2xl rounded-br-2xl rounded-tl-2xl p-3 text-sm text-gray-300 w-fit flex gap-1">
-                             <motion.span animate={{opacity:[0.2,1,0.2]}} transition={{repeat:Infinity, duration:1.4}} className="w-1.5 h-1.5 bg-gray-400 rounded-full"/>
-                             <motion.span animate={{opacity:[0.2,1,0.2]}} transition={{repeat:Infinity, duration:1.4, delay:0.2}} className="w-1.5 h-1.5 bg-gray-400 rounded-full"/>
-                             <motion.span animate={{opacity:[0.2,1,0.2]}} transition={{repeat:Infinity, duration:1.4, delay:0.4}} className="w-1.5 h-1.5 bg-gray-400 rounded-full"/>
-                          </div>
-                        ) : (
-                          <div className="bg-white/10 rounded-tr-2xl rounded-br-2xl rounded-tl-2xl p-3 text-sm text-gray-300 w-fit">
-                            ¡Excelente! Puedo conectarte con un asesor en 3 segundos o enviarte nuestro PDF de casos de éxito. ¿Qué prefieres?
-                          </div>
-                        )}
-                     </motion.div>
-                   )}
-                 </AnimatePresence>
-               </div>
-             </div>
-
-             {/* Small Bento 1 */}
-             <div className="md:col-span-1 md:row-span-1 rounded-[2rem] bg-white/5 border border-white/10 p-6 flex flex-col justify-between group overflow-hidden relative">
-               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent pointer-events-none z-0" />
-               <Globe className="text-white/50 mb-4 z-10 group-hover:text-white transition-colors" size={32} />
-               <div className="z-10">
-                 <h4 className="text-white font-bold text-lg mb-1">Web Development</h4>
-                 <p className="text-gray-400 text-xs mb-3">High-performance Next.js</p>
-                 <Link href="/servicios/web/presencia-digital" className="text-xs font-bold text-white hover:text-primary transition-colors flex items-center gap-1 group-hover:underline">
-                   Ver Servicios <ArrowRight size={12}/>
-                 </Link>
-               </div>
-             </div>
-
-             {/* Small Bento 2 */}
-             <div className="md:col-span-1 md:row-span-1 rounded-[2rem] bg-gradient-to-br from-primary to-emerald-400 p-6 flex flex-col justify-between text-black relative select-none">
-               <ArrowRight className="absolute top-6 right-6" size={24} />
-               <div className="mt-8">
-                 <h4 className="font-black text-2xl leading-tight mb-2">Multiplica<br/>tus Leads</h4>
-                 <Link href="https://wa.me/543515555123" target="_blank" className="text-sm font-bold opacity-80 hover:opacity-100 flex items-center gap-1">Empezar hoy <ChevronRight size={14}/></Link>
-               </div>
-             </div>
-
-             {/* Bottom Wide Bento */}
-             <div className="md:col-span-2 md:row-span-1 rounded-[2rem] bg-white/5 border border-white/10 p-6 flex items-center justify-between overflow-hidden relative">
-                <div className="flex flex-col z-10">
-                  <span className="text-4xl font-black text-white mb-1">10x</span>
-                  <span className="text-sm text-gray-400 font-medium tracking-wide">ROI Promedio en Automatizaciones</span>
-                </div>
-                <div className="w-32 h-20 bg-white/10 rounded-xl relative overflow-hidden flex items-end gap-1 p-2 pt-8 z-10">
-                   {[40, 60, 45, 80, 100].map((h, i) => (
-                     <motion.div 
-                       key={i} 
-                       initial={{ height: 0 }} 
-                       animate={{ height: `${h}%` }} 
-                       transition={{ delay: 0.5 + (i * 0.1), duration: 0.8 }}
-                       className={`w-full rounded-t-sm ${i === 4 ? 'bg-primary' : 'bg-white/20'}`} 
-                     />
-                   ))}
-                </div>
-             </div>
-
+          <motion.div variants={fadeIn} className="flex flex-col sm:flex-row items-center gap-4">
+            <Link 
+              href="https://wa.me/543515555123" target="_blank"
+              className="group relative bg-primary text-black px-8 py-4 rounded-full font-bold text-[15px] overflow-hidden transition-all shadow-[0_0_20px_rgba(195,216,9,0.3)] hover:shadow-[0_0_40px_rgba(195,216,9,0.6)] flex items-center justify-center gap-3 hover:bg-white"
+            >
+              <span className="relative z-10 flex items-center gap-2">Agendar Auditoría Gratuita <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" /></span>
+            </Link>
+            <Link href="#solucion" className="px-8 py-4 rounded-full font-bold text-[15px] text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-md">
+              Descubrir el ecosistema
+            </Link>
           </motion.div>
+        </motion.div>
+        
+        {/* Scroll indicator */}
+        <motion.div 
+          animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-50"
+        >
+          <span className="text-[10px] uppercase tracking-widest font-bold">Scroll</span>
+          <div className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent" />
         </motion.div>
       </section>
 
       {/* INFINITE MARQUEE */}
-      <section className="w-full py-8 bg-primary text-black border-y border-white/10 -rotate-2 scale-105 my-20 font-black text-2xl uppercase tracking-widest overflow-hidden whitespace-nowrap flex group">
+      <section className="w-full py-6 bg-primary text-black font-black text-xl uppercase tracking-widest overflow-hidden whitespace-nowrap flex z-20 shadow-[0_10px_50px_rgba(195,216,9,0.1)]">
         <div className="animate-scroll flex gap-8 items-center shrink-0 w-[200%]">
            {Array(8).fill("").map((_, i) => (
              <span key={i} className="flex gap-8 items-center">
-               <span>Inteligencia Artificial</span> <Sparkles size={24}/>
-               <span className="text-black/50">Next.js Development</span> <Sparkles size={24}/>
-               <span>Sistemas Autónomos</span> <Sparkles size={24}/>
-               <span className="text-black/50">High-End Design</span> <Sparkles size={24}/>
+               <span>Inteligencia Artificial</span> <span className="w-2 h-2 rounded-full bg-black"/>
+               <span className="text-black/60">Agencias Next-Gen</span> <span className="w-2 h-2 rounded-full bg-black/60"/>
+               <span>Automatización de Flujos</span> <span className="w-2 h-2 rounded-full bg-black"/>
+               <span className="text-black/60">High-End Web</span> <span className="w-2 h-2 rounded-full bg-black/60"/>
              </span>
            ))}
+        </div>
+      </section>
+
+      {/* SECCIÓN 2: EL PROBLEMA (EMPATÍA Y DOLOR) */}
+      <section className="w-full py-32 px-4 md:px-10 relative mt-10">
+        <div className="max-w-5xl mx-auto flex flex-col items-center">
+          <motion.h2 
+            initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeIn}
+            className="text-3xl md:text-5xl font-black text-center text-white mb-20 leading-tight"
+          >
+            ¿Tu negocio está escalando <br className="hidden md:block"/>o solo estás <span className="text-primary italic">trabajando el doble?</span>
+          </motion.h2>
+
+          <div className="grid md:grid-cols-3 gap-6 w-full">
+            {[
+              {
+                icon: <Clock />, title: "Cuello de Botella Operativo", 
+                desc: "Atiendes ventas, administras, respondes consultas repetitivas de madrugada. No hay sistema, solo fuerza bruta."
+              },
+              {
+                icon: <Globe />, title: "Presencia Invisible", 
+                desc: "Tu imagen online no refleja la calidad real de tu servicio. Tus redes venden, pero no tienes donde centralizar ni escalar."
+              },
+              {
+                icon: <LineChart />, title: "Data Desperdiciada", 
+                desc: "Pierdes leads porque no se les responde suficientemente rápido, no hay seguimiento automático, ni cualificación de clientes."
+              }
+            ].map((item, i) => (
+              <motion.div 
+                key={i} initial="hidden" whileInView="visible" viewport={{once:true}} 
+                variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.2, duration: 0.8, ease: "easeOut" as const }}}}
+                className="bg-white/[0.03] border border-white/5 rounded-[2rem] p-8 hover:bg-white/[0.06] transition-colors"
+              >
+                <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-gray-300 mb-6">
+                  {item.icon}
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div 
+            initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeIn}
+            className="mt-16 text-center max-w-2xl px-6 py-4 rounded-2xl bg-primary/10 border border-primary/20 text-primary font-medium"
+          >
+            El mercado cambió. Quien no integra inteligencia en sus procesos y una web que funcione como embudo, está condenado a estancarse.
+          </motion.div>
+        </div>
+      </section>
+
+      {/* SECCIÓN 3: LA SOLUCIÓN / EJES ESTRATÉGICOS */}
+      <section id="solucion" className="w-full py-32 px-4 md:px-10 relative bg-black/40 border-y border-white/5">
+        {/* Glow de fondo */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto z-10 relative">
+          <div className="text-center mb-20">
+            <span className="text-primary font-bold tracking-widest text-sm uppercase mb-4 block">La Solución MYB</span>
+            <h2 className="text-4xl md:text-6xl font-black text-white">Un ecosistema. <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">Dos motores de crecimiento.</span></h2>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-10">
+            {/* EJE 1: IA */}
+            <motion.div 
+              initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeIn}
+              className="bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-[3rem] p-10 md:p-14 relative overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-primary/10 blur-[80px] group-hover:bg-primary/20 transition-all rounded-full pointer-events-none" />
+              <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center text-primary mb-8 border border-primary/30">
+                <Cpu size={32} />
+              </div>
+              <h3 className="text-3xl font-black text-white mb-4">Eficiencia Autónoma<br/><span className="text-primary italic">con Inteligencia Artificial</span></h3>
+              <p className="text-gray-400 mb-8 leading-relaxed">
+                Sistemas que clonan tu conocimiento operativo. Atienden a clientes, cualifican leads y automatizan reportes las 24 horas del día. Es como contratar a un empleado élite que nunca duerme.
+              </p>
+              <ul className="space-y-4">
+                {[
+                  "Agentes de IA en WhatsApp y Web",
+                  "Automatización Cero Fricción (n8n & Make)",
+                  "Dashboards internos automatizados",
+                  "Mantenimiento y optimización mensual"
+                ].map((li, idx) => (
+                  <li key={idx} className="flex gap-3 text-gray-300 font-medium">
+                    <CheckCircle2 className="text-primary w-5 h-5 shrink-0" />
+                    {li}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* EJE 2: WEB */}
+            <motion.div 
+              initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeIn}
+              className="bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-[3rem] p-10 md:p-14 relative overflow-hidden group"
+            >
+              <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-blue-500/10 blur-[80px] group-hover:bg-blue-500/20 transition-all rounded-full pointer-events-none" />
+              <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-white mb-8 border border-white/20">
+                <Code2 size={32} />
+              </div>
+              <h3 className="text-3xl font-black text-white mb-4">Presencia Digital<br/><span className="text-gray-400 italic font-medium">High-End Web</span></h3>
+              <p className="text-gray-400 mb-8 leading-relaxed">
+                El hogar digital absoluto. No construimos plantillas estáticas; desarrollamos plataformas web Next-Gen diseñadas milimétricamente para convertir tráfico frío en clientes confiados y listos para comprar.
+              </p>
+              <ul className="space-y-4">
+                {[
+                  "Landing Pages de Alta Conversión",
+                  "Webs Corporativas y Portafolios",
+                  "Sistemas E-commerce e Invitaciones Digitales",
+                  "Arquitectura SEO Orgánico"
+                ].map((li, idx) => (
+                  <li key={idx} className="flex gap-3 text-gray-300 font-medium">
+                    <CheckCircle2 className="text-white/80 w-5 h-5 shrink-0" />
+                    {li}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECCIÓN 4: METODOLOGÍA (CÓMO TRABAJAMOS) */}
+      <section className="w-full py-32 px-4 md:px-10 max-w-6xl mx-auto">
+        <div className="text-left mb-16 md:mb-24 md:flex items-end justify-between">
+          <div>
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Nuestra<br/>Metodología.</h2>
+            <p className="text-gray-400 text-lg">Tres fases críticas para transformar tu negocio.</p>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            {
+              num: "01",
+              title: "Auditoría Estratégica",
+              desc: "Analizamos tus cuellos de botella actuales. No hay dos empresas iguales, por ende, el plan de digitalización y automatización es 100% a medida."
+            },
+            {
+              num: "02",
+              title: "Desarrollo y Testing",
+              desc: "Arquitectamos tu presencia web y desarrollamos los flujos de inteligencia artificial. Probamos el chatbot y la conversión en entornos estresados."
+            },
+            {
+              num: "03",
+              title: "Lanzamiento y Escala",
+              desc: "Desplegamos el ecosistema completo en tu entorno vivo. Acompañamos mediante dashboards y retención para optimizar y entrenar constantemente a tus bots."
+            }
+          ].map((step, i) => (
+            <motion.div 
+              key={i} initial="hidden" whileInView="visible" viewport={{once:true}}
+              variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1, transition: { delay: i * 0.2, duration: 0.6 }}}}
+              className="relative group h-full"
+            >
+              <div className="text-6xl font-black text-white/5 mb-4 group-hover:text-primary/20 transition-colors absolute -top-8 -left-4 z-0 pointer-events-none">{step.num}</div>
+              <div className="relative z-10 pt-4">
+                <div className="w-10 h-1bg-white/20 mb-6 rounded-full overflow-hidden">
+                  <div className="w-full h-1 bg-gradient-to-r from-primary to-transparent" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-3">{step.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{step.desc}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* SECCIÓN 5: POR QUÉ ELEGIRNOS (VENTAJA COMPETITIVA Y RTB) */}
+      <section className="w-full py-20 px-4 md:px-10 border-t border-white/5">
+        <div className="max-w-6xl mx-auto bg-primary text-black rounded-[3rem] p-10 md:p-16 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-12">
+           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white opacity-20 blur-[120px] rounded-full pointer-events-none" />
+           <div className="md:w-1/2 relative z-10">
+             <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight">No vendemos webs. Construimos <span className="italic">sistemas.</span></h2>
+             <p className="text-black/80 font-medium text-lg leading-relaxed mb-8">
+               La mayoría de agencias crean plantillas estáticas y te dejan a la deriva. Nosotros integramos Identidad Web de clase mundial con Cerebros de Inteligencia Artificial. Tu marca no solo será bella: será **inteligentemente letal.**
+             </p>
+             <Link href="https://wa.me/543515555123" target="_blank" className="inline-flex items-center gap-2 bg-black text-white px-8 py-4 rounded-full font-bold hover:bg-white/10 hover:text-black hover:border-black border transition-all">
+               Cotizar mi Ecosistema <ArrowRight size={18} />
+             </Link>
+           </div>
+           <div className="md:w-1/2 flex gap-4 flex-wrap justify-end relative z-10">
+             {[
+               { i: <Shield size={24}/>, t: "Resultados reales sin falsa magia" },
+               { i: <Briefcase size={24}/>, t: "Partnership, no solo proveedores" },
+               { i: <Zap size={24}/>, t: "ROI de tu tiempo operativo" }
+             ].map((badge, i) => (
+                <div key={i} className="bg-black/10 backdrop-blur-sm border border-black/10 p-5 rounded-2xl w-full sm:w-[calc(50%-8px)] flex flex-col gap-3">
+                  {badge.i}
+                  <span className="font-bold text-sm">{badge.t}</span>
+                </div>
+             ))}
+           </div>
         </div>
       </section>
 
@@ -259,26 +368,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer CTA */}
+      {/* FOOTER CTA */}
       <section className="w-full py-32 px-4 relative overflow-hidden flex flex-col items-center justify-center border-t border-white/5 mt-auto">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(195,216,9,0.1)_0%,transparent_60%)] pointer-events-none" />
-        <h2 className="text-5xl md:text-7xl font-black text-center text-white mb-8 relative z-10 tracking-tighter">
+        <h2 className="text-5xl md:text-7xl font-black text-center text-white mb-6 relative z-10 tracking-tighter">
           Construye tu <br/><span className="text-primary">Futuro Autónomo.</span>
         </h2>
+        <p className="text-gray-400 mb-10 text-center max-w-lg relative z-10">
+          Deja de postergar la profesionalización digital de tu empresa. El momento de escalar libre de estrés es ahora.
+        </p>
         <Link 
           href="https://wa.me/543515555123" 
           target="_blank"
           className="group relative bg-white text-black px-10 py-5 rounded-full font-bold text-lg overflow-hidden transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(195,216,9,0.4)] flex items-center justify-center gap-3 z-10 hover:bg-primary"
         >
           <span className="relative z-10 flex items-center gap-2">
-            Iniciar Proyecto <Send size={20} />
+            Desbloquear Crecimiento <Send size={20} />
           </span>
         </Link>
       </section>
       
-      {/* Real Footer */}
-      <footer className="w-full py-8 text-center text-sm font-medium tracking-wide text-gray-600 border-t border-white/5 bg-background relative z-10">
-        © {new Date().getFullYear()} MYB Digitals Agency. CRAFTED FOR EXCELLENCE.
+      {/* REAL FOOTER */}
+      <footer className="w-full py-12 px-6 flex flex-col items-center border-t border-white/5 bg-background relative z-10">
+        <div className="w-10 h-10 mb-6 bg-white/5 rounded-full flex items-center justify-center">
+           <Globe size={18} className="text-gray-400" />
+        </div>
+        <p className="text-sm font-medium tracking-wide text-gray-500 mb-2">
+          © {new Date().getFullYear()} MYB DIGITALS. TODOS LOS DERECHOS RESERVADOS.
+        </p>
+        <p className="text-xs text-gray-600 font-light">
+          Diseñado y Arquitectado con precisión para marcas que lideran.
+        </p>
       </footer>
     </main>
   );
