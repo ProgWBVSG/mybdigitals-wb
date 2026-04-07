@@ -4,11 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
 import { 
-  ArrowRight, Bot, Network, Code2, Cpu, Globe,
+  ArrowRight, Globe,
   ChevronDown, Sparkles, Send,
-  Clock, LineChart, Briefcase, Zap, Shield, CheckCircle2
+  Briefcase, Zap, Shield, CheckCircle2
 } from "lucide-react";
 import OrbitScene from "@/components/OrbitScene";
+import ScrollJourney from "@/components/ScrollJourney";
 
 // Animations
 const fadeIn = {
@@ -164,124 +165,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECCIÓN 2: EL PROBLEMA (EMPATÍA Y DOLOR) */}
-      <section className="w-full py-32 px-4 md:px-10 relative mt-10">
-        <div className="max-w-5xl mx-auto flex flex-col items-center">
-          <motion.h2 
-            initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeIn}
-            className="text-3xl md:text-5xl font-black text-center text-white mb-20 leading-tight"
-          >
-            ¿Tu negocio está escalando <br className="hidden md:block"/>o solo estás <span className="text-primary italic">trabajando el doble?</span>
-          </motion.h2>
+      {/* ── SCROLL JOURNEY 3D ── */}
+      <ScrollJourney />
 
-          <div className="grid md:grid-cols-3 gap-6 w-full">
-            {[
-              {
-                icon: <Clock />, title: "Cuello de Botella Operativo", 
-                desc: "Atiendes ventas, administras, respondes consultas repetitivas de madrugada. No hay sistema, solo fuerza bruta."
-              },
-              {
-                icon: <Globe />, title: "Presencia Invisible", 
-                desc: "Tu imagen online no refleja la calidad real de tu servicio. Tus redes venden, pero no tienes donde centralizar ni escalar."
-              },
-              {
-                icon: <LineChart />, title: "Data Desperdiciada", 
-                desc: "Pierdes leads porque no se les responde suficientemente rápido, no hay seguimiento automático, ni cualificación de clientes."
-              }
-            ].map((item, i) => (
-              <motion.div 
-                key={i} initial="hidden" whileInView="visible" viewport={{once:true}} 
-                variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.2, duration: 0.8, ease: "easeOut" as const }}}}
-                className="bg-white/[0.03] border border-white/5 rounded-[2rem] p-8 hover:bg-white/[0.06] transition-colors"
-              >
-                <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-gray-300 mb-6">
-                  {item.icon}
-                </div>
-                <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
 
-          <motion.div 
-            initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeIn}
-            className="mt-16 text-center max-w-2xl px-6 py-4 rounded-2xl bg-primary/10 border border-primary/20 text-primary font-medium"
-          >
-            El mercado cambió. Quien no integra inteligencia en sus procesos y una web que funcione como embudo, está condenado a estancarse.
-          </motion.div>
-        </div>
-      </section>
 
-      {/* SECCIÓN 3: LA SOLUCIÓN / EJES ESTRATÉGICOS */}
-      <section id="solucion" className="w-full py-32 px-4 md:px-10 relative bg-black/40 border-y border-white/5">
-        {/* Glow de fondo */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
-        
-        <div className="max-w-7xl mx-auto z-10 relative">
-          <div className="text-center mb-20">
-            <span className="text-primary font-bold tracking-widest text-sm uppercase mb-4 block">La Solución MYB</span>
-            <h2 className="text-4xl md:text-6xl font-black text-white">Un ecosistema. <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">Dos motores de crecimiento.</span></h2>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-10">
-            {/* EJE 1: IA */}
-            <motion.div 
-              initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeIn}
-              className="bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-[3rem] p-10 md:p-14 relative overflow-hidden group"
-            >
-              <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-primary/10 blur-[80px] group-hover:bg-primary/20 transition-all rounded-full pointer-events-none" />
-              <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center text-primary mb-8 border border-primary/30">
-                <Cpu size={32} />
-              </div>
-              <h3 className="text-3xl font-black text-white mb-4">Eficiencia Autónoma<br/><span className="text-primary italic">con Inteligencia Artificial</span></h3>
-              <p className="text-gray-400 mb-8 leading-relaxed">
-                Sistemas que clonan tu conocimiento operativo. Atienden a clientes, cualifican leads y automatizan reportes las 24 horas del día. Es como contratar a un empleado élite que nunca duerme.
-              </p>
-              <ul className="space-y-4">
-                {[
-                  "Agentes de IA en WhatsApp y Web",
-                  "Automatización Cero Fricción (n8n & Make)",
-                  "Dashboards internos automatizados",
-                  "Mantenimiento y optimización mensual"
-                ].map((li, idx) => (
-                  <li key={idx} className="flex gap-3 text-gray-300 font-medium">
-                    <CheckCircle2 className="text-primary w-5 h-5 shrink-0" />
-                    {li}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* EJE 2: WEB */}
-            <motion.div 
-              initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeIn}
-              className="bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-[3rem] p-10 md:p-14 relative overflow-hidden group"
-            >
-              <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-blue-500/10 blur-[80px] group-hover:bg-blue-500/20 transition-all rounded-full pointer-events-none" />
-              <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-white mb-8 border border-white/20">
-                <Code2 size={32} />
-              </div>
-              <h3 className="text-3xl font-black text-white mb-4">Presencia Digital<br/><span className="text-gray-400 italic font-medium">High-End Web</span></h3>
-              <p className="text-gray-400 mb-8 leading-relaxed">
-                El hogar digital absoluto. No construimos plantillas estáticas; desarrollamos plataformas web Next-Gen diseñadas milimétricamente para convertir tráfico frío en clientes confiados y listos para comprar.
-              </p>
-              <ul className="space-y-4">
-                {[
-                  "Landing Pages de Alta Conversión",
-                  "Webs Corporativas y Portafolios",
-                  "Sistemas E-commerce e Invitaciones Digitales",
-                  "Arquitectura SEO Orgánico"
-                ].map((li, idx) => (
-                  <li key={idx} className="flex gap-3 text-gray-300 font-medium">
-                    <CheckCircle2 className="text-white/80 w-5 h-5 shrink-0" />
-                    {li}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-        </div>
-      </section>
 
       {/* SECCIÓN 4: METODOLOGÍA (CÓMO TRABAJAMOS) */}
       <section className="w-full py-32 px-4 md:px-10 max-w-6xl mx-auto">
