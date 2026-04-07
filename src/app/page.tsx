@@ -1,28 +1,14 @@
 "use client";
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
+import { useState } from "react";
 import { 
   ArrowRight, Bot, Network, Code2, Cpu, Globe,
-  ChevronDown, Sparkles, Send, Workflow, Activity,
-  Clock, LineChart, MessageSquare, Briefcase, Zap, Shield, CheckCircle2
+  ChevronDown, Sparkles, Send,
+  Clock, LineChart, Briefcase, Zap, Shield, CheckCircle2
 } from "lucide-react";
-import Image from "next/image";
-
-// Importación dinámica del componente 3D para evitar errores de hidratación SSR (Server-Side Rendering)
-const Spline = dynamic(() => import('@splinetool/react-spline'), { 
-  ssr: false, 
-  loading: () => (
-    <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-[-1]">
-      <div className="flex flex-col items-center gap-4">
-        <div className="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
-        <p className="text-primary/70 text-xs tracking-[0.2em] font-medium uppercase animate-pulse">Cargando Ecosistema 3D...</p>
-      </div>
-    </div>
-  )
-});
+import OrbitScene from "@/components/OrbitScene";
 
 // Animations
 const fadeIn = {
@@ -60,61 +46,95 @@ const faqs = [
 
 export default function Home() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
-  const { scrollYProgress } = useScroll();
-  const yElement = useTransform(scrollYProgress, [0, 1], [0, 300]);
 
   return (
     <main className="flex min-h-[200vh] flex-col overflow-hidden bg-background text-foreground bg-mesh">
-      
-      {/* SECCIÓN 1: HERO 3D + WOW EFFECT */}
-      <section className="relative w-full h-[100vh] min-h-[800px] flex items-center justify-center overflow-hidden">
-        {/* Fondo 3D interactivo - Spline */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background z-10 pointer-events-none" />
-          <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
-          {/* Un modelo Spline ultra moderno, que simula partículas o anillos futuristas (ID genérico muy popular en Next-Gen UI) */}
-          <Spline scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode" className="w-full h-full object-cover scale-110" />
+
+      {/* ══════════════════════════════════════════════════════
+          SECCIÓN 1 – HERO (split: texto izq | 3D der)
+      ══════════════════════════════════════════════════════ */}
+      <section className="relative w-full min-h-screen flex items-center overflow-hidden pt-28 pb-10">
+        {/* Glows de fondo */}
+        <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-primary/5 blur-[140px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none" />
+
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-10 grid lg:grid-cols-2 gap-12 items-center">
+
+          {/* ── Columna IZQUIERDA: texto ── */}
+          <motion.div initial="hidden" animate="visible" variants={staggerContainer}>
+            <motion.div variants={fadeIn} className="inline-flex items-center gap-3 mb-8 px-5 py-2 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md shadow-[0_0_15px_rgba(195,216,9,0.2)]">
+              <Sparkles className="w-4 h-4 text-primary animate-pulse" />
+              <span className="text-xs font-bold text-primary tracking-widest uppercase">Ecosistemas Digitales Inteligentes</span>
+            </motion.div>
+
+            <motion.h1 variants={fadeIn} className="text-5xl md:text-7xl font-black tracking-tighter mb-6 text-white leading-[1.05]">
+              Transformamos<br/>
+              marcas manuales<br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic">en máquinas.</span>
+            </motion.h1>
+
+            <motion.p variants={fadeIn} className="text-lg text-gray-400 max-w-lg mb-10 leading-relaxed">
+              Diseñamos webs de élite y sistemas de automatización con IA que eliminan cuellos de botella, cualifican leads 24/7 y construyen una presencia digital imbatible.
+            </motion.p>
+
+            <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4">
+              <Link
+                href="https://wa.me/543515555123" target="_blank"
+                className="group bg-primary text-black px-8 py-4 rounded-full font-bold text-[15px] shadow-[0_0_20px_rgba(195,216,9,0.35)] hover:shadow-[0_0_40px_rgba(195,216,9,0.65)] hover:bg-white flex items-center justify-center gap-2 transition-all"
+              >
+                Agendar Auditoría Gratuita
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                href="#solucion"
+                className="px-8 py-4 rounded-full font-bold text-[15px] text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-md flex items-center justify-center"
+              >
+                Ver el ecosistema
+              </Link>
+            </motion.div>
+
+            {/* Métricas rápidas */}
+            <motion.div variants={fadeIn} className="mt-14 flex gap-10">
+              {[
+                { val: "10x", label: "ROI promedio" },
+                { val: "24/7", label: "Agentes activos" },
+                { val: "14d", label: "Entrega promedio" },
+              ].map(({ val, label }) => (
+                <div key={label}>
+                  <p className="text-3xl font-black text-primary">{val}</p>
+                  <p className="text-xs text-gray-500 font-medium mt-1 tracking-wider">{label}</p>
+                </div>
+              ))}
+            </motion.div>
+          </motion.div>
+
+          {/* ── Columna DERECHA: escena 3D custom ── */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: "easeOut" as const, delay: 0.2 }}
+            className="relative h-[520px] lg:h-[600px] flex items-center justify-center"
+          >
+            {/* Marco glassmorphism */}
+            <div className="absolute inset-0 rounded-[3rem] bg-white/[0.02] border border-white/[0.06] backdrop-blur-sm overflow-hidden">
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(195,216,9,0.05)_0%,transparent_70%)]" />
+            </div>
+            {/* La escena 3D de orbitas */}
+            <div className="relative w-full h-full">
+              <OrbitScene />
+            </div>
+          </motion.div>
+
         </div>
 
-        <motion.div 
-          initial="hidden" animate="visible" variants={staggerContainer}
-          className="relative z-20 w-full max-w-7xl mx-auto px-4 md:px-10 text-center flex flex-col items-center mt-[-5%]"
-        >
-          <motion.div variants={fadeIn} className="inline-flex items-center gap-3 mb-6 px-5 py-2 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md shadow-[0_0_15px_rgba(195,216,9,0.2)]">
-            <Sparkles className="w-4 h-4 text-primary animate-pulse" />
-            <span className="text-xs font-bold text-primary tracking-widest uppercase">Ecosistemas Digitales Inteligentes</span>
-          </motion.div>
-          
-          <motion.h1 variants={fadeIn} className="text-5xl md:text-8xl font-black tracking-tighter mb-6 text-balance text-white leading-[1.05]">
-            Transformamos marcas <br className="hidden md:block"/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-gray-500 font-medium">manuales en </span>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic">máquinas.</span>
-          </motion.h1>
-          
-          <motion.p variants={fadeIn} className="text-lg md:text-2xl text-gray-300/80 max-w-3xl text-center mb-10 text-balance leading-relaxed font-light">
-            Creamos web de alto rendimiento y automatizaciones con IA que eliminan tus cuellos de botella, escalan tus ventas y construyen una presencia digital imbatible.
-          </motion.p>
-          
-          <motion.div variants={fadeIn} className="flex flex-col sm:flex-row items-center gap-4">
-            <Link 
-              href="https://wa.me/543515555123" target="_blank"
-              className="group relative bg-primary text-black px-8 py-4 rounded-full font-bold text-[15px] overflow-hidden transition-all shadow-[0_0_20px_rgba(195,216,9,0.3)] hover:shadow-[0_0_40px_rgba(195,216,9,0.6)] flex items-center justify-center gap-3 hover:bg-white"
-            >
-              <span className="relative z-10 flex items-center gap-2">Agendar Auditoría Gratuita <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" /></span>
-            </Link>
-            <Link href="#solucion" className="px-8 py-4 rounded-full font-bold text-[15px] text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-md">
-              Descubrir el ecosistema
-            </Link>
-          </motion.div>
-        </motion.div>
-        
         {/* Scroll indicator */}
-        <motion.div 
-          animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-50"
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" as const }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-40"
         >
           <span className="text-[10px] uppercase tracking-widest font-bold">Scroll</span>
-          <div className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent" />
+          <div className="w-[1px] h-10 bg-gradient-to-b from-white to-transparent" />
         </motion.div>
       </section>
 
