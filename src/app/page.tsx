@@ -54,33 +54,36 @@ export default function Home() {
           SECCIÓN 1 – HERO (split: texto izq | 3D der)
       ══════════════════════════════════════════════════════ */}
       <section className="relative w-full min-h-screen flex items-center overflow-hidden pt-28 pb-10">
-        {/* Glows de fondo */}
-        <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-primary/5 blur-[140px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none" />
+        {/* Glows de ambiente */}
+        <div className="absolute top-1/4 left-1/3 w-[700px] h-[700px] bg-primary/[0.07] blur-[160px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyan-500/[0.04] blur-[130px] rounded-full pointer-events-none" />
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-10 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-10 grid lg:grid-cols-2 gap-6 lg:gap-16 items-center">
 
           {/* ── Columna IZQUIERDA: texto ── */}
           <motion.div initial="hidden" animate="visible" variants={staggerContainer}>
             <motion.div variants={fadeIn} className="inline-flex items-center gap-3 mb-8 px-5 py-2 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md shadow-[0_0_15px_rgba(195,216,9,0.2)]">
               <Sparkles className="w-4 h-4 text-primary animate-pulse" />
-              <span className="text-xs font-bold text-primary tracking-widest uppercase">Ecosistemas Digitales Inteligentes</span>
+              <span className="text-xs font-bold text-primary tracking-widest uppercase">Agencia Next-Gen · IA &amp; Web</span>
             </motion.div>
 
-            <motion.h1 variants={fadeIn} className="text-5xl md:text-7xl font-black tracking-tighter mb-6 text-white leading-[1.05]">
-              Transformamos<br/>
-              marcas manuales<br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic">en máquinas.</span>
+            {/* TÍTULO ORIGINAL RESTAURADO */}
+            <motion.h1 variants={fadeIn} className="text-[clamp(3rem,7vw,6rem)] font-bold tracking-tighter mb-6 text-white leading-[0.95]">
+              Escalamos negocios{" "}
+              <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic font-medium pr-2">
+                con IA y Software.
+              </span>
             </motion.h1>
 
-            <motion.p variants={fadeIn} className="text-lg text-gray-400 max-w-lg mb-10 leading-relaxed">
-              Diseñamos webs de élite y sistemas de automatización con IA que eliminan cuellos de botella, cualifican leads 24/7 y construyen una presencia digital imbatible.
+            <motion.p variants={fadeIn} className="text-lg text-gray-400 max-w-md mb-10 leading-relaxed">
+              Automatizaciones inteligentes y experiencias web de vanguardia. Para empresas que quieren dejar atrás las operaciones manuales y multiplicar su facturación.
             </motion.p>
 
             <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="https://wa.me/543515555123" target="_blank"
-                className="group bg-primary text-black px-8 py-4 rounded-full font-bold text-[15px] shadow-[0_0_20px_rgba(195,216,9,0.35)] hover:shadow-[0_0_40px_rgba(195,216,9,0.65)] hover:bg-white flex items-center justify-center gap-2 transition-all"
+                className="group bg-primary text-black px-8 py-4 rounded-full font-bold text-[15px] shadow-[0_0_24px_rgba(195,216,9,0.4)] hover:shadow-[0_0_45px_rgba(195,216,9,0.7)] hover:bg-white flex items-center justify-center gap-2 transition-all"
               >
                 Agendar Auditoría Gratuita
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
@@ -89,37 +92,45 @@ export default function Home() {
                 href="#solucion"
                 className="px-8 py-4 rounded-full font-bold text-[15px] text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-md flex items-center justify-center"
               >
-                Ver el ecosistema
+                Ver servicios
               </Link>
             </motion.div>
 
             {/* Métricas rápidas */}
-            <motion.div variants={fadeIn} className="mt-14 flex gap-10">
+            <motion.div variants={fadeIn} className="mt-14 flex gap-10 border-t border-white/5 pt-10">
               {[
-                { val: "10x", label: "ROI promedio" },
-                { val: "24/7", label: "Agentes activos" },
-                { val: "14d", label: "Entrega promedio" },
+                { val: "10x",  label: "ROI promedio" },
+                { val: "24/7", label: "Agentes IA activos" },
+                { val: "14d",  label: "Tiempo de entrega" },
               ].map(({ val, label }) => (
                 <div key={label}>
                   <p className="text-3xl font-black text-primary">{val}</p>
-                  <p className="text-xs text-gray-500 font-medium mt-1 tracking-wider">{label}</p>
+                  <p className="text-xs text-gray-500 font-medium mt-1 tracking-wider uppercase">{label}</p>
                 </div>
               ))}
             </motion.div>
           </motion.div>
 
-          {/* ── Columna DERECHA: escena 3D custom ── */}
+          {/* ── Columna DERECHA: Neural Network 3D ── */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
+            initial={{ opacity: 0, scale: 0.88 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeOut" as const, delay: 0.2 }}
-            className="relative h-[520px] lg:h-[600px] flex items-center justify-center"
+            transition={{ duration: 1.1, ease: "easeOut" as const, delay: 0.25 }}
+            className="relative h-[480px] lg:h-[640px]"
           >
             {/* Marco glassmorphism */}
-            <div className="absolute inset-0 rounded-[3rem] bg-white/[0.02] border border-white/[0.06] backdrop-blur-sm overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(195,216,9,0.05)_0%,transparent_70%)]" />
+            <div className="absolute inset-0 rounded-[2.5rem] bg-white/[0.02] border border-white/[0.07] overflow-hidden shadow-[0_0_80px_rgba(195,216,9,0.06)]">
+              {/* Glow interior */}
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(195,216,9,0.05)_0%,transparent_65%)]" />
+              {/* Esquinas de esqueleto tipo HUD */}
+              <div className="absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 border-primary/40 rounded-tl-lg" />
+              <div className="absolute top-4 right-4 w-5 h-5 border-t-2 border-r-2 border-primary/40 rounded-tr-lg" />
+              <div className="absolute bottom-4 left-4 w-5 h-5 border-b-2 border-l-2 border-primary/40 rounded-bl-lg" />
+              <div className="absolute bottom-4 right-4 w-5 h-5 border-b-2 border-r-2 border-primary/40 rounded-br-lg" />
+              {/* Etiqueta HUD */}
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 text-[9px] font-mono text-primary/40 tracking-widest uppercase">MYB // Neural-Net v2</div>
             </div>
-            {/* La escena 3D de orbitas */}
+            {/* Canvas 3D */}
             <div className="relative w-full h-full">
               <OrbitScene />
             </div>
@@ -130,13 +141,14 @@ export default function Home() {
         {/* Scroll indicator */}
         <motion.div
           animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" as const }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-40"
+          transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" as const }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-30"
         >
           <span className="text-[10px] uppercase tracking-widest font-bold">Scroll</span>
-          <div className="w-[1px] h-10 bg-gradient-to-b from-white to-transparent" />
+          <div className="w-[1px] h-10 bg-gradient-to-b from-primary to-transparent" />
         </motion.div>
       </section>
+
 
       {/* INFINITE MARQUEE */}
       <section className="w-full py-6 bg-primary text-black font-black text-xl uppercase tracking-widest overflow-hidden whitespace-nowrap flex z-20 shadow-[0_10px_50px_rgba(195,216,9,0.1)]">
