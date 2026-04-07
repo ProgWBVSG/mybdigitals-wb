@@ -1,198 +1,207 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
-interface Particle {
-  x: number; y: number; z: number;
-  vx: number; vy: number; vz: number;
-  r: number;
-}
+/* ─── Datos del dashboard simulado ─────────────────────── */
+const METRICS = [
+  { label: "Leads hoy",       value: "38",   change: "+12%", color: "#C3D809" },
+  { label: "Conversión",      value: "24%",  change: "+5%",  color: "#00c8ff" },
+  { label: "Agente IA resp.", value: "1.2s", change: "avg",  color: "#a855f7" },
+];
 
-const NUM_PARTICLES = 120;
-const CONNECTION_DIST = 160;
-const FOV = 500;
-const DEPTH = 600;
+const FLOW_NODES = [
+  { label: "Lead entra",    x: 10,  y: 32, dot: "#C3D809" },
+  { label: "IA califica",  x: 38,  y: 32, dot: "#00c8ff" },
+  { label: "WhatsApp",     x: 66,  y: 32, dot: "#a855f7" },
+  { label: "Cierre",       x: 90,  y: 32, dot: "#C3D809" },
+];
 
-function project(x: number, y: number, z: number, w: number, h: number) {
-  const scale = FOV / (FOV + z + DEPTH / 2);
-  return {
-    sx: x * scale + w / 2,
-    sy: y * scale + h / 2,
-    scale,
-  };
-}
+const NOTIFICATIONS = [
+  { text: "🔥 Nuevo lead desde la web",   delay: 0    },
+  { text: "✅ Agente IA respondió en 0.8s", delay: 2.5  },
+  { text: "💰 Conversión registrada",     delay: 5    },
+];
 
-export default function OrbitScene() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mouse = useRef({ x: 0, y: 0 });
-  const rotY = useRef(0);
-  const rotX = useRef(0);
-  const particles = useRef<Particle[]>([]);
-  const raf = useRef(0);
+export default function HeroVisual() {
+  const containerRef = useRef<HTMLDivElement>(null);
 
+  /* Tilt reactivo al mouse – CSS transition, sin RAF pesado */
   useEffect(() => {
-    const canvas = canvasRef.current!;
-    const ctx = canvas.getContext("2d")!;
-    let W = 0, H = 0;
-
-    // Inicializar partículas
-    particles.current = Array.from({ length: NUM_PARTICLES }, () => ({
-      x: (Math.random() - 0.5) * 800,
-      y: (Math.random() - 0.5) * 800,
-      z: (Math.random() - 0.5) * DEPTH,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      vz: (Math.random() - 0.5) * 0.3,
-      r: 1.5 + Math.random() * 2,
-    }));
-
-    const resize = () => {
-      W = canvas.width = canvas.offsetWidth;
-      H = canvas.height = canvas.offsetHeight;
+    const el = containerRef.current;
+    if (!el) return;
+    const handleMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 12; // -6 a 6 deg
+      const y = ((e.clientY - rect.top)  / rect.height - 0.5) * -8;  // -4 a 4 deg
+      el.style.transform = `perspective(1200px) rotateX(${y}deg) rotateY(${x}deg)`;
     };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const onMouse = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.current.x = ((e.clientX - rect.left) / W - 0.5) * 2;
-      mouse.current.y = ((e.clientY - rect.top) / H - 0.5) * 2;
+    const handleLeave = () => {
+      el.style.transform = "perspective(1200px) rotateX(4deg) rotateY(-6deg)";
     };
-    window.addEventListener("mousemove", onMouse);
-
-    // Colores de marca
-    const PRIMARY = "195,216,9";
-    const CYAN = "0,200,255";
-
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-
-      // Rotación automática + mouse
-      rotY.current += 0.003 + mouse.current.x * 0.008;
-      rotX.current += 0.001 + mouse.current.y * 0.004;
-
-      const cosY = Math.cos(rotY.current), sinY = Math.sin(rotY.current);
-      const cosX = Math.cos(rotX.current), sinX = Math.sin(rotX.current);
-
-      // Mover + rotar partículas
-      const projected = particles.current.map((p) => {
-        p.x += p.vx; p.y += p.vy; p.z += p.vz;
-        // Rebote en caja
-        if (Math.abs(p.x) > 420) p.vx *= -1;
-        if (Math.abs(p.y) > 420) p.vy *= -1;
-        if (Math.abs(p.z) > DEPTH / 2) p.vz *= -1;
-
-        // Rotar Y
-        const rx = p.x * cosY - p.z * sinY;
-        const rz = p.x * sinY + p.z * cosY;
-        // Rotar X
-        const ry = p.y * cosX - rz * sinX;
-        const rz2 = p.y * sinX + rz * cosX;
-
-        const { sx, sy, scale } = project(rx, ry, rz2, W, H);
-        return { sx, sy, scale, rz2, p };
-      });
-
-      // Ordenar por Z (pintor – lo más alejado primero)
-      projected.sort((a, b) => a.rz2 - b.rz2);
-
-      // Dibujar conexiones
-      for (let i = 0; i < projected.length; i++) {
-        const a = projected[i];
-        for (let j = i + 1; j < projected.length; j++) {
-          const b = projected[j];
-          const dx = a.sx - b.sx, dy = a.sy - b.sy;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < CONNECTION_DIST) {
-            const alpha = (1 - dist / CONNECTION_DIST) * 0.45;
-            // Gradiente verde → cian según profundidad
-            const depth = (a.rz2 + b.rz2) / 2;
-            const t = Math.max(0, Math.min(1, (depth + DEPTH / 2) / DEPTH));
-            const color = t > 0.5 ? PRIMARY : CYAN;
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(${color},${alpha})`;
-            ctx.lineWidth = 0.6 * ((a.scale + b.scale) / 2);
-            ctx.moveTo(a.sx, a.sy);
-            ctx.lineTo(b.sx, b.sy);
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Dibujar nodos
-      projected.forEach(({ sx, sy, scale, rz2, p }) => {
-        const depth = (rz2 + DEPTH / 2) / DEPTH; // 0..1
-        const alpha = 0.4 + depth * 0.6;
-        const color = depth > 0.5 ? PRIMARY : CYAN;
-        const radius = p.r * scale * 1.8;
-
-        // Glow
-        const grd = ctx.createRadialGradient(sx, sy, 0, sx, sy, radius * 3);
-        grd.addColorStop(0, `rgba(${color},${alpha * 0.6})`);
-        grd.addColorStop(1, `rgba(${color},0)`);
-        ctx.beginPath();
-        ctx.arc(sx, sy, radius * 3, 0, Math.PI * 2);
-        ctx.fillStyle = grd;
-        ctx.fill();
-
-        // Núcleo
-        ctx.beginPath();
-        ctx.arc(sx, sy, radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${color},${alpha})`;
-        ctx.fill();
-      });
-
-      // Nodo central fijo (el núcleo MYB)
-      const { sx: cx, sy: cy } = project(0, 0, 0, W, H);
-      const pulseR = 18 + Math.sin(Date.now() * 0.002) * 4;
-      // Outer glow
-      const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, pulseR * 4);
-      cg.addColorStop(0, `rgba(${PRIMARY},0.5)`);
-      cg.addColorStop(1, `rgba(${PRIMARY},0)`);
-      ctx.beginPath(); ctx.arc(cx, cy, pulseR * 4, 0, Math.PI * 2);
-      ctx.fillStyle = cg; ctx.fill();
-      // Ring
-      ctx.beginPath(); ctx.arc(cx, cy, pulseR + 8, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(${PRIMARY},0.3)`; ctx.lineWidth = 1; ctx.stroke();
-      // Core
-      ctx.beginPath(); ctx.arc(cx, cy, pulseR, 0, Math.PI * 2);
-      const coreGrd = ctx.createRadialGradient(cx - 4, cy - 4, 2, cx, cy, pulseR);
-      coreGrd.addColorStop(0, "#e8f56a");
-      coreGrd.addColorStop(1, "#7da000");
-      ctx.fillStyle = coreGrd; ctx.fill();
-      // Label
-      ctx.font = "bold 9px sans-serif";
-      ctx.fillStyle = "#000";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText("MYB", cx, cy);
-
-      raf.current = requestAnimationFrame(draw);
-    }
-
-    draw();
-
+    window.addEventListener("mousemove", handleMove);
+    el.addEventListener("mouseleave", handleLeave);
     return () => {
-      cancelAnimationFrame(raf.current);
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", onMouse);
+      window.removeEventListener("mousemove", handleMove);
+      el.removeEventListener("mouseleave", handleLeave);
     };
   }, []);
 
   return (
-    <div className="relative w-full h-full">
-      <canvas
-        ref={canvasRef}
-        className="w-full h-full"
-        style={{ display: "block" }}
-      />
+    <div className="relative w-full h-full flex items-center justify-center select-none">
+
+      {/* Laptop / browser flotante ─── */}
+      <motion.div
+        ref={containerRef}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, ease: "easeOut" as const }}
+        style={{
+          transform: "perspective(1200px) rotateX(4deg) rotateY(-6deg)",
+          transition: "transform 0.15s ease-out",
+          transformStyle: "preserve-3d",
+          willChange: "transform",
+        }}
+        className="relative w-[90%] max-w-[520px]"
+      >
+        {/* ─── Pantalla (browser) ─── */}
+        <div
+          className="rounded-t-2xl overflow-hidden border border-white/10"
+          style={{ background: "#0d0f14", boxShadow: "0 0 60px rgba(195,216,9,0.08)" }}
+        >
+          {/* Barra de URL */}
+          <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06] bg-white/[0.02]">
+            <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+            <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
+            <span className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+            <div className="flex-1 mx-3 h-6 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center px-3">
+              <span className="text-[10px] text-gray-500 font-mono">mybdigitals.com</span>
+              <span className="ml-auto">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-green-400">
+                  <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
+                  <path d="m9 12 2 2 4-4"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          {/* Contenido del dashboard */}
+          <div className="p-5 space-y-4">
+
+            {/* Título del dashboard simulado */}
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[11px] font-bold text-white/40 tracking-widest uppercase">Panel de Control · IA Activa</span>
+              <span className="flex items-center gap-1.5 text-[10px] text-primary font-bold">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping inline-block" />
+                LIVE
+              </span>
+            </div>
+
+            {/* Métricas */}
+            <div className="grid grid-cols-3 gap-3">
+              {METRICS.map((m, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 + i * 0.15, duration: 0.5 }}
+                  className="rounded-xl p-3 border border-white/[0.06]"
+                  style={{ background: `${m.color}0a` }}
+                >
+                  <p className="text-[9px] text-gray-500 mb-1 uppercase tracking-wider">{m.label}</p>
+                  <p className="text-xl font-black text-white leading-none">{m.value}</p>
+                  <p className="text-[10px] mt-1 font-semibold" style={{ color: m.color }}>{m.change}</p>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Flujo de automatización */}
+            <div className="rounded-xl border border-white/[0.06] p-4 relative" style={{ background: "rgba(255,255,255,0.015)" }}>
+              <p className="text-[9px] text-gray-500 uppercase tracking-widest mb-4">Flujo de Automatización IA</p>
+              <div className="relative h-10">
+                {/* Línea conectora */}
+                <div className="absolute top-1/2 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-primary/30 via-cyan-400/30 to-primary/30" />
+                {/* Línea animada */}
+                <motion.div
+                  className="absolute top-1/2 left-[10%] h-[1px]"
+                  style={{ background: "linear-gradient(90deg, #C3D809, #00c8ff)" }}
+                  animate={{ width: ["0%", "80%"] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.5 }}
+                />
+                {/* Nodos */}
+                {FLOW_NODES.map((node, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute flex flex-col items-center -translate-x-1/2 -translate-y-1/2"
+                    style={{ left: `${node.x}%`, top: "50%" }}
+                    animate={{ y: ["-50%", "calc(-50% - 2px)", "-50%"] }}
+                    transition={{ duration: 2, delay: i * 0.4, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <div className="w-3 h-3 rounded-full border-2" style={{ borderColor: node.dot, background: `${node.dot}30` }} />
+                    <span className="text-[8px] text-gray-500 mt-1.5 whitespace-nowrap">{node.label}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Mini gráfico de conversión */}
+            <div className="rounded-xl border border-white/[0.06] p-4" style={{ background: "rgba(195,216,9,0.03)" }}>
+              <p className="text-[9px] text-gray-500 uppercase tracking-widest mb-3">Conversión semanal</p>
+              <div className="flex items-end gap-1.5 h-10">
+                {[30, 45, 38, 60, 52, 75, 88].map((h, i) => (
+                  <motion.div
+                    key={i}
+                    className="flex-1 rounded-sm"
+                    style={{ background: i === 6 ? "#C3D809" : "rgba(195,216,9,0.2)" }}
+                    initial={{ height: 0 }}
+                    animate={{ height: `${h}%` }}
+                    transition={{ delay: 0.6 + i * 0.08, duration: 0.5, ease: "easeOut" as const }}
+                  />
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* ─── Base del laptop ─── */}
+        <div
+          className="h-3 rounded-b-xl border-x border-b border-white/10 mx-2"
+          style={{ background: "linear-gradient(180deg, #1a1c22, #0d0f14)" }}
+        />
+        <div
+          className="h-1.5 rounded-b-2xl border-x border-b border-white/[0.06] mx-6"
+          style={{ background: "#0d0f14" }}
+        />
+      </motion.div>
+
+      {/* ─── Notificaciones flotantes ─── */}
+      {NOTIFICATIONS.map((n, i) => (
+        <motion.div
+          key={i}
+          className="absolute text-[11px] font-semibold text-white bg-white/[0.06] border border-white/10 rounded-full px-3 py-1.5 backdrop-blur-sm pointer-events-none whitespace-nowrap"
+          style={{ right: "-10px", top: `${28 + i * 24}%` }}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: [0, 1, 1, 0], x: [20, 0, 0, 20] }}
+          transition={{
+            duration: 3,
+            delay: n.delay + 1.2,
+            repeat: Infinity,
+            repeatDelay: 7,
+            ease: "easeInOut" as const,
+          }}
+        >
+          {n.text}
+        </motion.div>
+      ))}
+
       {/* Indicador de estado */}
       <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 pointer-events-none">
         <span className="relative flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
           <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
         </span>
-        <span className="text-[10px] font-bold text-primary/70 tracking-[0.2em] uppercase">Neural network activo</span>
+        <span className="text-[10px] font-bold text-primary/60 tracking-[0.2em] uppercase">Sistema activo 24/7</span>
       </div>
     </div>
   );
