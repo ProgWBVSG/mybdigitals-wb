@@ -40,7 +40,7 @@ export default function AutomationsPage() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic">Autónomas</span>
           </motion.h1>
           
-          <motion.p variants={fadeIn} className="text-lg md:text-xl text-gray-400 max-w-2xl text-center text-balance leading-relaxed">
+          <motion.p variants={fadeIn} className="text-lg md:text-xl text-gray-300 max-w-2xl text-center text-balance leading-relaxed">
             Sistemas inteligentes que clonan tu conocimiento, atienden a tus clientes 24/7 y cualifican leads sin intervención humana. Multiplica el rendimiento de tu equipo por cien.
           </motion.p>
         </motion.div>
@@ -63,7 +63,7 @@ export default function AutomationsPage() {
                 {feature.icon}
               </div>
               <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">{feature.desc}</p>
+              <p className="text-gray-300 text-sm leading-relaxed">{feature.desc}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -120,7 +120,7 @@ export default function AutomationsPage() {
                 El fin de lo <br />
                 <span className="text-primary italic">manual.</span>
               </h2>
-              <p className="text-gray-400 text-lg mb-8">
+              <p className="text-gray-300 text-lg mb-8">
                 Desarrollamos redes neuronales acopladas al flujo de tu negocio. Si una tarea es repetitiva, predecible y se basa en datos, un Agente de IA entrenado a medida puede hacerla mejor, más rápido y sin margen de error.
               </p>
               
@@ -141,9 +141,11 @@ export default function AutomationsPage() {
               <Link 
                 href="https://wa.me/543515555123" 
                 target="_blank"
-                className="inline-flex items-center gap-2 bg-primary text-black px-8 py-4 rounded-full font-bold hover:bg-white transition-colors"
+                rel="noopener noreferrer"
+                aria-label="Agendar auditoría IA gratuita por WhatsApp"
+                className="inline-flex items-center gap-2 bg-primary text-black px-8 py-4 rounded-full font-bold hover:bg-white transition-colors min-h-[52px]"
               >
-                Auditoría IA Gratuita <ArrowRight size={18} />
+                Auditoría IA Gratuita <ArrowRight size={18} aria-hidden="true" />
               </Link>
             </motion.div>
           </div>

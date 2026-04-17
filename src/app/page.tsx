@@ -77,21 +77,22 @@ export default function Home() {
               </span>
             </motion.h1>
 
-            <motion.p variants={fadeIn} className="text-lg text-gray-400 max-w-md mb-10 leading-relaxed">
+            <motion.p variants={fadeIn} className="text-lg text-gray-300 max-w-md mb-10 leading-relaxed">
               Automatizaciones inteligentes y experiencias web de vanguardia. Para empresas que quieren dejar atrás las operaciones manuales y multiplicar su facturación.
             </motion.p>
 
             <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="https://wa.me/543515555123" target="_blank"
-                className="group bg-primary text-black px-8 py-4 rounded-full font-bold text-[15px] shadow-[0_0_24px_rgba(195,216,9,0.4)] hover:shadow-[0_0_45px_rgba(195,216,9,0.7)] hover:bg-white flex items-center justify-center gap-2 transition-all"
+                href="https://wa.me/543515555123" target="_blank" rel="noopener noreferrer"
+                aria-label="Agendar auditoría gratuita por WhatsApp"
+                className="group bg-primary text-black px-8 py-4 rounded-full font-bold text-[15px] shadow-[0_0_24px_rgba(195,216,9,0.4)] hover:shadow-[0_0_45px_rgba(195,216,9,0.7)] hover:bg-white flex items-center justify-center gap-2 transition-all min-h-[52px]"
               >
                 Agendar Auditoría Gratuita
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </Link>
               <Link
                 href="#solucion"
-                className="px-8 py-4 rounded-full font-bold text-[15px] text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-md flex items-center justify-center"
+                className="px-8 py-4 rounded-full font-bold text-[15px] text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-md flex items-center justify-center min-h-[52px]"
               >
                 Ver servicios
               </Link>
@@ -144,6 +145,7 @@ export default function Home() {
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" as const }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-30"
+          aria-hidden="true"
         >
           <span className="text-[10px] uppercase tracking-widest font-bold">Scroll</span>
           <div className="w-[1px] h-10 bg-gradient-to-b from-primary to-transparent" />
@@ -176,7 +178,7 @@ export default function Home() {
         <div className="text-left mb-16 md:mb-24 md:flex items-end justify-between">
           <div>
             <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Nuestra<br/>Metodología.</h2>
-            <p className="text-gray-400 text-lg">Tres fases críticas para transformar tu negocio.</p>
+            <p className="text-gray-300 text-lg">Tres fases críticas para transformar tu negocio.</p>
           </div>
         </div>
 
@@ -209,7 +211,7 @@ export default function Home() {
                   <div className="w-full h-1 bg-gradient-to-r from-primary to-transparent" />
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-3">{step.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{step.desc}</p>
+                <p className="text-gray-300 text-sm leading-relaxed">{step.desc}</p>
               </div>
             </motion.div>
           ))}
@@ -245,10 +247,10 @@ export default function Home() {
       </section>
 
       {/* FAQS SECTION */}
-      <section id="faqs" className="w-full py-32 px-4 md:px-10 max-w-4xl mx-auto">
+      <section id="faqs" aria-labelledby="faqs-heading" className="w-full py-32 px-4 md:px-10 max-w-4xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-4">Cero Fricciones. <br className="md:hidden"/><span className="text-primary italic font-medium">Respuestas Claras.</span></h2>
-          <p className="text-gray-400">Todo lo que necesitas saber antes de dar el salto cuántico en tu empresa.</p>
+          <h2 id="faqs-heading" className="text-4xl md:text-5xl font-black tracking-tight text-white mb-4">Cero Fricciones. <br className="md:hidden"/><span className="text-primary italic font-medium">Respuestas Claras.</span></h2>
+          <p className="text-gray-300">Todo lo que necesitas saber antes de dar el salto cuántico en tu empresa.</p>
         </div>
 
         <div className="flex flex-col gap-4">
@@ -294,12 +296,12 @@ export default function Home() {
         <h2 className="text-5xl md:text-7xl font-black text-center text-white mb-6 relative z-10 tracking-tighter">
           Construye tu <br/><span className="text-primary">Futuro Autónomo.</span>
         </h2>
-        <p className="text-gray-400 mb-10 text-center max-w-lg relative z-10">
+        <p className="text-gray-300 mb-10 text-center max-w-lg relative z-10">
           Deja de postergar la profesionalización digital de tu empresa. El momento de escalar libre de estrés es ahora.
         </p>
         <Link 
           href="https://wa.me/543515555123" 
-          target="_blank"
+          target="_blank" rel="noopener noreferrer"
           className="group relative bg-white text-black px-10 py-5 rounded-full font-bold text-lg overflow-hidden transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(195,216,9,0.4)] flex items-center justify-center gap-3 z-10 hover:bg-primary"
         >
           <span className="relative z-10 flex items-center gap-2">

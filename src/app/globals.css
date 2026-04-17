@@ -15,6 +15,41 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
   position: relative;
+  /* §3 Performance: font smoothing */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* §5 Layout: min 16px base (evita iOS auto-zoom) */
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ── §1 Accessibility: Skip-link para teclado ─────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: var(--color-primary);
+  color: #000;
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-radius: 0 0 0.5rem 0.5rem;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* ── §1 Accessibility: Focus-visible global ───────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
 /* Grid de puntos digital – el ADN visual de una agencia de IA */
@@ -55,4 +90,29 @@ body::after {
 
 .animate-scroll {
   animation: scroll 20s linear infinite;
+}
+
+/* ── §7 Animation: prefers-reduced-motion ─────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-scroll {
+    animation: none;
+  }
+}
+
+/* ── §2 Touch & Interaction ───────────────────────────────── */
+/* tap-action: manipulation elimina el delay de 300ms en mobile */
+a,
+button,
+[role="button"] {
+  touch-action: manipulation;
+  cursor: pointer;
 }
