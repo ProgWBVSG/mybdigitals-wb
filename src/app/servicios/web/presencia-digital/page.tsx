@@ -390,7 +390,7 @@ export default function PresenciaDigitalPage() {
                        { name: "Reinventadas 50+", url: "https://www.reinventadas50.com/" },
                        { name: "Erika Ríos", url: "https://www.erikarios.com.ar/" },
                     ].map((site, idx) => (
-                       <div key={idx} className="relative w-[300px] h-[220px] md:w-[450px] md:h-[320px] shrink-0 rounded-[1.5rem] border border-white/10 bg-[#050505] overflow-hidden group/card shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col transition-transform duration-700 hover:scale-[1.03]">
+                       <a key={idx} href={site.url} target="_blank" rel="noopener noreferrer" className="relative block w-[300px] h-[220px] md:w-[450px] md:h-[320px] shrink-0 rounded-[1.5rem] border border-white/10 bg-[#050505] overflow-hidden group/card shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col transition-transform duration-700 hover:scale-[1.03] cursor-pointer">
                            {/* Safari glass bar */}
                            <div className="h-8 md:h-10 bg-[#121212] border-b border-white/10 flex items-center px-4 gap-2 relative z-20 shrink-0">
                                <div className="flex gap-1.5 opacity-60 hover:opacity-100 transition-opacity">
@@ -418,7 +418,7 @@ export default function PresenciaDigitalPage() {
                                   {site.name} <ArrowRight className="w-3 h-3 text-primary" />
                                </span>
                            </div>
-                       </div>
+                       </a>
                     ))}
                  </div>
              </div>
