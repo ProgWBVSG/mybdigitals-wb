@@ -378,11 +378,7 @@ export default function PresenciaDigitalPage() {
                  <div className="absolute left-0 top-0 bottom-0 w-[80px] md:w-[250px] bg-gradient-to-r from-[#020202] to-transparent z-20 pointer-events-none" />
                  <div className="absolute right-0 top-0 bottom-0 w-[80px] md:w-[250px] bg-gradient-to-l from-[#020202] to-transparent z-20 pointer-events-none" />
 
-                 <motion.div
-                    animate={{ x: ["0%", "-50%"] }}
-                    transition={{ ease: "linear", duration: 50, repeat: Infinity }}
-                    className="flex gap-8 px-4 w-max"
-                 >
+                 <div className="flex gap-8 px-4 w-max animate-[scroll-marquee_50s_linear_infinite] hover:[animation-play-state:paused] will-change-transform">
                     {[
                        { name: "Elevare Consulting", url: "https://www.elevareconsultingmg.com/" },
                        { name: "Eneas Coaching", url: "https://eneascoaching.vercel.app/" },
@@ -424,7 +420,7 @@ export default function PresenciaDigitalPage() {
                            </div>
                        </div>
                     ))}
-                 </motion.div>
+                 </div>
              </div>
         </motion.div>
 
