@@ -222,9 +222,9 @@ export default function PresenciaDigitalPage() {
             <span className="text-[10px] md:text-xs font-bold text-primary tracking-[0.15em] uppercase">Ecosistema Digital Inteligente</span>
           </motion.div>
           
-          <motion.h1 variants={fadeIn} className="text-5xl md:text-7xl lg:text-[6.5rem] font-black tracking-tighter mb-8 text-balance leading-[1.05] max-w-5xl">
-            Convierte tráfico en <br className="hidden md:block"/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-br from-white via-primary to-emerald-600">oportunidades reales.</span>
+          <motion.h1 variants={fadeIn} className="text-[3.5rem] leading-[0.95] md:text-[6rem] lg:text-[8rem] xl:text-[9rem] font-black tracking-tighter mb-8 text-center max-w-[1200px] mx-auto flex flex-col items-center">
+             <span className="text-white block">CONVIERTE TRÁFICO</span>
+             <span className="text-transparent bg-clip-text bg-gradient-to-b from-primary via-primary/80 to-emerald-600 block italic border-b-8 border-primary/20 pb-2">EN OPORTUNIDADES.</span>
           </motion.h1>
           
           <motion.p variants={fadeIn} className="text-lg md:text-2xl text-gray-400 max-w-3xl text-center text-balance leading-relaxed mb-12 font-light">
@@ -431,29 +431,42 @@ export default function PresenciaDigitalPage() {
           </div>
         </motion.div>
 
-        {/* BOTTOM FINALIZER */}
+        {/* FEEDSPRING STYLE MASSIVE FOOTER CTA */}
         <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="flex justify-center"
+            className="w-full mt-20 md:mt-40 rounded-t-[3rem] md:rounded-t-[5rem] overflow-hidden relative isolate px-4 py-24 md:py-40 bg-black border-t border-white/5 shadow-[0_-50px_100px_rgba(0,0,0,0.8)]"
         >
-            <div className="text-center w-full max-w-4xl px-4 rounded-[3rem] bg-gradient-to-b from-white/[0.03] to-transparent border border-white/5 p-12 md:p-20 relative overflow-hidden isolate">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
-                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-8 border border-primary/20 backdrop-blur-md">
-                    <TrendingUp className="w-10 h-10 text-primary opacity-90" />
-                </div>
-                <h3 className="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight">Tu negocio no para. <br/> <span className="text-gray-500 font-medium italic text-2xl md:text-4xl">Tu web tampoco debería.</span></h3>
-                <p className="text-gray-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto font-light leading-relaxed">Nuestro equipo no diseña páginas tontas B2C. Desarrollamos vendedores incansables, 100% operativos a toda hora, enfocados exclusivamente en tu retorno de inversión.</p>
-                <Link 
-                    href="https://wa.me/543515555123?text=Hola,%20quiero%20conocer%20c%C3%B3mo%20una%20presencia%20digital%20automatizada%20con%20IA%20ayuda%20a%20mi%20negocio." 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 font-bold text-white mb-2 hover:text-primary transition-colors text-lg uppercase tracking-wider"
-                >
-                    Conversemos sobre tu negocio <ArrowRight className="w-5 h-5" />
-                </Link>
+            {/* Background glowing massive radial */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/20 blur-[200px] rounded-[100%] pointer-events-none -z-10 animate-pulse"></div>
+            
+            <div className="max-w-[1200px] mx-auto text-center flex flex-col items-center relative z-10">
+                <motion.div variants={fadeIn} className="mb-6 flex space-x-2">
+                   <span className="px-4 py-1.5 rounded-full bg-white/10 text-white font-bold text-xs md:text-sm border border-white/20 backdrop-blur-md">Ventas B2B</span>
+                   <span className="px-4 py-1.5 rounded-full bg-primary/10 text-primary font-bold text-xs md:text-sm border border-primary/30 backdrop-blur-md">Escala Rápido</span>
+                </motion.div>
+                
+                <motion.h2 variants={fadeIn} className="text-6xl md:text-[8rem] lg:text-[11rem] font-black tracking-tighter text-white leading-[0.9] mb-8 md:mb-12 uppercase drop-shadow-2xl">
+                    Tu negocio <br/>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-500 block italic">NO PARA.</span>
+                </motion.h2>
+
+                <motion.p variants={fadeIn} className="text-gray-400 text-lg md:text-3xl max-w-3xl mx-auto font-medium leading-relaxed mb-16 text-balance">
+                    Desarrollamos vendedores incansables, <strong className="text-white">100% operativos a toda hora</strong>, enfocados exclusivamente en tu retorno de inversión.
+                </motion.p>
+
+                <motion.div variants={fadeIn}>
+                  <Link 
+                      href="https://wa.me/543515555123?text=Hola,%20quiero%20conocer%20c%C3%B3mo%20una%20presencia%20digital%20automatizada%20con%20IA%20ayuda%20a%20mi%20negocio." 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-4 bg-white text-black px-10 py-6 md:px-14 md:py-8 rounded-full font-black text-xl md:text-3xl hover:bg-primary transition-all duration-300 hover:scale-[1.05] shadow-[0_0_50px_rgba(255,255,255,0.2)] hover:shadow-[0_0_80px_rgba(195,216,9,0.5)] group"
+                  >
+                      Empezar Proyecto Ahora <ArrowRight className="w-8 h-8 md:w-10 md:h-10 group-hover:translate-x-2 transition-transform" />
+                  </Link>
+                </motion.div>
             </div>
         </motion.div>
 
