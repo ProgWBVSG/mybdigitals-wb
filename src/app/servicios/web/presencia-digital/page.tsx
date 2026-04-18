@@ -228,7 +228,7 @@ export default function PresenciaDigitalPage() {
           </motion.h1>
           
           <motion.p variants={fadeIn} className="text-lg md:text-2xl text-gray-400 max-w-3xl text-center text-balance leading-relaxed mb-12 font-light">
-            No hacemos simples "páginas web". Instalamos una <span className="text-white font-medium">máquina de adquisición B2B</span> con Inteligencia Artificial, recolección de leads automatizada e infraestructura de alto rendimiento.
+            No hacemos simples "páginas web". Instalamos un <span className="text-white font-medium">ecosistema de adquisición de clientes</span> con Inteligencia Artificial, recolección de leads automatizada e infraestructura de alto rendimiento.
           </motion.p>
 
           <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 items-center justify-center w-full max-w-lg mx-auto">
@@ -250,7 +250,7 @@ export default function PresenciaDigitalPage() {
           
           {/* Trusted Badges */}
           <motion.div variants={fadeIn} className="mt-24 pt-10 border-t border-white/5 w-full flex flex-col items-center relative z-10">
-             <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-6 font-bold">Stack Tecnológico B2B</p>
+             <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-6 font-bold">Stack Tecnológico Corporativo</p>
              <div className="flex flex-wrap justify-center gap-6 md:gap-8 opacity-70 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500 items-center">
                 <div className="flex items-center gap-2 font-bold text-white text-xs md:text-sm"><Code className="w-4 h-4" /> Next.js 15</div>
                 <div className="flex items-center gap-2 font-bold text-white text-xs md:text-sm"><Database className="w-4 h-4" /> Supabase</div>
@@ -275,7 +275,7 @@ export default function PresenciaDigitalPage() {
                 El Diferenciador <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400 italic">MYB.</span>
              </h2>
              <p className="text-gray-400 text-lg max-w-2xl mx-auto text-balance">
-                Cualquiera puede usar una plantilla. Nosotros arquitectamos tu plataforma B2B/B2C para maximizar la recolección de datos y escalar con Inteligencia Artificial.
+                Cualquiera puede usar una plantilla. Nosotros arquitectamos tu plataforma corporativa para maximizar la recolección de datos y escalar con Inteligencia Artificial.
              </p>
           </div>
 
@@ -374,7 +374,7 @@ export default function PresenciaDigitalPage() {
                    <div className="inline-flex items-center gap-2 mb-6">
                       <div className="px-4 py-1.5 rounded-full bg-white/10 text-white text-[10px] font-bold uppercase tracking-widest backdrop-blur-md border border-white/20 flex items-center gap-2">
                          <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                         Máquina de Ventas B2B
+                         Plataforma Premium de Ventas
                       </div>
                    </div>
                    <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight">Presencia<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-primary">Digital Pro.</span></h2>
@@ -444,7 +444,7 @@ export default function PresenciaDigitalPage() {
             
             <div className="max-w-[1200px] mx-auto text-center flex flex-col items-center relative z-10">
                 <motion.div variants={fadeIn} className="mb-6 flex space-x-2">
-                   <span className="px-4 py-1.5 rounded-full bg-white/10 text-white font-bold text-xs md:text-sm border border-white/20 backdrop-blur-md">Ventas B2B</span>
+                   <span className="px-4 py-1.5 rounded-full bg-white/10 text-white font-bold text-xs md:text-sm border border-white/20 backdrop-blur-md">Ventas Inteligentes</span>
                    <span className="px-4 py-1.5 rounded-full bg-primary/10 text-primary font-bold text-xs md:text-sm border border-primary/30 backdrop-blur-md">Escala Rápido</span>
                 </motion.div>
                 

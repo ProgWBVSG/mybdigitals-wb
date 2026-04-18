@@ -75,7 +75,7 @@ export default function FloatingWidgets() {
           botResponse = "¡Excelente! Diseñamos ecosistemas con un enfoque estricto en conversión y velocidad (Next.js/React). ¿Qué tipo de proyecto tienes en mente?";
           newOptions = [
             { label: "Landing Page ($200 USD)", action: "link_wa", waText: "Me interesa el plan Landing Page de $200 USD." },
-            { label: "Presencia Digital ($400 USD)", action: "link_wa", waText: "Me interesa el plan B2B Presencia Digital de $400 USD." },
+            { label: "Presencia Digital ($400 USD)", action: "link_wa", waText: "Me interesa el plan de Presencia Digital de $400 USD." },
             { label: "E-Commerce / Custom SaaS", action: "link_wa", waText: "Quiero armar un e-commerce o sistema a medida." }
           ];
           break;
@@ -88,7 +88,7 @@ export default function FloatingWidgets() {
           newOptions = [{ label: "Chatear por WhatsApp", action: "link_wa", waText: option.waText }];
           break;
         case "precios":
-          botResponse = "Nuestro piso de inversión arranca en los $200 USD para sistemas de Landing Page, y $400 USD para Ecosistemas Digitales B2B con IA incluida. ¿Te gustaría consultar sobre alguno?";
+          botResponse = "Nuestro piso de inversión arranca en los $200 USD para sistemas de Landing Page, y $400 USD para Ecosistemas Digitales Premium con IA incluida. ¿Te gustaría consultar sobre alguno?";
           newOptions = [
              { label: "Consultar Landing Page", action: "link_wa", waText: "Hola, quiero consultar por la Landing Page de $200 USD." },
              { label: "Consultar Ecosistema Pro", action: "link_wa", waText: "Hola, quiero armar la máquina digital de $400 USD." }

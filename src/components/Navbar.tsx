@@ -9,7 +9,7 @@ import { ArrowRight, ChevronDown, Menu, X, Sparkles } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 const webLinks = [
-  { href: "/servicios/web/presencia-digital", label: "Presencia Digital B2B" },
+  { href: "/servicios/web/presencia-digital", label: "Presencia Digital Premium" },
   { href: "/servicios/web/landing-page", label: "Landing Pages" },
   { href: "/servicios/web/invitaciones", label: "Invitaciones Pro" },
 ];
