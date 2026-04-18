@@ -348,6 +348,8 @@ export default function PresenciaDigitalPage() {
           <p className="text-center text-gray-500/70 font-medium text-[10px] mt-8 uppercase tracking-widest">*Nota: Herramientas complejas de envíos masivos o API externas pueden requerir licencias operativas del cliente gestionables aparte.</p>
         </motion.div>
 
+        {/* TYPEWRITER NICHES SHOWCASE */}
+        <NicheTypewriter />
 
         {/* LIVE PORTFOLIO SHOWCASE */}
         <motion.div 
