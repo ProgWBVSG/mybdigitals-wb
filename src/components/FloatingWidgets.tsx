@@ -23,7 +23,7 @@ type Message = {
 const INITIAL_MESSAGES: Message[] = [
   {
     id: "init",
-    text: "¡Hola! Bienvenido a MYB Digitals. 👋\n\n¿En qué te podemos ayudar hoy? Selecciona una opción o escríbeme abajo.",
+    text: "¡Hola! Bienvenido a MYB Digitals. 👋\n\n¿En qué te podemos ayudar hoy? Selecciona una opción del menú para comenzar.",
     isBot: true,
     options: [
       { label: "🌐 Desarrollo Web Premium", action: "web", waText: "Me interesa una web premium con ustedes." },
@@ -235,26 +235,11 @@ export default function FloatingWidgets() {
                 )}
               </div>
 
-              {/* Chat Footer */}
-              <div className="p-3 bg-[#0e0f14] flex gap-2 border-t border-white/10 shrink-0">
-                <form onSubmit={handleTextInput} className="flex gap-2 w-full">
-                    <label htmlFor="chat-input" className="sr-only">Escribe tu consulta</label>
-                    <input
-                      id="chat-input"
-                      type="text"
-                      value={inputText}
-                      onChange={(e) => setInputText(e.target.value)}
-                      placeholder="Escribe tu duda..."
-                      className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all duration-150 min-h-[40px]"
-                    />
-                    <button
-                      type="submit"
-                      disabled={!inputText.trim()}
-                      className="w-10 h-10 shrink-0 bg-primary text-black rounded-full flex items-center justify-center hover:scale-105 transition-all duration-150 disabled:opacity-50 disabled:hover:scale-100"
-                    >
-                      <Send size={16} aria-hidden="true" />
-                    </button>
-                </form>
+              {/* Chat Footer - Removed Input */}
+              <div className="p-3 bg-[#0e0f14] flex gap-2 border-t border-white/10 shrink-0 justify-center">
+                  <span className="text-[10px] text-gray-500 font-medium uppercase tracking-widest flex items-center gap-1">
+                      <Bot size={12} /> Respuestas automáticas guiadas
+                  </span>
               </div>
             </motion.div>
           )}
