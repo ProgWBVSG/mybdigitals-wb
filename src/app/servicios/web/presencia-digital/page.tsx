@@ -222,9 +222,9 @@ export default function PresenciaDigitalPage() {
             <span className="text-[10px] md:text-xs font-bold text-primary tracking-[0.15em] uppercase">Ecosistema Digital Inteligente</span>
           </motion.div>
           
-          <motion.h1 variants={fadeIn} className="text-[3.5rem] leading-[0.95] md:text-[6rem] lg:text-[8rem] xl:text-[9rem] font-black tracking-tighter mb-8 text-center max-w-[1200px] mx-auto flex flex-col items-center">
-             <span className="text-white block">CONVIERTE TRÁFICO</span>
-             <span className="text-transparent bg-clip-text bg-gradient-to-b from-primary via-primary/80 to-emerald-600 block italic border-b-8 border-primary/20 pb-2">EN OPORTUNIDADES.</span>
+          <motion.h1 variants={fadeIn} className="text-5xl sm:text-[4.5rem] md:text-[6rem] lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tighter mb-8 text-center max-w-[1400px] mx-auto flex flex-col items-center leading-[0.9]">
+             <span className="text-white block">CONVIERTE TRÁFICO EN</span>
+             <span className="text-transparent bg-clip-text bg-gradient-to-b from-primary via-primary/80 to-emerald-600 block italic border-b-8 border-primary/20 pb-2 md:pb-4">OPORTUNIDADES.</span>
           </motion.h1>
           
           <motion.p variants={fadeIn} className="text-lg md:text-2xl text-gray-400 max-w-3xl text-center text-balance leading-relaxed mb-12 font-light">
