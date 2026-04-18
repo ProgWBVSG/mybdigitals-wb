@@ -349,6 +349,86 @@ export default function PresenciaDigitalPage() {
         </motion.div>
 
 
+        {/* LIVE PORTFOLIO SHOWCASE */}
+        <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="w-full py-24 md:py-32 flex flex-col items-center overflow-hidden bg-[#020202] border-y border-white/5 relative isolate mb-40"
+        >
+             {/* Background glows */}
+             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/10 blur-[150px] rounded-full pointer-events-none -z-10 animate-pulse"></div>
+
+             <div className="max-w-[1200px] w-full px-4 text-center mb-16 relative z-10">
+                <motion.span variants={fadeIn} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white font-bold text-[10px] md:text-xs tracking-widest uppercase mb-6 backdrop-blur-md">
+                   Portafolio en Vivo
+                </motion.span>
+                <motion.h2 variants={fadeIn} className="text-4xl md:text-5xl lg:text-7xl font-black text-white tracking-tighter leading-none mb-6">
+                   PROYECTOS <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-primary italic">ÉLITE.</span>
+                </motion.h2>
+                <motion.p variants={fadeIn} className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-light text-balance">
+                   Ecosistemas digitales que transmiten autoridad corporativa. Renderizados en vivo. <span className="text-white font-medium">Asómate a su interior.</span>
+                </motion.p>
+             </div>
+
+             {/* Live Marquee */}
+             <div className="w-full relative flex overflow-hidden group">
+                 {/* Left/Right fading gradients */}
+                 <div className="absolute left-0 top-0 bottom-0 w-[80px] md:w-[250px] bg-gradient-to-r from-[#020202] to-transparent z-20 pointer-events-none" />
+                 <div className="absolute right-0 top-0 bottom-0 w-[80px] md:w-[250px] bg-gradient-to-l from-[#020202] to-transparent z-20 pointer-events-none" />
+
+                 <motion.div
+                    animate={{ x: ["0%", "-50%"] }}
+                    transition={{ ease: "linear", duration: 50, repeat: Infinity }}
+                    className="flex gap-8 px-4 w-max"
+                 >
+                    {[
+                       { name: "Elevare Consulting", url: "https://www.elevareconsultingmg.com/" },
+                       { name: "Eneas Coaching", url: "https://eneascoaching.vercel.app/" },
+                       { name: "Reinventadas 50+", url: "https://www.reinventadas50.com/" },
+                       { name: "Erika Ríos", url: "https://www.erikarios.com.ar/" },
+                       // Duplicated for seamless loop
+                       { name: "Elevare Consulting", url: "https://www.elevareconsultingmg.com/" },
+                       { name: "Eneas Coaching", url: "https://eneascoaching.vercel.app/" },
+                       { name: "Reinventadas 50+", url: "https://www.reinventadas50.com/" },
+                       { name: "Erika Ríos", url: "https://www.erikarios.com.ar/" },
+                    ].map((site, idx) => (
+                       <div key={idx} className="relative w-[320px] h-[450px] md:w-[700px] md:h-[500px] shrink-0 rounded-[2rem] border border-white/10 bg-[#050505] overflow-hidden group/card shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col transition-transform duration-700 hover:scale-[1.02]">
+                           {/* Safari glass bar */}
+                           <div className="h-10 md:h-12 bg-[#121212] border-b border-white/10 flex items-center px-4 gap-2 relative z-20 shrink-0">
+                               <div className="flex gap-1.5 opacity-60 hover:opacity-100 transition-opacity">
+                                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                               </div>
+                               <div className="mx-auto bg-black/60 px-4 py-1.5 rounded-md text-[10px] md:text-xs text-gray-300 flex items-center justify-center gap-2 w-full max-w-[60%] truncate border border-white/5">
+                                 <svg className="w-3 h-3 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                                 {site.url.replace("https://", "")}
+                               </div>
+                           </div>
+
+                           {/* Iframe scale wrapper */}
+                           <div className="relative flex-1 w-full bg-black overflow-hidden isolate">
+                               <div className="absolute inset-0 bg-transparent z-10 pointer-events-none" />
+                               <div className="absolute top-0 left-0 w-[400%] h-[400%] origin-top-left scale-[0.25] pointer-events-none opacity-80 group-hover/card:opacity-100 transition-opacity duration-700">
+                                   <iframe src={site.url} className="w-full h-full border-none" loading="lazy" />
+                               </div>
+                           </div>
+
+                           {/* Hover Name Badge */}
+                           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 pointer-events-none opacity-0 group-hover/card:opacity-100 transition-all duration-300 translate-y-4 group-hover/card:translate-y-0">
+                               <span className="px-6 py-3 rounded-full bg-black/80 backdrop-blur-xl border border-white/10 text-white font-black text-sm md:text-base whitespace-nowrap shadow-2xl flex items-center gap-2">
+                                  {site.name} <ArrowRight className="w-4 h-4 text-primary" />
+                               </span>
+                           </div>
+                       </div>
+                    ))}
+                 </motion.div>
+             </div>
+        </motion.div>
+
+
         {/* PRICING CARD ELITE (The $400 Offer) */}
         <motion.div 
           id="planes"
