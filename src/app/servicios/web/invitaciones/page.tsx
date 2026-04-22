@@ -299,13 +299,17 @@ export default function InvitationsPage() {
             <motion.h1
               id="inv-hero-title"
               variants={fadeUp}
-              className="text-[clamp(2.5rem,7vw,5.5rem)] font-black tracking-tight mb-6 text-white leading-[1.0] drop-shadow-md w-full"
+              className="flex flex-col items-center justify-center font-black tracking-tight mb-6 text-white leading-[1.1] drop-shadow-md w-full"
             >
-              La invitación que{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic pr-2 pb-[0.1em]">
-                enamora
+              <span className="text-[clamp(1.5rem,4.5vw,5.5rem)] whitespace-nowrap">
+                La invitación que{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic pr-2 pb-[0.1em]">
+                  enamora
+                </span>
               </span>
-              <br />{" "}antes del evento.
+              <span className="text-[clamp(1.5rem,4.5vw,5.5rem)] whitespace-nowrap">
+                antes del evento.
+              </span>
             </motion.h1>
 
             {/* Subtext */}
