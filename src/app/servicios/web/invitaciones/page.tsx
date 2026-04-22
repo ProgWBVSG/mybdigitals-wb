@@ -287,7 +287,7 @@ export default function InvitationsPage() {
             initial="hidden"
             animate="visible"
             variants={stagger}
-            className="flex flex-col items-center w-full max-w-5xl"
+            className="flex flex-col items-center w-full max-w-5xl text-center"
           >
             {/* Tag / Badge */}
             <motion.div variants={fadeUp} className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
@@ -299,13 +299,13 @@ export default function InvitationsPage() {
             <motion.h1
               id="inv-hero-title"
               variants={fadeUp}
-              className="text-5xl md:text-6xl lg:text-[5.5rem] font-black tracking-tight mb-6 text-white leading-[1.05] drop-shadow-md"
+              className="text-[clamp(2.5rem,7vw,5.5rem)] font-black tracking-tight mb-6 text-white leading-[1.0] drop-shadow-md w-full"
             >
               La invitación que{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic pr-2 drop-shadow-sm inline-block">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic pr-2 pb-[0.1em]">
                 enamora
               </span>
-              <br className="hidden md:block" />{" "}antes del&nbsp;evento.
+              <br />{" "}antes del evento.
             </motion.h1>
 
             {/* Subtext */}

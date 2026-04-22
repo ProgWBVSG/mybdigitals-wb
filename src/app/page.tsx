@@ -54,103 +54,100 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
           SECCIÓN 1 – HERO (split: texto izq | 3D der)
       ══════════════════════════════════════════════════════ */}
-      <section className="relative w-full min-h-screen flex items-center overflow-hidden pt-28 pb-10">
+      <section className="relative w-full min-h-screen flex flex-col items-center overflow-hidden pt-36 pb-24 z-10">
         {/* Glows de ambiente */}
-        <div className="absolute top-1/4 left-1/3 w-[700px] h-[700px] bg-primary/[0.07] blur-[160px] rounded-full pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/[0.06] blur-[160px] rounded-full pointer-events-none" />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyan-500/[0.04] blur-[130px] rounded-full pointer-events-none" />
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-10 grid lg:grid-cols-2 gap-6 lg:gap-16 items-center">
-
-          {/* ── Columna IZQUIERDA: texto ── */}
-          <motion.div initial="hidden" animate="visible" variants={staggerContainer}>
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-10 flex flex-col items-center text-center gap-12">
+          
+          {/* ── BLOQUE DE TEXTO SUPERIOR ── */}
+          <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="flex flex-col items-center max-w-5xl">
             <motion.div variants={fadeIn} className="inline-flex items-center gap-3 mb-8 px-5 py-2 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md shadow-[0_0_15px_rgba(195,216,9,0.2)]">
               <Sparkles className="w-4 h-4 text-primary animate-pulse" />
               <span className="text-xs font-bold text-primary tracking-widest uppercase">Agencia Next-Gen · IA &amp; Web</span>
             </motion.div>
 
-            {/* TÍTULO ORIGINAL RESTAURADO */}
-            <motion.h1 variants={fadeIn} className="text-[clamp(3rem,7vw,6rem)] font-bold tracking-tighter mb-6 text-white leading-[0.95]">
+            {/* TÍTULO CORREGIDO (Centrado + padding vertical/horizontal de seguridad) */}
+            <motion.h1 variants={fadeIn} className="text-[clamp(3.5rem,8vw,7.5rem)] font-black tracking-tighter mb-6 text-white leading-[1.0] text-balance drop-shadow-md">
               Escalamos negocios{" "}
               <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic font-medium pr-2">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic font-medium pr-2 pb-[0.1em] inline-block">
                 con IA y Software.
               </span>
             </motion.h1>
 
-            <motion.p variants={fadeIn} className="text-lg text-gray-300 max-w-md mb-10 leading-relaxed">
-              Automatizaciones inteligentes y experiencias web de vanguardia. Para empresas que quieren dejar atrás las operaciones manuales y multiplicar su facturación.
+            <motion.p variants={fadeIn} className="text-lg md:text-2xl text-gray-300 max-w-3xl mb-10 leading-relaxed font-light text-balance">
+              Automatizaciones inteligentes y experiencias web premium de vanguardia. Dejá atrás las operaciones manuales y multiplicá tu facturación de forma predecible.
             </motion.p>
 
-            <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4">
+            <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
               <Link
                 href="https://wa.me/543515555123" target="_blank" rel="noopener noreferrer"
                 aria-label="Contactar por WhatsApp"
-                className="group bg-[#25D366] text-white px-8 py-4 rounded-full font-bold text-[15px] shadow-[0_0_24px_rgba(37,211,102,0.4)] hover:shadow-[0_0_45px_rgba(37,211,102,0.7)] hover:scale-105 flex items-center justify-center gap-2 transition-all min-h-[52px]"
+                className="group bg-[#25D366] text-white px-10 py-5 rounded-full font-bold text-[16px] shadow-[0_0_24px_rgba(37,211,102,0.4)] hover:shadow-[0_0_45px_rgba(37,211,102,0.7)] hover:scale-105 flex items-center justify-center gap-3 transition-all"
               >
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 shrink-0" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 shrink-0" aria-hidden="true">
                   <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.711.927 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 3.825 0 6.938 3.112 6.938 6.937 0 3.825-3.113 6.938-6.938 6.938z"/>
                 </svg>
-                Contactar por WhatsApp
+                Agendá una llamada
               </Link>
               <Link
                 href="#solucion"
-                className="px-8 py-4 rounded-full font-bold text-[15px] text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-md flex items-center justify-center min-h-[52px]"
+                className="px-10 py-5 rounded-full font-bold text-[16px] text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-md flex items-center justify-center gap-2"
               >
-                Ver servicios
+                Ver servicios <ChevronDown size={18} />
               </Link>
             </motion.div>
 
             {/* Métricas rápidas */}
-            <motion.div variants={fadeIn} className="mt-14 flex gap-10 border-t border-white/5 pt-10">
-              {[
+            <motion.div variants={fadeIn} className="mt-14 flex flex-wrap justify-center gap-10 md:gap-20 border-t border-white/5 pt-10 px-4 w-full">
+               {[
                 { val: "10x",  label: "ROI promedio" },
-                { val: "24/7", label: "Agentes IA activos" },
-                { val: "14d",  label: "Tiempo de entrega" },
+                { val: "24/7", label: "Agentes activos" },
+                { val: "14d",  label: "Lanzamiento web" },
               ].map(({ val, label }) => (
-                <div key={label}>
-                  <p className="text-3xl font-black text-primary">{val}</p>
+                <div key={label} className="text-center">
+                  <p className="text-3xl lg:text-4xl font-black text-primary">{val}</p>
                   <p className="text-xs text-gray-500 font-medium mt-1 tracking-wider uppercase">{label}</p>
                 </div>
               ))}
             </motion.div>
           </motion.div>
 
-          {/* ── Columna DERECHA: Neural Network 3D ── */}
+          {/* ── BLOQUE INFERIOR: Neural Network 3D Centrado ── */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.88 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.1, ease: "easeOut" as const, delay: 0.25 }}
-            className="relative h-[480px] lg:h-[640px]"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, ease: "easeOut" as const, delay: 0.35 }}
+            className="relative w-full max-w-6xl h-[400px] md:h-[500px] lg:h-[650px] mt-8 shrink-0"
           >
-            {/* Marco glassmorphism */}
-            <div className="absolute inset-0 rounded-[2.5rem] bg-white/[0.02] border border-white/[0.07] overflow-hidden shadow-[0_0_80px_rgba(195,216,9,0.06)]">
-              {/* Glow interior */}
+            {/* Marco glassmorphism ancho completo para el panel 3D */}
+            <div className="absolute inset-0 rounded-[2.5rem] md:rounded-[3rem] bg-white/[0.02] border border-white/[0.07] overflow-hidden shadow-[0_0_80px_rgba(195,216,9,0.06)]">
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(195,216,9,0.05)_0%,transparent_65%)]" />
               {/* Esquinas de esqueleto tipo HUD */}
-              <div className="absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 border-primary/40 rounded-tl-lg" />
-              <div className="absolute top-4 right-4 w-5 h-5 border-t-2 border-r-2 border-primary/40 rounded-tr-lg" />
-              <div className="absolute bottom-4 left-4 w-5 h-5 border-b-2 border-l-2 border-primary/40 rounded-bl-lg" />
-              <div className="absolute bottom-4 right-4 w-5 h-5 border-b-2 border-r-2 border-primary/40 rounded-br-lg" />
-              {/* Etiqueta HUD */}
-              <div className="absolute top-4 left-1/2 -translate-x-1/2 text-[9px] font-mono text-primary/40 tracking-widest uppercase">MYB // Neural-Net v2</div>
+              <div className="absolute top-4 lg:top-8 left-4 lg:left-8 w-6 h-6 border-t-2 border-l-2 border-primary/40 rounded-tl-xl" />
+              <div className="absolute top-4 lg:top-8 right-4 lg:right-8 w-6 h-6 border-t-2 border-r-2 border-primary/40 rounded-tr-xl" />
+              <div className="absolute bottom-4 lg:bottom-8 left-4 lg:left-8 w-6 h-6 border-b-2 border-l-2 border-primary/40 rounded-bl-xl" />
+              <div className="absolute bottom-4 lg:bottom-8 right-4 lg:right-8 w-6 h-6 border-b-2 border-r-2 border-primary/40 rounded-br-xl" />
+              {/* Etiqueta HUD central */}
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 text-[10px] font-mono text-primary/40 tracking-widest uppercase">MYB // Neural-Network Hub</div>
             </div>
             {/* Canvas 3D */}
-            <div className="relative w-full h-full">
+            <div className="relative w-full h-full p-2 md:p-6">
               <OrbitScene />
             </div>
           </motion.div>
-
         </div>
 
-        {/* Scroll indicator */}
+        {/* Scroll indicator overlay absolute to bottom */}
         <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" as const }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-30"
-          aria-hidden="true"
+           animate={{ y: [0, 8, 0] }}
+           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+           className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-30 pointer-events-none"
         >
-          <span className="text-[10px] uppercase tracking-widest font-bold">Scroll</span>
-          <div className="w-[1px] h-10 bg-gradient-to-b from-primary to-transparent" />
+           <span className="text-[9px] uppercase tracking-widest font-bold">Scroll Down</span>
+           <div className="w-[1px] h-8 bg-gradient-to-b from-primary text-transparent" />
         </motion.div>
       </section>
 
