@@ -345,10 +345,11 @@ export default function InvitationsPage() {
                    style={{ borderColor: "rgba(195,216,9,0.25)" }}
                  >
                    <div className="absolute top-0 inset-x-0 h-32 blur-[60px] opacity-20 pointer-events-none" style={{ background: "#C3D809" }} aria-hidden="true" />
-                   <div className="flex justify-center items-end gap-2 mb-2 relative z-10 mt-2">
+                   <div className="flex flex-col items-center mb-2 relative z-10 mt-2">
+                     <span className="text-gray-500 text-xl font-bold line-through mb-1">$134.999</span>
                      <span className="text-5xl lg:text-6xl font-black text-white">$68.999</span>
                    </div>
-                   <p className="text-gray-400 text-sm mb-6 relative z-10 font-medium">Pago único y definitivo</p>
+                   <p className="text-gray-400 text-sm mb-6 relative z-10 font-medium">Precio único · <span className="text-primary font-bold">50% OFF</span></p>
                    
                    <p className="text-gray-300 text-sm mb-6 relative z-10">
                      <strong className="text-primary font-bold">50% OFF por tiempo limitado</strong> — precio único de pago, sin costos ocultos ni cuotas.
