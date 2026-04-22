@@ -8,6 +8,7 @@ import {
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
+import CumplesTemplate from "@/components/CumplesTemplate";
 
 // ── BASE CONTENIDO POR TIPO ──
 
@@ -27,7 +28,7 @@ const baseBodasContent = {
   dressCode: { title: "Elegante Formal", info: "Por favor, reservá el color blanco para la novia." },
   gifts: {
      message: "El mejor regalo es tu presencia. Pero si querés sumarte a nuestra luna de miel, podés hacerlo acá:",
-     bank: "Santander Rio", cbu: "000000312000000000", alias: "boda.amor", name: "Los Novios"
+     bank: "XXXXXXXXXX", cbu: "XXXXXXXXXXXXXXXXXXXXXX", alias: "XXXXX.XXXXX", name: "XXXXXXXXXX"
   },
   mural: true,
   music: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3",
@@ -53,7 +54,7 @@ const baseCumplesContent = {
   dressCode: { title: "Gala Inolvidable", info: "Un detalle brillante o rosa pálido." },
   gifts: {
      message: "Tu presencia es mi mejor regalo. Si querés hacerlo especial aún más, podés dejarme un detalle acá:",
-     bank: "Galicia", cbu: "000000312000000000", alias: "mis.15.anios", name: "La Festejada"
+     bank: "XXXXXXXXXX", cbu: "XXXXXXXXXXXXXXXXXXXXXX", alias: "XXXXX.XXXXX", name: "XXXXXXXXXX"
   },
   mural: true,
   music: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3",
@@ -316,12 +317,15 @@ export default function DemoInvitationPage() {
     setRsvpSubmitted(true);
   };
 
+  // ── INYECCIÓN DEL MOTOR NUEVO DE CUMPLES ──
+  if (invType === "cumples") {
+    return <CumplesTemplate data={data} guestName={guestName} />;
+  }
+
   // Sección de galería: texto genérico por tipo
-  const galleryTitle = invType === "bodas" ? "Nuestros Momentos" : "Galería";
+  const galleryTitle = "Nuestros Momentos";
   // Etiqueta de RSVP por tipo
-  const rsvpDeadlineLabel = invType === "bodas"
-    ? `Por favor confirmá antes del 1° del mes anterior a la boda.`
-    : `Confirmá tu asistencia antes del ${data.date?.split(" ").slice(-2).join(" ") || "la fecha"}.`;
+  const rsvpDeadlineLabel = `Por favor confirmá antes del 1° del mes anterior a la boda.`;
 
   return (
     <div className="bg-[#fcfcff] min-h-screen text-stone-800 font-sans selection:bg-rose-200 overflow-x-hidden">
@@ -630,7 +634,35 @@ export default function DemoInvitationPage() {
         <section className="py-20 px-6 bg-[#fbfbfb] border-y border-stone-100 flex flex-col md:flex-row gap-10 justify-center items-center md:items-start text-center">
           {data.dressCode && (
             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="flex flex-col items-center max-w-sm">
-              <Shirt className="text-stone-400 mb-4" strokeWidth={1} size={36} />
+              {/* Dress code icons: vestido + traje */}
+              <div className="flex gap-4 mb-6">
+                {/* Vestido elegante */}
+                <div className="w-16 h-16 rounded-2xl bg-stone-100 border border-stone-200 flex items-center justify-center shadow-sm hover:-translate-y-1 transition-transform">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={data.colorAccent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M8 3h8" />
+                    <path d="M9 3C8 5 6 7 4 8l2 13h12l2-13c-2-1-4-3-5-5" />
+                    <path d="M9 3l3 5 3-5" />
+                    <path d="M10 14h4" strokeOpacity="0.4" />
+                  </svg>
+                </div>
+                {/* Traje formal */}
+                <div className="w-16 h-16 rounded-2xl bg-stone-100 border border-stone-200 flex items-center justify-center shadow-sm hover:-translate-y-1 transition-transform">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={data.colorAccent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M8 3H6L4 8l4 3V21h8V11l4-3-2-5h-2" />
+                    <path d="M8 3c0 2 1.5 4 4 5 2.5-1 4-3 4-5" />
+                    <path d="M12 8v5" strokeOpacity="0.4" />
+                    <path d="M10 10l2 2 2-2" strokeOpacity="0.4" />
+                  </svg>
+                </div>
+                {/* Gemstone / elegancia */}
+                <div className="w-16 h-16 rounded-2xl bg-stone-100 border border-stone-200 flex items-center justify-center shadow-sm hover:-translate-y-1 transition-transform">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={data.colorAccent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M6 3h12l4 6-10 12L2 9z" />
+                    <path d="M2 9h20" />
+                    <path d="M6 3l4 6m4 0l4-6" strokeOpacity="0.45" />
+                  </svg>
+                </div>
+              </div>
               <h3 className="text-lg uppercase tracking-widest font-semibold mb-2" style={{ color: data.colorAccent }}>Dress Code</h3>
               <p className="font-serif text-xl text-stone-700 mb-2">{data.dressCode.title}</p>
               <p className="text-sm text-stone-500">{data.dressCode.info}</p>

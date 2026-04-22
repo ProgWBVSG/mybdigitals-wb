@@ -19,8 +19,10 @@ import {
   Zap,
   ChevronDown,
   Sparkles,
+  ArrowDown,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 const WA_LINK =
@@ -150,6 +152,30 @@ function PhoneMockup() {
   );
 }
 
+/* ── Phone Mini (Para la galería de catálogos) ────────────── */
+function PhoneMini({ label, imgUrl, delay = 0, dateStr }: { label: string; imgUrl: string; delay?: number; dateStr: string }) {
+  return (
+    <motion.div 
+       animate={{ y: [0, -8, 0] }}
+       transition={{ duration: 4, repeat: Infinity, delay, ease: "easeInOut" }}
+       className="w-24 sm:w-32 aspect-[9/19] rounded-[2rem] overflow-hidden border-[4px] border-black relative shrink-0 shadow-xl bg-black"
+    >
+        {/* Notch */}
+        <div className="absolute top-0 inset-x-0 h-4 flex justify-center z-20">
+           <div className="w-10 h-3 bg-black rounded-b-xl" />
+        </div>
+        <Image src={imgUrl} alt={label} fill className="object-cover opacity-90" sizes="150px" />
+        
+        {/* Card info overlap */}
+        <div className="absolute bottom-4 inset-x-2 bg-white/90 backdrop-blur-md rounded-xl p-2 flex flex-col items-center shadow-lg">
+           <p className="text-[8px] sm:text-[9px] font-black text-black uppercase text-center mb-1 leading-tight">{label}</p>
+           <div className="w-full h-px bg-black/10 my-1"/>
+           <p className="text-[6px] sm:text-[7px] text-gray-500 font-semibold tracking-wider">{dateStr}</p>
+        </div>
+    </motion.div>
+  )
+}
+
 /* ── FAQ Item ─────────────────────────────────────────────── */
 function FaqItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
@@ -231,8 +257,8 @@ export default function InvitationsPage() {
       a: "Tus invitados completan un formulario dentro de la invitación (ni Google Forms ni redirecciones). Vos recibís un listado en tiempo real con nombre, acompañantes y restricciones alimentarias. Podés exportarlo a Excel cuando quieras.",
     },
     {
-      q: "¿Puedo pagar en cuotas?",
-      a: "Sí. Podés abonar en hasta 3 cuotas sin interés con tarjeta de débito o crédito. El precio en cuotas es de $23.666 x 3. También podés pagar en un solo pago de $68.999.",
+      q: "¿Cuáles son las formas de pago?",
+      a: "El pago se realiza mediante transferencia bancaria o MercadoPago por un valor único de $68.999 ARS. Se abona el 50% al iniciar para reservar la fecha, y el 50% restante al entregarte la invitación finalizada.",
     },
     {
       q: "¿Cómo es el proceso para crearla?",
@@ -251,117 +277,179 @@ export default function InvitationsPage() {
   ];
 
   return (
-    <main className="flex min-h-screen flex-col bg-background text-foreground bg-mesh pt-28 pb-24">
+    <main className="flex min-h-screen flex-col bg-background text-foreground bg-mesh pt-36 md:pt-40 pb-24">
       <div className="max-w-6xl mx-auto px-5 md:px-10 w-full relative z-10">
 
         {/* ── HERO ──────────────────────────────────────────── */}
-        <section aria-labelledby="inv-hero-title" className="grid lg:grid-cols-2 gap-12 items-center mb-28 md:mb-36">
-          {/* Left text */}
+        <section aria-labelledby="inv-hero-title" className="flex flex-col items-center text-center gap-10 mb-28 md:mb-32">
+          
           <motion.div
             initial="hidden"
             animate="visible"
             variants={stagger}
-            className="flex flex-col"
+            className="flex flex-col items-center w-full max-w-5xl"
           >
-            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md w-fit">
+            {/* Tag / Badge */}
+            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
               <Ticket className="text-primary w-4 h-4" aria-hidden="true" />
               <span className="text-xs font-semibold text-gray-300 tracking-wider uppercase">Invitaciones web interactivas</span>
             </motion.div>
 
+            {/* Title Centered */}
             <motion.h1
               id="inv-hero-title"
               variants={fadeUp}
-              className="text-5xl md:text-6xl xl:text-7xl font-black tracking-tight mb-6 text-white leading-[1.02]"
+              className="text-5xl md:text-6xl lg:text-[5.5rem] font-black tracking-tight mb-6 text-white leading-[1.05] drop-shadow-md"
             >
               La invitación que{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic pr-2 drop-shadow-sm inline-block">
                 enamora
-              </span>{" "}
-              antes de llegar al evento.
+              </span>
+              <br className="hidden md:block" />{" "}antes del&nbsp;evento.
             </motion.h1>
 
-            <motion.p variants={fadeUp} className="text-gray-300 text-lg leading-relaxed mb-8 max-w-lg">
-              Invitaciones web 100% personalizadas para Bodas, 15 Años, Baby Shower y más. Tus invitados confirman, ubican el salón, escuchan tu música y viven la experiencia desde el primer clic.
+            {/* Subtext */}
+            <motion.p variants={fadeUp} className="text-gray-300 text-lg md:text-xl font-light leading-relaxed mb-8 max-w-3xl text-balance">
+              Diseños premium 100% personalizados para Bodas, 15 Años y Baby Showers. Tus invitados confirman su lugar, ubican el salón y abren la pista de baile desde su pantalla.
             </motion.p>
 
             {/* Trust badges */}
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-4 mb-8">
+            <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-3 mb-16">
               {["🔒 Pago seguro", "📲 Envío por WhatsApp", "⚡ Entrega en 72 hs", "♾️ Sin límite de invitados"].map((badge) => (
-                <span key={badge} className="text-xs font-semibold text-gray-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
+                <span key={badge} className="text-xs font-medium text-gray-300 bg-white/5 border border-white/10 px-4 py-2 rounded-full">
                   {badge}
                 </span>
               ))}
             </motion.div>
 
-            {/* Price highlight */}
-            <motion.div
-              variants={fadeUp}
-              className="rounded-2xl border p-6 mb-6 relative overflow-hidden"
-              style={{ background: "rgba(195,216,9,0.06)", borderColor: "rgba(195,216,9,0.25)" }}
-            >
-              <div className="absolute top-0 right-0 w-32 h-32 blur-3xl opacity-20 rounded-full pointer-events-none" style={{ background: "#C3D809" }} aria-hidden="true" />
-              <div className="flex flex-wrap items-end gap-3 mb-2">
-                <span className="text-4xl md:text-5xl font-black text-white">$68.999</span>
-                <span className="text-gray-400 text-sm pb-1">pago único</span>
-              </div>
-              <p className="text-gray-300 text-sm mb-4">
-                o en <strong className="text-primary">3 cuotas de $23.666</strong> sin interés con tarjeta
-              </p>
-              <Link
-                href={WA_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Reservar mi invitación por WhatsApp"
-                className="inline-flex items-center gap-2 bg-primary text-black px-7 py-3.5 rounded-full font-black text-sm hover:bg-white transition-colors hover:scale-105 shadow-lg min-h-[52px]"
-                style={{ boxShadow: "0 12px 32px rgba(195,216,9,0.30)" }}
-              >
-                <MessageCircle size={18} aria-hidden="true" />
-                Reservar mi invitación por WhatsApp
-              </Link>
-              <p className="text-[11px] text-gray-500 mt-2">Sin costo oculto · Precio sin interés con tarjeta</p>
-            </motion.div>
+            {/* Bottom Content: Phone & Action Panel */}
+            <motion.div variants={fadeUp} className="w-full flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-24 relative">
+               
+               {/* Decorative background glow behind phone */}
+               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_center,rgba(195,216,9,0.06)_0%,transparent_60%)] -z-10 pointer-events-none" />
 
-            {/* Gallery Buttons */}
-            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 mb-8">
-              <Link
-                href="/servicios/web/invitaciones/bodas"
-                className="flex-1 inline-flex items-center justify-center gap-2 border border-rose-500/30 bg-rose-500/10 text-rose-200 px-6 py-3.5 rounded-2xl font-semibold text-sm hover:bg-rose-500/20 transition-colors"
-              >
-                💍 Ver diseños de Bodas
-              </Link>
-              <Link
-                href="/servicios/web/invitaciones/cumples"
-                className="flex-1 inline-flex items-center justify-center gap-2 border border-violet-500/30 bg-violet-500/10 text-violet-200 px-6 py-3.5 rounded-2xl font-semibold text-sm hover:bg-violet-500/20 transition-colors"
-              >
-                🎉 Ver de Cumples & 15s
-              </Link>
-            </motion.div>
+               {/* Left: Phone */}
+               <div className="flex justify-center z-10 shrink-0">
+                  <PhoneMockup />
+               </div>
 
-            {/* Social proof */}
-            <motion.div variants={fadeUp} className="flex items-center gap-3">
-              <div className="flex -space-x-2" aria-hidden="true">
-                {["💍", "🎉", "👶", "🥂"].map((emoji, i) => (
-                  <div key={i} className="w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-sm">
-                    {emoji}
-                  </div>
-                ))}
-              </div>
-              <p className="text-sm text-gray-400">
-                <strong className="text-white">+200 eventos</strong> celebrados con MYB
-              </p>
-            </motion.div>
-          </motion.div>
+               {/* Right: Actions */}
+               <div className="flex flex-col items-center md:items-start text-center md:text-left z-10">
+                 {/* Price highlight */}
+                 <div
+                   className="rounded-[2rem] border p-6 sm:p-8 mb-6 relative overflow-hidden w-full max-w-sm text-center bg-black/60 backdrop-blur-xl shadow-2xl"
+                   style={{ borderColor: "rgba(195,216,9,0.25)" }}
+                 >
+                   <div className="absolute top-0 inset-x-0 h-32 blur-[60px] opacity-20 pointer-events-none" style={{ background: "#C3D809" }} aria-hidden="true" />
+                   <div className="flex justify-center items-end gap-2 mb-2 relative z-10 mt-2">
+                     <span className="text-5xl lg:text-6xl font-black text-white">$68.999</span>
+                   </div>
+                   <p className="text-gray-400 text-sm mb-6 relative z-10 font-medium">Pago único y definitivo</p>
+                   
+                   <p className="text-gray-300 text-sm mb-6 relative z-10">
+                     Aboná el <strong className="text-primary font-bold">50% para reservar tu fecha</strong> y congelar el precio garantizado.
+                   </p>
+                   <Link
+                     href={WA_LINK}
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     aria-label="Reservar mi invitación por WhatsApp"
+                     className="inline-flex items-center justify-center w-full gap-2 bg-primary text-black px-6 py-4 rounded-xl font-black text-[15px] hover:bg-white transition-all shadow-lg hover:scale-105"
+                     style={{ boxShadow: "0 10px 30px rgba(195,216,9,0.25)" }}
+                   >
+                     <MessageCircle size={18} aria-hidden="true" />
+                     Cotizar por WhatsApp
+                   </Link>
+                   <p className="text-[11px] text-gray-500 mt-4 relative z-10 uppercase tracking-widest font-bold">Sin extras sorpresas</p>
+                 </div>
 
-          {/* Right: Phone mockup */}
-          <motion.div
-            initial={{ opacity: 0, x: 40, scale: 0.95 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="hidden lg:flex justify-center items-center relative"
-          >
-            <PhoneMockup />
+                 {/* Social proof & Anchors */}
+                 <div className="flex flex-col items-center md:items-start w-full gap-6">
+                    <a href="#galeria-modelos" className="inline-flex items-center justify-center gap-2 text-sm font-bold text-white border border-white/20 bg-white/5 w-full max-w-sm py-4 rounded-xl hover:bg-white/10 transition-colors">
+                      Explorar catálogos <ArrowDown size={16} />
+                    </a>
+                    
+                    <div className="flex items-center gap-3 w-full justify-center md:justify-start">
+                      <div className="flex -space-x-3" aria-hidden="true">
+                        {["💍", "🎉", "🥂"].map((emoji, i) => (
+                          <div key={i} className="w-10 h-10 rounded-full bg-white/10 border-2 border-background flex items-center justify-center text-sm z-10 shadow-md backdrop-blur-md">
+                            {emoji}
+                          </div>
+                        ))}
+                      </div>
+                      <p className="text-sm text-gray-400 text-left leading-tight">
+                        <strong className="text-white">+200 eventos</strong> felices<br/>respaldan nuestro trabajo
+                      </p>
+                    </div>
+                 </div>
+               </div>
+            </motion.div>
           </motion.div>
         </section>
+
+        {/* ── GALERÍA DE MODELOS (NUEVO) ────────────────────── */}
+        <motion.section
+          id="galeria-modelos"
+          aria-labelledby="inv-gallery-title"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="mb-28"
+        >
+           <motion.div variants={fadeUp} className="text-center mb-14">
+            <p className="text-[10px] font-black tracking-[0.4em] uppercase text-primary/60 mb-3">Catálogo online</p>
+            <h2 id="inv-gallery-title" className="text-3xl md:text-4xl font-black text-white">
+              Elegí la temática, <span className="text-primary italic">nosotros la armamos</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-8">
+             {/* BODAS */}
+             <motion.div variants={fadeUp} className="bg-white/5 border border-white/10 rounded-[3rem] p-8 md:p-12 flex flex-col items-center relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-br from-rose-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <h3 className="text-2xl font-black italic uppercase text-white mb-2 relative z-10">Bodas & Casamientos</h3>
+                <p className="text-gray-400 text-sm mb-10 text-center relative z-10">Diseños elegantes, románticos y minimalistas.</p>
+                
+                <div className="flex justify-center items-center gap-4 w-full mb-12 relative z-10">
+                   <PhoneMini label="Mica & Fede" imgUrl="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" dateStr="23 OCT 2025" delay={0} />
+                   <PhoneMini label="Ana & Juan" imgUrl="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" dateStr="12 DIC 2025" delay={1} />
+                   <div className="hidden sm:block">
+                     <PhoneMini label="Sofi & Mati" imgUrl="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=600&q=80" dateStr="15 NOV 2025" delay={2} />
+                   </div>
+                </div>
+
+                <Link
+                  href="/servicios/web/invitaciones/bodas"
+                  className="w-full sm:w-auto relative z-10 inline-flex items-center justify-center gap-2 px-10 py-4 rounded-full font-black text-[14px] uppercase tracking-wider bg-white text-black hover:bg-gray-200 hover:scale-105 transition-all shadow-xl"
+                >
+                  Ver modelos de bodas <ArrowRight size={16} />
+                </Link>
+             </motion.div>
+
+             {/* CUMPLES & 15S */}
+             <motion.div variants={fadeUp} className="bg-white/5 border border-white/10 rounded-[3rem] p-8 md:p-12 flex flex-col items-center relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-bl from-violet-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <h3 className="text-2xl font-black italic uppercase text-white mb-2 relative z-10">Fiestas & 15 Años</h3>
+                <p className="text-gray-400 text-sm mb-10 text-center relative z-10">Diseños neón, juveniles, dark y modernos.</p>
+                
+                <div className="flex justify-center items-center gap-4 w-full mb-12 relative z-10">
+                   <PhoneMini label="Mis 15 Lola" imgUrl="https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?auto=format&fit=crop&w=600&q=80" dateStr="10 ENE 2026" delay={0.5} />
+                   <PhoneMini label="Valen 15" imgUrl="https://images.unsplash.com/photo-1566737236500-c8ac43014a67?auto=format&fit=crop&w=600&q=80" dateStr="25 FEB 2026" delay={1.5} />
+                   <div className="hidden sm:block">
+                     <PhoneMini label="Martu Fest" imgUrl="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=600&q=80" dateStr="04 MAR 2026" delay={2.5} />
+                   </div>
+                </div>
+
+                <Link
+                  href="/servicios/web/invitaciones/cumples"
+                  className="w-full sm:w-auto relative z-10 inline-flex items-center justify-center gap-2 px-10 py-4 rounded-full font-black text-[14px] uppercase tracking-wider bg-white text-black hover:bg-gray-200 hover:scale-105 transition-all shadow-xl"
+                >
+                  Ver modelos de 15s <ArrowRight size={16} />
+                </Link>
+             </motion.div>
+          </div>
+        </motion.section>
 
         {/* ── HOW IT WORKS ──────────────────────────────────── */}
         <motion.section
@@ -461,7 +549,7 @@ export default function InvitationsPage() {
             <motion.div variants={fadeUp} className="mb-10">
               <p className="text-[10px] font-black tracking-[0.4em] uppercase text-primary/60 mb-3">Todo incluido</p>
               <h2 id="inv-includes-title" className="text-3xl md:text-4xl font-black text-white">
-                Una sola inversión, <span className="text-primary italic">todo adentro.</span>
+                Una sola inversión, <span className="text-primary italic">todo resuelto.</span>
               </h2>
               <p className="text-gray-400 mt-2 max-w-xl">Sin costos extra por invitado, sin cargos ocultos. Precio fijo, alcance ilimitado.</p>
             </motion.div>
@@ -489,7 +577,7 @@ export default function InvitationsPage() {
                   <span className="text-5xl font-black text-white">$68.999</span>
                   <span className="text-gray-500 text-sm pb-1">ARS</span>
                 </div>
-                <p className="text-primary text-sm mt-1">ó 3 cuotas de <strong>$23.666</strong> con tarjeta</p>
+                <p className="text-primary text-sm mt-1">Con <strong className="text-primary">50% de seña</strong> empezamos</p>
               </div>
               <Link
                 href={WA_LINK}
@@ -604,10 +692,9 @@ export default function InvitationsPage() {
                   <p className="text-gray-400 text-xs">Valor total</p>
                   <p className="text-white text-3xl font-black">$68.999</p>
                 </div>
-                <div className="hidden sm:block h-12 w-px bg-white/10" aria-hidden="true" />
                 <div className="text-left">
-                  <p className="text-gray-400 text-xs">En cuotas</p>
-                  <p className="text-primary text-3xl font-black">3 x $23.666</p>
+                  <p className="text-gray-400 text-xs">Pago Inicial</p>
+                  <p className="text-primary text-3xl font-black">50%</p>
                 </div>
                 <div className="hidden sm:block h-12 w-px bg-white/10" aria-hidden="true" />
                 <div className="text-left">
@@ -629,13 +716,11 @@ export default function InvitationsPage() {
                   Reservar por WhatsApp
                 </Link>
                 <Link
-                  href={WA_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/servicios/web/invitaciones/bodas"
                   aria-label="Ver ejemplos de invitaciones"
                   className="inline-flex items-center justify-center gap-2 border border-white/20 text-white px-8 py-4 rounded-full font-bold hover:bg-white/10 transition-colors min-h-[52px] text-base"
                 >
-                  Ver ejemplos
+                  Ver ejemplos de Bodas
                   <ArrowRight size={16} aria-hidden="true" />
                 </Link>
               </div>

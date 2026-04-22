@@ -7,7 +7,10 @@ import Image from "next/image";
 const niches = [
   { text: "CLÍNICO.", image: "/niche_clinico.png", color: "from-blue-400 to-cyan-300" },
   { text: "DE COACHING.", image: "/niche_coaching.png", color: "from-amber-400 to-orange-400" },
-  { text: "DE MARKETING.", image: "/niche_marketing.png", color: "from-purple-400 to-pink-400" },
+  { text: "GASTRONÓMICO.", image: "/niche_gastronomico.png", color: "from-red-400 to-orange-500" },
+  { text: "VETERINARIO.", image: "/niche_veterinario.png", color: "from-emerald-400 to-teal-400" },
+  { text: "E-COMMERCE.", image: "/niche_ecommerce.png", color: "from-purple-400 to-pink-400" },
+  { text: "FINANCIERO.", image: "/niche_financiero.png", color: "from-indigo-400 to-purple-400" }
 ];
 
 export default function NicheTypewriter() {
@@ -34,8 +37,10 @@ export default function NicheTypewriter() {
     if (!isDeleting && displayedText === currentNiche) {
       timer = setTimeout(() => setIsDeleting(true), 2500); // pause at end
     } else if (isDeleting && displayedText === "") {
-      setIsDeleting(false);
-      setLoopNum(loopNum + 1);
+      timer = setTimeout(() => {
+        setIsDeleting(false);
+        setLoopNum(loopNum + 1);
+      }, 500);
     }
   
     return () => clearTimeout(timer);

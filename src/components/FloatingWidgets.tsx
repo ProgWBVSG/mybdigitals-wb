@@ -23,13 +23,13 @@ type Message = {
 const INITIAL_MESSAGES: Message[] = [
   {
     id: "init",
-    text: "¡Hola! Bienvenido a MYB Digitals. 👋\n\n¿En qué te podemos ayudar hoy? Selecciona una opción del menú para comenzar.",
+    text: "¡Hola! Bienvenido a MYB Digitals. 👋\n\n¿En qué te podemos ayudar hoy? Selecciona un área de servicio para guiarte:",
     isBot: true,
     options: [
-      { label: "🌐 Desarrollo Web Premium", action: "web", waText: "Me interesa una web premium con ustedes." },
-      { label: "🤖 Agentes y Asistentes IA", action: "ia", waText: "Quiero implementar IA en mi negocio." },
-      { label: "⚙️ Automatizaciones", action: "auto", waText: "Necesito automatizar mis procesos." },
-      { label: "💰 Precios y Planes", action: "precios" }
+      { label: "🌐 Sitios y Páginas Web", action: "web_menu" },
+      { label: "💌 Invitaciones Web", action: "invitaciones_menu" },
+      { label: "🤖 Agentes IA y Automatizaciones", action: "ia_menu" },
+      { label: "💰 Consultar Precios", action: "precios_menu" }
     ]
   }
 ];
@@ -71,31 +71,66 @@ export default function FloatingWidgets() {
       let newOptions: Option[] | undefined = undefined;
 
       switch (option.action) {
-        case "web":
-          botResponse = "¡Excelente! Diseñamos ecosistemas con un enfoque estricto en conversión y velocidad (Next.js/React). ¿Qué tipo de proyecto tienes en mente?";
+        case "web_menu":
+          botResponse = "Diseñamos ecosistemas con un enfoque estricto en conversión. Contamos con 2 servicios top. ¿Cuál resuena más con vos?";
           newOptions = [
-            { label: "Landing Page ($200 USD)", action: "link_wa", waText: "Me interesa el plan Landing Page de $200 USD." },
-            { label: "Presencia Digital ($400 USD)", action: "link_wa", waText: "Me interesa el plan de Presencia Digital de $400 USD." },
-            { label: "E-Commerce / Custom SaaS", action: "link_wa", waText: "Quiero armar un e-commerce o sistema a medida." }
+            { label: "Landing Page ($200 USD)", action: "web_landing", waText: "Me interesa el plan Landing Page de $200 USD." },
+            { label: "Presencia Corporativa ($400 USD)", action: "web_presencia", waText: "Me interesa el plan de Presencia Digital de $400 USD." },
+            { label: "⬅️ Volver al menú principal", action: "start" }
           ];
           break;
-        case "ia":
-          botResponse = "¡La IA puede ahorrarte muchas horas y sueldos! Podemos crear Asistentes Virtuales 24/7 que respondan consultas, califiquen leads y tomen citas por ti. ¿Hablamos por WhatsApp para ver cómo aplicarlo a tu nicho?";
-          newOptions = [{ label: "Conectar con Asesor", action: "link_wa", waText: option.waText }];
-          break;
-        case "auto":
-          botResponse = "Automatizar procesos como emails, carga de CRMs o mensajes post-venta ahorra mucho tiempo. ¿Querés contarnos qué proceso te quita tiempo actualmente?";
-          newOptions = [{ label: "Chatear por WhatsApp", action: "link_wa", waText: option.waText }];
-          break;
-        case "precios":
-          botResponse = "Nuestro piso de inversión arranca en los $200 USD para sistemas de Landing Page, y $400 USD para Ecosistemas Digitales Premium con IA incluida. ¿Te gustaría consultar sobre alguno?";
+        case "web_landing":
+          botResponse = "La Landing Page es ideal para un producto o servicio específico. Incluye copywriting, diseño de alto impacto y embudo de conversión listo en 5 a 10 días. ¿Querés agendar una llamada o chatear ahora mismo por WhatsApp?";
           newOptions = [
-             { label: "Consultar Landing Page", action: "link_wa", waText: "Hola, quiero consultar por la Landing Page de $200 USD." },
-             { label: "Consultar Ecosistema Pro", action: "link_wa", waText: "Hola, quiero armar la máquina digital de $400 USD." }
+             { label: "📲 Consultar por WhatsApp", action: "link_wa", waText: option.waText },
+             { label: "⬅️ Volver atrás", action: "web_menu" }
           ];
+          break;
+        case "web_presencia":
+          botResponse = "El plan Presencia Digital es para marcas que necesitan autoridad de nivel Silicon Valley. Sitio multipágina, portafolios, integración con IA y SEO. ¿Hablamos para armarte un presupuesto a medida?";
+          newOptions = [
+             { label: "📲 Chatear por WhatsApp", action: "link_wa", waText: option.waText },
+             { label: "⬅️ Volver atrás", action: "web_menu" }
+          ];
+          break;
+        case "invitaciones_menu":
+          botResponse = "¡Qué excelente noticia! Transformamos eventos en experiencias VIP. Invitaciones interactivas con cuenta regresiva, GPS y confirmación (RSVP) automatizada en Excel. ¿Qué tipo de evento estás planeando?";
+          newOptions = [
+            { label: "💍 Casamiento / Boda", action: "inv_bodas" },
+            { label: "🎉 Mis 15 Años", action: "inv_15s" },
+            { label: "👶 Baby Shower / Otro", action: "inv_otro" },
+            { label: "⬅️ Menú principal", action: "start" }
+          ];
+          break;
+        case "inv_bodas":
+        case "inv_15s":
+        case "inv_otro":
+          botResponse = "El precio All-Inclusive (todo incluido) es de $68.999 ARS pago único. Recibís la invitación en 3 días hábiles, cobramos un 50% de seña para reservar fecha de diseño y el otro 50% al entregar. ¿Arrancamos?";
+          newOptions = [
+             { label: "📲 Cotizar por WhatsApp", action: "link_wa", waText: `Hola! Quiero reservar una invitación web para ${option.label}` },
+             { label: "⬅️ Volver", action: "invitaciones_menu" }
+          ];
+          break;
+        case "ia_menu":
+          botResponse = "Nuestros Agentes conversacionales o Automatizaciones te devuelven tiempo y evitan que pierdas clientes. Podemos crear un bot que responda preguntas repetitivas o cargue datos directo a tu Excel. ¿En qué perdés mucho tiempo hoy?";
+          newOptions = [
+             { label: "📲 Escribirle mi problema al experto", action: "link_wa", waText: "Hola, me interesa implementar Inteligencia Artificial o automatizar tareas de mi negocio." },
+             { label: "⬅️ Menú principal", action: "start" }
+          ];
+          break;
+        case "precios_menu":
+          botResponse = "Resumen rápido:\n• Invitaciones Eventos: $68.999 ARS\n• Landing Pages Web: $200 USD\n• Webs Ecosistema Pro: $400 USD\n• Agentes IA: Costo variable\n\n¿Qué paquete querías arrancar?";
+          newOptions = [
+             { label: "📲 Quiero charlar por WhatsApp", action: "link_wa", waText: "Hola, vi sus precios en el chat de la web y quería consultar para arrancar un proyecto." },
+             { label: "⬅️ Menú principal", action: "start" }
+          ];
+          break;
+        case "start":
+          botResponse = INITIAL_MESSAGES[0].text;
+          newOptions = INITIAL_MESSAGES[0].options;
           break;
         case "link_wa":
-          handleSendToWhatsApp(option.waText || "");
+          handleSendToWhatsApp(option.waText || "Hola, me comunico tras hablar con su bot temporal en la web.");
           return; // No se añade mensaje nuevo del bot
       }
 
@@ -121,9 +156,12 @@ export default function FloatingWidgets() {
         ...prev, 
         { 
           id: Date.now().toString(), 
-          text: "¡Interesante! Para poder darte una respuesta técnica detallada sobre eso, lo mejor es que lo hablemos por WhatsApp.", 
+          text: "¡Interesante! Como Asistente virtual estoy entrenado para derivarte al área correcta de nuestro catálogo, pero las consultas específicas personalizadas las contestan los fundadores (humanos).\n\n¿Querés enviarles tu consulta directo al celular o preferís volver al menú de opciones?", 
           isBot: true,
-          options: [{ label: "Continuar chat en WhatsApp", action: "link_wa", waText: `Hola equipo, mi consulta es: "${userText}"` }]
+          options: [
+             { label: "📲 Derivar por WhatsApp ahora", action: "link_wa", waText: `Hola equipo, les escribo por lo siguiente: "${userText}"` },
+             { label: "📋 Volver a consultar el menú", action: "start" }
+          ]
         }
       ]);
     }, 1000);

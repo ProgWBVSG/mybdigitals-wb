@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 const webLinks = [
   { href: "/servicios/web/presencia-digital", label: "Presencia Digital Premium" },
   { href: "/servicios/web/landing-page", label: "Landing Pages" },
-  { href: "/servicios/web/invitaciones", label: "Invitaciones Pro" },
+  { href: "/servicios/web/invitaciones", label: "Invitaciones Digitales" },
 ];
 
 export default function Navbar() {

@@ -1,9 +1,10 @@
 "use client";
 
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { CheckCircle2, MonitorSmartphone, Search, ArrowRight, Code, Zap, Database, MessageSquare, Lock, Layout, Shield, Server, GitMerge, LineChart, Users, Globe, TrendingUp } from "lucide-react";
+import { CheckCircle2, MonitorSmartphone, Search, ArrowRight, Code, Zap, Database, MessageSquare, Lock, Layout, Shield, Server, GitMerge, LineChart, Users, Globe, TrendingUp, Eye, Award, ShieldCheck, Compass, MousePointerClick, CalendarClock, Target, Layers, Briefcase, Lightbulb, PenTool, Gauge, Filter, ShoppingCart, BadgeDollarSign, Bot } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
+import NicheTypewriter from "@/components/NicheTypewriter";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -182,6 +183,156 @@ const BackgroundTechElements = () => {
    )
 }
 
+const MethodologySection = () => {
+   return (
+      <motion.div 
+         initial="hidden"
+         whileInView="visible"
+         viewport={{ once: true, margin: "-100px" }}
+         variants={staggerContainer}
+         className="w-full flex flex-col items-center mb-40 relative z-10"
+      >
+         {/* HEADER: ¿Qué hacemos realmente? */}
+         <div className="max-w-[1000px] w-full text-center px-4 mb-20">
+            <motion.div variants={fadeIn} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white font-bold text-[10px] md:text-xs tracking-widest uppercase mb-6 backdrop-blur-md">
+               <Target className="w-3 h-3 text-primary" /> Filosofía MYB
+            </motion.div>
+            <motion.h2 variants={fadeIn} className="text-3xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter leading-tight mb-8">
+               No hacemos "Páginas Web".<br />
+               <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-primary italic pr-2">Construimos Activos Digitales.</span>
+            </motion.h2>
+            <motion.p variants={fadeIn} className="text-gray-400 text-lg md:text-xl font-light text-balance leading-relaxed">
+               Diseñamos y desarrollamos espacios estratégicos pensados para posicionar marcas, ordenar su propuesta de valor y generar consultas orgánicas. <strong>Un sistema que trabaja 24/7 para tu posicionamiento y ventas</strong>, sin depender exclusivamente del algoritmo de las redes sociales.
+            </motion.p>
+         </div>
+
+         {/* DOS COLUMNAS: Beneficios vs 5 Funciones */}
+         <div className="max-w-[1200px] w-full px-4 grid grid-cols-1 lg:grid-cols-12 gap-8 mb-24">
+            
+            {/* Beneficios */}
+            <motion.div variants={fadeIn} className="lg:col-span-5 bg-gradient-to-b from-[#0a0a0a] to-[#050505] rounded-[2rem] border border-white/10 p-8 md:p-10 relative overflow-hidden group">
+               <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[80px] rounded-full pointer-events-none group-hover:bg-primary/10 transition-colors duration-500"></div>
+               <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                  <Globe className="w-6 h-6 text-primary" />
+                  Beneficios del Ecosistema
+               </h3>
+               <ul className="space-y-6">
+                  {[
+                     { text: "Aparecer en los motores de búsqueda (Google).", icon: <Search className="w-5 h-5 text-gray-400" /> },
+                     { text: "Centralizar toda tu información en un solo lugar.", icon: <Layers className="w-5 h-5 text-emerald-400" /> },
+                     { text: "Generar consultas sin publicar contenido diario.", icon: <CalendarClock className="w-5 h-5 text-blue-400" /> },
+                     { text: "Construir posicionamiento y autoridad a largo plazo.", icon: <TrendingUp className="w-5 h-5 text-purple-400" /> },
+                     { text: "Filtrar mejor a tus clientes ideales automáticamente.", icon: <Filter className="w-5 h-5 text-primary" /> },
+                  ].map((item, i) => (
+                     <li key={i} className="flex items-start gap-4">
+                        <div className="shrink-0 mt-0.5 bg-white/5 p-2 rounded-lg border border-white/5">{item.icon}</div>
+                        <span className="text-gray-300 font-medium leading-relaxed">{item.text}</span>
+                     </li>
+                  ))}
+               </ul>
+               <div className="mt-10 p-4 bg-white/5 rounded-xl border border-primary/20 text-center">
+                  <span className="text-primary text-sm font-bold uppercase tracking-wider">No reemplaza las redes.</span><br/>
+                  <span className="text-gray-300 text-xs mt-1 block">Las potencia y les da dirección estratégica.</span>
+               </div>
+            </motion.div>
+
+            {/* 5 Funciones Clave */}
+            <motion.div variants={fadeIn} className="lg:col-span-7 bg-[#0c0c0c] rounded-[2rem] border border-white/10 p-8 md:p-10 relative overflow-hidden">
+               <h3 className="text-2xl font-bold text-white mb-8">Las 5 funciones de una Web Estratégica:</h3>
+               <div className="flex flex-col gap-4">
+                  {[
+                     { title: "Claridad", desc: "En segundos el visitante entiende qué hacés y para quién.", sub: "Home -> Mensaje Claro + CTA", icon: <Eye />, color: "text-blue-400", bg: "bg-blue-400/10", border: "border-blue-400/20" },
+                     { title: "Autoridad", desc: "Refuerza tu experiencia y diferenciación en tu nicho.", sub: "Sobre Mí -> Historia + Autoridad", icon: <Award />, color: "text-purple-400", bg: "bg-purple-400/10", border: "border-purple-400/20" },
+                     { title: "Confianza", desc: "Testimonios y coherencia visual 100% profesional.", sub: "Servicios -> Qué hacés y para quién", icon: <ShieldCheck />, color: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-400/20" },
+                     { title: "Dirección", desc: "Guía al usuario hacia una acción de compra o registro.", sub: "Secciones -> Prueba Social + CTA", icon: <Compass />, color: "text-orange-400", bg: "bg-orange-400/10", border: "border-orange-400/20" },
+                     { title: "Conversión", desc: "Facilita el contacto inmediato integrado al embudo.", sub: "Contacto -> WhatsApp / Formulario", icon: <MousePointerClick />, color: "text-primary", bg: "bg-primary/10", border: "border-primary/20" }
+                  ].map((f, i) => (
+                     <div key={i} className={`flex items-center gap-4 md:gap-6 p-4 rounded-2xl border ${f.border} bg-white/[0.02] hover:bg-white/5 transition-colors`}>
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${f.bg} ${f.color}`}>
+                           {f.icon}
+                        </div>
+                        <div className="flex-1">
+                           <h4 className="text-white font-bold mb-1 flex items-center gap-2">
+                              {f.title} <ArrowRight className="w-3 h-3 text-gray-500" /> <span className="text-gray-300 font-normal text-sm md:text-base">{f.desc}</span>
+                           </h4>
+                           <span className={`text-[10px] md:text-xs font-bold uppercase tracking-widest ${f.color} opacity-80`}>{f.sub}</span>
+                        </div>
+                     </div>
+                  ))}
+               </div>
+            </motion.div>
+         </div>
+
+         {/* QUÉ INCLUYE EL SERVICIO - Bento Box */}
+         <div className="max-w-[1200px] w-full px-4 text-center mb-12">
+            <h3 className="text-3xl md:text-4xl font-black text-white mb-4">¿Qué incluye el servicio?</h3>
+            <p className="text-gray-400 text-lg">Cuatro pilares para una presencia infalible.</p>
+         </div>
+         
+         <div className="max-w-[1200px] w-full px-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <motion.div variants={fadeIn} className="bg-[#050505] border border-white/10 rounded-3xl p-8 hover:border-primary/30 transition-colors group relative overflow-hidden">
+               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-[50px] group-hover:bg-primary/10"></div>
+               <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 text-primary">
+                  <Lightbulb size={24} />
+               </div>
+               <h4 className="text-xl font-bold text-white mb-4">Estructura Estratégica</h4>
+               <ul className="space-y-3 text-gray-400 text-sm">
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" /> Definición de arquitectura web.</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" /> Organización clara de la propuesta de valor.</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" /> Jerarquización estratégica de servicios.</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" /> Redacción estructurada orientada a conversión.</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" /> Integración de llamados a la acción (CTA).</li>
+               </ul>
+            </motion.div>
+            
+            <motion.div variants={fadeIn} className="bg-[#050505] border border-white/10 rounded-3xl p-8 hover:border-emerald-500/30 transition-colors group relative overflow-hidden">
+               <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 blur-[50px] group-hover:bg-emerald-500/10"></div>
+               <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-6 text-emerald-500">
+                  <PenTool size={24} />
+               </div>
+               <h4 className="text-xl font-bold text-white mb-4">Desarrollo y Diseño</h4>
+               <ul className="space-y-3 text-gray-400 text-sm">
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" /> Diseño personalizado alineado a tu identidad visual.</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" /> Adaptación estética 100% profesional.</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" /> Diseño responsive (celular, tablet, computadora).</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" /> Optimización máxima de experiencia de usuario (UX).</li>
+               </ul>
+            </motion.div>
+
+            <motion.div variants={fadeIn} className="bg-[#050505] border border-white/10 rounded-3xl p-8 hover:border-purple-500/30 transition-colors group relative overflow-hidden">
+               <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 blur-[50px] group-hover:bg-purple-500/10"></div>
+               <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-6 text-purple-500">
+                  <Server size={24} />
+               </div>
+               <h4 className="text-xl font-bold text-white mb-4">Infraestructura Técnica</h4>
+               <ul className="space-y-3 text-gray-400 text-sm">
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" /> Configuración de Dominio propio.</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" /> Servidores Cloud de alto rendimiento (Hosting).</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" /> Base de datos integrada y Certificado SSL.</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" /> Cuentas de correo empresariales (opcional).</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" /> Optimización básica para buscadores (SEO).</li>
+               </ul>
+            </motion.div>
+
+            <motion.div variants={fadeIn} className="bg-[#050505] border border-white/10 rounded-3xl p-8 hover:border-blue-500/30 transition-colors group relative overflow-hidden">
+               <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-[50px] group-hover:bg-blue-500/10"></div>
+               <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-6 text-blue-500">
+                  <Gauge size={24} />
+               </div>
+               <h4 className="text-xl font-bold text-white mb-4">Herramientas de Conversión</h4>
+               <ul className="space-y-3 text-gray-400 text-sm">
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" /> Botón directo e inteligente a WhatsApp.</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" /> Formularios de contacto estratégicos.</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" /> Sistema de captación de correos para base de datos.</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" /> Integración con agenda online automatizada.</li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" /> Estructura de Testimonios y Preguntas Frecuentes.</li>
+               </ul>
+            </motion.div>
+         </div>
+      </motion.div>
+   )
+}
 
 export default function PresenciaDigitalPage() {
   const containerRef = useRef(null);
@@ -222,9 +373,9 @@ export default function PresenciaDigitalPage() {
             <span className="text-[10px] md:text-xs font-bold text-primary tracking-[0.15em] uppercase">Ecosistema Digital Inteligente</span>
           </motion.div>
           
-          <motion.h1 variants={fadeIn} className="text-5xl sm:text-[4.5rem] md:text-[6rem] lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tighter mb-8 text-center max-w-[1400px] mx-auto flex flex-col items-center leading-[0.9]">
-             <span className="text-white block">CONVIERTE TRÁFICO EN</span>
-             <span className="text-transparent bg-clip-text bg-gradient-to-b from-primary via-primary/80 to-emerald-600 block italic border-b-8 border-primary/20 pb-2 md:pb-4">OPORTUNIDADES.</span>
+          <motion.h1 variants={fadeIn} className="text-5xl sm:text-[4.5rem] md:text-[6rem] lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tighter mb-8 text-center max-w-[1400px] mx-auto flex flex-col items-center leading-[1.1]">
+             <span className="text-white block pb-1">CONVIERTE TRÁFICO EN</span>
+             <span className="text-transparent bg-clip-text bg-gradient-to-b from-primary via-primary/80 to-emerald-600 block italic pr-2 border-b-8 border-primary/20 pt-1 pb-3 md:pb-5">OPORTUNIDADES.</span>
           </motion.h1>
           
           <motion.p variants={fadeIn} className="text-lg md:text-2xl text-gray-400 max-w-3xl text-center text-balance leading-relaxed mb-12 font-light">
@@ -262,6 +413,9 @@ export default function PresenciaDigitalPage() {
           </motion.div>
         </motion.div>
 
+        {/* NEW METODOLOGY & PHILOSOPHY SECTION */}
+        <MethodologySection />
+
         {/* CORE ARCHITECTURE MODULES (Bento Box Glassmorphism) */}
         <motion.div 
           initial="hidden"
@@ -272,7 +426,7 @@ export default function PresenciaDigitalPage() {
         >
           <div className="text-center mb-16 md:mb-24">
              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 tracking-tight">
-                El Diferenciador <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400 italic">MYB.</span>
+                El Diferenciador <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400 italic pr-2">MYB.</span>
              </h2>
              <p className="text-gray-400 text-lg max-w-2xl mx-auto text-balance">
                 Cualquiera puede usar una plantilla. Nosotros arquitectamos tu plataforma corporativa para maximizar la recolección de datos y escalar con Inteligencia Artificial.
@@ -367,7 +521,7 @@ export default function PresenciaDigitalPage() {
                    Portafolio en Vivo
                 </motion.span>
                 <motion.h2 variants={fadeIn} className="text-4xl md:text-5xl lg:text-7xl font-black text-white tracking-tighter leading-none mb-6">
-                   PROYECTOS <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-primary italic">ÉLITE.</span>
+                   PROYECTOS <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-primary italic pr-2">ÉLITE.</span>
                 </motion.h2>
                 <motion.p variants={fadeIn} className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-light text-balance">
                    Ecosistemas digitales que transmiten autoridad corporativa. Renderizados en vivo. <span className="text-white font-medium">Asómate a su interior.</span>
@@ -427,46 +581,42 @@ export default function PresenciaDigitalPage() {
         </motion.div>
 
 
-        {/* PRICING CARD ELITE (The $400 Offer) */}
+        {/* PRICING CARDS */}
         <motion.div 
           id="planes"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="mb-40 flex flex-col items-center"
+          className="mb-40 flex flex-col items-center gap-16"
         >
+          {/* PLAN 1: SERVICIOS */}
           <div className="max-w-[950px] w-full relative">
-             {/* Glow surround */}
              <div className="absolute inset-0 bg-primary/20 blur-[120px] rounded-[4rem] pointer-events-none -z-10" />
-             
-             {/* Border animated gradient wrapper */}
              <div className="absolute -inset-[2px] bg-gradient-to-b from-primary/50 via-primary/10 to-[#030303] rounded-[3rem] -z-10" />
 
              <div className="bg-[#050505] rounded-[3rem] p-8 md:p-14 md:py-16 relative overflow-hidden flex flex-col lg:flex-row gap-12 lg:gap-16 justify-between isolate">
-                
-                {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#ffffff_2px,transparent_2px)] [background-size:32px_32px] pointer-events-none"></div>
 
                 <div className="lg:w-[45%] flex flex-col justify-center">
                    <div className="inline-flex items-center gap-2 mb-6">
                       <div className="px-4 py-1.5 rounded-full bg-white/10 text-white text-[10px] font-bold uppercase tracking-widest backdrop-blur-md border border-white/20 flex items-center gap-2">
                          <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                         Plataforma Premium de Ventas
+                         Plataforma Avanzada de Ventas
                       </div>
                    </div>
-                   <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight">Presencia<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-primary">Digital Pro.</span></h2>
+                   <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight">Presencia<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-primary">Digital.</span></h2>
                    
                    <div className="flex flex-col mb-8 border-b border-white/10 pb-8">
                       <div className="flex items-start gap-2">
                           <span className="text-7xl md:text-[6rem] font-black tracking-tighter leading-none text-white">$400</span>
                           <span className="text-xl text-primary font-bold mt-2">USD</span>
                       </div>
-                      <span className="text-gray-500 font-medium text-sm mt-3 uppercase tracking-wider">Inversión única y definitiva por la infraestructura.</span>
+                      <span className="text-gray-500 font-medium text-sm mt-3 uppercase tracking-wider">Inversión única por la infraestructura.</span>
                    </div>
                    
                    <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-10 font-light">
-                       El estándar para empresarios serios. Olvídate de los constructores lentos de los 2010s; invierte en infraestructura propia y tecnología IA que recolecta clientes y escala tu facturación todos los días. Diseñada para lucir de 100 Millones.
+                       El estándar para empresarios serios profesionales y prestadores de servicios. Invierte en infraestructura propia y tecnología que recolecta prospectos todos los días.
                    </p>
 
                    <Link 
@@ -475,7 +625,7 @@ export default function PresenciaDigitalPage() {
                      rel="noopener noreferrer"
                      className="group relative w-full inline-flex items-center justify-center gap-3 bg-white text-black px-8 py-5 rounded-full font-black text-lg hover:bg-primary transition-all duration-300 min-h-[60px] shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_40px_rgba(195,216,9,0.3)] hover:scale-[1.02]"
                    >
-                     Solicitar Implementación Ahora
+                     Solicitar Implementación
                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                    </Link>
                 </div>
@@ -486,13 +636,11 @@ export default function PresenciaDigitalPage() {
                    </h3>
                    <div className="flex flex-col gap-6 text-left mb-6">
                       {[
-                         { title: "Sesión Diagnóstica Estratégica", desc: "Formulario/Llamada inicial para mapear exactamente tus dolores, deseos comerciales y embudo.", icon: <Users className="w-5 h-5 text-gray-400" /> },
-                         { title: "Dashboard de Recolección de Leads", desc: "Formularios de alta conversión integrados en la web.", icon: <Database className="w-5 h-5 text-blue-400" /> },
-                         { title: "Asistente Virtual IA (24/7)", desc: "Un bot inteligente entrenado con tu info para que recoja mails e interactúe por ti.", icon: <MessageSquare className="w-5 h-5 text-primary" /> },
-                         { title: "Automatizaciones de Flujo", desc: "Integración básica que notifica a WhatsApp, Drive o CRM al instante que un cliente se registra.", icon: <Zap className="w-5 h-5 text-purple-400" /> },
-                         { title: "Diseño UX/UI Premium 10X", desc: "Un diseño 'jaw-dropping' (Hará que tu competencia se vea vieja instantáneamente).", icon: <MonitorSmartphone className="w-5 h-5 text-orange-400" /> },
-                         { title: "Infraestructura Elite de 1 Año", desc: "Hosting Vercel Cloud, Dominio Corporativo y Certificado SSL V2 incluidos.", icon: <Globe className="w-5 h-5 text-emerald-400" /> },
-                         { title: "SEO Pro Integrado", desc: "Configuración meta, schema y analíticas para escalar posiciones orgánicamente.", icon: <Search className="w-5 h-5 text-indigo-400" /> },
+                         { title: "Sesión Diagnóstica Estratégica", desc: "Llamada inicial para mapear exactamente tus dolores, embudo y cliente ideal.", icon: <Users className="w-5 h-5 text-gray-400" /> },
+                         { title: "Dashboard de Recolección de Leads", desc: "Formularios de alta conversión integrados.", icon: <Database className="w-5 h-5 text-blue-400" /> },
+                         { title: "Asistente Virtual IA (24/7)", desc: "Bot inteligente que captura clientes por ti.", icon: <MessageSquare className="w-5 h-5 text-primary" /> },
+                         { title: "Automatizaciones de Flujo", desc: "Notifica a tu equipo al instante que un prospecto se registra.", icon: <Zap className="w-5 h-5 text-purple-400" /> },
+                         { title: "Diseño UX/UI Profesional", desc: "Arquitectura que posiciona tu marca.", icon: <MonitorSmartphone className="w-5 h-5 text-emerald-400" /> },
                       ].map((item, idx) => (
                          <div key={idx} className="flex items-start gap-4 p-3 rounded-2xl hover:bg-white/5 transition-colors -mx-3 border border-transparent hover:border-white/5">
                             <div className="shrink-0 mt-1 bg-white/5 p-2 rounded-xl">{item.icon}</div>
@@ -504,9 +652,82 @@ export default function PresenciaDigitalPage() {
                       ))}
                    </div>
                 </div>
-
              </div>
           </div>
+
+          {/* PLAN 2: E-COMMERCE / PRODUCTOS */}
+          <div className="max-w-[950px] w-full relative">
+             <div className="absolute inset-0 bg-orange-500/10 blur-[120px] rounded-[4rem] pointer-events-none -z-10" />
+             <div className="absolute -inset-[2px] bg-gradient-to-b from-orange-500/40 via-orange-500/10 to-[#030303] rounded-[3rem] -z-10" />
+
+             <div className="bg-[#050505] rounded-[3rem] p-8 md:p-14 md:py-16 relative overflow-hidden flex flex-col lg:flex-row gap-12 lg:gap-16 justify-between isolate">
+                <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#ffffff_2px,transparent_2px)] [background-size:32px_32px] pointer-events-none"></div>
+
+                <div className="lg:w-[45%] flex flex-col justify-center">
+                   <div className="inline-flex items-center gap-2 mb-6">
+                      <div className="px-4 py-1.5 rounded-full bg-white/10 text-white text-[10px] font-bold uppercase tracking-widest backdrop-blur-md border border-white/20 flex items-center gap-2">
+                         <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+                         E-Commerce para Productos
+                      </div>
+                   </div>
+                   <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight">TiendaIA<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">Optimizada.</span></h2>
+                   
+                   <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-10 font-light">
+                       Mejor que las típicas plataformas de pago mensual. Un diseño espectacular, conectado con tu marca, más todo un dashboard interactivo que utiliza estrategias establecidas para enganchar al cliente y asegurar tus ventas.
+                   </p>
+
+                   <Link 
+                     href="https://wa.me/543515555123?text=Hola,%20tengo%20productos%20y%20quiero%20crear%20mi%20Tienda%20IA%20Optimizada." 
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="group relative w-full inline-flex items-center justify-center gap-3 bg-white text-black px-8 py-5 rounded-full font-black text-lg hover:bg-orange-500 hover:text-white transition-all duration-300 min-h-[60px] shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_40px_rgba(249,115,22,0.3)] hover:scale-[1.02]"
+                   >
+                     Armar mi E-commerce
+                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                   </Link>
+                </div>
+
+                <div className="lg:w-[55%] flex flex-col pt-4 lg:pt-0 border-t border-white/10 lg:border-t-0 lg:border-l lg:pl-16">
+                   <h3 className="text-xl md:text-2xl font-bold mb-8 text-white flex items-center gap-3">
+                       <ShoppingCart className="text-orange-500 w-6 h-6" /> Lo que incluye tu Tienda
+                   </h3>
+                   <div className="flex flex-col gap-6 text-left mb-6">
+                      {[
+                         { title: "Funnels Estratégicos", desc: "Recuperación de carritos abandonados, cross-selling y promociones inteligentes.", icon: <LineChart className="w-5 h-5 text-red-400" /> },
+                         { title: "Dashboard Operativo", desc: "Gestión completa de stock, pedidos y catálogo de forma directa.", icon: <Gauge className="w-5 h-5 text-orange-400" /> },
+                         { title: "Integración de Pagos Locales", desc: "Conecta MercadoPago u otros sin depender de plataformas restrictivas extras.", icon: <Target className="w-5 h-5 text-green-400" /> },
+                         { title: "Asistente de Ventas IA", desc: "Responde dudas al instante (talles, envíos) a las 3 AM y empuja la compra.", icon: <MessageSquare className="w-5 h-5 text-primary" /> },
+                         { title: "Diseño Impactante", desc: "Una presentación de producto inmersiva que incrementa el valor percibido.", icon: <PenTool className="w-5 h-5 text-emerald-400" /> },
+                      ].map((item, idx) => (
+                         <div key={idx} className="flex items-start gap-4 p-3 rounded-2xl hover:bg-white/5 transition-colors -mx-3 border border-transparent hover:border-white/5">
+                            <div className="shrink-0 mt-1 bg-white/5 p-2 rounded-xl">{item.icon}</div>
+                            <div>
+                                <h4 className="text-white font-bold text-sm mb-1">{item.title}</h4>
+                                <p className="text-gray-400 text-xs md:text-[13px] leading-relaxed">{item.desc}</p>
+                            </div>
+                         </div>
+                      ))}
+                   </div>
+                </div>
+             </div>
+          </div>
+        </motion.div>
+
+        {/* AUTOMATION INCENTIVE (Subtle Upsell) */}
+        <motion.div
+           initial="hidden"
+           whileInView="visible"
+           viewport={{ once: true, margin: "-50px" }}
+           variants={fadeIn}
+           className="max-w-[700px] mx-auto text-center mb-28 px-6 py-10 rounded-[2rem] bg-gradient-to-b from-white/[0.03] to-transparent border border-white/5 relative overflow-hidden group"
+        >
+           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-[2px] bg-gradient-to-r from-transparent via-primary/50 to-transparent group-hover:w-64 transition-all duration-700"></div>
+           <Bot className="w-8 h-8 text-primary/70 mx-auto mb-4 opacity-80" />
+           <h3 className="text-xl md:text-2xl font-bold text-white mb-3">Tu negocio será Future-Proof.</h3>
+           <p className="text-gray-400 text-sm md:text-base leading-relaxed mb-6 font-light text-balance px-4">
+             Toda nuestra arquitectura web está construida bajo un estándar de desarrollo corporativo <strong>"AI-Ready"</strong>. Es decir, cuando tu empresa alcance un volumen inmanejable de forma manual...<br className="hidden md:block"/><br className="hidden md:block"/>
+             Tu ecosistema estará <span className="text-white font-medium">listo para integrarse</span> y enchufarse a <strong><Link href="/servicios/automatizaciones" className="text-primary hover:text-emerald-400 transition-colors font-medium relative hover:underline underline-offset-4 decoration-primary/50">Agentes de Inteligencia Artificial.</Link></strong> Cuando decidas automatizar al 100% tus procesos, ya tendrás la mejor base armada.
+           </p>
         </motion.div>
 
         {/* FEEDSPRING STYLE MASSIVE FOOTER CTA */}
@@ -528,7 +749,7 @@ export default function PresenciaDigitalPage() {
                 
                 <motion.h2 variants={fadeIn} className="text-6xl md:text-[8rem] lg:text-[11rem] font-black tracking-tighter text-white leading-[0.9] mb-8 md:mb-12 uppercase drop-shadow-2xl">
                     Tu negocio <br/>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-500 block italic">NO PARA.</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-500 block italic pr-2">NO PARA.</span>
                 </motion.h2>
 
                 <motion.p variants={fadeIn} className="text-gray-400 text-lg md:text-3xl max-w-3xl mx-auto font-medium leading-relaxed mb-16 text-balance">

@@ -198,7 +198,7 @@ export default function LandingPageService() {
           
           <motion.h1 variants={fadeIn} className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-6 text-balance text-white leading-tight">
             Más que una <br className="hidden md:block"/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-primary italic">Landing Page.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-primary italic pr-2">Landing Page.</span>
           </motion.h1>
           
           <motion.p variants={fadeIn} className="text-lg md:text-xl text-gray-300 max-w-2xl text-center text-balance leading-relaxed">
