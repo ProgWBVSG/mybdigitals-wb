@@ -241,8 +241,8 @@ function PhoneCard({ d, i }: { d: D; i: number }) {
     </motion.div>
   );
 }
-
 export default function BodasPage() {
+  return (
     <main className="min-h-screen bg-background pt-28 pb-24">
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');`}</style>
 
