@@ -258,7 +258,7 @@ export default function InvitationsPage() {
     },
     {
       q: "¿Cuáles son las formas de pago?",
-      a: "El pago se realiza mediante transferencia bancaria o MercadoPago por un valor único de $68.999 ARS. Se abona el 50% al iniciar para reservar la fecha, y el 50% restante al entregarte la invitación finalizada.",
+      a: "El pago se realiza mediante transferencia bancaria o MercadoPago por un valor único de $68.999 ARS. El pago es único y completo. Actualmente ofrecemos un 50% de descuento sobre el precio regular, por tiempo limitado.",
     },
     {
       q: "¿Cómo es el proceso para crearla?",
@@ -351,7 +351,7 @@ export default function InvitationsPage() {
                    <p className="text-gray-400 text-sm mb-6 relative z-10 font-medium">Pago único y definitivo</p>
                    
                    <p className="text-gray-300 text-sm mb-6 relative z-10">
-                     Aboná el <strong className="text-primary font-bold">50% para reservar tu fecha</strong> y congelar el precio garantizado.
+                     <strong className="text-primary font-bold">50% OFF por tiempo limitado</strong> — precio único de pago, sin costos ocultos ni cuotas.
                    </p>
                    <Link
                      href={WA_LINK}
@@ -581,7 +581,7 @@ export default function InvitationsPage() {
                   <span className="text-5xl font-black text-white">$68.999</span>
                   <span className="text-gray-500 text-sm pb-1">ARS</span>
                 </div>
-                <p className="text-primary text-sm mt-1">Con <strong className="text-primary">50% de seña</strong> empezamos</p>
+                <p className="text-primary text-sm mt-1"><strong className="text-primary">50% OFF</strong> — precio especial por tiempo limitado</p>
               </div>
               <Link
                 href={WA_LINK}
@@ -691,14 +691,14 @@ export default function InvitationsPage() {
               </p>
 
               {/* Pricing recap */}
-              <div className="inline-flex flex-col sm:flex-row items-center gap-6 mb-10 px-8 py-5 rounded-2xl border border-white/10 bg-white/5">
+              <div className="inline-flex flex-col sm:flex-row items-center gap-6 mb-10 px-8 py-5 rounded-2xl border border-primary/20 bg-white/5">
                 <div className="text-left">
-                  <p className="text-gray-400 text-xs">Valor total</p>
-                  <p className="text-white text-3xl font-black">$68.999</p>
+                  <p className="text-gray-400 text-xs line-through">Precio regular</p>
+                  <p className="text-gray-500 text-3xl font-black line-through">$137.999</p>
                 </div>
                 <div className="text-left">
-                  <p className="text-gray-400 text-xs">Pago Inicial</p>
-                  <p className="text-primary text-3xl font-black">50%</p>
+                  <p className="text-gray-400 text-xs">Precio con descuento</p>
+                  <p className="text-primary text-3xl font-black">$68.999</p>
                 </div>
                 <div className="hidden sm:block h-12 w-px bg-white/10" aria-hidden="true" />
                 <div className="text-left">

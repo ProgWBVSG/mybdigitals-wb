@@ -105,7 +105,7 @@ export default function FloatingWidgets() {
         case "inv_bodas":
         case "inv_15s":
         case "inv_otro":
-          botResponse = "El precio All-Inclusive (todo incluido) es de $68.999 ARS pago único. Recibís la invitación en 3 días hábiles, cobramos un 50% de seña para reservar fecha de diseño y el otro 50% al entregar. ¿Arrancamos?";
+          botResponse = "El precio All-Inclusive (todo incluido) es de $68.999 ARS — pago único y sin costos ocultos. Actualmente tenemos un 50% OFF sobre el precio regular. Entregamos la invitación en 3 días hábiles. ¿Arrancamos?";
           newOptions = [
              { label: "📲 Cotizar por WhatsApp", action: "link_wa", waText: `Hola! Quiero reservar una invitación web para ${option.label}` },
              { label: "⬅️ Volver", action: "invitaciones_menu" }
