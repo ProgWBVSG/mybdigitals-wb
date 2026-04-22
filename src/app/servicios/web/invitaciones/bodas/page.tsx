@@ -2,8 +2,22 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, MessageCircle, Heart, Camera, Gamepad2, CheckCircle, Image as ImageIcon, MapPin, Ticket, Gift, Sparkles } from "lucide-react";
 import Image from "next/image";
+
+const WA_LINK =
+  "https://wa.me/543515555123?text=Hola!%20quiero%20ver%20dise%C3%B1os%20de%20invitaci%C3%B3n%20para%20mi%20casamiento";
+
+const features = [
+  { title: "Álbum Colaborativo", desc: "Tus invitados escanean un QR en la boda para subir sus fotos a un álbum en vivo.", icon: Camera },
+  { title: "Dress Code & Gifts", desc: "Reglas de estilo y módulo de Mesa de Regalos con cuenta bancaria para tu luna de miel.", icon: Gift },
+  { title: "RSVP Inteligente", desc: "Gestión de confirmaciones, opciones vegetarianas, sin TACC y lista de canciones pedidas.", icon: CheckCircle },
+  { title: "Minijuego de Trivia", desc: "¿Quién conoce mejor a los novios? Rompehielo ideal mientras esperan la cena.", icon: Gamepad2 },
+  { title: "Carrusel 3D Inmersivo", desc: "Muestra tu book preboda con transiciones y animaciones fluidas 3D increíbles.", icon: ImageIcon },
+  { title: "GPS & Cuenta Regresiva", desc: "Mapa directo al salón o iglesia y el reloj midiendo cada segundo para dar el Sí.", icon: MapPin },
+  { title: "Ticket VIP Personalizado", desc: "La invitación reconoce el nombre o la familia y les da una bienvenida personalizada.", icon: Ticket },
+  { title: "Música Automática", desc: "Esa canción que los identifica suena ni bien abren la tarjeta para entrar en clima.", icon: Sparkles },
+];
 
 // Mezcla perfecta: Diseños fotográficos probados + Diseños minimalistas botánicos para los que no tenían foto.
 const designs = [
@@ -229,14 +243,84 @@ function PhoneCard({ d, i }: { d: D; i: number }) {
 }
 
 export default function BodasPage() {
-  return (
     <main className="min-h-screen bg-background pt-28 pb-24">
-      <div className="max-w-5xl mx-auto px-5 md:px-10">
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');`}</style>
+
+      {/* ── HERO BANNER (BODAS) ── */}
+      <div className="w-full relative flex flex-col items-center overflow-hidden mb-12">
+         {/* Top Bar Promocional */}
+         <div className="w-full bg-[#f43f5e] py-3 z-30 flex justify-center items-center gap-2 md:gap-4 shadow-sm relative">
+           <span className="text-xl md:text-2xl text-white" style={{ fontFamily: "'Great Vibes', cursive" }}>Love is in the air</span>
+           <span className="font-bold text-[10px] md:text-xs tracking-widest text-white uppercase ml-2">Promo Bodas</span>
+           <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="text-[10px] md:text-xs text-white border-b border-white/60 pb-0.5 hover:text-rose-200 transition-colors font-semibold">
+             (Solicitar)
+           </a>
+         </div>
+
+         {/* Contenedor Visual (Imagen + Textos) */}
+         <div className="relative w-full h-[70vh] min-h-[500px] flex flex-col justify-center items-center px-4">
+            {/* Imagen de Fondo (Escala de Grises - Pareja casándose) */}
+            <div className="absolute inset-0 w-full h-full z-0">
+               <Image 
+                  src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80" 
+                  alt="Casamiento Hero Bodas" 
+                  fill 
+                  className="object-cover object-center grayscale opacity-75" 
+               />
+               <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-background" />
+            </div>
+
+            {/* Contenido Central */}
+            <div className="relative z-20 flex flex-col items-center text-center w-full max-w-5xl mt-8">
+               <p className="text-[10px] md:text-xs font-black tracking-[0.3em] uppercase text-zinc-300 mb-6 drop-shadow-md">
+                 COLECCIÓN NUPCIAL — INVITACIONES WEB
+               </p>
+               
+               <h1 className="text-[1.8rem] sm:text-4xl md:text-6xl lg:text-[5.5rem] font-black italic uppercase text-white leading-tight tracking-normal mb-6 w-full px-2 whitespace-nowrap" style={{ textShadow: "0 10px 40px rgba(0,0,0,0.8)" }}>
+                 El amor merece <br /> una invitación digna
+               </h1>
+               
+               <p className="text-sm md:text-base font-medium tracking-[0.2em] uppercase text-zinc-200 mb-10 mt-2 drop-shadow-md">
+                 Porque es uno de los días más importantes de tu vida
+               </p>
+               
+               <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="bg-[#f43f5e] hover:bg-[#e11d48] text-white px-8 py-4 rounded-md font-bold text-xs uppercase tracking-widest flex items-center gap-3 transition-colors shadow-[0_0_20px_rgba(244,63,94,0.3)]">
+                 Reservar nuestra fecha
+                 <Heart size={18} fill="currentColor" />
+               </a>
+            </div>
+         </div>
+      </div>
+
+      {/* Grid de Funcionalidades */}
+      <div className="max-w-6xl mx-auto px-5 md:px-10 mb-24">
+         <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Módulo Nupcial <span className="text-[#f43f5e]">All-Inclusive</span></h2>
+            <p className="text-zinc-400 max-w-xl mx-auto">No pagues extras ocultos. Tu invitación viene completamente equipada con <strong className="text-white">todas estas funcionalidades premium</strong> por un precio plano.</p>
+         </div>
+
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            {features.map((f, i) => {
+               const Icon = f.icon;
+               return (
+                 <div key={i} className="bg-white/5 border border-white/5 backdrop-blur-sm rounded-2xl p-6 transition-all hover:-translate-y-1 hover:bg-white/[0.07] hover:border-[#f43f5e]/30 group">
+                    <div className="w-12 h-12 rounded-xl bg-black/40 flex items-center justify-center border border-white/10 mb-5 group-hover:bg-[#f43f5e]/10 group-hover:border-[#f43f5e]/50 transition-colors">
+                       <Icon size={22} className="text-zinc-400 group-hover:text-[#f43f5e] transition-colors" />
+                    </div>
+                    <h3 className="text-white font-bold text-lg mb-2">{f.title}</h3>
+                    <p className="text-zinc-500 text-sm leading-relaxed">{f.desc}</p>
+                 </div>
+               )
+            })}
+         </div>
+      </div>
+
+      <div className="max-w-5xl mx-auto px-5 md:px-10 text-center">
 
         {/* Back */}
         <Link
           href="/servicios/web/invitaciones"
-          className="inline-flex items-center gap-2 text-gray-500 text-sm mb-14 hover:text-white transition-colors group"
+          className="inline-flex items-center gap-2 text-gray-500 text-sm mb-14 hover:text-white transition-colors group mx-auto"
         >
           <ArrowLeft size={15} className="group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
           Volver a Invitaciones
