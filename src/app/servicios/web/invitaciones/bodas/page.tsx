@@ -277,7 +277,7 @@ export default function BodasPage() {
                </p>
                
                <h1 className="text-[1.8rem] sm:text-4xl md:text-6xl lg:text-[5.5rem] font-black italic uppercase text-white leading-tight tracking-normal mb-6 w-full px-2 whitespace-nowrap" style={{ textShadow: "0 10px 40px rgba(0,0,0,0.8)" }}>
-                 El amor merece <br /> una invitación digna
+                 El <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-fuchsia-300">amor</span> merece <br /> una <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 to-rose-400">invitación digna</span>
                </h1>
                
                <p className="text-sm md:text-base font-medium tracking-[0.2em] uppercase text-zinc-200 mb-10 mt-2 drop-shadow-md">
