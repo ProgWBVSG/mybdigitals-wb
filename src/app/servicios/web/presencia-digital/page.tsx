@@ -373,10 +373,36 @@ export default function PresenciaDigitalPage() {
             <span className="text-[10px] md:text-xs font-bold text-primary tracking-[0.15em] uppercase">Ecosistema Digital Inteligente</span>
           </motion.div>
           
-          <motion.h1 variants={fadeIn} className="text-5xl sm:text-[4.5rem] md:text-[6rem] lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tighter mb-8 text-center max-w-[1400px] mx-auto flex flex-col items-center leading-[1.1]">
+          <motion.h1 variants={fadeIn} className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-4 text-center max-w-4xl mx-auto leading-[1.05]">
              <span className="text-white block pb-1">CONVIERTE TRÁFICO EN</span>
-             <span className="text-transparent bg-clip-text bg-gradient-to-b from-primary via-primary/80 to-emerald-600 block italic pr-2 border-b-8 border-primary/20 pt-1 pb-3 md:pb-5">OPORTUNIDADES.</span>
+             <span className="text-transparent bg-clip-text bg-gradient-to-b from-primary via-primary/80 to-emerald-600 block italic pr-2 pb-[0.1em]">OPORTUNIDADES.</span>
           </motion.h1>
+
+          {/* SVG Scan Line Decoration */}
+          <motion.div
+            variants={fadeIn}
+            className="relative w-full max-w-2xl mx-auto mb-8 h-10 overflow-hidden"
+          >
+            <svg viewBox="0 0 600 40" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* Static grid lines */}
+              <line x1="0" y1="20" x2="600" y2="20" stroke="rgba(195,216,9,0.12)" strokeWidth="1"/>
+              <line x1="0" y1="8" x2="600" y2="8" stroke="rgba(195,216,9,0.05)" strokeWidth="1"/>
+              <line x1="0" y1="32" x2="600" y2="32" stroke="rgba(195,216,9,0.05)" strokeWidth="1"/>
+              {/* Vertical tick marks */}
+              {[0,60,120,180,240,300,360,420,480,540,600].map((x) => (
+                <line key={x} x1={x} y1="14" x2={x} y2="26" stroke="rgba(195,216,9,0.15)" strokeWidth="1"/>
+              ))}
+              {/* Diamond accent center */}
+              <polygon points="300,12 308,20 300,28 292,20" fill="rgba(195,216,9,0.2)" stroke="rgba(195,216,9,0.6)" strokeWidth="1"/>
+              <polygon points="300,16 304,20 300,24 296,20" fill="rgba(195,216,9,0.5)"/>
+            </svg>
+            {/* Animated scan line */}
+            <motion.div
+              className="absolute top-0 h-full w-[2px] bg-gradient-to-b from-transparent via-primary to-transparent opacity-80"
+              animate={{ x: ["-10px", "620px"] }}
+              transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+            />
+          </motion.div>
           
           <motion.p variants={fadeIn} className="text-lg md:text-2xl text-gray-400 max-w-3xl text-center text-balance leading-relaxed mb-12 font-light">
             No hacemos simples "páginas web". Instalamos un <span className="text-white font-medium">ecosistema de adquisición de clientes</span> con Inteligencia Artificial, recolección de leads automatizada e infraestructura de alto rendimiento.
