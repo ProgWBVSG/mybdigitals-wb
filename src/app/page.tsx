@@ -70,7 +70,7 @@ export default function Home() {
 
             {/* TÍTULO CORREGIDO (Centrado + padding vertical/horizontal de seguridad) */}
             <motion.h1 variants={fadeIn} className="text-[clamp(3.5rem,8vw,7.5rem)] font-black tracking-tighter mb-6 text-white leading-[1.0] text-balance drop-shadow-md">
-              Escalamos negocios{" "}
+              Escalamos tu negocio{" "}
               <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic font-medium pr-2 pb-[0.1em] inline-block">
                 con IA y Software.
