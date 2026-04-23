@@ -378,30 +378,29 @@ export default function PresenciaDigitalPage() {
              <span className="text-transparent bg-clip-text bg-gradient-to-b from-primary via-primary/80 to-emerald-600 block italic pr-2 pb-[0.1em]">OPORTUNIDADES.</span>
           </motion.h1>
 
-          {/* SVG Scan Line Decoration */}
+          {/* Animated metric badges */}
           <motion.div
             variants={fadeIn}
-            className="relative w-full max-w-2xl mx-auto mb-8 h-10 overflow-hidden"
+            className="flex flex-wrap justify-center gap-3 mb-10"
           >
-            <svg viewBox="0 0 600 40" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-              {/* Static grid lines */}
-              <line x1="0" y1="20" x2="600" y2="20" stroke="rgba(195,216,9,0.12)" strokeWidth="1"/>
-              <line x1="0" y1="8" x2="600" y2="8" stroke="rgba(195,216,9,0.05)" strokeWidth="1"/>
-              <line x1="0" y1="32" x2="600" y2="32" stroke="rgba(195,216,9,0.05)" strokeWidth="1"/>
-              {/* Vertical tick marks */}
-              {[0,60,120,180,240,300,360,420,480,540,600].map((x) => (
-                <line key={x} x1={x} y1="14" x2={x} y2="26" stroke="rgba(195,216,9,0.15)" strokeWidth="1"/>
-              ))}
-              {/* Diamond accent center */}
-              <polygon points="300,12 308,20 300,28 292,20" fill="rgba(195,216,9,0.2)" stroke="rgba(195,216,9,0.6)" strokeWidth="1"/>
-              <polygon points="300,16 304,20 300,24 296,20" fill="rgba(195,216,9,0.5)"/>
-            </svg>
-            {/* Animated scan line */}
-            <motion.div
-              className="absolute top-0 h-full w-[2px] bg-gradient-to-b from-transparent via-primary to-transparent opacity-80"
-              animate={{ x: ["-10px", "620px"] }}
-              transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-            />
+            {[
+              { icon: "⚡", label: "Entrega en 14 días" },
+              { icon: "🤖", label: "IA integrada" },
+              { icon: "📈", label: "SEO optimizado" },
+              { icon: "🔒", label: "SSL + Hosting incluido" },
+            ].map((badge, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 + i * 0.12, duration: 0.5 }}
+                whileHover={{ scale: 1.06, y: -2 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-md text-sm font-semibold text-gray-200 shadow-[0_0_14px_rgba(195,216,9,0.07)] hover:border-primary/30 hover:bg-primary/5 transition-colors cursor-default"
+              >
+                <span>{badge.icon}</span>
+                {badge.label}
+              </motion.span>
+            ))}
           </motion.div>
           
           <motion.p variants={fadeIn} className="text-lg md:text-2xl text-gray-400 max-w-3xl text-center text-balance leading-relaxed mb-12 font-light">
