@@ -74,8 +74,8 @@ export default function FloatingWidgets() {
         case "web_menu":
           botResponse = "Diseñamos ecosistemas con un enfoque estricto en conversión. Contamos con 3 servicios top. ¿Cuál resuena más con vos?";
           newOptions = [
-            { label: "Landing Page ($200 USD)", action: "web_landing", waText: "Me interesa el plan Landing Page de $200 USD." },
-            { label: "Presencia Corporativa ($400 USD)", action: "web_presencia", waText: "Me interesa el plan de Presencia Digital de $400 USD." },
+            { label: "Landing Page", action: "web_landing", waText: "Me interesa el plan Landing Page de $200 USD." },
+            { label: "Presencia Corporativa", action: "web_presencia", waText: "Me interesa el plan de Presencia Digital de $400 USD." },
             { label: "Invitaciones Digitales", action: "inv_menu_bot" },
             { label: "⬅️ Volver al menú principal", action: "start" }
           ];
