@@ -69,12 +69,9 @@ export default function Home() {
             </motion.div>
 
             {/* TÍTULO CORREGIDO (Centrado + padding vertical/horizontal de seguridad) */}
-            <motion.h1 variants={fadeIn} className="text-[clamp(3.5rem,8vw,7.5rem)] font-black tracking-tighter mb-6 text-white leading-[1.0] text-balance drop-shadow-md">
-              Escalamos tu negocio{" "}
-              <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic font-medium pr-2 pb-[0.1em] inline-block">
-                con IA y Software.
-              </span>
+            <motion.h1 variants={fadeIn} className="font-black tracking-tighter mb-6 text-white leading-[1.05] drop-shadow-md flex flex-col items-center text-center">
+              <span className="whitespace-nowrap text-[clamp(2.8rem,7vw,6.5rem)]">Escalamos tu negocio</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic font-medium pb-[0.1em] pr-[0.1em] inline-block whitespace-nowrap text-[clamp(2.8rem,7vw,6.5rem)]">con IA y Software.</span>
             </motion.h1>
 
             <motion.p variants={fadeIn} className="text-lg md:text-2xl text-gray-300 max-w-3xl mb-10 leading-relaxed font-light text-balance">
