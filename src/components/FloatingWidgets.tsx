@@ -72,10 +72,11 @@ export default function FloatingWidgets() {
 
       switch (option.action) {
         case "web_menu":
-          botResponse = "Diseñamos ecosistemas con un enfoque estricto en conversión. Contamos con 2 servicios top. ¿Cuál resuena más con vos?";
+          botResponse = "Diseñamos ecosistemas con un enfoque estricto en conversión. Contamos con 3 servicios top. ¿Cuál resuena más con vos?";
           newOptions = [
             { label: "Landing Page ($200 USD)", action: "web_landing", waText: "Me interesa el plan Landing Page de $200 USD." },
             { label: "Presencia Corporativa ($400 USD)", action: "web_presencia", waText: "Me interesa el plan de Presencia Digital de $400 USD." },
+            { label: "Invitaciones Digitales", action: "inv_menu_bot" },
             { label: "⬅️ Volver al menú principal", action: "start" }
           ];
           break;
@@ -100,6 +101,15 @@ export default function FloatingWidgets() {
             { label: "🎉 Mis 15 Años", action: "inv_15s" },
             { label: "👶 Baby Shower / Otro", action: "inv_otro" },
             { label: "⬅️ Menú principal", action: "start" }
+          ];
+          break;
+        case "inv_menu_bot":
+          botResponse = "¿Para qué ocasión necesitás la invitación?";
+          newOptions = [
+             { label: "💍 Casamiento / Boda", action: "inv_bodas", waText: "Me interesa una invitación digital para mi casamiento." },
+             { label: "🥂 Fiesta de 15 Años", action: "inv_15s", waText: "Me interesa una invitación digital para una fiesta de 15 años." },
+             { label: "🎉 Otro evento", action: "inv_otro", waText: "Me interesa una invitación digital para un evento." },
+             { label: "⬅️ Volver atrás", action: "web_menu" }
           ];
           break;
         case "inv_bodas":
