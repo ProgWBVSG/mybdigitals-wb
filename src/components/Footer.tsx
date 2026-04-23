@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { MessageCircle, Zap, ArrowUpRight } from "lucide-react";
+import { MessageCircle, ArrowUpRight } from "lucide-react";
 
 const NAV_LINKS = [
   {
@@ -45,7 +45,10 @@ export default function Footer() {
           <div className="lg:w-[320px] shrink-0 flex flex-col gap-5">
             <Link href="/" className="inline-flex items-center gap-2 group w-fit">
               <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center shadow-[0_0_14px_rgba(195,216,9,0.4)]">
-                <Zap className="w-4 h-4 text-black fill-black" />
+                {/* Robot icon */}
+                <svg className="w-5 h-5 text-black" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.38-1 1.73V7h3a3 3 0 0 1 3 3v1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-1H3a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1v-1a3 3 0 0 1 3-3h3V5.73A2 2 0 0 1 10 4a2 2 0 0 1 2-2zm-2 9a1.5 1.5 0 0 0 0 3 1.5 1.5 0 0 0 0-3zm4 0a1.5 1.5 0 0 0 0 3 1.5 1.5 0 0 0 0-3zm-4 4h4v1H10v-1z"/>
+                </svg>
               </div>
               <span className="font-black text-xl tracking-tight">
                 MYB <span className="text-primary">DIGITALS</span>
