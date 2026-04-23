@@ -439,7 +439,7 @@ export default function InvitationsPage() {
                 <p className="text-gray-400 text-sm mb-10 text-center relative z-10">Diseños neón, juveniles, dark y modernos.</p>
                 
                 <div className="flex justify-center items-center gap-4 w-full mb-12 relative z-10">
-                   <PhoneMini label="Mis 15 Lola" imgUrl="https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?auto=format&fit=crop&w=600&q=80" dateStr="10 ENE 2026" delay={0.5} />
+                   <PhoneMini label="Mis 15 Lola" imgUrl="https://gregdotel.com/wp-content/uploads/2023/05/15-Carismell_GDP3220_15-anos-jardin-botanico-quinceaneras-republica-dominicana-santo-domingo_Greg-Dotel_1.jpg" dateStr="10 ENE 2026" delay={0.5} />
                    <PhoneMini label="Valen 15" imgUrl="https://images.unsplash.com/photo-1566737236500-c8ac43014a67?auto=format&fit=crop&w=600&q=80" dateStr="25 FEB 2026" delay={1.5} />
                    <div className="hidden sm:block">
                      <PhoneMini label="Martu Fest" imgUrl="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=600&q=80" dateStr="04 MAR 2026" delay={2.5} />
