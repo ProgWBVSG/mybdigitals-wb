@@ -344,10 +344,10 @@ export default function CumplesPage() {
             {/* Imagen de Fondo (Escala de Grises) */}
             <div className="absolute inset-0 w-full h-full z-0">
                <Image 
-                  src="https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?auto=format&fit=crop&w=1920&q=80" 
-                  alt="Hero 15 años" 
+                  src="https://gregdotel.com/wp-content/uploads/2023/05/15-Carismell_GDP3220_15-anos-jardin-botanico-quinceaneras-republica-dominicana-santo-domingo_Greg-Dotel_1.jpg" 
+                  alt="Quinceañera en jardín botánico" 
                   fill 
-                  className="object-cover object-center grayscale opacity-80" 
+                  className="object-cover object-top grayscale opacity-80" 
                />
                <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/60 to-background" />
             </div>
