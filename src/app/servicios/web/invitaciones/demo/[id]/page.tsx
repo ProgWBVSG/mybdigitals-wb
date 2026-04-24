@@ -189,6 +189,38 @@ function SectionTitle({ title, font, color }: { title: string; font: string; col
   );
 }
 
+// ── Parsea fechas en español como "10 Diciembre 2025" o "15 de Noviembre 2025" ──
+function parseEventDate(dateStr: string): Date | null {
+  if (!dateStr) return null;
+  const monthMap: Record<string, number> = {
+    enero: 0, febrero: 1, marzo: 2, abril: 3, mayo: 4, junio: 5,
+    julio: 6, agosto: 7, septiembre: 8, octubre: 9, noviembre: 10, diciembre: 11,
+  };
+  const lower = dateStr.toLowerCase();
+  const dayMatch = lower.match(/(\d{1,2})/);
+  const yearMatch = lower.match(/(202[0-9]|203[0-9])/);
+  let monthNum = -1;
+  for (const [name, num] of Object.entries(monthMap)) {
+    if (lower.includes(name)) { monthNum = num; break; }
+  }
+  if (!dayMatch || monthNum === -1) return null;
+  const day = parseInt(dayMatch[1], 10);
+  const year = yearMatch ? parseInt(yearMatch[1], 10) : new Date().getFullYear();
+  return new Date(year, monthNum, day, 20, 0, 0);
+}
+
+function calcTimeLeft(target: Date | null) {
+  if (!target) return { d: 0, h: 0, m: 0, s: 0 };
+  const diff = target.getTime() - Date.now();
+  if (diff <= 0) return { d: 0, h: 0, m: 0, s: 0 };
+  return {
+    d: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    h: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    m: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+    s: Math.floor((diff % (1000 * 60)) / 1000),
+  };
+}
+
 export default function DemoInvitationPage() {
   const router = useRouter();
   const params = useParams();
@@ -212,7 +244,7 @@ export default function DemoInvitationPage() {
 
   const [isEntered, setIsEntered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [timeLeft, setTimeLeft] = useState({ d: 45, h: 12, m: 30, s: 0 });
+  const [timeLeft, setTimeLeft] = useState({ d: 0, h: 0, m: 0, s: 0 });
   const [showGifts, setShowGifts] = useState(false);
   const [triviaIdx, setTriviaIdx] = useState(0);
   const [triviaAns, setTriviaAns] = useState<Record<number, number | null>>({});
@@ -290,16 +322,14 @@ export default function DemoInvitationPage() {
   }, [isPlaying]);
 
   useEffect(() => {
+    if (!data) return;
+    const target = parseEventDate(data.date);
+    setTimeLeft(calcTimeLeft(target));
     const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        let { d, h, m, s } = prev;
-        if (s > 0) s--;
-        else { s = 59; if (m > 0) m--; else { m = 59; if (h > 0) h--; else { h = 23; d--; } } }
-        return { d, h, m, s };
-      });
+      setTimeLeft(calcTimeLeft(target));
     }, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [data]);
 
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, 150]);
