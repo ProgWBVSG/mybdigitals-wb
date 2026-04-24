@@ -32,7 +32,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="w-full bg-[#030303] border-t border-white/[0.06] text-white font-sans relative overflow-hidden">
+    <footer className="w-full relative bg-[#030303] text-white font-sans overflow-hidden z-20 [clip-path:polygon(0_4vw,100%_0,100%_100%,0_100%)] lg:[clip-path:polygon(0_6vw,100%_0,100%_100%,0_100%)] pt-[4vw] lg:pt-[6vw] -mt-[4vw] lg:-mt-[6vw]">
       {/* Ambient glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
 

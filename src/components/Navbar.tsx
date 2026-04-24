@@ -83,6 +83,9 @@ export default function Navbar() {
           <Link href="/" className="text-[13px] tracking-wide text-gray-300 hover:text-white transition-colors duration-200 font-semibold">
             Inicio
           </Link>
+          <Link href="/nosotros" className="text-[13px] tracking-wide text-gray-300 hover:text-white transition-colors duration-200 font-semibold">
+            Nosotros
+          </Link>
 
           <div className="relative group" ref={dropdownRef}>
             <button
@@ -197,6 +200,7 @@ export default function Navbar() {
 
                 <nav className="flex flex-col gap-2 flex-1">
                    <Link href="/" onClick={() => setMobileOpen(false)} className="text-2xl font-black text-white py-4 border-b border-white/5">Inicio</Link>
+                   <Link href="/nosotros" onClick={() => setMobileOpen(false)} className="text-2xl font-black text-white py-4 border-b border-white/5">Nosotros</Link>
                    
                    <div className="py-4 border-b border-white/5">
                       <span className="text-[10px] uppercase font-black tracking-widest text-primary/80 mb-4 block">Ecosistemas Web</span>
