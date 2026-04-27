@@ -495,44 +495,45 @@ export default function DemoInvitationPage() {
         {isPlaying ? <Pause size={16} fill="currentColor" strokeWidth={0} /> : <Play size={16} fill="currentColor" className="ml-1" strokeWidth={0} />}
       </motion.button>
 
-      {/* ── 2. HERO ── */}
-      <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
-        <motion.div style={{ y: y1 }} className={`absolute inset-0 z-0 ${data.styleType === "watercolor" ? "mix-blend-multiply opacity-50" : ""}`}>
-          <Image src={data.bgHero} alt="Fondo" fill className="object-cover" priority style={{ opacity: data.opacityHero }} />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#fcfcff]/60 to-[#fcfcff]" style={{ '--tw-gradient-to': bgBase } as any} />
-        </motion.div>
+      {/* ── 2. HERO — Foto pareja de fondo + degradé ── */}
+      <section className="relative min-h-screen flex flex-col items-center justify-end overflow-hidden pb-20">
+        {/* Foto de la pareja como fondo completo */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/couple-hero.png"
+            alt="Pareja"
+            fill
+            className="object-cover object-top"
+            sizes="100vw"
+            priority
+          />
+          {/* Degradé inferior: la foto se funde hacia el color base de la invitación */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-current" style={{ color: bgBase }} />
+          <div className="absolute bottom-0 left-0 right-0 h-[60%] bg-gradient-to-b from-transparent" style={{ background: `linear-gradient(to bottom, transparent 0%, ${bgBase}80 40%, ${bgBase} 100%)` }} />
+          {/* Overlay sutil para que el texto sea legible */}
+          <div className="absolute inset-0 bg-black/15" />
+        </div>
 
-        <div className="relative z-10 flex flex-col items-center px-4 w-full text-center mt-10 sm:mt-20">
-          {/* ── Foto de la Pareja ── */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.1 }}
-            className="relative w-44 h-44 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full overflow-hidden mb-8 shadow-2xl"
-            style={{ border: `4px solid ${accent}50` }}
+        {/* Contenido: NOS CASAMOS + Nombres + Fecha */}
+        <div className="relative z-10 flex flex-col items-center px-4 w-full text-center">
+          <motion.p
+            initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}
+            className="text-[10px] sm:text-xs tracking-[0.4em] font-bold uppercase mb-4 text-white drop-shadow-lg"
           >
-            <Image
-              src="/couple-hero.png"
-              alt="Pareja"
-              fill
-              className="object-cover object-top"
-              sizes="(max-width: 640px) 176px, (max-width: 768px) 224px, 256px"
-              priority
-            />
-            <div className="absolute inset-0 rounded-full ring-1 ring-white/20" />
-          </motion.div>
+            Nos Casamos
+          </motion.p>
 
           <motion.h1
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }}
-            style={{ fontFamily: data.font, color: accent }}
+            style={{ fontFamily: data.font, color: "white", textShadow: "0 4px 30px rgba(0,0,0,0.5)" }}
             className="text-4xl md:text-6xl lg:text-7xl uppercase tracking-widest mb-4"
           >
             {data.names}
           </motion.h1>
-          <div className="w-10 h-[1px] bg-stone-300 my-6" />
+          <div className="w-10 h-[1px] bg-white/50 my-6" />
           <motion.p
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.4 }}
-            className="text-sm md:text-lg text-stone-500 tracking-[0.2em] font-light uppercase"
+            className="text-sm md:text-lg text-white/80 tracking-[0.2em] font-light uppercase drop-shadow-md"
           >
             {data.date}
           </motion.p>
@@ -540,7 +541,7 @@ export default function DemoInvitationPage() {
 
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1, y: [0, 8, 0] }} transition={{ duration: 1.5, repeat: Infinity, delay: 1 }}
-          className="absolute bottom-12 text-stone-400"
+          className="absolute bottom-6 text-white/60"
         >
           <ChevronDown size={24} strokeWidth={1} />
         </motion.div>
