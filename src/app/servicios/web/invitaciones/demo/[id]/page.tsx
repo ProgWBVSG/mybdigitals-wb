@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { ArrowLeft, Map, Pause, Play, ChevronDown, ChevronLeft, ChevronRight, ImagePlus, CheckCircle } from "lucide-react";
+import { ArrowLeft, Map, MapPin, Pause, Play, ChevronDown, ChevronLeft, ChevronRight, ImagePlus, CheckCircle } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
