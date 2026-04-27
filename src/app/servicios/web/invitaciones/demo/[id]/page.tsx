@@ -425,14 +425,28 @@ export default function DemoInvitationPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 1 }}
-              className="relative z-10 flex flex-col items-center text-center px-4"
+              className="relative z-10 flex flex-col items-center text-center w-full max-w-md mx-auto px-4"
             >
+              {/* ── Foto de la Pareja ── */}
+              <div className="relative w-40 h-40 sm:w-52 sm:h-52 rounded-full overflow-hidden mb-8 border-4 shadow-xl" style={{ borderColor: `${accent}40` }}>
+                <Image
+                  src="/couple-hero.png"
+                  alt="Pareja"
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 640px) 160px, 208px"
+                  priority
+                />
+                {/* Brillo sutil en el borde */}
+                <div className="absolute inset-0 rounded-full" style={{ boxShadow: `inset 0 0 20px ${accent}15` }} />
+              </div>
+
               <p className="text-[10px] tracking-[0.35em] font-bold uppercase mb-4" style={{ color: accent }}>
                 {data.gateTitle}
               </p>
 
               <h1
-                style={{ fontFamily: "'Dancing Script', 'Georgia', cursive", fontSize: "4.5rem", lineHeight: 1, color: "#374151" }}
+                style={{ fontFamily: "'Dancing Script', 'Georgia', cursive", fontSize: "clamp(2.8rem, 10vw, 4.5rem)", lineHeight: 1, color: "#374151" }}
                 className="mb-3 max-w-sm"
               >
                 {data.names}
