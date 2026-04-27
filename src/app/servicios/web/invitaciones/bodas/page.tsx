@@ -258,33 +258,38 @@ export default function BodasPage() {
          </div>
 
          {/* Contenedor Visual (Imagen + Textos) */}
-         <div className="relative w-full h-[70vh] min-h-[500px] flex flex-col justify-center items-center px-4">
-            {/* Imagen de Fondo (Escala de Grises - Pareja casándose) */}
+         <div className="relative w-full h-[75vh] min-h-[520px] md:min-h-[600px] flex flex-col justify-center items-center px-4">
+            {/* Imagen de Fondo — Pareja en alta resolución */}
             <div className="absolute inset-0 w-full h-full z-0">
                <Image 
-                  src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80" 
-                  alt="Casamiento Hero Bodas" 
+                  src="/hero-bodas-couple.jpg" 
+                  alt="Pareja romántica — Hero Invitaciones de Boda" 
                   fill 
-                  className="object-cover object-center grayscale opacity-75" 
+                  priority
+                  className="object-cover object-center" 
+                  sizes="100vw"
                />
-               <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-background" />
+               {/* Degradé con varias capas para legibilidad perfecta */}
+               <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-background" />
+               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+               <div className="absolute inset-0 bg-black/20" />
             </div>
 
             {/* Contenido Central */}
-            <div className="relative z-20 flex flex-col items-center text-center w-full max-w-5xl mt-8">
+            <div className="relative z-20 flex flex-col items-center text-center w-full max-w-5xl mt-8 px-2">
                <p className="text-[10px] md:text-xs font-black tracking-[0.3em] uppercase text-zinc-300 mb-6 drop-shadow-md">
                  COLECCIÓN NUPCIAL — INVITACIONES WEB
                </p>
                
-               <h1 className="text-[1.8rem] sm:text-4xl md:text-6xl lg:text-[5.5rem] font-black italic uppercase text-white leading-tight tracking-normal mb-6 w-full px-2 whitespace-nowrap" style={{ textShadow: "0 10px 40px rgba(0,0,0,0.8)" }}>
-                 El <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-fuchsia-300 pb-[0.1em] pr-[0.1em] inline-block">amor</span> merece <br /> una <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 to-rose-400 pb-[0.1em] pr-[0.1em] inline-block">invitación digna</span>
+               <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-[5.5rem] font-black italic uppercase text-white leading-[1.1] tracking-normal mb-6 w-full" style={{ textShadow: "0 10px 40px rgba(0,0,0,0.8)" }}>
+                 El <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-fuchsia-300 pb-[0.1em] pr-[0.1em] inline-block">amor</span> merece <br className="hidden sm:block" /><span className="sm:hidden"> </span>una <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 to-rose-400 pb-[0.1em] pr-[0.1em] inline-block">invitación digna</span>
                </h1>
                
-               <p className="text-sm md:text-base font-medium tracking-[0.2em] uppercase text-zinc-200 mb-10 mt-2 drop-shadow-md">
+               <p className="text-xs sm:text-sm md:text-base font-medium tracking-[0.15em] sm:tracking-[0.2em] uppercase text-zinc-200 mb-10 mt-2 drop-shadow-md max-w-md md:max-w-none">
                  Porque es uno de los días más importantes de tu vida
                </p>
                
-               <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="bg-[#f43f5e] hover:bg-[#e11d48] text-white px-8 py-4 rounded-md font-bold text-xs uppercase tracking-widest flex items-center gap-3 transition-colors shadow-[0_0_20px_rgba(244,63,94,0.3)]">
+               <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="bg-[#f43f5e] hover:bg-[#e11d48] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-md font-bold text-[10px] sm:text-xs uppercase tracking-widest flex items-center gap-3 transition-colors shadow-[0_0_20px_rgba(244,63,94,0.3)]">
                  Reservar nuestra fecha
                  <Heart size={18} fill="currentColor" />
                </a>
