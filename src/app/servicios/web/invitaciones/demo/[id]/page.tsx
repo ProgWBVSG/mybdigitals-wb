@@ -518,7 +518,8 @@ export default function DemoInvitationPage() {
         <div className="relative z-10 flex flex-col items-center px-4 w-full text-center">
           <motion.p
             initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}
-            className="text-[10px] sm:text-xs tracking-[0.4em] font-bold uppercase mb-4 text-white drop-shadow-lg"
+            className="text-2xl sm:text-3xl md:text-4xl tracking-[0.3em] font-bold uppercase mb-6 drop-shadow-lg"
+            style={{ color: accent, textShadow: "0 2px 20px rgba(0,0,0,0.4)" }}
           >
             Nos Casamos
           </motion.p>
@@ -530,10 +531,11 @@ export default function DemoInvitationPage() {
           >
             {data.names}
           </motion.h1>
-          <div className="w-10 h-[1px] bg-white/50 my-6" />
+          <div className="w-10 h-[1px] my-6" style={{ backgroundColor: `${accent}80` }} />
           <motion.p
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.4 }}
-            className="text-sm md:text-lg text-white/80 tracking-[0.2em] font-light uppercase drop-shadow-md"
+            className="text-base sm:text-lg md:text-xl tracking-[0.2em] font-semibold uppercase drop-shadow-md"
+            style={{ color: accent, textShadow: "0 2px 15px rgba(0,0,0,0.3)" }}
           >
             {data.date}
           </motion.p>
