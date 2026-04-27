@@ -502,7 +502,26 @@ export default function DemoInvitationPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#fcfcff]/60 to-[#fcfcff]" style={{ '--tw-gradient-to': bgBase } as any} />
         </motion.div>
 
-        <div className="relative z-10 flex flex-col items-center px-4 w-full text-center mt-20">
+        <div className="relative z-10 flex flex-col items-center px-4 w-full text-center mt-10 sm:mt-20">
+          {/* ── Foto de la Pareja ── */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.1 }}
+            className="relative w-44 h-44 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full overflow-hidden mb-8 shadow-2xl"
+            style={{ border: `4px solid ${accent}50` }}
+          >
+            <Image
+              src="/couple-hero.png"
+              alt="Pareja"
+              fill
+              className="object-cover object-top"
+              sizes="(max-width: 640px) 176px, (max-width: 768px) 224px, 256px"
+              priority
+            />
+            <div className="absolute inset-0 rounded-full ring-1 ring-white/20" />
+          </motion.div>
+
           <motion.h1
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }}
             style={{ fontFamily: data.font, color: accent }}
