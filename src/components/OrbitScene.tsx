@@ -62,7 +62,7 @@ export default function HeroVisual() {
           transformStyle: "preserve-3d",
           willChange: "transform",
         }}
-        className="relative w-[90%] max-w-[520px]"
+        className="relative w-full max-w-[480px] sm:w-[90%] sm:max-w-[520px]"
       >
         {/* ─── Pantalla (browser) ─── */}
         <div
@@ -175,12 +175,12 @@ export default function HeroVisual() {
         />
       </motion.div>
 
-      {/* ─── Notificaciones flotantes ─── */}
+      {/* ─── Notificaciones flotantes ─── (ocultas en mobile sm) */}
       {NOTIFICATIONS.map((n, i) => (
         <motion.div
           key={i}
-          className="absolute text-[11px] font-semibold text-white bg-white/[0.06] border border-white/10 rounded-full px-3 py-1.5 backdrop-blur-sm pointer-events-none whitespace-nowrap"
-          style={{ right: "-10px", top: `${28 + i * 24}%` }}
+          className="hidden sm:block absolute text-[11px] font-semibold text-white bg-white/[0.06] border border-white/10 rounded-full px-3 py-1.5 backdrop-blur-sm pointer-events-none whitespace-nowrap"
+          style={{ right: "4px", top: `${28 + i * 24}%` }}
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: [0, 1, 1, 0], x: [20, 0, 0, 20] }}
           transition={{

@@ -1,25 +1,35 @@
 "use client";
 
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { 
-  ArrowLeft, CalendarHeart, MapPin, Gift, Music, Pause, Play, ChevronDown, 
-  Camera, Map, Clock, HelpCircle, Shirt, Hotel, ChevronLeft, ChevronRight, ImagePlus, CheckCircle
-} from "lucide-react";
+import { ArrowLeft, Map, Pause, Play, ChevronDown, ChevronLeft, ChevronRight, ImagePlus, CheckCircle } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import CumplesTemplate from "@/components/CumplesTemplate";
+import {
+  HeartAnimIcon,
+  ClockAnimIcon,
+  PinAnimIcon,
+  GiftAnimIcon,
+  CameraAnimIcon,
+  QuestionAnimIcon,
+  HotelAnimIcon,
+  DressAnimIcon,
+  SuitAnimIcon,
+  GemAnimIcon,
+  SparkleAnimIcon,
+} from "@/components/AnimatedIcons";
 
 // ── BASE CONTENIDO POR TIPO ──
 
 const baseBodasContent = {
   historyLine: "Hay recuerdos que no voy a borrar, personas que no voy a olvidar y lugares donde siempre voy a querer estar...",
   gallery: [
-     "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80",
-     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
-     "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80",
-     "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80",
-     "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=600&q=80",
+     "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=90",
+     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=90",
+     "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=90",
+     "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=90",
+     "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1600&q=90",
   ],
   locations: [
     { type: "Ceremonia", title: "Catedral Nuestra Señora", time: "18:00 hs", link: "https://maps.google.com/?q=Catedral", address: "Av. Principal 123", icon: MapPin },
@@ -32,7 +42,7 @@ const baseBodasContent = {
   },
   mural: true,
   music: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3",
-  instagram: "nuestraboda2025",
+  instagram: "nuestraboda2026",
   logistics: {
      hotels: "Contamos con tarifas especiales en el Hotel Principal (10% OFF mencionando el casamiento).",
      transport: "Saldrán micros desde Plaza Centro a las 17:30 hs puntuales."
@@ -42,11 +52,11 @@ const baseBodasContent = {
 const baseCumplesContent = {
   historyLine: "Los momentos más lindos son los que compartimos con las personas que queremos...",
   gallery: [
-     "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=600&q=80",
-     "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=600&q=80",
-     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
-     "https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?auto=format&fit=crop&w=600&q=80",
-     "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80",
+     "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1600&q=90",
+     "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1600&q=90",
+     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=90",
+     "https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?auto=format&fit=crop&w=1600&q=90",
+     "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1600&q=90",
   ],
   locations: [
     { type: "Fiesta", title: "Salón Crystal", time: "21:30 hs", link: "https://maps.google.com/?q=Salon", address: "Calle Soñada 456", icon: Map }
@@ -152,42 +162,28 @@ const triviaCumples: Record<string, {q: string; options: string[]; correct: numb
   ],
 };
 
-// ── BASE DE DATOS DEMOS ──
+// ── BASE DE DATOS DEMOS (fechas 2026/2027 para countdown funcional) ──
 const demoDataBase: Record<string, any> = {
-  // BODAS
-  "bodas-1": { ...baseBodasContent, trivia: triviaBodas["1"], names: "Marti & Tomi", gateTitle: "Nuestra Boda", decorGate: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80", bgHero: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80", date: "15 de Noviembre 2025", font: "Georgia, serif", colorAccent: "#d4af37", styleType: "photo", opacityHero: 0.15 },
-  "bodas-2": { ...baseBodasContent, trivia: triviaBodas["2"], names: "Julieta & Marcos", gateTitle: "Nos Casamos", decorGate: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80", bgHero: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1920&q=80", date: "22 de Marzo 2026", font: "Arial, sans-serif", colorAccent: "#60a5fa", styleType: "photo", opacityHero: 0.2 },
-  "bodas-3": { ...baseBodasContent, trivia: triviaBodas["3"], names: "Lisa & Hernán", gateTitle: "Celebramos", decorGate: "https://images.unsplash.com/photo-1596431940984-7eaf9bd80de5?auto=format&fit=crop&w=800&q=80", bgHero: "https://images.unsplash.com/photo-1596431940984-7eaf9bd80de5?auto=format&fit=crop&w=1920&q=80", date: "16 de Septiembre 2025", font: "Geist Sans, sans-serif", colorAccent: "#4b5548", styleType: "watercolor", opacityHero: 0.1 },
-  "bodas-4": { ...baseBodasContent, trivia: triviaBodas["4"], names: "Candela & Elías", gateTitle: "Gran Día", decorGate: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80", bgHero: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80", date: "08 de Junio 2025", font: "Courier New, monospace", colorAccent: "#9ca3af", styleType: "photo", opacityHero: 0.2 },
-  "bodas-5": { ...baseBodasContent, trivia: triviaBodas["5"], names: "Georgina & Joaquín", gateTitle: "Sunset Boho", decorGate: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=800&q=80", bgHero: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1920&q=80", date: "30 de Agosto 2025", font: "Palatino, serif", colorAccent: "#f0a58f", styleType: "photo", opacityHero: 0.15 },
-  "bodas-6": { ...baseBodasContent, trivia: triviaBodas["6"], names: "Stefi & Nico", gateTitle: "Monograma Elegante", decorGate: "https://images.unsplash.com/photo-1579549321487-3cb83e5a5960?auto=format&fit=crop&w=800&q=80", bgHero: "https://images.unsplash.com/photo-1579549321487-3cb83e5a5960?auto=format&fit=crop&w=1920&q=80", date: "20 de Diciembre 2025", font: "Georgia, serif", colorAccent: "#611a28", styleType: "watercolor", opacityHero: 0.1 },
-  "bodas-7": { ...baseBodasContent, trivia: triviaBodas["7"], names: "Anto & Fer", gateTitle: "Lavanda Clásica", decorGate: "https://images.unsplash.com/photo-1543362143-6c84b1ebac1d?auto=format&fit=crop&w=800&q=80", bgHero: "https://images.unsplash.com/photo-1543362143-6c84b1ebac1d?auto=format&fit=crop&w=1920&q=80", date: "14 de Octubre 2025", font: "Arial, sans-serif", colorAccent: "#a78bfa", styleType: "watercolor", opacityHero: 0.08 },
-  "bodas-8": { ...baseBodasContent, trivia: triviaBodas["8"], names: "Valentina & Lucas", gateTitle: "El Gran Día", decorGate: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80", bgHero: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1920&q=80", date: "11 de Octubre 2025", font: "Arial, sans-serif", colorAccent: "#cbd5e1", styleType: "photo", opacityHero: 0.15 },
+  // BODAS — todas con fechas futuras para que el countdown funcione
+  "bodas-1": { ...baseBodasContent, trivia: triviaBodas["1"], names: "Marti & Tomi", gateTitle: "Nuestra Boda", decorGate: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=90", date: "15 de Noviembre 2026", font: "Georgia, serif", colorAccent: "#d4af37", colorBg: "#ffffff", styleType: "photo", opacityHero: 0.15 },
+  "bodas-2": { ...baseBodasContent, trivia: triviaBodas["2"], names: "Julieta & Marcos", gateTitle: "Nos Casamos", decorGate: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1920&q=90", date: "22 de Marzo 2027", font: "Arial, sans-serif", colorAccent: "#60a5fa", colorBg: "#f0f4f8", styleType: "photo", opacityHero: 0.2 },
+  "bodas-3": { ...baseBodasContent, trivia: triviaBodas["3"], names: "Lisa & Hernán", gateTitle: "Celebramos", decorGate: "https://images.unsplash.com/photo-1596431940984-7eaf9bd80de5?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1596431940984-7eaf9bd80de5?auto=format&fit=crop&w=1920&q=90", date: "16 de Septiembre 2026", font: "Geist Sans, sans-serif", colorAccent: "#4b5548", colorBg: "#fdfbf7", styleType: "watercolor", opacityHero: 0.1 },
+  "bodas-4": { ...baseBodasContent, trivia: triviaBodas["4"], names: "Candela & Elías", gateTitle: "Gran Día", decorGate: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=90", date: "08 de Junio 2026", font: "Courier New, monospace", colorAccent: "#9ca3af", colorBg: "#f3f4f6", styleType: "photo", opacityHero: 0.2 },
+  "bodas-5": { ...baseBodasContent, trivia: triviaBodas["5"], names: "Georgina & Joaquín", gateTitle: "Sunset Boho", decorGate: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1920&q=90", date: "30 de Agosto 2026", font: "Palatino, serif", colorAccent: "#f0a58f", colorBg: "#fff6f5", styleType: "photo", opacityHero: 0.15 },
+  "bodas-6": { ...baseBodasContent, trivia: triviaBodas["6"], names: "Stefi & Nico", gateTitle: "Monograma Elegante", decorGate: "https://images.unsplash.com/photo-1579549321487-3cb83e5a5960?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1579549321487-3cb83e5a5960?auto=format&fit=crop&w=1920&q=90", date: "20 de Diciembre 2026", font: "Georgia, serif", colorAccent: "#611a28", colorBg: "#ffffff", styleType: "watercolor", opacityHero: 0.1 },
+  "bodas-7": { ...baseBodasContent, trivia: triviaBodas["7"], names: "Anto & Fer", gateTitle: "Lavanda Clásica", decorGate: "https://images.unsplash.com/photo-1543362143-6c84b1ebac1d?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1543362143-6c84b1ebac1d?auto=format&fit=crop&w=1920&q=90", date: "14 de Octubre 2026", font: "Arial, sans-serif", colorAccent: "#a78bfa", colorBg: "#fcfcff", styleType: "watercolor", opacityHero: 0.08 },
+  "bodas-8": { ...baseBodasContent, trivia: triviaBodas["8"], names: "Valentina & Lucas", gateTitle: "El Gran Día", decorGate: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1920&q=90", date: "11 de Octubre 2026", font: "Arial, sans-serif", colorAccent: "#cbd5e1", colorBg: "#fafafa", styleType: "photo", opacityHero: 0.15 },
 
   // CUMPLES
-  "cumples-1": { ...baseCumplesContent, trivia: triviaCumples["1"], names: "Mía", gateTitle: "Mis 15 Años", decorGate: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80", bgHero: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1920&q=80", date: "10 Diciembre 2025", font: "Arial, sans-serif", colorAccent: "#a855f7", styleType: "photo", opacityHero: 0.25 },
-  "cumples-2": { ...baseCumplesContent, trivia: triviaCumples["2"], names: "Delfina", gateTitle: "Mis 15", decorGate: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=800&q=80", bgHero: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1920&q=80", date: "24 Mayo 2025", font: "Georgia, serif", colorAccent: "#eaac8b", styleType: "watercolor", opacityHero: 0.1 },
-  "cumples-3": { ...baseCumplesContent, trivia: triviaCumples["3"], names: "Valentina", gateTitle: "Golden Sweet", bgHero: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80", date: "15 de Agosto", font: "Palatino, serif", colorAccent: "#eab308", styleType: "photo", opacityHero: 0.15 },
-  "cumples-4": { ...baseCumplesContent, trivia: triviaCumples["4"], names: "Camila", gateTitle: "Gala Rosa", bgHero: "https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?auto=format&fit=crop&w=1920&q=80", date: "20 Septiembre 2025", font: "Courier New, monospace", colorAccent: "#f43f5e", styleType: "photo", opacityHero: 0.2 },
-  "cumples-5": { ...baseCumplesContent, trivia: triviaCumples["5"], names: "Martina", gateTitle: "Mis XV", bgHero: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1920&q=80", date: "05 Febrero 2026", font: "Trebuchet MS, sans-serif", colorAccent: "#3b82f6", styleType: "photo", opacityHero: 0.25 },
-  "cumples-6": { ...baseCumplesContent, trivia: triviaCumples["6"], names: "Luna", gateTitle: "Party", bgHero: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80", date: "18 de Octubre", font: "Inter, sans-serif", colorAccent: "#818cf8", styleType: "photo", opacityHero: 0.2 },
-  "cumples-7": { ...baseCumplesContent, trivia: triviaCumples["7"], names: "Sol", gateTitle: "15 Años", bgHero: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1920&q=80", date: "12 Enero 2026", font: "Georgia, serif", colorAccent: "#db2777", styleType: "watercolor", opacityHero: 0.1 },
-  "cumples-8": { ...baseCumplesContent, trivia: triviaCumples["8"], names: "Renata", gateTitle: "Mis XV", bgHero: "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?auto=format&fit=crop&w=1920&q=80", date: "28 Noviembre 2025", font: "Arial, sans-serif", colorAccent: "#ea580c", styleType: "photo", opacityHero: 0.2 },
+  "cumples-1": { ...baseCumplesContent, trivia: triviaCumples["1"], names: "Mía", gateTitle: "Mis 15 Años", decorGate: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1920&q=90", date: "10 Diciembre 2026", font: "Arial, sans-serif", colorAccent: "#a855f7", styleType: "photo", opacityHero: 0.25 },
+  "cumples-2": { ...baseCumplesContent, trivia: triviaCumples["2"], names: "Delfina", gateTitle: "Mis 15", decorGate: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1920&q=90", date: "24 Mayo 2026", font: "Georgia, serif", colorAccent: "#eaac8b", styleType: "watercolor", opacityHero: 0.1 },
+  "cumples-3": { ...baseCumplesContent, trivia: triviaCumples["3"], names: "Valentina", gateTitle: "Golden Sweet", bgHero: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=90", date: "15 de Agosto 2026", font: "Palatino, serif", colorAccent: "#eab308", styleType: "photo", opacityHero: 0.15 },
+  "cumples-4": { ...baseCumplesContent, trivia: triviaCumples["4"], names: "Camila", gateTitle: "Gala Rosa", bgHero: "https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?auto=format&fit=crop&w=1920&q=90", date: "20 Septiembre 2026", font: "Courier New, monospace", colorAccent: "#f43f5e", styleType: "photo", opacityHero: 0.2 },
+  "cumples-5": { ...baseCumplesContent, trivia: triviaCumples["5"], names: "Martina", gateTitle: "Mis XV", bgHero: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1920&q=90", date: "05 Febrero 2027", font: "Trebuchet MS, sans-serif", colorAccent: "#3b82f6", styleType: "photo", opacityHero: 0.25 },
+  "cumples-6": { ...baseCumplesContent, trivia: triviaCumples["6"], names: "Luna", gateTitle: "Party", bgHero: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=90", date: "18 de Octubre 2026", font: "Inter, sans-serif", colorAccent: "#818cf8", styleType: "photo", opacityHero: 0.2 },
+  "cumples-7": { ...baseCumplesContent, trivia: triviaCumples["7"], names: "Sol", gateTitle: "15 Años", bgHero: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1920&q=90", date: "12 Enero 2027", font: "Georgia, serif", colorAccent: "#db2777", styleType: "watercolor", opacityHero: 0.1 },
+  "cumples-8": { ...baseCumplesContent, trivia: triviaCumples["8"], names: "Renata", gateTitle: "Mis XV", bgHero: "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?auto=format&fit=crop&w=1920&q=90", date: "28 Noviembre 2026", font: "Arial, sans-serif", colorAccent: "#ea580c", styleType: "photo", opacityHero: 0.2 },
 };
-
-function SectionTitle({ title, font, color }: { title: string; font: string; color: string }) {
-  return (
-    <motion.h2
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      className="text-4xl text-center mb-10"
-      style={{ fontFamily: font, color }}
-    >
-      {title}
-    </motion.h2>
-  );
-}
 
 // ── Parsea fechas en español como "10 Diciembre 2025" o "15 de Noviembre 2025" ──
 function parseEventDate(dateStr: string): Date | null {
@@ -205,7 +201,7 @@ function parseEventDate(dateStr: string): Date | null {
   }
   if (!dayMatch || monthNum === -1) return null;
   const day = parseInt(dayMatch[1], 10);
-  const year = yearMatch ? parseInt(yearMatch[1], 10) : new Date().getFullYear();
+  const year = yearMatch ? parseInt(yearMatch[1], 10) : new Date().getFullYear() + 1;
   return new Date(year, monthNum, day, 20, 0, 0);
 }
 
@@ -219,6 +215,46 @@ function calcTimeLeft(target: Date | null) {
     m: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
     s: Math.floor((diff % (1000 * 60)) / 1000),
   };
+}
+
+// AnimIcon eliminado — usando AnimatedIcons.tsx con SVG animados reales
+
+// ── Colores por sección (alternancia elegante) ──
+// isAccent=true → fondo de color, texto blanco
+// isAccent=false → fondo blanco/neutro, color en texto
+function sectionStyle(isAccent: boolean, accent: string, bg: string) {
+  if (isAccent) {
+    return {
+      section: { backgroundColor: accent },
+      title: { color: "#ffffff" },
+      text: { color: "rgba(255,255,255,0.85)" },
+      sub: { color: "rgba(255,255,255,0.7)" },
+      card: { background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)" },
+      btnBorder: { borderColor: "rgba(255,255,255,0.5)", color: "#fff" },
+    };
+  }
+  return {
+    section: { backgroundColor: bg },
+    title: { color: accent },
+    text: { color: "#374151" },
+    sub: { color: "#6b7280" },
+    card: { background: "#ffffff", border: "1px solid #e5e7eb" },
+    btnBorder: { borderColor: "#d1d5db", color: accent },
+  };
+}
+
+function SectionTitle({ title, font, style }: { title: string; font: string; style: React.CSSProperties }) {
+  return (
+    <motion.h2
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      className="text-4xl text-center mb-10"
+      style={{ fontFamily: font, ...style }}
+    >
+      {title}
+    </motion.h2>
+  );
 }
 
 export default function DemoInvitationPage() {
@@ -321,9 +357,11 @@ export default function DemoInvitationPage() {
     }
   }, [isPlaying]);
 
+  // ── COUNTDOWN: corre cada segundo en cuanto data está disponible ──
   useEffect(() => {
     if (!data) return;
     const target = parseEventDate(data.date);
+    // Actualizar inmediatamente
     setTimeLeft(calcTimeLeft(target));
     const timer = setInterval(() => {
       setTimeLeft(calcTimeLeft(target));
@@ -352,13 +390,22 @@ export default function DemoInvitationPage() {
     return <CumplesTemplate data={data} guestName={guestName} />;
   }
 
-  // Sección de galería: texto genérico por tipo
-  const galleryTitle = "Nuestros Momentos";
-  // Etiqueta de RSVP por tipo
+  const accent = data.colorAccent || "#d4af37";
+  const bgBase = data.colorBg || "#ffffff";
   const rsvpDeadlineLabel = `Por favor confirmá antes del 1° del mes anterior a la boda.`;
 
+  // Estilos pre-calculados por sección (alternando)
+  const s1 = sectionStyle(false, accent, bgBase);       // Historia: fondo blanco, titulo de color
+  const s2 = sectionStyle(true,  accent, bgBase);       // Countdown: fondo accent, texto blanco
+  const s3 = sectionStyle(false, accent, bgBase);       // Galeria: fondo blanco
+  const s4 = sectionStyle(true,  accent, bgBase);       // Ubicación: fondo accent, texto blanco
+  const s5 = sectionStyle(false, accent, bgBase);       // Dress + Logística: fondo blanco
+  const s6 = sectionStyle(true,  accent, bgBase);       // Regalos: fondo accent, texto blanco
+  const s7 = sectionStyle(false, accent, bgBase);       // Trivia: fondo blanco
+
   return (
-    <div className="bg-[#fcfcff] min-h-screen text-stone-800 font-sans selection:bg-rose-200 overflow-x-hidden">
+    <div className="min-h-screen text-stone-800 font-sans selection:bg-rose-200 overflow-x-hidden" style={{ backgroundColor: bgBase }}>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap');`}</style>
       <audio ref={audioRef} src={data.music} loop hidden />
 
       {/* ── 1. PANTALLA DE INGRESO (Gatekeeper) ── */}
@@ -380,14 +427,13 @@ export default function DemoInvitationPage() {
               transition={{ delay: 0.2, duration: 1 }}
               className="relative z-10 flex flex-col items-center text-center px-4"
             >
-              {/* Sin "Hola familia X" — presentación elegante */}
-              <p className="text-[10px] tracking-[0.35em] text-stone-500 font-bold uppercase mb-4" style={{ color: data.colorAccent }}>
+              <p className="text-[10px] tracking-[0.35em] font-bold uppercase mb-4" style={{ color: accent }}>
                 {data.gateTitle}
               </p>
 
               <h1
-                style={{ fontFamily: "'Dancing Script', 'Georgia', cursive", fontSize: "4.5rem", lineHeight: 1 }}
-                className="text-stone-700 mb-3 max-w-sm"
+                style={{ fontFamily: "'Dancing Script', 'Georgia', cursive", fontSize: "4.5rem", lineHeight: 1, color: "#374151" }}
+                className="mb-3 max-w-sm"
               >
                 {data.names}
               </h1>
@@ -396,11 +442,13 @@ export default function DemoInvitationPage() {
 
               {guestName && (
                 <div className="mb-6 text-stone-600 bg-white/80 px-5 py-2 rounded-full backdrop-blur-md border border-stone-200/60 text-xs tracking-widest font-semibold uppercase shadow-sm">
-                  Tu lugar está reservado, <span style={{ color: data.colorAccent }}>{guestName}</span>
+                  Tu lugar está reservado, <span style={{ color: accent }}>{guestName}</span>
                 </div>
               )}
 
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={handleEnter}
                 className="relative overflow-hidden group border border-stone-300 bg-white hover:border-stone-800 text-stone-600 hover:text-stone-900 px-10 py-3 rounded-full text-xs font-semibold tracking-widest uppercase transition-all duration-300 shadow-sm"
               >
@@ -408,7 +456,7 @@ export default function DemoInvitationPage() {
                 <span className="relative z-10 flex items-center gap-2">
                   Abrir Invitación <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </span>
-              </button>
+              </motion.button>
             </motion.div>
           </motion.div>
         )}
@@ -437,13 +485,13 @@ export default function DemoInvitationPage() {
       <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
         <motion.div style={{ y: y1 }} className={`absolute inset-0 z-0 ${data.styleType === "watercolor" ? "mix-blend-multiply opacity-50" : ""}`}>
           <Image src={data.bgHero} alt="Fondo" fill className="object-cover" priority style={{ opacity: data.opacityHero }} />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#fcfcff]/5 via-[#fcfcff]/60 to-[#fcfcff]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#fcfcff]/60 to-[#fcfcff]" style={{ '--tw-gradient-to': bgBase } as any} />
         </motion.div>
 
         <div className="relative z-10 flex flex-col items-center px-4 w-full text-center mt-20">
           <motion.h1
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }}
-            style={{ fontFamily: data.font, color: data.colorAccent }}
+            style={{ fontFamily: data.font, color: accent }}
             className="text-4xl md:text-6xl lg:text-7xl uppercase tracking-widest mb-4"
           >
             {data.names}
@@ -465,24 +513,23 @@ export default function DemoInvitationPage() {
         </motion.div>
       </section>
 
-      {/* ── HISTORIA / FRASE ── */}
+      {/* ── HISTORIA / FRASE ── SECCIÓN 1: fondo blanco, accents de color */}
       {data.historyLine && (
-        <section className="relative py-28 px-6 text-center overflow-hidden border-b border-stone-100" style={{ backgroundColor: "#fdfaf6" }}>
-          {/* Fondo floral visible */}
+        <section className="relative py-20 px-6 text-center overflow-hidden border-b border-stone-100" style={s1.section}>
+          {/* Fondo floral visible pero sin tapar texto */}
           <div className="absolute inset-0 pointer-events-none">
             <Image
-              src="https://images.unsplash.com/photo-1490750967868-88df5691cc6e?auto=format&fit=crop&w=1600&q=80"
+              src="https://images.unsplash.com/photo-1490750967868-88df5691cc6e?auto=format&fit=crop&w=1600&q=90"
               alt="Flores decorativas"
               fill
               className="object-cover"
-              style={{ opacity: 0.18 }}
+              style={{ opacity: 0.12 }}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#fdfaf6]/80 via-transparent to-[#fdfaf6]/80" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#fdfaf6]/60 via-transparent to-[#fdfaf6]/60" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/90" style={{ '--tw-gradient-from': `${bgBase}/90`, '--tw-gradient-to': `${bgBase}/90` } as any} />
           </div>
 
-          {/* Rama izquierda */}
-          <div className="absolute left-0 top-0 h-full w-48 pointer-events-none" style={{ color: data.colorAccent, opacity: 0.65 }}>
+          {/* Ramas SVG — ocultas en mobile para evitar superposición */}
+          <div className="absolute left-0 top-0 h-full w-32 md:w-48 pointer-events-none hidden sm:block" style={{ color: accent, opacity: 0.55 }}>
             <svg viewBox="0 0 180 520" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
               <path d="M25 520 C35 420 15 365 50 290 C70 235 28 178 58 115 C78 72 45 35 68 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
               <path d="M48 400 C72 378 108 388 132 365" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
@@ -490,36 +537,14 @@ export default function DemoInvitationPage() {
               <path d="M52 225 C76 202 112 218 140 195" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
               <ellipse cx="80" cy="390" rx="18" ry="9" fill="currentColor" opacity="0.3" transform="rotate(-25 80 390)"/>
               <ellipse cx="72" cy="300" rx="16" ry="8" fill="currentColor" opacity="0.3" transform="rotate(-30 72 300)"/>
-              <circle cx="132" cy="365" r="12" fill="currentColor" opacity="0.18"/>
               <circle cx="132" cy="365" r="5" fill="currentColor" opacity="0.7"/>
-              <ellipse cx="132" cy="352" rx="7" ry="4" fill="currentColor" opacity="0.4"/>
-              <ellipse cx="143" cy="358" rx="7" ry="4" fill="currentColor" opacity="0.4" transform="rotate(55 143 358)"/>
-              <ellipse cx="143" cy="372" rx="7" ry="4" fill="currentColor" opacity="0.4" transform="rotate(125 143 372)"/>
-              <ellipse cx="132" cy="378" rx="7" ry="4" fill="currentColor" opacity="0.4" transform="rotate(180 132 378)"/>
-              <ellipse cx="121" cy="372" rx="7" ry="4" fill="currentColor" opacity="0.4" transform="rotate(-125 121 372)"/>
-              <ellipse cx="121" cy="358" rx="7" ry="4" fill="currentColor" opacity="0.4" transform="rotate(-55 121 358)"/>
-              <circle cx="124" cy="275" r="9" fill="currentColor" opacity="0.18"/>
               <circle cx="124" cy="275" r="4" fill="currentColor" opacity="0.7"/>
-              <ellipse cx="124" cy="265" rx="6" ry="3.5" fill="currentColor" opacity="0.4"/>
-              <ellipse cx="133" cy="271" rx="6" ry="3.5" fill="currentColor" opacity="0.4" transform="rotate(60 133 271)"/>
-              <ellipse cx="133" cy="279" rx="6" ry="3.5" fill="currentColor" opacity="0.4" transform="rotate(120 133 279)"/>
-              <ellipse cx="124" cy="285" rx="6" ry="3.5" fill="currentColor" opacity="0.4" transform="rotate(180 124 285)"/>
-              <ellipse cx="115" cy="279" rx="6" ry="3.5" fill="currentColor" opacity="0.4" transform="rotate(-120 115 279)"/>
-              <ellipse cx="115" cy="271" rx="6" ry="3.5" fill="currentColor" opacity="0.4" transform="rotate(-60 115 271)"/>
-              <circle cx="140" cy="195" r="8" fill="currentColor" opacity="0.18"/>
               <circle cx="140" cy="195" r="3.5" fill="currentColor" opacity="0.7"/>
-              <ellipse cx="140" cy="186" rx="5" ry="3" fill="currentColor" opacity="0.4"/>
-              <ellipse cx="149" cy="191" rx="5" ry="3" fill="currentColor" opacity="0.4" transform="rotate(60 149 191)"/>
-              <ellipse cx="149" cy="199" rx="5" ry="3" fill="currentColor" opacity="0.4" transform="rotate(120 149 199)"/>
-              <ellipse cx="140" cy="204" rx="5" ry="3" fill="currentColor" opacity="0.4" transform="rotate(180 140 204)"/>
-              <ellipse cx="131" cy="199" rx="5" ry="3" fill="currentColor" opacity="0.4" transform="rotate(-120 131 199)"/>
-              <ellipse cx="131" cy="191" rx="5" ry="3" fill="currentColor" opacity="0.4" transform="rotate(-60 131 191)"/>
               <circle cx="68" cy="5" r="5" fill="currentColor" opacity="0.55"/>
             </svg>
           </div>
 
-          {/* Rama derecha (espejo) */}
-          <div className="absolute right-0 top-0 h-full w-48 pointer-events-none" style={{ color: data.colorAccent, opacity: 0.65 }}>
+          <div className="absolute right-0 top-0 h-full w-32 md:w-48 pointer-events-none hidden sm:block" style={{ color: accent, opacity: 0.55 }}>
             <svg viewBox="0 0 180 520" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" style={{ transform: "scaleX(-1)" }}>
               <path d="M25 520 C35 420 15 365 50 290 C70 235 28 178 58 115 C78 72 45 35 68 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
               <path d="M48 400 C72 378 108 388 132 365" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
@@ -527,45 +552,22 @@ export default function DemoInvitationPage() {
               <path d="M52 225 C76 202 112 218 140 195" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
               <ellipse cx="80" cy="390" rx="18" ry="9" fill="currentColor" opacity="0.3" transform="rotate(-25 80 390)"/>
               <ellipse cx="72" cy="300" rx="16" ry="8" fill="currentColor" opacity="0.3" transform="rotate(-30 72 300)"/>
-              <circle cx="132" cy="365" r="12" fill="currentColor" opacity="0.18"/>
               <circle cx="132" cy="365" r="5" fill="currentColor" opacity="0.7"/>
-              <ellipse cx="132" cy="352" rx="7" ry="4" fill="currentColor" opacity="0.4"/>
-              <ellipse cx="143" cy="358" rx="7" ry="4" fill="currentColor" opacity="0.4" transform="rotate(55 143 358)"/>
-              <ellipse cx="143" cy="372" rx="7" ry="4" fill="currentColor" opacity="0.4" transform="rotate(125 143 372)"/>
-              <ellipse cx="132" cy="378" rx="7" ry="4" fill="currentColor" opacity="0.4" transform="rotate(180 132 378)"/>
-              <ellipse cx="121" cy="372" rx="7" ry="4" fill="currentColor" opacity="0.4" transform="rotate(-125 121 372)"/>
-              <ellipse cx="121" cy="358" rx="7" ry="4" fill="currentColor" opacity="0.4" transform="rotate(-55 121 358)"/>
-              <circle cx="124" cy="275" r="9" fill="currentColor" opacity="0.18"/>
               <circle cx="124" cy="275" r="4" fill="currentColor" opacity="0.7"/>
-              <ellipse cx="124" cy="265" rx="6" ry="3.5" fill="currentColor" opacity="0.4"/>
-              <ellipse cx="133" cy="271" rx="6" ry="3.5" fill="currentColor" opacity="0.4" transform="rotate(60 133 271)"/>
-              <ellipse cx="133" cy="279" rx="6" ry="3.5" fill="currentColor" opacity="0.4" transform="rotate(120 133 279)"/>
-              <ellipse cx="124" cy="285" rx="6" ry="3.5" fill="currentColor" opacity="0.4" transform="rotate(180 124 285)"/>
-              <ellipse cx="115" cy="279" rx="6" ry="3.5" fill="currentColor" opacity="0.4" transform="rotate(-120 115 279)"/>
-              <ellipse cx="115" cy="271" rx="6" ry="3.5" fill="currentColor" opacity="0.4" transform="rotate(-60 115 271)"/>
-              <circle cx="140" cy="195" r="8" fill="currentColor" opacity="0.18"/>
               <circle cx="140" cy="195" r="3.5" fill="currentColor" opacity="0.7"/>
-              <ellipse cx="140" cy="186" rx="5" ry="3" fill="currentColor" opacity="0.4"/>
-              <ellipse cx="149" cy="191" rx="5" ry="3" fill="currentColor" opacity="0.4" transform="rotate(60 149 191)"/>
-              <ellipse cx="149" cy="199" rx="5" ry="3" fill="currentColor" opacity="0.4" transform="rotate(120 149 199)"/>
-              <ellipse cx="140" cy="204" rx="5" ry="3" fill="currentColor" opacity="0.4" transform="rotate(180 140 204)"/>
-              <ellipse cx="131" cy="199" rx="5" ry="3" fill="currentColor" opacity="0.4" transform="rotate(-120 131 199)"/>
-              <ellipse cx="131" cy="191" rx="5" ry="3" fill="currentColor" opacity="0.4" transform="rotate(-60 131 191)"/>
               <circle cx="68" cy="5" r="5" fill="currentColor" opacity="0.55"/>
             </svg>
           </div>
 
-          {/* Texto */}
-          <div className="relative z-10 max-w-xl mx-auto">
+          {/* Texto centrado con padding lateral para no chocar con ramas */}
+          <div className="relative z-10 max-w-md sm:max-w-xl mx-auto px-4 sm:px-12 md:px-4">
             <motion.div
               initial={{ opacity: 0, scaleX: 0 }} whileInView={{ opacity: 1, scaleX: 1 }} viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="flex items-center justify-center gap-3 mb-8"
             >
               <div className="h-[1px] w-16 bg-gradient-to-r from-transparent to-stone-300" />
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ color: data.colorAccent }}>
-                <path d="M10 2C10 2 7 6 2 6C2 6 6 9 6 14C6 14 8 11 10 10C12 11 14 14 14 14C14 9 18 6 18 6C13 6 10 2 10 2Z" fill="currentColor" opacity="0.7"/>
-              </svg>
+              <HeartAnimIcon color={accent} size={22} />
               <div className="h-[1px] w-16 bg-gradient-to-l from-transparent to-stone-300" />
             </motion.div>
 
@@ -574,8 +576,8 @@ export default function DemoInvitationPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.9, delay: 0.2 }}
-              className="text-xl md:text-2xl font-light italic leading-relaxed text-stone-600"
-              style={{ fontFamily: "Georgia, serif" }}
+              className="text-xl md:text-2xl font-light italic leading-relaxed"
+              style={{ fontFamily: "Georgia, serif", color: "#4b5563" }}
             >
               &ldquo;{data.historyLine}&rdquo;
             </motion.p>
@@ -587,9 +589,9 @@ export default function DemoInvitationPage() {
             >
               <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-stone-300" />
               <div className="flex gap-1.5">
-                <div className="w-1 h-1 rounded-full" style={{ backgroundColor: data.colorAccent, opacity: 0.5 }} />
-                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: data.colorAccent, opacity: 0.7 }} />
-                <div className="w-1 h-1 rounded-full" style={{ backgroundColor: data.colorAccent, opacity: 0.5 }} />
+                <div className="w-1 h-1 rounded-full" style={{ backgroundColor: accent, opacity: 0.5 }} />
+                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: accent, opacity: 0.7 }} />
+                <div className="w-1 h-1 rounded-full" style={{ backgroundColor: accent, opacity: 0.5 }} />
               </div>
               <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-stone-300" />
             </motion.div>
@@ -597,27 +599,45 @@ export default function DemoInvitationPage() {
         </section>
       )}
 
-      {/* ── CUENTA REGRESIVA ── */}
-      <section className="py-20 px-6 flex flex-col items-center justify-center border-b border-stone-100 bg-[#fbfbfb]">
-        <p className="text-xs uppercase tracking-widest text-stone-400 mb-8 font-semibold">Faltan</p>
+      {/* ── CUENTA REGRESIVA ── SECCIÓN 2: fondo de COLOR (accent), texto blanco */}
+      <section className="py-20 px-6 flex flex-col items-center justify-center" style={s2.section}>
+        <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex flex-col items-center">
+          <ClockAnimIcon color="rgba(255,255,255,0.85)" size={40} />
+          <p className="text-xs uppercase tracking-widest font-semibold mt-4 mb-8" style={s2.sub}>Cuenta Regresiva</p>
+        </motion.div>
+
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} className="flex gap-3 md:gap-6">
           {Object.entries(timeLeft).map(([unit, value]) => (
-            <div key={unit} className="w-16 h-20 md:w-20 md:h-24 bg-white border border-stone-200 rounded-xl shadow-sm flex flex-col items-center justify-center">
-              <span className="text-2xl md:text-3xl text-stone-700 font-serif" style={{ color: data.colorAccent }}>
+            <div key={unit} className="w-16 h-20 md:w-24 md:h-28 rounded-2xl flex flex-col items-center justify-center shadow-lg" style={s2.card}>
+              <motion.span
+                key={value}
+                initial={{ y: -10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className="text-2xl md:text-4xl font-bold"
+                style={s2.title}
+              >
                 {value.toString().padStart(2, "0")}
-              </span>
-              <span className="text-[8px] md:text-[10px] uppercase tracking-widest text-stone-400 mt-2">
+              </motion.span>
+              <span className="text-[8px] md:text-[11px] uppercase tracking-widest mt-2 font-semibold" style={s2.sub}>
                 {{ d: "Días", h: "Hs", m: "Min", s: "Seg" }[unit]}
               </span>
             </div>
           ))}
         </motion.div>
+
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-8 text-xs tracking-widest uppercase font-semibold" style={s2.sub}>
+          {data.date}
+        </motion.p>
       </section>
 
-      {/* ── GALERÍA DE FOTOS ── */}
+      {/* ── GALERÍA DE FOTOS ── SECCIÓN 3: fondo blanco */}
       {data.gallery && data.gallery.length > 0 && (
-        <section className="py-20 overflow-hidden relative border-b border-stone-100">
-          <SectionTitle title={galleryTitle} font={data.font} color={data.colorAccent} />
+        <section className="py-20 overflow-hidden relative border-b border-stone-100" style={s3.section}>
+          <div className="flex items-center justify-center gap-3 mb-10">
+            <CameraAnimIcon color={accent} size={36} />
+          </div>
+          <SectionTitle title="Nuestros Momentos" font={data.font} style={s3.title} />
           <div className="relative flex w-[200%] gap-4" style={{ WebkitMaskImage: "linear-gradient(90deg, transparent, white 10%, white 90%, transparent)" }}>
             <motion.div
               animate={{ x: ["0%", "-50%"] }}
@@ -634,134 +654,128 @@ export default function DemoInvitationPage() {
         </section>
       )}
 
-      {/* ── UBICACIÓN ── */}
+      {/* ── UBICACIÓN ── SECCIÓN 4: fondo de COLOR (accent), texto blanco */}
       {data.locations && (
-        <section className="py-24 px-6 max-w-4xl mx-auto">
-          <SectionTitle title="Dónde y Cuándo" font={data.font} color={data.colorAccent} />
-          <div className="grid md:grid-cols-2 gap-8">
-            {data.locations.map((loc: any, i: number) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-white border border-stone-200 p-8 rounded-3xl text-center flex flex-col items-center">
-                <div className="w-14 h-14 rounded-full bg-stone-50 flex items-center justify-center mb-6 text-stone-500">
-                  <loc.icon size={24} strokeWidth={1.5} />
-                </div>
-                <h3 className="text-xl tracking-wider uppercase mb-2" style={{ color: data.colorAccent }}>{loc.type}</h3>
-                <p className="font-serif text-2xl text-stone-700 mb-1">{loc.title}</p>
-                <div className="flex items-center gap-2 text-sm text-stone-500 mb-6">
-                  <Clock size={14} /> <span>{loc.time}</span>
-                </div>
-                <p className="text-sm text-stone-500 mb-8">{loc.address}</p>
-                <a href={loc.link} target="_blank" rel="noopener noreferrer" className="border border-stone-300 text-stone-600 hover:bg-stone-50 px-8 py-3 rounded-full text-[10px] uppercase tracking-widest font-bold transition-colors w-full">
-                  Cómo Llegar
-                </a>
-              </motion.div>
-            ))}
+        <section className="py-24 px-6" style={s4.section}>
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center justify-center gap-3 mb-10">
+              <PinAnimIcon color="rgba(255,255,255,0.9)" size={40} />
+            </div>
+            <SectionTitle title="Dónde y Cuándo" font={data.font} style={s4.title} />
+            <div className="grid md:grid-cols-2 gap-8">
+              {data.locations.map((loc: any, i: number) => (
+                <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                  className="p-8 rounded-3xl text-center flex flex-col items-center shadow-lg" style={s4.card}>
+                  <div className="w-14 h-14 rounded-full flex items-center justify-center mb-6" style={{ background: "rgba(255,255,255,0.2)" }}>
+                    <PinAnimIcon color="rgba(255,255,255,0.9)" size={28} />
+                  </div>
+                  <h3 className="text-xl tracking-wider uppercase mb-2 font-bold" style={s4.title}>{loc.type}</h3>
+                  <p className="font-serif text-2xl mb-1" style={s4.text}>{loc.title}</p>
+                  <div className="flex items-center gap-2 text-sm mb-6" style={s4.sub}>
+                    <Clock size={14} /> <span>{loc.time}</span>
+                  </div>
+                  <p className="text-sm mb-8" style={s4.sub}>{loc.address}</p>
+                  <a href={loc.link} target="_blank" rel="noopener noreferrer"
+                    className="border px-8 py-3 rounded-full text-[10px] uppercase tracking-widest font-bold transition-colors w-full hover:opacity-80"
+                    style={s4.btnBorder}>
+                    Cómo Llegar
+                  </a>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
       )}
 
-      {/* ── DRESS CODE Y LOGÍSTICA ── */}
+      {/* ── DRESS CODE Y LOGÍSTICA ── SECCIÓN 5: fondo blanco */}
       {(data.dressCode || data.logistics) && (
-        <section className="py-20 px-6 bg-[#fbfbfb] border-y border-stone-100 flex flex-col md:flex-row gap-10 justify-center items-center md:items-start text-center">
+        <section className="py-20 px-6 flex flex-col md:flex-row gap-10 justify-center items-center md:items-start text-center border-y border-stone-100" style={s5.section}>
           {data.dressCode && (
             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="flex flex-col items-center max-w-sm">
-              {/* Dress code icons: vestido + traje */}
               <div className="flex gap-4 mb-6">
-                {/* Vestido elegante */}
-                <div className="w-16 h-16 rounded-2xl bg-stone-100 border border-stone-200 flex items-center justify-center shadow-sm hover:-translate-y-1 transition-transform">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={data.colorAccent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M8 3h8" />
-                    <path d="M9 3C8 5 6 7 4 8l2 13h12l2-13c-2-1-4-3-5-5" />
-                    <path d="M9 3l3 5 3-5" />
-                    <path d="M10 14h4" strokeOpacity="0.4" />
-                  </svg>
+                {/* Vestido — SVG animado real (oscila) */}
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-sm" style={{ background: `${accent}15`, border: `1px solid ${accent}30` }}>
+                  <DressAnimIcon color={accent} size={36} />
                 </div>
-                {/* Traje formal */}
-                <div className="w-16 h-16 rounded-2xl bg-stone-100 border border-stone-200 flex items-center justify-center shadow-sm hover:-translate-y-1 transition-transform">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={data.colorAccent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M8 3H6L4 8l4 3V21h8V11l4-3-2-5h-2" />
-                    <path d="M8 3c0 2 1.5 4 4 5 2.5-1 4-3 4-5" />
-                    <path d="M12 8v5" strokeOpacity="0.4" />
-                    <path d="M10 10l2 2 2-2" strokeOpacity="0.4" />
-                  </svg>
+                {/* Traje — SVG animado real (levita) */}
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-sm" style={{ background: `${accent}15`, border: `1px solid ${accent}30` }}>
+                  <SuitAnimIcon color={accent} size={36} />
                 </div>
-                {/* Gemstone / elegancia */}
-                <div className="w-16 h-16 rounded-2xl bg-stone-100 border border-stone-200 flex items-center justify-center shadow-sm hover:-translate-y-1 transition-transform">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={data.colorAccent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M6 3h12l4 6-10 12L2 9z" />
-                    <path d="M2 9h20" />
-                    <path d="M6 3l4 6m4 0l4-6" strokeOpacity="0.45" />
-                  </svg>
+                {/* Gema — SVG animado real (brilla con destello) */}
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-sm" style={{ background: `${accent}15`, border: `1px solid ${accent}30` }}>
+                  <GemAnimIcon color={accent} size={36} />
                 </div>
               </div>
-              <h3 className="text-lg uppercase tracking-widest font-semibold mb-2" style={{ color: data.colorAccent }}>Dress Code</h3>
-              <p className="font-serif text-xl text-stone-700 mb-2">{data.dressCode.title}</p>
-              <p className="text-sm text-stone-500">{data.dressCode.info}</p>
+              <h3 className="text-lg uppercase tracking-widest font-semibold mb-2" style={s5.title}>Dress Code</h3>
+              <p className="font-serif text-xl mb-2" style={s5.text}>{data.dressCode.title}</p>
+              <p className="text-sm" style={s5.sub}>{data.dressCode.info}</p>
             </motion.div>
           )}
 
           {data.logistics && (
             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="flex flex-col items-center max-w-sm mt-10 md:mt-0">
-              <Hotel className="text-stone-400 mb-4" strokeWidth={1} size={36} />
-              <h3 className="text-lg uppercase tracking-widest font-semibold mb-2" style={{ color: data.colorAccent }}>Logística</h3>
-              {data.logistics.hotels && <p className="text-sm text-stone-500 mb-3">{data.logistics.hotels}</p>}
+              <HotelAnimIcon color={accent} size={40} />
+              <h3 className="text-lg uppercase tracking-widest font-semibold mb-2 mt-4" style={s5.title}>Logística</h3>
+              {data.logistics.hotels && <p className="text-sm mb-3" style={s5.sub}>{data.logistics.hotels}</p>}
               {data.logistics.hotels && <div className="h-px w-10 bg-stone-300 my-2" />}
-              <p className="text-sm text-stone-500">{data.logistics.transport}</p>
+              <p className="text-sm" style={s5.sub}>{data.logistics.transport}</p>
             </motion.div>
           )}
         </section>
       )}
 
-      {/* ── REGALOS ── */}
+      {/* ── REGALOS ── SECCIÓN 6: fondo de COLOR (accent), texto blanco */}
       {data.gifts && (
-        <section className="py-24 px-6 max-w-md mx-auto text-center">
-          <div className="flex justify-center mb-6">
-            <div className="w-16 h-16 rounded-full bg-stone-50 flex items-center justify-center text-stone-400">
-              <Gift size={28} strokeWidth={1} />
+        <section className="py-24 px-6" style={s6.section}>
+          <div className="max-w-md mx-auto text-center">
+            <div className="flex justify-center mb-6">
+              <GiftAnimIcon color="rgba(255,255,255,0.95)" size={44} />
             </div>
+            <SectionTitle title="Mesa de Regalos" font={data.font} style={s6.title} />
+            <p className="mb-8 leading-relaxed text-sm" style={s6.text}>{data.gifts.message}</p>
+
+            <button
+              onClick={() => setShowGifts(!showGifts)}
+              className="px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all hover:opacity-80"
+              style={s6.btnBorder}
+            >
+              Datos Bancarios
+            </button>
+
+            <AnimatePresence>
+              {showGifts && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}
+                  className="overflow-hidden mt-6"
+                >
+                  <div className="rounded-2xl p-6 text-sm flex flex-col gap-3 shadow-inner" style={s6.card}>
+                    <p style={s6.text}><strong style={s6.title}>Banco:</strong> {data.gifts.bank}</p>
+                    <p style={s6.text}><strong style={s6.title}>Alias:</strong> {data.gifts.alias}</p>
+                    <p style={s6.text}><strong style={s6.title}>CBU:</strong> <span className="font-mono">{data.gifts.cbu}</span></p>
+                    <p style={s6.text}><strong style={s6.title}>Titular:</strong> {data.gifts.name}</p>
+                    <button
+                      onClick={() => navigator.clipboard?.writeText(data.gifts.cbu)}
+                      className="mt-4 px-4 py-2 rounded-full text-[10px] uppercase font-bold tracking-wider transition hover:opacity-80"
+                      style={s6.btnBorder}
+                    >
+                      Copiar CBU
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
-          <SectionTitle title="Mesa de Regalos" font={data.font} color={data.colorAccent} />
-          <p className="text-stone-500 mb-8 leading-relaxed text-sm">{data.gifts.message}</p>
-
-          <button
-            onClick={() => setShowGifts(!showGifts)}
-            className="bg-white border border-stone-300 text-stone-700 px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:border-stone-400 transition"
-          >
-            Datos Bancarios
-          </button>
-
-          <AnimatePresence>
-            {showGifts && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}
-                className="overflow-hidden mt-6"
-              >
-                <div className="bg-white border border-stone-200 rounded-2xl p-6 text-sm text-stone-600 flex flex-col gap-3 shadow-inner">
-                  <p><strong>Banco:</strong> {data.gifts.bank}</p>
-                  <p><strong>Alias:</strong> {data.gifts.alias}</p>
-                  <p><strong>CBU:</strong> <span className="font-mono">{data.gifts.cbu}</span></p>
-                  <p><strong>Titular:</strong> {data.gifts.name}</p>
-                  <button
-                    onClick={() => navigator.clipboard?.writeText(data.gifts.cbu)}
-                    className="mt-4 border border-stone-300 bg-stone-50 px-4 py-2 rounded-full text-[10px] uppercase font-bold tracking-wider hover:bg-stone-100 transition"
-                    style={{ color: data.colorAccent }}
-                  >
-                    Copiar CBU
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </section>
       )}
 
-      {/* ── TRIVIA ── */}
+      {/* ── TRIVIA ── SECCIÓN 7: fondo blanco */}
       {data.trivia && Array.isArray(data.trivia) && data.trivia.length > 0 && (() => {
         const currentTrivia = data.trivia[triviaIdx];
         const currentAns = triviaAns[triviaIdx] ?? null;
         return (
-          <section className="py-24 px-6 bg-[#fbfbfb] border-y border-stone-100 flex flex-col items-center">
-            <HelpCircle className="text-stone-400 mb-6" size={32} strokeWidth={1} />
-            <p className="text-[10px] uppercase font-bold tracking-[0.3em] mb-4" style={{ color: data.colorAccent }}>Mini Juego</p>
+          <section className="py-24 px-6 flex flex-col items-center" style={s7.section}>
+            <QuestionAnimIcon color={accent} size={40} />
+            <p className="text-[10px] uppercase font-bold tracking-[0.3em] mb-4 mt-2" style={s7.title}>Mini Juego</p>
 
             <div className="flex items-center gap-4 w-full justify-center max-w-lg mb-8">
               <button onClick={() => setTriviaIdx((p) => Math.max(p - 1, 0))} disabled={triviaIdx === 0} className="text-stone-400 disabled:opacity-30 hover:text-stone-700 transition p-2">
@@ -773,7 +787,8 @@ export default function DemoInvitationPage() {
                   <motion.h3
                     key={triviaIdx}
                     initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }}
-                    className="font-serif text-2xl md:text-3xl text-stone-700 text-center h-16 flex items-center justify-center leading-tight"
+                    className="font-serif text-2xl md:text-3xl text-center h-16 flex items-center justify-center leading-tight"
+                    style={s7.text}
                   >
                     {currentTrivia.q}
                   </motion.h3>
@@ -789,17 +804,17 @@ export default function DemoInvitationPage() {
               {currentTrivia.options.map((opt: string, i: number) => {
                 const isSelected = currentAns === i;
                 const isCorrect = i === currentTrivia.correct;
-                let style = "bg-white border-stone-200 text-stone-600";
+                let bg = "bg-white border-stone-200 text-stone-600";
                 if (currentAns !== null) {
-                  if (isSelected && !isCorrect) style = "bg-red-50 border-red-200 text-red-600";
-                  if (isCorrect) style = "bg-green-50 border-green-200 text-green-700";
+                  if (isSelected && !isCorrect) bg = "bg-red-50 border-red-200 text-red-600";
+                  if (isCorrect) bg = "bg-green-50 border-green-200 text-green-700";
                 }
                 return (
                   <button
                     key={`${triviaIdx}-${i}`}
                     disabled={currentAns !== null}
                     onClick={() => setTriviaAns((p) => ({ ...p, [triviaIdx]: i }))}
-                    className={`border px-6 py-4 rounded-xl text-sm font-medium transition-all ${style}`}
+                    className={`border px-6 py-4 rounded-xl text-sm font-medium transition-all ${bg}`}
                   >
                     {opt}
                   </button>
@@ -819,7 +834,7 @@ export default function DemoInvitationPage() {
 
             <div className="flex justify-center gap-2 mt-4">
               {data.trivia.map((_: any, i: number) => (
-                <div key={i} className={`w-2 h-2 rounded-full transition-colors ${i === triviaIdx ? "bg-stone-600" : "bg-stone-300"}`} style={{ backgroundColor: i === triviaIdx ? data.colorAccent : undefined }} />
+                <div key={i} className={`w-2 h-2 rounded-full transition-colors ${i === triviaIdx ? "" : "bg-stone-300"}`} style={{ backgroundColor: i === triviaIdx ? accent : undefined }} />
               ))}
             </div>
           </section>
@@ -828,15 +843,15 @@ export default function DemoInvitationPage() {
 
       {/* ── INSTAGRAM / HASHTAG ── */}
       {data.instagram && (
-        <section className="py-20 px-6 max-w-lg mx-auto text-center flex flex-col items-center">
-          <div className="w-14 h-14 rounded-full bg-pink-50 text-pink-500 flex items-center justify-center mb-6">
-            <Camera strokeWidth={1.5} size={24} />
+        <section className="py-20 px-6 max-w-lg mx-auto text-center flex flex-col items-center" style={{ backgroundColor: bgBase }}>
+          <div className="w-14 h-14 rounded-full flex items-center justify-center mb-6" style={{ background: `${accent}15` }}>
+            <CameraAnimIcon color={accent} size={28} />
           </div>
-          <SectionTitle title="Compartí tus fotos" font={data.font} color={data.colorAccent} />
+          <SectionTitle title="Compartí tus fotos" font={data.font} style={{ color: accent }} />
           <p className="text-stone-500 text-sm mb-6 leading-relaxed">
             Etiquetanos en tus fotos y videos de la fiesta usando el hashtag oficial.
           </p>
-          <p className="font-bold text-2xl tracking-widest uppercase mb-8" style={{ color: data.colorAccent }}>
+          <p className="font-bold text-2xl tracking-widest uppercase mb-8" style={{ color: accent }}>
             #{data.instagram}
           </p>
         </section>
@@ -844,40 +859,29 @@ export default function DemoInvitationPage() {
 
       {/* ── MURAL INTERACTIVO ── */}
       {data.mural && (
-        <section className="py-24 px-6 bg-[#fbfbfb] border-y border-stone-100 flex flex-col lg:flex-row gap-10 items-center justify-center overflow-hidden">
+        <section className="py-24 px-6 border-y border-stone-100 flex flex-col lg:flex-row gap-10 items-center justify-center overflow-hidden" style={{ backgroundColor: bgBase }}>
           <div className="w-full max-w-sm flex flex-col items-center lg:items-start text-center lg:text-left">
-            <SectionTitle title="Mural de Deseos" font={data.font} color={data.colorAccent} />
+            <div className="flex justify-center mb-4"><SparkleAnimIcon color={accent} size={32} /></div>
+            <SectionTitle title="Mural de Deseos" font={data.font} style={{ color: accent }} />
             <p className="text-stone-500 text-sm mb-6 leading-relaxed">
               Dejá tu marca en el mural virtual. Escribí un mensaje y arrastrá tu notita donde más te guste.
             </p>
             <div className="w-full flex flex-col gap-3 bg-white p-6 rounded-3xl border border-stone-200 shadow-sm relative z-20">
               <input
-                type="text"
-                placeholder="Tu nombre o apodo"
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
+                type="text" placeholder="Tu nombre o apodo" value={newName} onChange={(e) => setNewName(e.target.value)}
                 className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm outline-none"
               />
               <textarea
-                placeholder="Escribí un deseo o mensaje corto..."
-                value={newNote}
-                onChange={(e) => setNewNote(e.target.value)}
-                maxLength={60}
-                className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm outline-none resize-none h-24"
+                placeholder="Escribí un deseo o mensaje corto..." value={newNote} onChange={(e) => setNewNote(e.target.value)}
+                maxLength={60} className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm outline-none resize-none h-24"
               />
               <div className="flex gap-2 mt-2 w-full">
-                <button
-                  onClick={addNote}
-                  style={{ backgroundColor: data.colorAccent }}
-                  className="flex-1 text-white px-2 py-3 rounded-xl text-[11px] font-bold tracking-widest uppercase shadow-lg hover:brightness-110 transition flex items-center justify-center whitespace-nowrap"
-                >
+                <button onClick={addNote} style={{ backgroundColor: accent }}
+                  className="flex-1 text-white px-2 py-3 rounded-xl text-[11px] font-bold tracking-widest uppercase shadow-lg hover:brightness-110 transition flex items-center justify-center whitespace-nowrap">
                   Colgar Nota
                 </button>
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  className="w-12 h-[42px] bg-stone-100 border border-stone-200 text-stone-600 rounded-xl flex items-center justify-center hover:bg-stone-200 transition-colors shadow-sm self-center"
-                  title="Añadir Foto"
-                >
+                <button onClick={() => fileInputRef.current?.click()}
+                  className="w-12 h-[42px] bg-stone-100 border border-stone-200 text-stone-600 rounded-xl flex items-center justify-center hover:bg-stone-200 transition-colors shadow-sm self-center" title="Añadir Foto">
                   <ImagePlus size={18} />
                 </button>
                 <input type="file" accept="image/*" ref={fileInputRef} hidden onChange={handlePhotoUpload} />
@@ -928,34 +932,26 @@ export default function DemoInvitationPage() {
       )}
 
       {/* ── RSVP ── */}
-      <section className="bg-stone-900 text-stone-300 py-32 px-6 flex flex-col items-center text-center">
+      <section style={{ backgroundColor: "#1c1917" }} className="text-stone-300 py-32 px-6 flex flex-col items-center text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="relative z-10 w-full max-w-lg flex flex-col items-center">
-          <SectionTitle title="RSVP" font={data.font} color="#ffffff" />
+          <HeartAnimIcon color={accent} size={36} />
+          <SectionTitle title="RSVP" font={data.font} style={{ color: "#ffffff" }} />
 
           <AnimatePresence mode="wait">
             {rsvpSubmitted ? (
-              /* ── SUCCESS STATE ── */
               <motion.div
-                key="success"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
+                key="success" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}
                 className="flex flex-col items-center gap-6 py-10"
               >
                 <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 200, delay: 0.1 }}
+                  initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, delay: 0.1 }}
                   className="w-20 h-20 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: `${data.colorAccent}22`, border: `2px solid ${data.colorAccent}` }}
+                  style={{ backgroundColor: `${accent}22`, border: `2px solid ${accent}` }}
                 >
-                  <CheckCircle size={40} style={{ color: data.colorAccent }} strokeWidth={1.5} />
+                  <CheckCircle size={40} style={{ color: accent }} strokeWidth={1.5} />
                 </motion.div>
                 <div>
-                  <h3 className="text-2xl font-light text-white mb-2" style={{ fontFamily: data.font }}>
-                    ¡Confirmado!
-                  </h3>
+                  <h3 className="text-2xl font-light text-white mb-2" style={{ fontFamily: data.font }}>¡Confirmado!</h3>
                   <p className="text-stone-400 text-sm leading-relaxed">
                     {rsvpAttending === "yes"
                       ? `Ya estás anotado, ${rsvpName}. ¡Nos vemos en el gran día!`
@@ -969,70 +965,44 @@ export default function DemoInvitationPage() {
                 )}
               </motion.div>
             ) : (
-              /* ── FORM STATE ── */
               <motion.div key="form" exit={{ opacity: 0 }} className="w-full">
-                <p className="text-stone-400 mb-10 font-light leading-relaxed text-sm">
-                  {rsvpDeadlineLabel}
-                </p>
+                <p className="text-stone-400 mb-10 font-light leading-relaxed text-sm">{rsvpDeadlineLabel}</p>
 
                 <div className="bg-stone-800/50 border border-stone-700 rounded-3xl p-6 md:p-8 w-full text-left flex flex-col gap-6">
-                  {/* Nombre siempre editable */}
                   <div>
                     <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-2 block">Tu nombre completo</label>
                     <input
-                      type="text"
-                      placeholder="Escribí tu nombre..."
-                      value={rsvpName}
-                      onChange={(e) => setRsvpName(e.target.value)}
+                      type="text" placeholder="Escribí tu nombre..." value={rsvpName} onChange={(e) => setRsvpName(e.target.value)}
                       className="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3 text-sm text-stone-200 outline-none focus:border-stone-500 transition-colors"
                     />
                   </div>
 
-                  {/* Asistencia */}
                   <div>
                     <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-3 block">Asistencia</label>
                     <div className="grid grid-cols-2 gap-4">
-                      <button
-                        onClick={() => setRsvpAttending("yes")}
+                      <button onClick={() => setRsvpAttending("yes")}
                         className={`border rounded-xl px-4 py-3 text-sm transition-all ${rsvpAttending === "yes" ? "border-transparent text-white" : "border-stone-500 text-stone-300 hover:bg-stone-700"}`}
-                        style={rsvpAttending === "yes" ? { backgroundColor: data.colorAccent, borderColor: data.colorAccent } : {}}
-                      >
+                        style={rsvpAttending === "yes" ? { backgroundColor: accent, borderColor: accent } : {}}>
                         Sí, asisto ✓
                       </button>
-                      <button
-                        onClick={() => setRsvpAttending("no")}
-                        className={`border rounded-xl px-4 py-3 text-sm transition-all ${rsvpAttending === "no" ? "border-stone-400 bg-stone-700 text-white" : "border-stone-700 text-stone-500 hover:bg-stone-800"}`}
-                      >
+                      <button onClick={() => setRsvpAttending("no")}
+                        className={`border rounded-xl px-4 py-3 text-sm transition-all ${rsvpAttending === "no" ? "border-stone-400 bg-stone-700 text-white" : "border-stone-700 text-stone-500 hover:bg-stone-800"}`}>
                         No asisto
                       </button>
                     </div>
                   </div>
 
-                  {/* Restricciones dietarias – siempre visibles */}
                   <div>
                     <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-3 block">Menú / Restricciones dietarias</label>
                     <div className="flex flex-col gap-2">
                       {dietOptions.map(opt => {
                         const checked = rsvpDiet.has(opt.id);
                         return (
-                          <button
-                            key={opt.id}
-                            type="button"
-                            onClick={() => toggleDiet(opt.id)}
-                            className={`flex items-center gap-3 w-full px-4 py-3 rounded-xl border text-sm text-left transition-all ${
-                              checked
-                                ? "border-transparent text-white"
-                                : "border-stone-700 text-stone-400 hover:border-stone-500 hover:text-stone-300"
-                            }`}
-                            style={checked ? { backgroundColor: `${data.colorAccent}33`, borderColor: data.colorAccent, color: "#fff" } : {}}
-                          >
-                            <span
-                              className="w-5 h-5 rounded-md border flex-shrink-0 flex items-center justify-center transition-all"
-                              style={checked
-                                ? { backgroundColor: data.colorAccent, borderColor: data.colorAccent }
-                                : { borderColor: "#57534e" }
-                              }
-                            >
+                          <button key={opt.id} type="button" onClick={() => toggleDiet(opt.id)}
+                            className={`flex items-center gap-3 w-full px-4 py-3 rounded-xl border text-sm text-left transition-all ${checked ? "border-transparent text-white" : "border-stone-700 text-stone-400 hover:border-stone-500 hover:text-stone-300"}`}
+                            style={checked ? { backgroundColor: `${accent}33`, borderColor: accent, color: "#fff" } : {}}>
+                            <span className="w-5 h-5 rounded-md border flex-shrink-0 flex items-center justify-center transition-all"
+                              style={checked ? { backgroundColor: accent, borderColor: accent } : { borderColor: "#57534e" }}>
                               {checked && (
                                 <svg width="11" height="9" viewBox="0 0 11 9" fill="none">
                                   <path d="M1 4L4 7.5L10 1" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
@@ -1046,24 +1016,16 @@ export default function DemoInvitationPage() {
                     </div>
                   </div>
 
-                  {/* Canción sugerida – siempre visible */}
                   <div>
                     <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-2 block">Canción sugerida 🎵</label>
-                    <input
-                      type="text"
-                      placeholder="Esa que no puede faltar..."
-                      value={rsvpSong}
-                      onChange={(e) => setRsvpSong(e.target.value)}
+                    <input type="text" placeholder="Esa que no puede faltar..." value={rsvpSong} onChange={(e) => setRsvpSong(e.target.value)}
                       className="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3 text-sm text-stone-300 outline-none focus:border-stone-500 transition-colors"
                     />
                   </div>
 
-                  <button
-                    onClick={handleRsvpSubmit}
-                    disabled={!rsvpAttending || !rsvpName.trim()}
-                    style={{ backgroundColor: (rsvpAttending && rsvpName.trim()) ? data.colorAccent : undefined }}
-                    className="mt-4 w-full text-white px-10 py-4 rounded-xl text-[11px] font-bold tracking-[0.25em] uppercase shadow-lg hover:brightness-110 transition disabled:opacity-40 disabled:cursor-not-allowed bg-stone-700"
-                  >
+                  <button onClick={handleRsvpSubmit} disabled={!rsvpAttending || !rsvpName.trim()}
+                    style={{ backgroundColor: (rsvpAttending && rsvpName.trim()) ? accent : undefined }}
+                    className="mt-4 w-full text-white px-10 py-4 rounded-xl text-[11px] font-bold tracking-[0.25em] uppercase shadow-lg hover:brightness-110 transition disabled:opacity-40 disabled:cursor-not-allowed bg-stone-700">
                     Confirmar asistencia
                   </button>
                 </div>

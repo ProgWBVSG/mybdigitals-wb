@@ -70,11 +70,11 @@ export default function Home() {
 
             {/* TÍTULO CORREGIDO (Centrado + padding vertical/horizontal de seguridad) */}
             <motion.h1 variants={fadeIn} className="font-black tracking-tighter mb-6 text-white leading-[1.05] drop-shadow-md flex flex-col items-center text-center">
-              <span className="whitespace-nowrap text-[clamp(2.8rem,7vw,6.5rem)]">Escalamos tu negocio</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic font-medium pb-[0.1em] pr-[0.1em] inline-block whitespace-nowrap text-[clamp(2.8rem,7vw,6.5rem)]">con IA y Software.</span>
+              <span className="text-[clamp(1.9rem,7vw,6.5rem)] leading-tight">Escalamos tu negocio</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic font-medium pb-[0.1em] pr-[0.1em] inline-block text-[clamp(1.9rem,7vw,6.5rem)] leading-tight">con IA y Software.</span>
             </motion.h1>
 
-            <motion.p variants={fadeIn} className="text-lg md:text-2xl text-gray-300 max-w-3xl mb-10 leading-relaxed font-light text-balance">
+            <motion.p variants={fadeIn} className="text-base md:text-2xl text-gray-300 max-w-3xl mb-10 leading-relaxed font-light text-balance px-2 sm:px-0">
               Automatizaciones inteligentes y experiencias web premium de vanguardia. Dejá atrás las operaciones manuales y multiplicá tu facturación de forma predecible.
             </motion.p>
 
@@ -117,7 +117,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, ease: "easeOut" as const, delay: 0.35 }}
-            className="relative w-full max-w-6xl h-[400px] md:h-[500px] lg:h-[650px] mt-8 shrink-0"
+            className="relative w-full max-w-6xl h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] mt-8 shrink-0 overflow-hidden"
           >
             {/* Marco glassmorphism ancho completo para el panel 3D */}
             <div className="absolute inset-0 rounded-[2.5rem] md:rounded-[3rem] bg-white/[0.02] border border-white/[0.07] overflow-hidden shadow-[0_0_80px_rgba(195,216,9,0.06)]">
@@ -215,13 +215,13 @@ export default function Home() {
       </section>
 
       {/* SECCIÓN 5: POR QUÉ ELEGIRNOS (VENTAJA COMPETITIVA Y RTB) */}
-      <section className="w-full py-20 px-4 md:px-10 border-t border-white/5">
-        <div className="max-w-6xl mx-auto bg-primary text-black rounded-[3rem] p-10 md:p-16 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-12">
+      <section className="w-full py-16 md:py-20 px-4 md:px-10 border-t border-white/5">
+        <div className="max-w-6xl mx-auto bg-primary text-black rounded-[2rem] sm:rounded-[3rem] p-7 sm:p-10 md:p-16 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white opacity-20 blur-[120px] rounded-full pointer-events-none" />
            <div className="md:w-1/2 relative z-10">
-             <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight">No vendemos webs. Construimos <span className="italic">sistemas.</span></h2>
+             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-6 leading-tight">No vendemos webs. Construimos <span className="italic">sistemas.</span></h2>
              <p className="text-black/80 font-medium text-lg leading-relaxed mb-8">
-               La mayoría de agencias crean plantillas estáticas y te dejan a la deriva. Nosotros integramos Identidad Web de clase mundial con Cerebros de Inteligencia Artificial. Tu marca no solo será bella: será **inteligentemente letal.**
+               La mayoría de agencias crean plantillas estáticas y te dejan a la deriva. Nosotros integramos Identidad Web de clase mundial con Cerebros de Inteligencia Artificial. Tu marca no solo será bella: será <strong>inteligentemente letal.</strong>
              </p>
              <Link href="https://wa.me/543515555123" target="_blank" className="inline-flex items-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-[#25D366] hover:scale-105 border-transparent transition-all shadow-[0_0_20px_rgba(37,211,102,0.3)] min-h-[52px]">
                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 shrink-0" aria-hidden="true"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.711.927 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 3.825 0 6.938 3.112 6.938 6.937 0 3.825-3.113 6.938-6.938 6.938z"/></svg>
@@ -290,7 +290,7 @@ export default function Home() {
       {/* FOOTER CTA */}
       <section className="w-full py-32 px-4 relative overflow-hidden flex flex-col items-center justify-center border-t border-white/5 mt-auto">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(195,216,9,0.1)_0%,transparent_60%)] pointer-events-none" />
-        <h2 className="text-5xl md:text-7xl font-black text-center text-white mb-6 relative z-10 tracking-tighter">
+        <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-center text-white mb-6 relative z-10 tracking-tighter">
           Construye tu <br/><span className="text-primary">Futuro Autónomo.</span>
         </h2>
         <p className="text-gray-300 mb-10 text-center max-w-lg relative z-10">

@@ -62,12 +62,12 @@ function ChatVisual({ accent }: { accent: string }) {
   ];
 
   return (
-    <div className="flex justify-center" style={{ perspective: "900px" }}>
+    <div className="flex justify-center overflow-hidden px-2" style={{ perspective: "900px" }}>
       <motion.div
         animate={{ rotateY: [4, -4, 4], rotateX: [3, -3, 3], y: [0, -12, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         style={{ transformStyle: "preserve-3d" }}
-        className="relative w-full max-w-[320px]"
+        className="relative w-full max-w-[290px] sm:max-w-[320px]"
       >
         {/* Floor glow */}
         <div
@@ -149,12 +149,12 @@ function ChatVisual({ accent }: { accent: string }) {
 /* ─── 3D Visual: Browser ─────────────────────────────────────── */
 function WebVisual({ accent }: { accent: string }) {
   return (
-    <div className="flex justify-center" style={{ perspective: "900px" }}>
+    <div className="flex justify-center overflow-hidden px-2" style={{ perspective: "900px" }}>
       <motion.div
         animate={{ rotateY: [-5, 5, -5], rotateX: [-3, 3, -3], y: [0, -12, 0] }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
         style={{ transformStyle: "preserve-3d" }}
-        className="relative w-full max-w-[340px]"
+        className="relative w-full max-w-[300px] sm:max-w-[340px]"
       >
         <div aria-hidden="true" className="absolute inset-x-8 -bottom-6 h-10 blur-2xl rounded-full opacity-60" style={{ background: accent }} />
         <div className="relative rounded-2xl overflow-hidden"
@@ -205,12 +205,12 @@ function WebVisual({ accent }: { accent: string }) {
 function ResultsVisual({ accent }: { accent: string }) {
   const bars = [22, 35, 48, 56, 70, 82, 95];
   return (
-    <div className="flex justify-center" style={{ perspective: "900px" }}>
+    <div className="flex justify-center overflow-hidden px-2" style={{ perspective: "900px" }}>
       <motion.div
         animate={{ rotateY: [4, -4, 4], rotateX: [2, -2, 2], y: [0, -10, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
         style={{ transformStyle: "preserve-3d" }}
-        className="relative w-full max-w-[320px]"
+        className="relative w-full max-w-[290px] sm:max-w-[320px]"
       >
         <div aria-hidden="true" className="absolute inset-x-8 -bottom-6 h-10 blur-2xl rounded-full opacity-60" style={{ background: accent }} />
         <div className="relative rounded-2xl overflow-hidden p-5"
@@ -270,7 +270,7 @@ const VISUALS = [ChatVisual, WebVisual, ResultsVisual] as const;
 /* ─── Main Section (vertical, no sticky) ────────────────────── */
 export default function ScrollJourney() {
   return (
-    <section id="solucion" aria-label="Nuestros servicios" className="w-full py-24 md:py-32 relative overflow-hidden">
+    <section id="solucion" aria-label="Nuestros servicios" className="w-full py-16 md:py-32 relative overflow-hidden">
 
       {/* Subtle grid background */}
       <div
@@ -287,7 +287,7 @@ export default function ScrollJourney() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto px-5 md:px-10 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 md:px-10 relative z-10">
 
         {/* Section header */}
         <motion.div
@@ -309,7 +309,7 @@ export default function ScrollJourney() {
         </motion.div>
 
         {/* Stages — vertical stack */}
-        <div className="flex flex-col gap-24 md:gap-32">
+        <div className="flex flex-col gap-16 md:gap-32">
           {STAGES.map((stage, i) => {
             const Visual = VISUALS[i];
             const isEven = i % 2 === 0;
@@ -321,7 +321,7 @@ export default function ScrollJourney() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+                className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center"
               >
                 {/* Text side */}
                 <div className={`flex flex-col justify-center ${isEven ? "lg:order-1" : "lg:order-2"}`}>
@@ -342,7 +342,7 @@ export default function ScrollJourney() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-3xl md:text-4xl xl:text-5xl font-black text-white leading-[1.05] tracking-tight mb-5">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-black text-white leading-[1.05] tracking-tight mb-5">
                     {stage.title}
                   </h3>
 
