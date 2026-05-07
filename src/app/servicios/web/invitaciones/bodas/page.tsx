@@ -24,8 +24,8 @@ const designs = [
   {
     id: 1, label: "Golden Dusk",
     n1: "Marti & Tomi", date: "15 de Noviembre",
-    photo: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
-    bg: "#ffffff", accent: "#d4af37", text: "#1a1a1a",
+    photo: "/fotos_boda/foto1.jpg",
+    bg: "#faf8f6", accent: "#e11d48", text: "#1a1a1a",
     cnt: ["45","12","30","00"],
     font: "Georgia, serif", align: "center", textCase: "uppercase", tracking: "0.15em",
     isMinimalist: false
@@ -33,7 +33,7 @@ const designs = [
   {
     id: 2, label: "Ocean Breeze",
     n1: "JULIETA Y MARCOS", date: "22 . 03 . 2026",
-    photo: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80",
+    photo: "/fotos_boda/foto2.jpg",
     bg: "#f0f4f8", accent: "#60a5fa", text: "#0f172a",
     cnt: ["120","08","15","40"],
     font: "Arial, sans-serif", align: "flex-start", textCase: "uppercase", tracking: "0.05em",
@@ -51,7 +51,7 @@ const designs = [
   {
     id: 4, label: "Brindis Gris",
     n1: "Candela & Elías", date: "08 Junio 2025",
-    photo: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80",
+    photo: "/fotos_boda/foto3.jpg",
     bg: "#f3f4f6", accent: "#9ca3af", text: "#111827",
     cnt: ["87","11","37","14"],
     font: "Courier New, monospace", align: "center", textCase: "capitalize", tracking: "0.1em",
@@ -60,7 +60,7 @@ const designs = [
   {
     id: 5, label: "Sunset Boho",
     n1: "GEORGINA & JOAQUÍN", date: "30 Agosto 2025",
-    photo: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=600&q=80",
+    photo: "/fotos_boda/foto4.jpg",
     bg: "#fff6f5", accent: "#f0a58f", text: "#4a2c26",
     cnt: null, // "Reserva la fecha"
     font: "Palatino, serif", align: "center", textCase: "uppercase", tracking: "0.05em",
@@ -79,7 +79,7 @@ const designs = [
     // ROTO PREVIAMENTE -> Nuevo diseño Lavanda "Anto & Fer"
     id: 7, label: "Lavanda Clásica",
     n1: "ANTO & FER", date: "NOS CASAMOS",
-    bgImage: "https://images.unsplash.com/photo-1543362143-6c84b1ebac1d?auto=format&fit=crop&w=600&q=80",
+    bgImage: "https://images.unsplash.com/photo-1543362143-6c84b1ebac1d?auto=format&fit=crop&w=1600&q=90",
     bg: "#fcfcff", accent: "#a78bfa", text: "#4a4a4f",
     font: "Arial, sans-serif", align: "center", textCase: "uppercase", tracking: "0.2em",
     isMinimalist: true, layoutTemplate: "lavender"
@@ -87,7 +87,7 @@ const designs = [
   {
     id: 8, label: "Minimal Chic",
     n1: "Valentina & Lucas", date: "11 de Octubre",
-    photo: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80",
+    photo: "/fotos_boda/foto5.jpg",
     bg: "#fafafa", accent: "#cbd5e1", text: "#334155",
     cnt: ["66","10","22","09"],
     font: "Arial, sans-serif", align: "flex-end", textCase: "capitalize", tracking: "0.05em",
@@ -266,6 +266,7 @@ export default function BodasPage() {
                   alt="Pareja romántica — Hero Invitaciones de Boda" 
                   fill 
                   priority
+                  quality={90}
                   className="object-cover object-center" 
                   sizes="100vw"
                />
@@ -276,13 +277,18 @@ export default function BodasPage() {
             </div>
 
             {/* Contenido Central */}
-            <div className="relative z-20 flex flex-col items-center text-center w-full max-w-5xl mt-8 px-2">
+            <div className="relative z-20 flex flex-col items-center text-center w-full max-w-5xl -mt-16 md:-mt-24 px-2">
                <p className="text-[10px] md:text-xs font-black tracking-[0.3em] uppercase text-zinc-300 mb-6 drop-shadow-md">
                  COLECCIÓN NUPCIAL — INVITACIONES WEB
                </p>
                
-               <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-[5.5rem] font-black italic uppercase text-white leading-[1.1] tracking-normal mb-6 w-full" style={{ textShadow: "0 10px 40px rgba(0,0,0,0.8)" }}>
-                 El <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-fuchsia-300 pb-[0.1em] pr-[0.1em] inline-block">amor</span> merece <br className="hidden sm:block" /><span className="sm:hidden"> </span>una <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 to-rose-400 pb-[0.1em] pr-[0.1em] inline-block">invitación digna</span>
+               <h1 className="font-black italic uppercase text-white leading-[1.05] tracking-normal mb-6 w-full flex flex-col items-center" style={{ textShadow: "0 10px 40px rgba(0,0,0,0.8)" }}>
+                 <span className="text-[clamp(1.2rem,4.5vw,4.5rem)] whitespace-nowrap">
+                   El <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-fuchsia-300 pb-[0.1em] pr-[0.1em] inline-block">amor</span> merece una
+                 </span>
+                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 to-rose-400 pb-[0.1em] pr-[0.1em] inline-block text-[clamp(1.2rem,4.5vw,4.5rem)] whitespace-nowrap">
+                   invitación digna
+                 </span>
                </h1>
                
                <p className="text-xs sm:text-sm md:text-base font-medium tracking-[0.15em] sm:tracking-[0.2em] uppercase text-zinc-200 mb-10 mt-2 drop-shadow-md max-w-md md:max-w-none">

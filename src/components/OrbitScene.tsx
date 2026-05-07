@@ -62,7 +62,7 @@ export default function HeroVisual() {
           transformStyle: "preserve-3d",
           willChange: "transform",
         }}
-        className="relative w-full max-w-[480px] sm:w-[90%] sm:max-w-[520px]"
+        className="relative w-full max-w-[480px] sm:w-[90%] sm:max-w-[520px] max-sm:scale-[0.62] max-sm:origin-center"
       >
         {/* ─── Pantalla (browser) ─── */}
         <div
@@ -86,7 +86,7 @@ export default function HeroVisual() {
           </div>
 
           {/* Contenido del dashboard */}
-          <div className="p-5 space-y-4">
+          <div className="p-3 sm:p-5 space-y-3 sm:space-y-4">
 
             {/* Título del dashboard simulado */}
             <div className="flex items-center justify-between mb-1">
@@ -105,18 +105,18 @@ export default function HeroVisual() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 + i * 0.15, duration: 0.5 }}
-                  className="rounded-xl p-3 border border-white/[0.06]"
+                  className="rounded-xl p-2 sm:p-3 border border-white/[0.06]"
                   style={{ background: `${m.color}0a` }}
                 >
                   <p className="text-[9px] text-gray-500 mb-1 uppercase tracking-wider">{m.label}</p>
-                  <p className="text-xl font-black text-white leading-none">{m.value}</p>
+                  <p className="text-lg sm:text-xl font-black text-white leading-none">{m.value}</p>
                   <p className="text-[10px] mt-1 font-semibold" style={{ color: m.color }}>{m.change}</p>
                 </motion.div>
               ))}
             </div>
 
             {/* Flujo de automatización */}
-            <div className="rounded-xl border border-white/[0.06] p-4 relative" style={{ background: "rgba(255,255,255,0.015)" }}>
+            <div className="rounded-xl border border-white/[0.06] p-3 sm:p-4 relative" style={{ background: "rgba(255,255,255,0.015)" }}>
               <p className="text-[9px] text-gray-500 uppercase tracking-widest mb-4">Flujo de Automatización IA</p>
               <div className="relative h-10">
                 {/* Línea conectora */}
@@ -195,8 +195,8 @@ export default function HeroVisual() {
         </motion.div>
       ))}
 
-      {/* Indicador de estado */}
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 pointer-events-none">
+      {/* Indicador de estado — hidden on mobile to avoid overlap with floating bot */}
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 hidden sm:flex items-center gap-2 pointer-events-none">
         <span className="relative flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
           <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />

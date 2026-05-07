@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { MessageCircle, ArrowUpRight } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { MessageCircle, ArrowUpRight, Heart } from "lucide-react";
 
 const NAV_LINKS = [
   {
@@ -29,7 +30,35 @@ const NAV_LINKS = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
   const year = new Date().getFullYear();
+
+  if (pathname?.includes("/servicios/web/invitaciones/demo") || pathname?.includes("/cumples")) {
+    return (
+      <footer className="w-full relative bg-[#030303] text-white font-sans overflow-hidden z-20 [clip-path:polygon(0_4vw,100%_0,100%_100%,0_100%)] lg:[clip-path:polygon(0_6vw,100%_0,100%_100%,0_100%)] pt-[4vw] lg:pt-[6vw] -mt-[4vw] lg:-mt-[6vw]">
+        <div className="max-w-4xl mx-auto px-6 md:px-10 py-16 text-center flex flex-col items-center gap-6 relative z-10">
+          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mb-2 border border-primary/20">
+            <Heart size={16} className="text-primary" />
+          </div>
+          <h2 className="text-2xl font-black tracking-[0.2em] uppercase">Invitaciones Digitales</h2>
+          <p className="text-xs font-bold tracking-widest text-primary uppercase">by MYB Digitals</p>
+          <p className="text-sm text-gray-400 max-w-lg mt-2 mb-4 leading-relaxed">
+            Invitaciones únicas, interactivas y personalizadas para que tu evento comience desde el primer click.
+          </p>
+          <a
+            href="https://wa.me/543515555123?text=Hola!%20Me%20encant%C3%B3%20la%20demo%20de%20invitaciones,%20quiero%20la%20m%C3%ADa!"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-primary text-black font-bold text-sm uppercase tracking-widest hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(195,216,9,0.3)]"
+          >
+            Quiero la mía <ArrowUpRight size={16} />
+          </a>
+          <div className="w-full h-px bg-white/5 my-6" />
+          <p className="text-xs text-gray-600">© {year} MYB Digitals. Todos los derechos reservados.</p>
+        </div>
+      </footer>
+    );
+  }
 
   return (
     <footer className="w-full relative bg-[#030303] text-white font-sans overflow-hidden z-20 [clip-path:polygon(0_4vw,100%_0,100%_100%,0_100%)] lg:[clip-path:polygon(0_6vw,100%_0,100%_100%,0_100%)] pt-[4vw] lg:pt-[6vw] -mt-[4vw] lg:-mt-[6vw]">

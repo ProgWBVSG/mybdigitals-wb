@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import OrbitScene from "@/components/OrbitScene";
 import ScrollJourney from "@/components/ScrollJourney";
+import Magnetic from "@/components/Magnetic";
+import SporeRiver from "@/components/SporeRiver";
 
 // Animations
 const fadeIn = {
@@ -59,6 +61,9 @@ export default function Home() {
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/[0.06] blur-[160px] rounded-full pointer-events-none" />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyan-500/[0.04] blur-[130px] rounded-full pointer-events-none" />
 
+        {/* Río de esporas tecnológico */}
+        <SporeRiver />
+
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-10 flex flex-col items-center text-center gap-12">
           
           {/* ── BLOQUE DE TEXTO SUPERIOR ── */}
@@ -69,9 +74,9 @@ export default function Home() {
             </motion.div>
 
             {/* TÍTULO CORREGIDO (Centrado + padding vertical/horizontal de seguridad) */}
-            <motion.h1 variants={fadeIn} className="font-black tracking-tighter mb-6 text-white leading-[1.05] drop-shadow-md flex flex-col items-center text-center">
-              <span className="text-[clamp(1.9rem,7vw,6.5rem)] leading-tight">Escalamos tu negocio</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic font-medium pb-[0.1em] pr-[0.1em] inline-block text-[clamp(1.9rem,7vw,6.5rem)] leading-tight">con IA y Software.</span>
+            <motion.h1 variants={fadeIn} className="font-black tracking-tighter mb-6 text-white leading-[1.08] drop-shadow-md flex flex-col items-center text-center">
+              <span className="text-[clamp(1.6rem,5.8vw,5.5rem)] leading-tight">Escalamos tu negocio</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-lime-300 to-emerald-400 italic font-medium pb-[0.1em] pr-[0.1em] inline-block text-[clamp(1.6rem,5.8vw,5.5rem)] leading-tight">con IA y Software.</span>
             </motion.h1>
 
             <motion.p variants={fadeIn} className="text-base md:text-2xl text-gray-300 max-w-3xl mb-10 leading-relaxed font-light text-balance px-2 sm:px-0">
@@ -79,22 +84,26 @@ export default function Home() {
             </motion.p>
 
             <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
-              <Link
-                href="https://wa.me/543515555123" target="_blank" rel="noopener noreferrer"
-                aria-label="Contactar por WhatsApp"
-                className="group bg-[#25D366] text-white px-10 py-5 rounded-full font-bold text-[16px] shadow-[0_0_24px_rgba(37,211,102,0.4)] hover:shadow-[0_0_45px_rgba(37,211,102,0.7)] hover:scale-105 flex items-center justify-center gap-3 transition-all"
-              >
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 shrink-0" aria-hidden="true">
-                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.711.927 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 3.825 0 6.938 3.112 6.938 6.937 0 3.825-3.113 6.938-6.938 6.938z"/>
-                </svg>
-                Agendá una llamada
-              </Link>
-              <Link
-                href="#solucion"
-                className="px-10 py-5 rounded-full font-bold text-[16px] text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-md flex items-center justify-center gap-2"
-              >
-                Ver servicios <ChevronDown size={18} />
-              </Link>
+              <Magnetic>
+                <Link
+                  href="https://wa.me/543515555123" target="_blank" rel="noopener noreferrer"
+                  aria-label="Contactar por WhatsApp"
+                  className="group bg-[#25D366] text-white px-10 py-5 rounded-full font-bold text-[16px] shadow-[0_0_24px_rgba(37,211,102,0.4)] hover:shadow-[0_0_45px_rgba(37,211,102,0.7)] hover:scale-105 flex items-center justify-center gap-3 transition-all"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 shrink-0" aria-hidden="true">
+                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.711.927 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 3.825 0 6.938 3.112 6.938 6.937 0 3.825-3.113 6.938-6.938 6.938z"/>
+                  </svg>
+                  Agendá una llamada
+                </Link>
+              </Magnetic>
+              <Magnetic>
+                <Link
+                  href="#solucion"
+                  className="px-10 py-5 rounded-full font-bold text-[16px] text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-md flex items-center justify-center gap-2"
+                >
+                  Ver servicios <ChevronDown size={18} />
+                </Link>
+              </Magnetic>
             </motion.div>
 
             {/* Métricas rápidas */}
@@ -117,7 +126,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, ease: "easeOut" as const, delay: 0.35 }}
-            className="relative w-full max-w-6xl h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] mt-8 shrink-0 overflow-hidden"
+            className="relative w-full max-w-6xl h-[380px] sm:h-[400px] md:h-[500px] lg:h-[650px] mt-8 shrink-0 overflow-hidden"
           >
             {/* Marco glassmorphism ancho completo para el panel 3D */}
             <div className="absolute inset-0 rounded-[2.5rem] md:rounded-[3rem] bg-white/[0.02] border border-white/[0.07] overflow-hidden shadow-[0_0_80px_rgba(195,216,9,0.06)]">
@@ -284,6 +293,46 @@ export default function Home() {
               </motion.div>
             )
           })}
+        </div>
+      </section>
+
+      {/* SECCIÓN DIAGNÓSTICO IA */}
+      <section className="w-full py-24 md:py-32 px-4 relative overflow-hidden border-t border-white/5">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(195,216,9,0.05)_0%,transparent_70%)] pointer-events-none" />
+        
+        <div className="max-w-5xl mx-auto bg-[#0a0a0a] border border-white/10 rounded-[3rem] p-8 md:p-16 relative overflow-hidden shadow-2xl">
+           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[80px] rounded-full pointer-events-none" />
+           <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/10 blur-[80px] rounded-full pointer-events-none" />
+           
+           <div className="flex flex-col md:flex-row items-center gap-12 relative z-10">
+              <div className="md:w-1/2">
+                <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md">
+                  <Sparkles className="w-4 h-4 text-primary animate-pulse" />
+                  <span className="text-xs font-bold text-primary tracking-widest uppercase">Gratis</span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
+                  Descubrí cómo la IA puede <span className="text-primary italic font-medium">escalar tu empresa.</span>
+                </h2>
+                <p className="text-gray-300 text-lg leading-relaxed mb-8">
+                  Completá nuestro formulario inteligente en menos de 2 minutos. Nuestro sistema analizará tu negocio y te enviará un <strong>diagnóstico personalizado</strong> con los cuellos de botella exactos y las soluciones automatizadas para resolverlos.
+                </p>
+                <ul className="flex flex-col gap-3 mb-10">
+                  <li className="flex items-center gap-3 text-sm text-gray-400 font-medium"><CheckCircle2 className="w-5 h-5 text-emerald-500" /> Detección de fugas operativas</li>
+                  <li className="flex items-center gap-3 text-sm text-gray-400 font-medium"><CheckCircle2 className="w-5 h-5 text-emerald-500" /> Recomendaciones de automatización</li>
+                  <li className="flex items-center gap-3 text-sm text-gray-400 font-medium"><CheckCircle2 className="w-5 h-5 text-emerald-500" /> Evaluación de madurez digital</li>
+                </ul>
+              </div>
+              <div className="md:w-1/2 flex justify-center">
+                 <Magnetic>
+                   <Link href="/diagnostico" className="group relative bg-white text-black px-10 py-6 rounded-[2rem] font-black text-xl overflow-hidden transition-all shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_50px_rgba(195,216,9,0.3)] flex flex-col items-center justify-center gap-4 hover:scale-[1.02] w-full max-w-sm text-center">
+                      <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                        <Zap className="w-8 h-8 fill-primary/20" />
+                      </div>
+                      <span>Iniciar Evaluación <ArrowRight className="w-5 h-5 inline-block ml-2 group-hover:translate-x-1 transition-transform" /></span>
+                   </Link>
+                 </Magnetic>
+              </div>
+           </div>
         </div>
       </section>
 

@@ -56,7 +56,7 @@ export default function Navbar() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" as const }}
-        className="fixed top-4 left-1/2 -translate-x-1/2 w-[92%] md:w-auto md:min-w-[700px] flex justify-between items-center px-3 py-3 pr-4 z-50 bg-[#050505]/70 backdrop-blur-2xl border border-white/10 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+        className="fixed top-4 left-1/2 -translate-x-1/2 w-[92%] md:w-auto flex justify-between items-center px-3 py-3 pr-4 z-50 bg-[#050505]/70 backdrop-blur-2xl border border-white/10 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
         role="banner"
       >
         {/* Logo */}
@@ -80,10 +80,10 @@ export default function Navbar() {
           className="hidden md:flex gap-8 items-center font-medium mx-auto px-6"
           aria-label="Navegación principal"
         >
-          <Link href="/" className="text-[13px] tracking-wide text-gray-300 hover:text-white transition-colors duration-200 font-semibold">
+          <Link href="/" className="text-[13px] tracking-wide text-gray-300 hover:text-white transition-colors duration-200 font-semibold whitespace-nowrap">
             Inicio
           </Link>
-          <Link href="/nosotros" className="text-[13px] tracking-wide text-gray-300 hover:text-white transition-colors duration-200 font-semibold">
+          <Link href="/nosotros" className="text-[13px] tracking-wide text-gray-300 hover:text-white transition-colors duration-200 font-semibold whitespace-nowrap">
             Nosotros
           </Link>
 
@@ -94,7 +94,7 @@ export default function Navbar() {
               aria-haspopup="true"
               aria-expanded={webOpen}
               aria-controls="web-menu"
-              className="text-[13px] tracking-wide text-gray-300 hover:text-white transition-colors duration-200 cursor-pointer flex items-center gap-1 font-semibold"
+              className="text-[13px] tracking-wide text-gray-300 hover:text-white transition-colors duration-200 cursor-pointer flex items-center gap-1 font-semibold whitespace-nowrap"
             >
               Soluciones Web
               <motion.span
@@ -136,7 +136,7 @@ export default function Navbar() {
             </AnimatePresence>
           </div>
 
-          <Link href="/servicios/automatizaciones" className="text-[13px] tracking-wide text-gray-300 hover:text-white transition-colors duration-200 font-semibold flex items-center gap-1.5">
+          <Link href="/servicios/automatizaciones" className="text-[13px] tracking-wide text-gray-300 hover:text-white transition-colors duration-200 font-semibold flex items-center gap-1.5 whitespace-nowrap">
             Agentes IA <Sparkles className="w-3 h-3 text-primary" />
           </Link>
         </nav>
@@ -147,7 +147,7 @@ export default function Navbar() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Agendar sesión en WhatsApp"
-          className="hidden md:flex bg-white text-black px-6 py-2.5 rounded-full font-bold text-[13px] hover:scale-105 hover:bg-primary transition-all duration-300 gap-2 items-center shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+          className="hidden md:flex bg-white text-black px-6 py-2.5 rounded-full font-bold text-[13px] hover:scale-105 hover:bg-primary transition-all duration-300 gap-2 items-center shadow-[0_0_20px_rgba(255,255,255,0.1)] whitespace-nowrap"
         >
           Iniciar Proyecto <ArrowRight size={14} aria-hidden="true" />
         </Link>

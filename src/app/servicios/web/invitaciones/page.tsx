@@ -234,15 +234,13 @@ export default function InvitationsPage() {
     "Padrinos y sección historia",
     "Personalizacion por invitado (con nombre)",
     "Save The Date animado",
-    "Hospedajes y traslados",
-    "Soporte técnico durante el evento",
-    "Actualizaciones ilimitadas post-entrega",
+    "Hoja de Excel con los anotados",
   ];
 
   const faqs = [
     {
       q: "¿Cuánto tiempo antes debo pedirla?",
-      a: "Lo ideal es pedirla 2 o 3 meses antes del evento para que tus invitados la reciban con tiempo. Si necesitás urgente, tenemos entrega en 24 hs con un costo adicional.",
+      a: "No hay un límite de tiempo estricto para pedirla, pero recomendamos hacerlo con anticipación para tu tranquilidad. Una vez que nos entregues todo el material e información necesaria, la tenemos lista y funcionando en menos de 72 horas hábiles.",
     },
     {
       q: "¿Puedo hacer cambios después de que esté publicada?",
@@ -250,7 +248,7 @@ export default function InvitationsPage() {
     },
     {
       q: "¿Cuántos invitados puedo agregar?",
-      a: "Podés enviarla a todos los que quieras, sin costo extra por invitado. Envíos ilimitados por WhatsApp.",
+      a: "Podés enviarla a todos los que quieras, sin costo extra por invitado. Los confirmados se conectan automáticamente a una base de datos mediante Excel o Google Sheets que te compartimos para que el personal del evento tenga el listado siempre actualizado.",
     },
     {
       q: "¿Cómo funciona el sistema de confirmación?",

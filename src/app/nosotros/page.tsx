@@ -190,14 +190,14 @@ export default function Nosotros() {
           >
             <Users className="w-12 h-12 text-primary mx-auto mb-6" />
             <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
-              Somos <span className="text-primary italic">Benjamín, Matías y Álvaro.</span>
+              Somos <span className="text-primary italic">Benjamín y Matías.</span>
             </h2>
             <p className="text-xl text-gray-300 leading-relaxed text-balance">
               Vimos a demasiadas empresas gastar fortunas en soluciones que no servían para nada. Por eso creamos MYB Digitals: queríamos ser una agencia transparente, rápida y enfocada únicamente en hacer crecer tu negocio.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Bio Benjamín */}
             <motion.div 
               initial="hidden" whileInView="visible" viewport={{once:true}}
@@ -223,20 +223,6 @@ export default function Nosotros() {
                <p className="text-cyan-400 text-sm font-bold mb-4 tracking-wide uppercase">Ingeniería Web & IA</p>
                <p className="text-gray-400 text-sm leading-relaxed">
                  Diseñador de ecosistemas digitales y arquitecto de software. Su objetivo no es solo implementar tecnología, sino orquestar flujos de trabajo hiper-optimizados que operen como el motor silencioso de la marca.
-               </p>
-            </motion.div>
-
-            {/* Bio Álvaro */}
-            <motion.div 
-              initial="hidden" whileInView="visible" viewport={{once:true}}
-              variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { delay: 0.3, duration: 0.6 }}}}
-              className="bg-white/[0.02] border border-white/5 rounded-3xl p-8 hover:bg-white/[0.04] transition-colors"
-            >
-               <div className="w-20 h-20 bg-gradient-to-br from-emerald-500/20 to-transparent rounded-full mb-6 border border-emerald-500/20 flex items-center justify-center text-2xl font-black text-emerald-400">A</div>
-               <h3 className="text-2xl font-bold text-white mb-1">Álvaro</h3>
-               <p className="text-emerald-400 text-sm font-bold mb-4 tracking-wide uppercase">Operaciones & Crecimiento</p>
-               <p className="text-gray-400 text-sm leading-relaxed">
-                 Garantiza la entrega impecable y el escalamiento del proyecto. Conecta los resultados comerciales con las integraciones técnicas, asegurando la adopción y el retorno de inversión del sistema desplegado.
                </p>
             </motion.div>
           </div>

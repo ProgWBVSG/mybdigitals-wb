@@ -4,6 +4,7 @@ import "./globals.css";
 import FloatingWidgets from "@/components/FloatingWidgets";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CustomCursor from "@/components/CustomCursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -60,6 +61,7 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Saltar al contenido principal
         </a>
+        <CustomCursor />
         <Navbar />
         <div id="main-content" tabIndex={-1}>
           {children}

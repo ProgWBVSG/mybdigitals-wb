@@ -8,46 +8,46 @@ const STAGES = [
   {
     step: "01",
     title: "IA que trabaja por vos",
-    subtitle: "Automatización Inteligente",
-    desc: "Agentes autónomos que cualifican leads, responden clientes en WhatsApp y envían reportes solos. Tu operación escala sin sumar personal.",
+    subtitle: "Atención 24/7 en Piloto Automático",
+    desc: "Creamos agentes de IA que atienden a tus clientes por WhatsApp, filtran a los interesados y te ahorran horas de trabajo manual todos los días. Tu negocio sigue funcionando mientras vos descansás.",
     Icon: Bot,
     accentA: "#C3D809",
     accentB: "#00d084",
     items: [
-      "Agente IA en WhatsApp y Web",
-      "Flujos n8n / Make sin fricción",
-      "CRM y dashboards sincronizados",
-      "Reportes diarios automáticos",
+      "Respuestas Instantáneas",
+      "Filtro Inteligente de Leads",
+      "Ventas por WhatsApp",
+      "Cero Tareas Repetitivas",
     ],
   },
   {
     step: "02",
-    title: "Tu web como vendedor",
-    subtitle: "Desarrollo Web de Élite",
-    desc: "Sitios Next.js ultrarrápidos, SEO técnico desde la base y experiencia premium. No una plantilla — una máquina de conversión que trabaja 24/7.",
+    title: "Webs que venden de verdad",
+    subtitle: "Tu Mejor Vitrina Digital",
+    desc: "No hacemos simples páginas web. Diseñamos sitios de alta conversión y alto impacto que convencen a tus visitas de elegirte a vos antes que a tu competencia.",
     Icon: Globe,
     accentA: "#0099ff",
     accentB: "#00e0ff",
     items: [
-      "Landings de alta conversión",
-      "Webs corporativas y portafolios",
-      "SEO técnico desde la arquitectura",
-      "E-commerce e invitaciones digitales",
+      "Velocidad de Carga Máxima",
+      "Diseño que Genera Confianza",
+      "Fácil de Navegar",
+      "Optimizado para Google",
     ],
   },
   {
     step: "03",
-    title: "Resultados reales",
-    subtitle: "Tu empresa en 90 días",
-    desc: "Un ecosistema completo que trabaja solo. Más ventas, menos fricción y presencia digital que nadie en tu industria puede ignorar.",
+    title: "Más ventas, menos esfuerzo",
+    subtitle: "Crecimiento Sin Límites",
+    desc: "Nuestra tecnología se encarga del trabajo pesado. Multiplicamos tus resultados eliminando los procesos manuales que hoy frenan el crecimiento de tu empresa.",
     Icon: TrendingUp,
     accentA: "#a855f7",
     accentB: "#ec4899",
     items: [
-      "10x ROI promedio por cliente",
-      "80% menos horas manuales",
-      "Presencia digital de nivel enterprise",
-      "Escalás sin incorporar más personal",
+      "Mejor Retorno de Inversión",
+      "Marca Más Profesional",
+      "Resultados Medibles",
+      "Escalá Sin Complicaciones",
     ],
   },
 ] as const;
@@ -62,7 +62,7 @@ function ChatVisual({ accent }: { accent: string }) {
   ];
 
   return (
-    <div className="flex justify-center overflow-hidden px-2" style={{ perspective: "900px" }}>
+    <div className="flex justify-center overflow-visible px-2" style={{ perspective: "900px" }}>
       <motion.div
         animate={{ rotateY: [4, -4, 4], rotateX: [3, -3, 3], y: [0, -12, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -149,7 +149,7 @@ function ChatVisual({ accent }: { accent: string }) {
 /* ─── 3D Visual: Browser ─────────────────────────────────────── */
 function WebVisual({ accent }: { accent: string }) {
   return (
-    <div className="flex justify-center overflow-hidden px-2" style={{ perspective: "900px" }}>
+    <div className="flex justify-center overflow-visible px-2" style={{ perspective: "900px" }}>
       <motion.div
         animate={{ rotateY: [-5, 5, -5], rotateX: [-3, 3, -3], y: [0, -12, 0] }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
@@ -205,7 +205,7 @@ function WebVisual({ accent }: { accent: string }) {
 function ResultsVisual({ accent }: { accent: string }) {
   const bars = [22, 35, 48, 56, 70, 82, 95];
   return (
-    <div className="flex justify-center overflow-hidden px-2" style={{ perspective: "900px" }}>
+    <div className="flex justify-center overflow-visible px-2" style={{ perspective: "900px" }}>
       <motion.div
         animate={{ rotateY: [4, -4, 4], rotateX: [2, -2, 2], y: [0, -10, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}

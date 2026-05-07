@@ -356,7 +356,7 @@ export default function PresenciaDigitalPage() {
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
-          className="min-h-[70vh] flex flex-col items-center justify-center text-center mt-10 md:mt-20 mb-32 relative"
+          className="min-h-[70vh] flex flex-col items-center justify-center text-center mt-4 md:mt-6 mb-32 relative"
         >
           <BackgroundTechElements />
 
@@ -412,7 +412,7 @@ export default function PresenciaDigitalPage() {
                 href="#planes" 
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[60px] bg-primary text-black px-10 py-4 rounded-full font-bold text-lg hover:bg-white hover:scale-105 transition-all duration-300 focus:outline-none shadow-[0_0_30px_rgba(195,216,9,0.3)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)]"
              >
-                Ver Solución de $400 <ArrowRight className="w-5 h-5" />
+                Quiero escalar mi negocio <ArrowRight className="w-5 h-5" />
              </Link>
              <Link 
                 href="https://wa.me/543515555123?text=Hola,%20necesito%20elevar%20mi%20presencia%20digital%20para%20conseguir%20m%C3%A1s%20clientes." 
@@ -695,14 +695,14 @@ export default function PresenciaDigitalPage() {
                          E-Commerce para Productos
                       </div>
                    </div>
-                   <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight">TiendaIA<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">Optimizada.</span></h2>
+                   <h2 className="text-3xl md:text-5xl font-black mb-6 leading-tight text-white">Tienda de productos<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">Optimizada.</span></h2>
                    
                    <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-10 font-light">
                        Mejor que las típicas plataformas de pago mensual. Un diseño espectacular, conectado con tu marca, más todo un dashboard interactivo que utiliza estrategias establecidas para enganchar al cliente y asegurar tus ventas.
                    </p>
 
                    <Link 
-                     href="https://wa.me/543515555123?text=Hola,%20tengo%20productos%20y%20quiero%20crear%20mi%20Tienda%20IA%20Optimizada." 
+                     href="https://wa.me/543515555123?text=Hola,%20tengo%20productos%20y%20quiero%20crear%20mi%20Tienda%20de%20productos%20Optimizada." 
                      target="_blank"
                      rel="noopener noreferrer"
                      className="group relative w-full inline-flex items-center justify-center gap-3 bg-white text-black px-8 py-5 rounded-full font-black text-lg hover:bg-orange-500 hover:text-white transition-all duration-300 min-h-[60px] shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_40px_rgba(249,115,22,0.3)] hover:scale-[1.02]"

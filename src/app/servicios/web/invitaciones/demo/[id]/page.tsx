@@ -25,11 +25,11 @@ import {
 const baseBodasContent = {
   historyLine: "Hay recuerdos que no voy a borrar, personas que no voy a olvidar y lugares donde siempre voy a querer estar...",
   gallery: [
-     "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=90",
-     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=90",
-     "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=90",
-     "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=90",
-     "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1600&q=90",
+     "/fotos_boda/foto1.jpg",
+     "/fotos_boda/foto2.jpg",
+     "/fotos_boda/foto3.jpg",
+     "/fotos_boda/foto4.jpg",
+     "/fotos_boda/foto5.jpg",
   ],
   locations: [
     { type: "Ceremonia", title: "Catedral Nuestra Señora", time: "18:00 hs", link: "https://maps.google.com/?q=Catedral", address: "Av. Principal 123", icon: MapPin },
@@ -165,14 +165,14 @@ const triviaCumples: Record<string, {q: string; options: string[]; correct: numb
 // ── BASE DE DATOS DEMOS (fechas 2026/2027 para countdown funcional) ──
 const demoDataBase: Record<string, any> = {
   // BODAS — todas con fechas futuras para que el countdown funcione
-  "bodas-1": { ...baseBodasContent, trivia: triviaBodas["1"], names: "Marti & Tomi", gateTitle: "Nuestra Boda", decorGate: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=90", date: "15 de Noviembre 2026", font: "Georgia, serif", colorAccent: "#d4af37", colorBg: "#ffffff", styleType: "photo", opacityHero: 0.15 },
-  "bodas-2": { ...baseBodasContent, trivia: triviaBodas["2"], names: "Julieta & Marcos", gateTitle: "Nos Casamos", decorGate: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1920&q=90", date: "22 de Marzo 2027", font: "Arial, sans-serif", colorAccent: "#60a5fa", colorBg: "#f0f4f8", styleType: "photo", opacityHero: 0.2 },
+  "bodas-1": { ...baseBodasContent, trivia: triviaBodas["1"], names: "Marti & Tomi", gateTitle: "Nuestra Boda", decorGate: "/fotos_boda/foto1.jpg", bgHero: "/fotos_boda/foto1.jpg", date: "15 de Noviembre 2026", font: "Georgia, serif", colorAccent: "#e11d48", colorBg: "#faf8f6", styleType: "photo", opacityHero: 0.15 },
+  "bodas-2": { ...baseBodasContent, trivia: triviaBodas["2"], names: "Julieta & Marcos", gateTitle: "Nos Casamos", decorGate: "/fotos_boda/foto2.jpg", bgHero: "/fotos_boda/foto2.jpg", date: "22 de Marzo 2027", font: "Arial, sans-serif", colorAccent: "#60a5fa", colorBg: "#f0f4f8", styleType: "photo", opacityHero: 0.2 },
   "bodas-3": { ...baseBodasContent, trivia: triviaBodas["3"], names: "Lisa & Hernán", gateTitle: "Celebramos", decorGate: "https://images.unsplash.com/photo-1596431940984-7eaf9bd80de5?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1596431940984-7eaf9bd80de5?auto=format&fit=crop&w=1920&q=90", date: "16 de Septiembre 2026", font: "Geist Sans, sans-serif", colorAccent: "#4b5548", colorBg: "#fdfbf7", styleType: "watercolor", opacityHero: 0.1 },
-  "bodas-4": { ...baseBodasContent, trivia: triviaBodas["4"], names: "Candela & Elías", gateTitle: "Gran Día", decorGate: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=90", date: "08 de Junio 2026", font: "Courier New, monospace", colorAccent: "#9ca3af", colorBg: "#f3f4f6", styleType: "photo", opacityHero: 0.2 },
-  "bodas-5": { ...baseBodasContent, trivia: triviaBodas["5"], names: "Georgina & Joaquín", gateTitle: "Sunset Boho", decorGate: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1920&q=90", date: "30 de Agosto 2026", font: "Palatino, serif", colorAccent: "#f0a58f", colorBg: "#fff6f5", styleType: "photo", opacityHero: 0.15 },
+  "bodas-4": { ...baseBodasContent, trivia: triviaBodas["4"], names: "Candela & Elías", gateTitle: "Gran Día", decorGate: "/fotos_boda/foto3.jpg", bgHero: "/fotos_boda/foto3.jpg", date: "08 de Junio 2026", font: "Courier New, monospace", colorAccent: "#9ca3af", colorBg: "#f3f4f6", styleType: "photo", opacityHero: 0.2 },
+  "bodas-5": { ...baseBodasContent, trivia: triviaBodas["5"], names: "Georgina & Joaquín", gateTitle: "Sunset Boho", decorGate: "/fotos_boda/foto4.jpg", bgHero: "/fotos_boda/foto4.jpg", date: "30 de Agosto 2026", font: "Palatino, serif", colorAccent: "#f0a58f", colorBg: "#fff6f5", styleType: "photo", opacityHero: 0.15 },
   "bodas-6": { ...baseBodasContent, trivia: triviaBodas["6"], names: "Stefi & Nico", gateTitle: "Monograma Elegante", decorGate: "https://images.unsplash.com/photo-1579549321487-3cb83e5a5960?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1579549321487-3cb83e5a5960?auto=format&fit=crop&w=1920&q=90", date: "20 de Diciembre 2026", font: "Georgia, serif", colorAccent: "#611a28", colorBg: "#ffffff", styleType: "watercolor", opacityHero: 0.1 },
   "bodas-7": { ...baseBodasContent, trivia: triviaBodas["7"], names: "Anto & Fer", gateTitle: "Lavanda Clásica", decorGate: "https://images.unsplash.com/photo-1543362143-6c84b1ebac1d?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1543362143-6c84b1ebac1d?auto=format&fit=crop&w=1920&q=90", date: "14 de Octubre 2026", font: "Arial, sans-serif", colorAccent: "#a78bfa", colorBg: "#fcfcff", styleType: "watercolor", opacityHero: 0.08 },
-  "bodas-8": { ...baseBodasContent, trivia: triviaBodas["8"], names: "Valentina & Lucas", gateTitle: "El Gran Día", decorGate: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1920&q=90", date: "11 de Octubre 2026", font: "Arial, sans-serif", colorAccent: "#cbd5e1", colorBg: "#fafafa", styleType: "photo", opacityHero: 0.15 },
+  "bodas-8": { ...baseBodasContent, trivia: triviaBodas["8"], names: "Valentina & Lucas", gateTitle: "El Gran Día", decorGate: "/fotos_boda/foto5.jpg", bgHero: "/fotos_boda/foto5.jpg", date: "11 de Octubre 2026", font: "Arial, sans-serif", colorAccent: "#cbd5e1", colorBg: "#fafafa", styleType: "photo", opacityHero: 0.15 },
 
   // CUMPLES
   "cumples-1": { ...baseCumplesContent, trivia: triviaCumples["1"], names: "Mía", gateTitle: "Mis 15 Años", decorGate: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1200&q=90", bgHero: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1920&q=90", date: "10 Diciembre 2026", font: "Arial, sans-serif", colorAccent: "#a855f7", styleType: "photo", opacityHero: 0.25 },
@@ -430,12 +430,13 @@ export default function DemoInvitationPage() {
               {/* ── Foto de la Pareja ── */}
               <div className="relative w-40 h-40 sm:w-52 sm:h-52 rounded-full overflow-hidden mb-8 border-4 shadow-xl" style={{ borderColor: `${accent}40` }}>
                 <Image
-                  src="/couple-hero.png"
+                  src={data.decorGate || data.bgHero}
                   alt="Pareja"
                   fill
                   className="object-cover object-top"
                   sizes="(max-width: 640px) 160px, 208px"
                   priority
+                  quality={100}
                 />
                 {/* Brillo sutil en el borde */}
                 <div className="absolute inset-0 rounded-full" style={{ boxShadow: `inset 0 0 20px ${accent}15` }} />
@@ -500,12 +501,13 @@ export default function DemoInvitationPage() {
         {/* Foto de la pareja como fondo completo */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/couple-hero.png"
+            src={data.bgHero}
             alt="Pareja"
             fill
             className="object-cover object-top"
             sizes="100vw"
             priority
+            quality={100}
           />
           {/* Degradé inferior: la foto se funde hacia el color base de la invitación */}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-current" style={{ color: bgBase }} />
@@ -518,27 +520,32 @@ export default function DemoInvitationPage() {
         <div className="relative z-10 flex flex-col items-center px-4 w-full text-center">
           <motion.p
             initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}
-            className="text-2xl sm:text-3xl md:text-4xl tracking-[0.3em] font-bold uppercase mb-6 drop-shadow-lg"
-            style={{ color: accent, textShadow: "0 2px 20px rgba(0,0,0,0.4)" }}
+            className="text-2xl sm:text-3xl md:text-4xl tracking-[0.3em] font-bold uppercase mb-6"
+            style={{ color: accent, textShadow: "0 0 20px rgba(255,255,255,0.9), 0 0 40px rgba(255,255,255,0.7)" }}
           >
             Nos Casamos
           </motion.p>
 
           <motion.h1
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }}
-            style={{ fontFamily: data.font, color: "white", textShadow: "0 4px 30px rgba(0,0,0,0.5)" }}
-            className="text-4xl md:text-6xl lg:text-7xl uppercase tracking-widest mb-4"
+            style={{ fontFamily: data.font, color: "white", textShadow: "0 2px 4px rgba(0,0,0,0.8), 0 0 30px rgba(255,255,255,0.6)" }}
+            className="text-4xl md:text-6xl lg:text-7xl uppercase tracking-widest mb-6"
           >
             {data.names}
           </motion.h1>
-          <div className="w-10 h-[1px] my-6" style={{ backgroundColor: `${accent}80` }} />
-          <motion.p
+          
+          <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.4 }}
-            className="text-base sm:text-lg md:text-xl tracking-[0.2em] font-semibold uppercase drop-shadow-md"
-            style={{ color: accent, textShadow: "0 2px 15px rgba(0,0,0,0.3)" }}
+            className="flex flex-col items-center"
           >
-            {data.date}
-          </motion.p>
+            <div className="text-5xl md:text-7xl font-light mb-1" style={{ fontFamily: "'Cormorant Garamond', serif", color: accent, textShadow: "0 0 20px rgba(255,255,255,0.9)" }}>
+              {data.date.split(" ")[0]}
+            </div>
+            <div className="w-16 h-[1px] my-2" style={{ backgroundColor: `${accent}80`, boxShadow: "0 0 10px rgba(255,255,255,0.8)" }} />
+            <div className="text-lg md:text-xl tracking-[0.4em] font-semibold uppercase" style={{ color: accent, textShadow: "0 0 15px rgba(255,255,255,0.9)" }}>
+              {data.date.split(" ").slice(1).join(" ")}
+            </div>
+          </motion.div>
         </div>
 
         <motion.div
