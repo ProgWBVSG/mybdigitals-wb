@@ -306,8 +306,8 @@ export default function BodasPage() {
       {/* Grid de Funcionalidades */}
       <div className="max-w-6xl mx-auto px-5 md:px-10 mb-24">
          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Módulo Nupcial <span className="text-[#f43f5e]">All-Inclusive</span></h2>
-            <p className="text-zinc-400 max-w-xl mx-auto">No pagues extras ocultos. Tu invitación viene completamente equipada con <strong className="text-white">todas estas funcionalidades premium</strong> por un precio plano.</p>
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Todo lo que incluye tu Experiencia <span className="text-[#f43f5e]">Full Premium</span></h2>
+            <p className="text-zinc-400 max-w-xl mx-auto">Olvidate de los "packs básicos" y los extras ocultos. Tu invitación viene equipada con <strong className="text-white">absolutamente todo</strong> lo necesario para que tu boda sea una experiencia tecnológica inolvidable, por un único precio plano.</p>
          </div>
 
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
