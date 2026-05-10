@@ -261,14 +261,14 @@ export default function BodasPage() {
          <div className="relative w-full h-[75vh] min-h-[520px] md:min-h-[600px] flex flex-col justify-center items-center px-4">
             {/* Imagen de Fondo — Pareja en alta resolución */}
             <div className="absolute inset-0 w-full h-full z-0">
-               <Image 
-                  src="/hero-bodas-couple.jpg" 
-                  alt="Pareja romántica — Hero Invitaciones de Boda" 
-                  fill 
-                  priority
-                  quality={90}
-                  className="object-cover object-center" 
-                  sizes="100vw"
+               <video 
+                  src="/video_inicio_bodas.mp4" 
+                  poster="/hero-bodas-couple.jpg"
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  className="object-cover object-center w-full h-full grayscale" 
                />
                {/* Degradé con varias capas para legibilidad perfecta */}
                <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-background" />
