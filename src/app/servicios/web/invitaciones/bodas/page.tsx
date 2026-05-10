@@ -307,7 +307,7 @@ export default function BodasPage() {
       <div className="max-w-6xl mx-auto px-5 md:px-10 mb-24">
          <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Todo lo que incluye tu Experiencia <span className="text-[#f43f5e]">Full Premium</span></h2>
-            <p className="text-zinc-400 max-w-xl mx-auto">Olvidate de los "packs básicos" y los extras ocultos. Tu invitación viene equipada con <strong className="text-white">absolutamente todo</strong> lo necesario para que tu boda sea una experiencia tecnológica inolvidable, por un único precio plano.</p>
+            <p className="text-zinc-400 max-w-xl mx-auto">RSVP, Álbum de fotos, Trivia, Mesa de regalos, GPS, Cuenta regresiva y Música. Olvidate de los extras: tu invitación ya incluye <strong className="text-white">todas las funciones premium</strong> por un único precio.</p>
          </div>
 
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
