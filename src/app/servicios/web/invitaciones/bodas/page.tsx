@@ -371,8 +371,11 @@ export default function BodasPage() {
               Premium
             </span>
           </h1>
-          <p className="text-gray-400 max-w-lg mx-auto text-sm leading-relaxed">
+          <p className="text-gray-400 max-w-lg mx-auto text-sm leading-relaxed mb-4">
             Una colección ecléctica combinando nuestra tarjetería fotográfica clásica con nuevos diseños editoriales, botánicos y minimalistas. Haz click para ver las Demos.
+          </p>
+          <p className="text-zinc-500 max-w-lg mx-auto text-xs italic font-medium bg-white/5 border border-white/10 rounded-lg py-2 px-4 inline-block mt-2">
+            * Aclaración: Las fotos de estas demostraciones no pertenecen a clientes reales por políticas de privacidad 🙂
           </p>
         </motion.div>
 
