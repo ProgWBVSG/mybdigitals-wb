@@ -279,6 +279,7 @@ export default function DemoInvitationPage() {
   }, [params]);
 
   const [isEntered, setIsEntered] = useState(false);
+  const [isOpening, setIsOpening] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeLeft, setTimeLeft] = useState({ d: 0, h: 0, m: 0, s: 0 });
   const [showGifts, setShowGifts] = useState(false);
@@ -463,10 +464,15 @@ export default function DemoInvitationPage() {
 
               <motion.div 
                 className="relative cursor-pointer group flex flex-col items-center mt-6" 
-                onClick={handleEnter}
+                onClick={() => {
+                  if (isOpening) return;
+                  setIsOpening(true);
+                  setTimeout(() => handleEnter(), 1000);
+                }}
                 initial="idle"
                 whileHover="hover"
                 whileTap="tap"
+                animate={isOpening ? "open" : undefined}
               >
                 {/* Envelope Container */}
                 <div className="relative w-40 h-28 bg-stone-100 rounded-md shadow-md border border-stone-200 flex items-center justify-center z-10" style={{ perspective: "1000px" }}>
@@ -480,7 +486,8 @@ export default function DemoInvitationPage() {
                      variants={{
                         idle: { opacity: 0 },
                         hover: { opacity: 1 },
-                        tap: { opacity: 1 }
+                        tap: { opacity: 1 },
+                        open: { opacity: 1 }
                      }}
                      transition={{ duration: 0.1, delay: 0.15 }}
                   >
@@ -493,7 +500,8 @@ export default function DemoInvitationPage() {
                     variants={{
                       idle: { y: 0 },
                       hover: { y: -40 },
-                      tap: { y: -44, scale: 1.05 }
+                      tap: { y: -44, scale: 1.05 },
+                      open: { y: -80, scale: 1.15 }
                     }}
                     transition={{ type: "spring", stiffness: 300, damping: 25 }}
                   >
@@ -512,7 +520,8 @@ export default function DemoInvitationPage() {
                     variants={{
                        idle: { rotateX: 0, opacity: 1 },
                        hover: { rotateX: 110, opacity: 0 },
-                       tap: { rotateX: 110, opacity: 0 }
+                       tap: { rotateX: 110, opacity: 0 },
+                       open: { rotateX: 120, opacity: 0 }
                     }}
                     transition={{ duration: 0.3, ease: "easeIn" }}
                   >
@@ -528,7 +537,8 @@ export default function DemoInvitationPage() {
                     variants={{
                       idle: { opacity: 1, scale: 1 },
                       hover: { opacity: 0, scale: 0.5 },
-                      tap: { opacity: 0, scale: 0.5 }
+                      tap: { opacity: 0, scale: 0.5 },
+                      open: { opacity: 0, scale: 0.2 }
                     }}
                     transition={{ duration: 0.25 }}
                   >
@@ -542,7 +552,7 @@ export default function DemoInvitationPage() {
                 {/* Text below */}
                 <motion.p 
                    className="mt-8 text-xs font-bold tracking-[0.2em] uppercase text-stone-500 transition-colors"
-                   variants={{ hover: { color: accent, y: -2 } }}
+                   variants={{ hover: { color: accent, y: -2 }, open: { opacity: 0 } }}
                 >
                   Abrir Invitación
                 </motion.p>
