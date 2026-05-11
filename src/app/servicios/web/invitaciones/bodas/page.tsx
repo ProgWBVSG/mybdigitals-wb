@@ -264,7 +264,6 @@ export default function BodasPage() {
             <div className="absolute inset-0 w-full h-full z-0">
                <video 
                   src="/video_inicio_bodas.mp4" 
-                  poster="/hero-bodas-couple.jpg"
                   autoPlay 
                   loop 
                   muted 
