@@ -26,21 +26,37 @@ export const viewport: Viewport = {
   // NO se deshabilita userScalable (importante para accesibilidad WCAG)
 };
 
+export const metadataBase = new URL("https://mybdigitals.com");
+
 export const metadata: Metadata = {
-  title: "MYB Digitals | Agencia Web & IA",
-  description: "Escalamos negocios mediante Automatización de IA y Desarrollo Web Premium. Agentes inteligentes, landings de alta conversión y presencia digital de clase mundial.",
-  keywords: ["agencia digital", "automatización IA", "desarrollo web", "landing page", "chatbot", "WhatsApp bot"],
-  authors: [{ name: "MYB Digitals" }],
-  // §SEO: Open Graph para redes sociales
+  title: {
+    default: "MYB Digitals | Agencia Web & Automatizaciones con IA en Córdoba",
+    template: "%s | MYB Digitals"
+  },
+  description: "Agencia líder en Córdoba de Desarrollo Web Premium y Automatización con Inteligencia Artificial. Escalamos empresas con agentes IA, chatbots y landing pages de alta conversión.",
+  keywords: ["agencia de automatizaciones córdoba", "agencia web córdoba", "desarrollo web premium", "chatbots con IA", "agencia de inteligencia artificial", "automatización de procesos", "diseño web córdoba", "landing pages"],
+  authors: [{ name: "MYB Digitals", url: "https://mybdigitals.com" }],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "MYB Digitals | Agencia Web & IA",
-    description: "Escalamos negocios mediante Automatización de IA y Desarrollo Web Premium.",
+    title: "MYB Digitals | Agencia Web & Automatizaciones con IA en Córdoba",
+    description: "Escalamos negocios mediante Automatización de IA y Desarrollo Web Premium. Desde Córdoba, Argentina para el mundo.",
+    url: "https://mybdigitals.com",
+    siteName: "MYB Digitals",
     type: "website",
     locale: "es_AR",
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
