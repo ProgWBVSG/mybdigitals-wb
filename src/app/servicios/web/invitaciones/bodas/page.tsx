@@ -310,16 +310,28 @@ export default function BodasPage() {
             <p className="text-zinc-400 max-w-xl mx-auto">RSVP, Álbum de fotos, Trivia, Mesa de regalos, GPS, Cuenta regresiva y Música. Olvidate de los extras: tu invitación ya incluye <strong className="text-white">todas las funciones premium</strong> por un único precio.</p>
          </div>
 
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {features.map((f, i) => {
                const Icon = f.icon;
+               const isHighlighted = f.title.includes("Excel");
                return (
-                 <div key={i} className="bg-white/5 border border-white/5 backdrop-blur-sm rounded-2xl p-6 transition-all hover:-translate-y-1 hover:bg-white/[0.07] hover:border-[#f43f5e]/30 group">
-                    <div className="w-12 h-12 rounded-xl bg-black/40 flex items-center justify-center border border-white/10 mb-5 group-hover:bg-[#f43f5e]/10 group-hover:border-[#f43f5e]/50 transition-colors">
-                       <Icon size={22} className="text-zinc-400 group-hover:text-[#f43f5e] transition-colors" />
+                 <div key={i} className={`backdrop-blur-sm rounded-2xl p-6 transition-all hover:-translate-y-1 group ${
+                    isHighlighted
+                       ? "bg-[#f43f5e]/10 border-2 border-[#fda4af]/60 shadow-[0_0_30px_rgba(244,63,94,0.15)] hover:shadow-[0_0_40px_rgba(244,63,94,0.25)]"
+                       : "bg-white/5 border border-white/5 hover:bg-white/[0.07] hover:border-[#f43f5e]/30"
+                 }`}>
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-colors ${
+                       isHighlighted
+                          ? "bg-[#f43f5e]/20 border border-[#fda4af]/50 text-[#fda4af]"
+                          : "bg-black/40 border border-white/10 text-zinc-400 group-hover:bg-[#f43f5e]/10 group-hover:border-[#f43f5e]/50 group-hover:text-[#f43f5e]"
+                    }`}>
+                       <Icon size={22} className={!isHighlighted ? "transition-colors" : ""} />
                     </div>
-                    <h3 className="text-white font-bold text-lg mb-2">{f.title}</h3>
-                    <p className="text-zinc-500 text-sm leading-relaxed">{f.desc}</p>
+                    <h3 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
+                       {f.title}
+                       {isHighlighted && <Sparkles size={16} className="text-[#fda4af]" />}
+                    </h3>
+                    <p className={`${isHighlighted ? "text-zinc-300" : "text-zinc-500"} text-sm leading-relaxed`}>{f.desc}</p>
                  </div>
                )
             })}

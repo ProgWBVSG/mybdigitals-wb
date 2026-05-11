@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 export default function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const pathname = usePathname();
 
   // Framer Motion values (no disparan re-renders de React, súper optimizado)
   const cursorX = useMotionValue(-100);
@@ -74,6 +76,8 @@ export default function CustomCursor() {
   }, [isVisible, cursorX, cursorY]);
 
   if (!isVisible) return null;
+  // Ocultar el cursor en la vista previa de las invitaciones demo
+  if (pathname?.includes("/demo/")) return null;
 
   return (
     <>
