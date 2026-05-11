@@ -654,7 +654,7 @@ export default function DemoInvitationPage() {
           <div className="absolute inset-0 pointer-events-none">
             <Image
               src="https://images.unsplash.com/photo-1490750967868-88df5691cc6e?auto=format&fit=crop&w=1600&q=90"
-              alt="Flores decorativas"
+              alt=""
               fill
               className="object-cover"
               style={{ opacity: 0.12 }}
