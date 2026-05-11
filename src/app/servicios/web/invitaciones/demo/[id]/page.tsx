@@ -469,12 +469,12 @@ export default function DemoInvitationPage() {
                 whileTap="tap"
               >
                 {/* Envelope Container */}
-                <div className="relative w-32 h-24 bg-stone-100 rounded-md shadow-md border border-stone-200 flex items-center justify-center z-10" style={{ perspective: "1000px" }}>
+                <div className="relative w-40 h-28 bg-stone-100 rounded-md shadow-md border border-stone-200 flex items-center justify-center z-10" style={{ perspective: "1000px" }}>
                   
                   {/* Layer 2: Flap Back (Inside of the top flap, standing up) */}
                   <motion.svg 
-                     className="absolute bottom-[100%] left-0 w-full h-[48px] z-10 pointer-events-none" 
-                     viewBox="0 0 128 48" 
+                     className="absolute bottom-[100%] left-0 w-full h-[56px] z-10 pointer-events-none" 
+                     viewBox="0 0 160 56" 
                      fill="none" 
                      style={{ transform: "rotate(180deg)" }}
                      variants={{
@@ -484,26 +484,26 @@ export default function DemoInvitationPage() {
                      }}
                      transition={{ duration: 0.1, delay: 0.15 }}
                   >
-                     <path d="M0 0 L64 48 L128 0 Z" fill="#e5e7eb" stroke="#d1d5db" strokeWidth="1" strokeLinejoin="round" />
+                     <path d="M0 0 L80 56 L160 0 Z" fill="#e5e7eb" stroke="#d1d5db" strokeWidth="1" strokeLinejoin="round" />
                   </motion.svg>
 
                   {/* Layer 3: Letter */}
                   <motion.div 
-                    className="absolute w-28 h-20 bg-white border border-stone-200 rounded-sm flex flex-col items-center justify-center shadow-sm z-20"
+                    className="absolute w-36 h-24 bg-white border border-stone-200 rounded-sm flex flex-col items-center justify-center shadow-sm z-20"
                     variants={{
                       idle: { y: 0 },
-                      hover: { y: -32 },
-                      tap: { y: -36, scale: 1.05 }
+                      hover: { y: -40 },
+                      tap: { y: -44, scale: 1.05 }
                     }}
                     transition={{ type: "spring", stiffness: 300, damping: 25 }}
                   >
-                     <p className="text-[10px] font-serif italic mb-1" style={{ color: accent }}>Para ti</p>
-                     <Heart size={12} fill={accent} color={accent} className="opacity-70" />
+                     <p className="text-xs font-serif italic mb-1" style={{ color: accent }}>Para ti</p>
+                     <Heart size={14} fill={accent} color={accent} className="opacity-70" />
                   </motion.div>
 
                   {/* Layer 4: Front Flaps (Bottom, Left, Right) */}
-                  <svg className="absolute inset-0 w-full h-full z-30 pointer-events-none drop-shadow-sm" viewBox="0 0 128 96" fill="none">
-                     <path d="M0 0 L64 48 L128 0 L128 96 L0 96 Z" fill="#ffffff" stroke="#e5e7eb" strokeWidth="1" strokeLinejoin="round" />
+                  <svg className="absolute inset-0 w-full h-full z-30 pointer-events-none drop-shadow-sm" viewBox="0 0 160 112" fill="none">
+                     <path d="M0 0 L80 56 L160 0 L160 112 L0 112 Z" fill="#ffffff" stroke="#e5e7eb" strokeWidth="1" strokeLinejoin="round" />
                   </svg>
 
                   {/* Layer 5: Top Flap Front (Animated opening) */}
@@ -516,15 +516,15 @@ export default function DemoInvitationPage() {
                     }}
                     transition={{ duration: 0.3, ease: "easeIn" }}
                   >
-                     <svg className="w-full h-full drop-shadow-sm" viewBox="0 0 128 96" fill="none">
-                        <path d="M0 0 L64 48 L128 0 Z" fill="#f9fafb" stroke="#e5e7eb" strokeWidth="1" strokeLinejoin="round" />
+                     <svg className="w-full h-full drop-shadow-sm" viewBox="0 0 160 112" fill="none">
+                        <path d="M0 0 L80 56 L160 0 Z" fill="#f9fafb" stroke="#e5e7eb" strokeWidth="1" strokeLinejoin="round" />
                      </svg>
                   </motion.div>
                   
-                  {/* Layer 6: Seal (Sello de cera) */}
+                  {/* Layer 6: Seal (Sello de cera en forma de Corazón) */}
                   <motion.div 
-                    className="absolute top-[48px] left-1/2 w-8 h-8 rounded-full z-50 shadow-md flex items-center justify-center"
-                    style={{ x: "-50%", y: "-50%", backgroundColor: accent }}
+                    className="absolute top-[56px] left-1/2 z-50 flex items-center justify-center"
+                    style={{ x: "-50%", y: "-50%", filter: "drop-shadow(0 4px 3px rgb(0 0 0 / 0.1)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06))" }}
                     variants={{
                       idle: { opacity: 1, scale: 1 },
                       hover: { opacity: 0, scale: 0.5 },
@@ -532,8 +532,9 @@ export default function DemoInvitationPage() {
                     }}
                     transition={{ duration: 0.25 }}
                   >
-                    <div className="w-4 h-4 border border-white/50 rounded-full flex items-center justify-center">
-                       <div className="w-1 h-1 bg-white/70 rounded-full" />
+                    <Heart size={36} fill={accent} color={accent} />
+                    <div className="absolute inset-0 flex items-center justify-center -mt-0.5">
+                       <Heart size={14} fill="rgba(255,255,255,0.15)" color="rgba(255,255,255,0.4)" strokeWidth={1.5} />
                     </div>
                   </motion.div>
                 </div>
