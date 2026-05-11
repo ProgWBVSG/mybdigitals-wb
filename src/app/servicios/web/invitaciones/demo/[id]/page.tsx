@@ -405,7 +405,12 @@ export default function DemoInvitationPage() {
   const s7 = sectionStyle(false, accent, bgBase);       // Trivia: fondo blanco
 
   return (
-    <div className="min-h-screen text-stone-800 font-sans selection:bg-rose-200 overflow-x-hidden" style={{ backgroundColor: bgBase }}>
+    <div className="min-h-screen text-stone-800 font-sans selection:bg-rose-200 overflow-x-hidden relative" style={{ backgroundColor: bgBase }}>
+      {/* Textura sutil global para dar efecto "papel texturizado / piedritas" a los fondos lisos */}
+      <div 
+        className="fixed inset-0 pointer-events-none mix-blend-multiply opacity-[0.04] z-0"
+        style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/stucco.png')" }} 
+      />
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap');`}</style>
       <audio ref={audioRef} src={data.music} loop hidden />
 
@@ -1017,9 +1022,8 @@ export default function DemoInvitationPage() {
             </div>
           </div>
 
-          <div ref={muralRef} className="w-full max-w-xl h-[450px] border-[12px] border-[#d4bca4] bg-[#fdfaf6] rounded-lg shadow-inner relative overflow-hidden flex items-center justify-center p-4">
-            <div className="absolute inset-0 opacity-[0.05] bg-[url('https://www.transparenttextures.com/patterns/cork-board.png')] pointer-events-none" />
-            <div className="absolute inset-x-0 top-0 h-4 bg-black/5 pointer-events-none" />
+          <div ref={muralRef} className="w-full max-w-xl h-[450px] border-[10px] border-white bg-[#f8f7f5] rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] relative overflow-hidden flex items-center justify-center p-4">
+            <div className="absolute inset-0 opacity-[0.06] pointer-events-none" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/handmade-paper.png')" }} />
 
             {notes.map((note) => {
               if (note.type === "photo") {
@@ -1029,13 +1033,14 @@ export default function DemoInvitationPage() {
                     initial={{ opacity: 0, scale: 0.5, left: note.x, top: note.y }}
                     animate={{ opacity: 1, scale: 1, left: note.x, top: note.y }}
                     style={{ rotate: note.rotation }}
-                    className="absolute p-2 pb-4 bg-white shadow-xl cursor-grab active:cursor-grabbing border border-stone-200 flex flex-col items-center z-10"
+                    className="absolute p-3 pb-8 bg-white shadow-[0_8px_20px_rgba(0,0,0,0.12)] cursor-grab active:cursor-grabbing border border-stone-100 flex flex-col items-center z-10"
                   >
-                    <div className="w-3 h-3 rounded-full bg-red-400/80 shadow-[inset_0_-1px_3px_rgba(0,0,0,0.3)] absolute -top-1.5 left-1/2 -translate-x-1/2 z-20" />
-                    <div className="w-28 h-28 md:w-36 md:h-36 relative bg-stone-100 overflow-hidden mb-2 pointer-events-none">
+                    {/* Washi Tape */}
+                    <div className="w-12 h-5 bg-stone-100/90 shadow-sm absolute -top-2 left-1/2 -translate-x-1/2 z-20" style={{ transform: "rotate(-3deg)" }} />
+                    <div className="w-28 h-28 md:w-36 md:h-36 relative bg-stone-50 overflow-hidden mb-2 pointer-events-none">
                       <Image src={note.imageUrl!} alt="Foto" fill className="object-cover" />
                     </div>
-                    <p className="font-serif text-[11px] text-stone-800 text-center uppercase tracking-wide">{note.name}</p>
+                    <p className="font-serif text-[11px] text-stone-600 text-center uppercase tracking-widest">{note.name}</p>
                   </motion.div>
                 );
               }
@@ -1044,12 +1049,13 @@ export default function DemoInvitationPage() {
                   key={note.id} drag dragConstraints={muralRef} dragElastic={0} dragMomentum={false}
                   initial={{ opacity: 0, scale: 0.5, left: note.x, top: note.y }}
                   animate={{ opacity: 1, scale: 1, left: note.x, top: note.y }}
-                  style={{ backgroundColor: note.color, rotate: note.rotation }}
-                  className="absolute w-32 min-h-[120px] p-4 shadow-md flex flex-col gap-2 cursor-grab active:cursor-grabbing border-t border-white/40 z-10"
+                  style={{ rotate: note.rotation }}
+                  className="absolute w-36 min-h-[140px] p-5 shadow-[0_8px_20px_rgba(0,0,0,0.08)] flex flex-col gap-2 cursor-grab active:cursor-grabbing z-10 bg-white border border-stone-100"
                 >
-                  <div className="w-3 h-3 rounded-full bg-red-400/80 shadow-[inset_0_-1px_3px_rgba(0,0,0,0.3)] absolute -top-1.5 left-1/2 -translate-x-1/2" />
-                  <p className="font-serif text-sm text-stone-800 leading-snug break-words flex-1 mt-1 pointer-events-none">{note.text}</p>
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-black/40 text-right pointer-events-none">{note.name}</p>
+                  {/* Washi Tape Dorado/Plateado sutil */}
+                  <div className="w-10 h-4 bg-[#f3f0ea] shadow-sm absolute -top-2 left-1/2 -translate-x-1/2" style={{ transform: "rotate(2deg)" }} />
+                  <p className="font-serif italic text-[14px] text-stone-600 leading-relaxed break-words flex-1 mt-2 pointer-events-none text-center">{note.text}</p>
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-stone-400 text-center pointer-events-none mt-2">— {note.name} —</p>
                 </motion.div>
               );
             })}
