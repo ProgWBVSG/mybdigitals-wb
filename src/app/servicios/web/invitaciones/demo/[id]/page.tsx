@@ -417,7 +417,7 @@ export default function DemoInvitationPage() {
             className="fixed inset-0 z-[100] bg-[#fbfbfb] flex flex-col items-center justify-center overflow-hidden"
           >
             <div className="absolute top-0 left-0 w-full h-full opacity-40 pointer-events-none flex flex-col items-center justify-center">
-              <Image src={data.decorGate || data.bgHero} alt="Decor" fill className="object-cover scale-105 opacity-40 blur-sm" priority />
+              <Image src={data.decorGate || data.bgHero} alt="Decor" fill className="object-cover scale-105 opacity-40 blur-sm" sizes="100vw" quality={90} priority />
               <div className="absolute inset-0 bg-stone-50/50 mix-blend-color" />
             </div>
 
@@ -434,7 +434,7 @@ export default function DemoInvitationPage() {
                   alt="Pareja"
                   fill
                   className="object-cover object-top"
-                  sizes="(max-width: 640px) 160px, 208px"
+                  sizes="(max-width: 640px) 500px, 500px"
                   priority
                   quality={100}
                 />

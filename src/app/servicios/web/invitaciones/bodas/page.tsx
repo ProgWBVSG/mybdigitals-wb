@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft, MessageCircle, Heart, Camera, Gamepad2, CheckCircle, Image as ImageIcon, MapPin, Ticket, Gift, Sparkles } from "lucide-react";
+import { ArrowLeft, MessageCircle, Heart, Camera, Gamepad2, CheckCircle, Image as ImageIcon, MapPin, Ticket, Gift, Sparkles, Users } from "lucide-react";
 import Image from "next/image";
 
 const WA_LINK =
@@ -12,6 +12,7 @@ const features = [
   { title: "Álbum Colaborativo", desc: "Tus invitados escanean un QR en la boda para subir sus fotos a un álbum en vivo.", icon: Camera },
   { title: "Dress Code & Gifts", desc: "Reglas de estilo y módulo de Mesa de Regalos con cuenta bancaria para tu luna de miel.", icon: Gift },
   { title: "RSVP Inteligente", desc: "Gestión de confirmaciones, opciones vegetarianas, sin TACC y lista de canciones pedidas.", icon: CheckCircle },
+  { title: "Panel Privado & Excel", desc: "Una página web donde te llegan todos los anotados. Podés agregar, eliminar y exportar tu lista a Excel.", icon: Users },
   { title: "Minijuego de Trivia", desc: "¿Quién conoce mejor a los novios? Rompehielo ideal mientras esperan la cena.", icon: Gamepad2 },
   { title: "Carrusel 3D Inmersivo", desc: "Muestra tu book preboda con transiciones y animaciones fluidas 3D increíbles.", icon: ImageIcon },
   { title: "GPS & Cuenta Regresiva", desc: "Mapa directo al salón o iglesia y el reloj midiendo cada segundo para dar el Sí.", icon: MapPin },
@@ -243,7 +244,7 @@ function PhoneCard({ d, i }: { d: D; i: number }) {
 }
 export default function BodasPage() {
   return (
-    <main className="min-h-screen bg-background pt-28 pb-24">
+    <main className="min-h-screen bg-background pt-20 md:pt-28 pb-24">
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');`}</style>
 
       {/* ── HERO BANNER (BODAS) ── */}
@@ -277,7 +278,7 @@ export default function BodasPage() {
             </div>
 
             {/* Contenido Central */}
-            <div className="relative z-20 flex flex-col items-center text-center w-full max-w-5xl -mt-16 md:-mt-24 px-2">
+            <div className="relative z-20 flex flex-col items-center text-center w-full max-w-5xl -mt-28 md:-mt-24 px-2">
                <p className="text-[10px] md:text-xs font-black tracking-[0.3em] uppercase text-zinc-300 mb-6 drop-shadow-md">
                  COLECCIÓN NUPCIAL — INVITACIONES WEB
                </p>
@@ -306,7 +307,7 @@ export default function BodasPage() {
       {/* Grid de Funcionalidades */}
       <div className="max-w-6xl mx-auto px-5 md:px-10 mb-24">
          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Todo lo que incluye tu Experiencia <span className="text-[#f43f5e]">Full Premium</span></h2>
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Todo lo que incluye la carta <span className="text-[#f43f5e]">Full Premium</span></h2>
             <p className="text-zinc-400 max-w-xl mx-auto">RSVP, Álbum de fotos, Trivia, Mesa de regalos, GPS, Cuenta regresiva y Música. Olvidate de los extras: tu invitación ya incluye <strong className="text-white">todas las funciones premium</strong> por un único precio.</p>
          </div>
 
