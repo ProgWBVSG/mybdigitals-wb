@@ -290,6 +290,7 @@ export default function DemoInvitationPage() {
   const [rsvpSubmitted, setRsvpSubmitted] = useState(false);
   const [rsvpAttending, setRsvpAttending] = useState<"yes" | "no" | null>(null);
   const [rsvpName, setRsvpName] = useState("");
+  const [rsvpGuests, setRsvpGuests] = useState<number>(1);
   const [rsvpDiet, setRsvpDiet] = useState<Set<string>>(new Set());
   const [rsvpSong, setRsvpSong] = useState("");
 
@@ -1001,7 +1002,7 @@ export default function DemoInvitationPage() {
             </p>
             <div className="w-full flex flex-col gap-3 bg-white p-6 rounded-3xl border border-stone-200 shadow-sm relative z-20">
               <input
-                type="text" placeholder="Tu nombre o apodo" value={newName} onChange={(e) => setNewName(e.target.value)}
+                type="text" placeholder="Tu nombre" value={newName} onChange={(e) => setNewName(e.target.value)}
                 className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm outline-none"
               />
               <textarea
@@ -1125,6 +1126,25 @@ export default function DemoInvitationPage() {
                       </button>
                     </div>
                   </div>
+
+                  <AnimatePresence>
+                    {rsvpAttending === "yes" && (
+                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-2 block pt-2">Cantidad de invitados</label>
+                        <select 
+                          value={rsvpGuests} onChange={(e) => setRsvpGuests(Number(e.target.value))}
+                          className="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3 text-sm text-stone-200 outline-none focus:border-stone-500 transition-colors appearance-none"
+                        >
+                          <option value={1}>1 persona (Solo yo)</option>
+                          <option value={2}>2 personas</option>
+                          <option value={3}>3 personas</option>
+                          <option value={4}>4 personas</option>
+                          <option value={5}>5 personas (Familia)</option>
+                          <option value={6}>6 personas o más (Familia grande)</option>
+                        </select>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
                   <div>
                     <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-3 block">Menú / Restricciones dietarias</label>
