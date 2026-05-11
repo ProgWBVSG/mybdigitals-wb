@@ -461,17 +461,91 @@ export default function DemoInvitationPage() {
                 </div>
               )}
 
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
+              <motion.div 
+                className="relative cursor-pointer group flex flex-col items-center mt-6" 
                 onClick={handleEnter}
-                className="relative overflow-hidden group border border-stone-300 bg-white hover:border-stone-800 text-stone-600 hover:text-stone-900 px-10 py-3 rounded-full text-xs font-semibold tracking-widest uppercase transition-all duration-300 shadow-sm"
+                initial="idle"
+                whileHover="hover"
+                whileTap="tap"
               >
-                <div className="absolute inset-0 w-0 bg-stone-100 transition-all duration-[250ms] ease-out group-hover:w-full" />
-                <span className="relative z-10 flex items-center gap-2">
-                  Abrir Invitación <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </span>
-              </motion.button>
+                {/* Envelope Container */}
+                <div className="relative w-32 h-24 bg-stone-100 rounded-md shadow-md border border-stone-200 flex items-center justify-center z-10" style={{ perspective: "1000px" }}>
+                  
+                  {/* Layer 2: Flap Back (Inside of the top flap, standing up) */}
+                  <motion.svg 
+                     className="absolute bottom-[100%] left-0 w-full h-[48px] z-10 pointer-events-none" 
+                     viewBox="0 0 128 48" 
+                     fill="none" 
+                     style={{ transform: "rotate(180deg)" }}
+                     variants={{
+                        idle: { opacity: 0 },
+                        hover: { opacity: 1 },
+                        tap: { opacity: 1 }
+                     }}
+                     transition={{ duration: 0.1, delay: 0.15 }}
+                  >
+                     <path d="M0 0 L64 48 L128 0 Z" fill="#e5e7eb" stroke="#d1d5db" strokeWidth="1" strokeLinejoin="round" />
+                  </motion.svg>
+
+                  {/* Layer 3: Letter */}
+                  <motion.div 
+                    className="absolute w-28 h-20 bg-white border border-stone-200 rounded-sm flex flex-col items-center justify-center shadow-sm z-20"
+                    variants={{
+                      idle: { y: 0 },
+                      hover: { y: -32 },
+                      tap: { y: -36, scale: 1.05 }
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                  >
+                     <p className="text-[10px] font-serif italic mb-1" style={{ color: accent }}>Para ti</p>
+                     <Heart size={12} fill={accent} color={accent} className="opacity-70" />
+                  </motion.div>
+
+                  {/* Layer 4: Front Flaps (Bottom, Left, Right) */}
+                  <svg className="absolute inset-0 w-full h-full z-30 pointer-events-none drop-shadow-sm" viewBox="0 0 128 96" fill="none">
+                     <path d="M0 0 L64 48 L128 0 L128 96 L0 96 Z" fill="#ffffff" stroke="#e5e7eb" strokeWidth="1" strokeLinejoin="round" />
+                  </svg>
+
+                  {/* Layer 5: Top Flap Front (Animated opening) */}
+                  <motion.div 
+                    className="absolute top-0 left-0 w-full h-full z-40 origin-top pointer-events-none"
+                    variants={{
+                       idle: { rotateX: 0, opacity: 1 },
+                       hover: { rotateX: 110, opacity: 0 },
+                       tap: { rotateX: 110, opacity: 0 }
+                    }}
+                    transition={{ duration: 0.3, ease: "easeIn" }}
+                  >
+                     <svg className="w-full h-full drop-shadow-sm" viewBox="0 0 128 96" fill="none">
+                        <path d="M0 0 L64 48 L128 0 Z" fill="#f9fafb" stroke="#e5e7eb" strokeWidth="1" strokeLinejoin="round" />
+                     </svg>
+                  </motion.div>
+                  
+                  {/* Layer 6: Seal (Sello de cera) */}
+                  <motion.div 
+                    className="absolute top-[48px] left-1/2 w-8 h-8 rounded-full z-50 shadow-md flex items-center justify-center"
+                    style={{ x: "-50%", y: "-50%", backgroundColor: accent }}
+                    variants={{
+                      idle: { opacity: 1, scale: 1 },
+                      hover: { opacity: 0, scale: 0.5 },
+                      tap: { opacity: 0, scale: 0.5 }
+                    }}
+                    transition={{ duration: 0.25 }}
+                  >
+                    <div className="w-4 h-4 border border-white/50 rounded-full flex items-center justify-center">
+                       <div className="w-1 h-1 bg-white/70 rounded-full" />
+                    </div>
+                  </motion.div>
+                </div>
+
+                {/* Text below */}
+                <motion.p 
+                   className="mt-8 text-xs font-bold tracking-[0.2em] uppercase text-stone-500 transition-colors"
+                   variants={{ hover: { color: accent, y: -2 } }}
+                >
+                  Abrir Invitación
+                </motion.p>
+              </motion.div>
             </motion.div>
           </motion.div>
         )}
