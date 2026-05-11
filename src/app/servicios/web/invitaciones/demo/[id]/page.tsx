@@ -915,12 +915,12 @@ export default function DemoInvitationPage() {
                 <ChevronLeft size={24} />
               </button>
 
-              <div className="flex-1 overflow-hidden">
+              <div className="flex-1 overflow-x-hidden">
                 <AnimatePresence mode="wait">
                   <motion.h3
                     key={triviaIdx}
                     initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }}
-                    className="font-serif text-2xl md:text-3xl text-center h-16 flex items-center justify-center leading-tight"
+                    className="font-serif text-2xl md:text-3xl text-center min-h-[100px] flex items-center justify-center leading-tight px-1"
                     style={s7.text}
                   >
                     {currentTrivia.q}
