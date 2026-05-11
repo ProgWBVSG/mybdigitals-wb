@@ -79,7 +79,7 @@ export default function CustomCursor() {
     <>
       {/* Dot principal (sigue al mouse exacto) */}
       <motion.div
-        className="fixed top-0 left-0 bg-primary rounded-full pointer-events-none z-[9999] mix-blend-difference"
+        className="hidden md:block fixed top-0 left-0 bg-primary rounded-full pointer-events-none z-[9999] mix-blend-difference"
         style={{
           width: "6px",
           height: "6px",
@@ -95,7 +95,7 @@ export default function CustomCursor() {
       />
       {/* Anillo exterior (sigue con física de resorte) */}
       <motion.div
-        className="fixed top-0 left-0 border border-primary rounded-full pointer-events-none z-[9998] mix-blend-difference"
+        className="hidden md:block fixed top-0 left-0 border border-primary rounded-full pointer-events-none z-[9998] mix-blend-difference"
         style={{
           width: "24px",
           height: "24px",
