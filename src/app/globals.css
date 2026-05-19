@@ -92,6 +92,15 @@ body::after {
   animation: scroll 20s linear infinite;
 }
 
+@keyframes brands-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-brands-scroll {
+  animation: brands-scroll 35s linear infinite;
+}
+
 /* ── §7 Animation: prefers-reduced-motion ─────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
