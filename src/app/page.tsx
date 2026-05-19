@@ -12,6 +12,7 @@ import OrbitScene from "@/components/OrbitScene";
 import ScrollJourney from "@/components/ScrollJourney";
 import Magnetic from "@/components/Magnetic";
 import SporeRiver from "@/components/SporeRiver";
+import BrandsCarousel from "@/components/BrandsCarousel";
 
 // Animations
 const fadeIn = {
@@ -202,7 +203,8 @@ export default function Home() {
       {/* ── SCROLL JOURNEY 3D ── */}
       <ScrollJourney />
 
-
+      {/* ── MARCAS / BRANDS CAROUSEL ── */}
+      <BrandsCarousel />
 
 
       {/* SECCIÓN 4: METODOLOGÍA (CÓMO TRABAJAMOS) */}
