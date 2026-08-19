@@ -5,6 +5,7 @@ import FloatingWidgets from "@/components/FloatingWidgets";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
+import HideOnSlopcheck from "@/components/HideOnSlopcheck";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,9 +27,8 @@ export const viewport: Viewport = {
   // NO se deshabilita userScalable (importante para accesibilidad WCAG)
 };
 
-export const metadataBase = new URL("https://mybdigitals.com");
-
 export const metadata: Metadata = {
+  metadataBase: new URL("https://mybdigitals.com"),
   title: {
     default: "MYB Digitals | Agencia Web & Automatizaciones con IA en Córdoba",
     template: "%s | MYB Digitals"
@@ -77,13 +77,17 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Saltar al contenido principal
         </a>
-        <CustomCursor />
-        <Navbar />
+        <HideOnSlopcheck>
+          <CustomCursor />
+          <Navbar />
+        </HideOnSlopcheck>
         <div id="main-content" tabIndex={-1}>
           {children}
         </div>
-        <Footer />
-        <FloatingWidgets />
+        <HideOnSlopcheck>
+          <Footer />
+          <FloatingWidgets />
+        </HideOnSlopcheck>
       </body>
     </html>
   );
