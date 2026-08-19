@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
 import { crawl } from "./fetcher";
 import { buildContextFromFiles, type UploadedFile } from "./files";
-import { buildPrompt } from "./prompt";
+import { buildPrompts } from "./prompt";
 import { SIGNALS } from "./registry";
 import { computeScore, groupByCategory } from "./score";
 import { runDetectors } from "./signals";
@@ -93,7 +93,7 @@ function report(ctx: CrawlContext, started: number): AnalysisResult {
       title: s.title,
     })),
     byCategory: groupByCategory(findings),
-    prompt: buildPrompt({
+    prompts: buildPrompts({
       url: ctx.source === "url" ? ctx.home.finalUrl : ctx.input,
       title,
       score,

@@ -257,7 +257,7 @@ function Resultado({ data }: { data: AnalysisResult }) {
       )}
 
       <Report data={data} />
-      <PromptBox prompt={data.prompt} />
+      <PromptBox prompts={data.prompts} />
       <Disclaimer />
     </section>
   );

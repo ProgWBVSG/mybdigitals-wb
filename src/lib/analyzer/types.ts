@@ -110,6 +110,21 @@ export interface CrawlContext {
   unavailable: number[];
 }
 
+/** Cuánto puede llegar a cambiar la página si se aplica el prompt. */
+export type NivelDeRiesgo = "ninguno" | "bajo" | "alto";
+
+/** Un nivel de intervención, del más conservador al más invasivo. */
+export interface PromptVariant {
+  id: "quirurgico" | "equilibrado" | "completo";
+  label: string;
+  /** Una línea que explica qué hace y qué no toca. */
+  summary: string;
+  riesgo: NivelDeRiesgo;
+  /** Advertencia visible en la UI, solo en los niveles que cambian el diseño. */
+  aviso?: string;
+  text: string;
+}
+
 /** Payload final que consume la UI. */
 export interface AnalysisResult {
   url: string;
@@ -135,7 +150,8 @@ export interface AnalysisResult {
   findings: Finding[];
   passed: { code: number; title: string; category: Category }[];
   byCategory: { category: Category; label: string; findings: Finding[] }[];
-  prompt: string;
+  /** Los tres niveles de intervención. La UI muestra el primero por defecto. */
+  prompts: PromptVariant[];
   meta: {
     title: string | null;
     description: string | null;
