@@ -187,41 +187,56 @@ export function Analyzer() {
   );
 }
 
+/** Tres tramos para colorear las barras sin que el usuario tenga que interpretar. */
+function nivelDe(porcentaje: number): "alto" | "medio" | "bajo" {
+  if (porcentaje >= 70) return "alto";
+  return porcentaje >= 40 ? "medio" : "bajo";
+}
+
 function Resultado({ data }: { data: AnalysisResult }) {
   const origen = data.mode === "url" ? new URL(data.finalUrl).hostname : "los archivos subidos";
 
   return (
     <section className="result" aria-label="Resultado del análisis">
       <div className="verdict">
-        <div>
-          <p className="score">
-            {data.score.toFixed(1)}
-            <small>de 10</small>
+        <div className="score-col">
+          <p className="score">{data.score.toFixed(1)}</p>
+          <p className="score-que-mide">
+            <span>de 10</span>
+            qué tan humana parece
           </p>
         </div>
         <div>
           <h2>{data.verdict}</h2>
           <p>{data.summary}</p>
+
+          {/* La escala se dice en pantalla: sin esto, un 9 se lee como "9 de IA". */}
+          <p className="score-escala">
+            <b>1</b> generada y publicada sin revisar · <b>10</b> escrita por una persona
+          </p>
+
+          {/* Las barras crecen para el mismo lado que el puntaje: mas lleno, mejor. */}
           <dl className="axes">
             <div>
-              <dt>Marcas de generación automática</dt>
+              <dt>Escritura y estructura propias</dt>
               <dd>
-                <span className="axis-bar" aria-hidden="true">
-                  <span style={{ width: `${Math.min(100, (data.authorshipPenalty / 26) * 100)}%` }} />
+                <span className="axis-bar" data-nivel={nivelDe(data.authorshipClean)} aria-hidden="true">
+                  <span style={{ width: `${data.authorshipClean}%` }} />
                 </span>
-                <b>{data.authorshipPenalty}</b>
+                <b>{data.authorshipClean}%</b>
               </dd>
             </div>
             <div>
               <dt>Terminado técnico</dt>
               <dd>
-                <span className="axis-bar" data-soft="true" aria-hidden="true">
-                  <span style={{ width: `${Math.min(100, (data.hygienePenalty / 30) * 100)}%` }} />
+                <span className="axis-bar" data-nivel={nivelDe(data.hygieneClean)} aria-hidden="true">
+                  <span style={{ width: `${data.hygieneClean}%` }} />
                 </span>
-                <b>{data.hygienePenalty}</b>
+                <b>{data.hygieneClean}%</b>
               </dd>
             </div>
           </dl>
+
           <div className="facts">
             <span>
               <b>{data.findings.length}</b> problemas

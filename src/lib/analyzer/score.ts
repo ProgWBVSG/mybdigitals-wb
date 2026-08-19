@@ -46,6 +46,9 @@ export interface ScoreResult {
   maxPenalty: number;
   authorshipPenalty: number;
   hygienePenalty: number;
+  /** Porcentaje limpio de cada eje (100 = sin un solo hallazgo). */
+  authorshipClean: number;
+  hygieneClean: number;
   verdict: string;
   summary: string;
 }
@@ -97,6 +100,10 @@ export function computeScore(findings: Finding[], options: ScoreOptions = {}): S
     maxPenalty: AUTHORSHIP_SATURATION + HYGIENE_SATURATION,
     authorshipPenalty,
     hygienePenalty,
+    // Se expresan como "cuanto tiene a favor" para que las barras crezcan en
+    // la misma direccion que el puntaje: mas lleno, mejor.
+    authorshipClean: Math.round((1 - authorshipNorm) * 100),
+    hygieneClean: Math.round((1 - hygieneNorm) * 100),
     verdict: verdictFor(score, authorshipNorm, hygieneNorm),
     summary: summaryFor(findings, authorship, hygiene, authorshipNorm, hygieneNorm),
   };

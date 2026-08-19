@@ -373,7 +373,7 @@
 
 .slopcheck .verdict {
   display: grid;
-  grid-template-columns: minmax(0, 9rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
   gap: clamp(1.5rem, 4vw, 3rem);
   padding: 2rem;
   border-radius: var(--radius-lg);
@@ -389,16 +389,6 @@
   letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
   margin: 0;
-}
-
-.slopcheck .score small {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  color: var(--ink-muted);
-  margin-top: 0.75rem;
-  text-transform: uppercase;
 }
 
 .slopcheck .verdict h2 {
@@ -953,20 +943,6 @@
   font-weight: 500;
 }
 
-/* Vuelta al sitio principal desde la herramienta. */
-.slopcheck .topbar-back {
-  font-size: 0.8125rem;
-  color: var(--ink-muted);
-  text-decoration: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .slopcheck .topbar-back:hover {
-    color: var(--ink);
-    text-decoration: underline;
-  }
-}
-
 /* ------------------------------------------------- Niveles del prompt */
 .slopcheck .prompt-intro {
   margin: -0.75rem 0 1.25rem;
@@ -1043,4 +1019,55 @@
   color: var(--warn);
   flex-shrink: 0;
   margin-top: 0.1rem;
+}
+
+/* --------------------------------------- Qué mide el puntaje */
+.slopcheck .score-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.slopcheck .score-que-mide {
+  margin: 0.75rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.slopcheck .score-que-mide span {
+  display: block;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.slopcheck .score-escala {
+  margin: 1.25rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--ink-muted);
+}
+
+.slopcheck .score-escala b {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Las barras van del rojo al verde en la misma direccion que el puntaje. */
+.slopcheck .axis-bar[data-nivel="alto"] > span { background: var(--good); }
+.slopcheck .axis-bar[data-nivel="medio"] > span { background: var(--warn); }
+.slopcheck .axis-bar[data-nivel="bajo"] > span { background: var(--accent); }
+
+/* Solo en la version integrada: vuelta al sitio principal. */
+.slopcheck .topbar-back {
+  font-size: 0.8125rem;
+  color: var(--ink-muted);
+  text-decoration: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .slopcheck .topbar-back:hover {
+    color: var(--ink);
+    text-decoration: underline;
+  }
 }

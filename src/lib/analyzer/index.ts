@@ -49,8 +49,17 @@ function report(ctx: CrawlContext, started: number): AnalysisResult {
     : ctx.unavailable;
   const visible = findings.filter((f) => !unavailable.includes(f.code));
 
-  const { score, penalty, maxPenalty, authorshipPenalty, hygienePenalty, verdict, summary } =
-    computeScore(visible, { shrinkable: ctx.unavailable });
+  const {
+    score,
+    penalty,
+    maxPenalty,
+    authorshipPenalty,
+    hygienePenalty,
+    authorshipClean,
+    hygieneClean,
+    verdict,
+    summary,
+  } = computeScore(visible, { shrinkable: ctx.unavailable });
 
   const title = $("title").first().text().trim() || null;
   const description = $('meta[name="description"]').attr("content")?.trim() ?? null;
@@ -86,6 +95,8 @@ function report(ctx: CrawlContext, started: number): AnalysisResult {
     maxPenalty,
     authorshipPenalty,
     hygienePenalty,
+    authorshipClean,
+    hygieneClean,
     findings: visible,
     contentBlind,
     passed,

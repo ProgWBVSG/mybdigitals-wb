@@ -147,6 +147,9 @@ export interface AnalysisResult {
   authorshipPenalty: number;
   /** Penalización de las señales de terminado técnico. */
   hygienePenalty: number;
+  /** Porcentaje limpio de cada eje (100 = sin un solo hallazgo). */
+  authorshipClean: number;
+  hygieneClean: number;
   findings: Finding[];
   passed: { code: number; title: string; category: Category }[];
   byCategory: { category: Category; label: string; findings: Finding[] }[];
