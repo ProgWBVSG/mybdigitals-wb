@@ -13,6 +13,7 @@ import ScrollJourney from "@/components/ScrollJourney";
 import Magnetic from "@/components/Magnetic";
 import SporeRiver from "@/components/SporeRiver";
 import BrandsCarousel from "@/components/BrandsCarousel";
+import { SITE_URL } from "@/lib/site";
 
 // Animations
 const fadeIn = {
@@ -56,7 +57,6 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "MYB Digitals",
-    "image": "https://mybdigitals.com/og-image.jpg",
     "description": "Agencia líder en Córdoba de Desarrollo Web Premium y Automatización con Inteligencia Artificial.",
     "address": {
       "@type": "PostalAddress",
@@ -69,7 +69,7 @@ export default function Home() {
       "latitude": -31.4135,
       "longitude": -64.1810
     },
-    "url": "https://mybdigitals.com",
+    "url": SITE_URL,
     "telephone": "+543515555123",
     "priceRange": "$$$"
   };

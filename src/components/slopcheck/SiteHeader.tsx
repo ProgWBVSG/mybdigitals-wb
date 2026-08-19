@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SITE_URL } from "@/lib/site";
 
 /**
  * En la portada de SlopCheck la barra flota sobre el hero; en el resto de sus
@@ -15,7 +16,7 @@ export function SiteHeader() {
       <Link href="/slopcheck" className="wordmark">
         slop<b>check</b>
       </Link>
-      <a className="topbar-back" href="https://mybdigitals.com">
+      <a className="topbar-back" href={SITE_URL}>
         ← mybdigitals.com
       </a>
     </header>

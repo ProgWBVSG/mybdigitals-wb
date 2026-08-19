@@ -1,13 +1,14 @@
 import { Analyzer } from "@/components/slopcheck/Analyzer";
 import { SIGNALS } from "@/lib/analyzer/registry";
 import { CATEGORY_LABEL, type Category } from "@/lib/analyzer/types";
+import { SITE_URL, urlDe } from "@/lib/site";
 
 /** Datos estructurados propios de la herramienta, dentro del sitio de MYB. */
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   name: "SlopCheck",
-  url: "https://mybdigitals.com/slopcheck",
+  url: urlDe("/slopcheck"),
   applicationCategory: "DeveloperApplication",
   operatingSystem: "Web",
   description:
@@ -17,7 +18,7 @@ const jsonLd = {
   publisher: {
     "@type": "Organization",
     name: "MYB Digitals",
-    url: "https://mybdigitals.com",
+    url: SITE_URL,
   },
 };
 

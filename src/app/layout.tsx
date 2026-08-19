@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import HideOnSlopcheck from "@/components/HideOnSlopcheck";
+import { SITE_URL } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,21 +29,21 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mybdigitals.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "MYB Digitals | Agencia Web & Automatizaciones con IA en Córdoba",
     template: "%s | MYB Digitals"
   },
   description: "Agencia líder en Córdoba de Desarrollo Web Premium y Automatización con Inteligencia Artificial. Escalamos empresas con agentes IA, chatbots y landing pages de alta conversión.",
   keywords: ["agencia de automatizaciones córdoba", "agencia web córdoba", "desarrollo web premium", "chatbots con IA", "agencia de inteligencia artificial", "automatización de procesos", "diseño web córdoba", "landing pages"],
-  authors: [{ name: "MYB Digitals", url: "https://mybdigitals.com" }],
+  authors: [{ name: "MYB Digitals", url: SITE_URL }],
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "MYB Digitals | Agencia Web & Automatizaciones con IA en Córdoba",
     description: "Escalamos negocios mediante Automatización de IA y Desarrollo Web Premium. Desde Córdoba, Argentina para el mundo.",
-    url: "https://mybdigitals.com",
+    url: SITE_URL,
     siteName: "MYB Digitals",
     type: "website",
     locale: "es_AR",

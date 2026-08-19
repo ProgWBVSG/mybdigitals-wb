@@ -4,6 +4,7 @@ import Link from "next/link";
 import { GradientBackground } from "@/components/slopcheck/ui/gradient-backgrounds";
 import { SiteHeader } from "@/components/slopcheck/SiteHeader";
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from "@/lib/slopcheck-config";
+import { SITE_URL, urlDe } from "@/lib/site";
 import "./slopcheck.css";
 
 /** SlopCheck usa su propia tipografía, distinta a la del resto del sitio. */
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "es_AR",
-    url: "https://mybdigitals.com/slopcheck",
+    url: urlDe("/slopcheck"),
     siteName: "MYB Digitals",
     title: "SlopCheck — analizá si tu web parece hecha con IA",
     description:
@@ -51,7 +52,7 @@ export default function SlopcheckLayout({ children }: { children: React.ReactNod
               la suya.
               <span className="footer-by">
                 Desarrollado por{" "}
-                <a href="https://mybdigitals.com" target="_blank" rel="noopener noreferrer">
+                <a href={SITE_URL} target="_blank" rel="noopener noreferrer">
                   mybdigitals.com
                 </a>
               </span>
