@@ -150,6 +150,9 @@ export async function buildContextFromFiles(raw: UploadedFile[]): Promise<CrawlC
     if (!faviconFile && !$('link[rel~="icon"]').length) unavailable.add(4);
   }
   if (htmls.length < 2) [12, 39].forEach((c) => unavailable.add(c));
+  // Los enlaces internos de un bundle son poco fiables (rutas relativas, sin
+  // servidor). Si hay varias paginas, no se juzga la navegacion.
+  if (htmls.length >= 2) unavailable.add(42);
   if (!hasJs) [22, 24, 33].forEach((c) => unavailable.add(c));
   if (!isBundle) unavailable.add(42);
 
@@ -165,7 +168,11 @@ export async function buildContextFromFiles(raw: UploadedFile[]): Promise<CrawlC
     robots: robotsFile ? snapshot(robotsFile.name, robotsFile.bytes) : null,
     sitemap: sitemapFile ? snapshot(sitemapFile.name, sitemapFile.bytes) : null,
     llms: llmsFile ? snapshot(llmsFile.name, llmsFile.bytes) : null,
-    notFound: notFoundFile ? snapshot(notFoundFile.name, notFoundFile.bytes) : null,
+    // El 404 del bundle representa la pagina de error, no una respuesta HTTP:
+    // sin este status el detector lo tomaba por un soft-404.
+    notFound: notFoundFile
+      ? { ...snapshot(notFoundFile.name, notFoundFile.bytes), status: 404, ok: false }
+      : null,
     favicon: faviconFile ? snapshot(faviconFile.name, faviconFile.bytes) : null,
     assets,
     totalJsBytes: assets.filter((a) => a.kind === "js").reduce((n, a) => n + a.bytes, 0),

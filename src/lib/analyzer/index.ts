@@ -5,6 +5,7 @@ import { buildPrompts } from "./prompt";
 import { SIGNALS } from "./registry";
 import { computeScore, groupByCategory } from "./score";
 import { runDetectors } from "./signals";
+import { sinContenidoLegible } from "./signals/helpers";
 import type { AnalysisResult, CrawlContext } from "./types";
 
 /**
@@ -42,7 +43,7 @@ function report(ctx: CrawlContext, started: number): AnalysisResult {
 
   // Un HTML sin texto no se puede juzgar: se marcan esas señales como no
   // comprobables, pero sin bajar el umbral (sería castigar dos veces lo mismo).
-  const contentBlind = ctx.visibleText.length < 400;
+  const contentBlind = sinContenidoLegible($, ctx.visibleText);
   const unavailable = contentBlind
     ? [...new Set([...ctx.unavailable, ...CONTENT_DEPENDENT])]
     : ctx.unavailable;

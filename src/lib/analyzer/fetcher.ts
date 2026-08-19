@@ -36,22 +36,33 @@ function isPrivateAddress(ip: string): boolean {
 }
 
 /**
- * Un dominio público puede resolver a una IP interna. Se comprueba la
- * resolución real antes de pedir nada, y otra vez si hubo redirección.
+ * Un dominio publico puede resolver a una IP interna. Se comprueba la
+ * resolucion real antes de pedir nada, y otra vez si hubo redireccion.
+ *
+ * Si la resolucion falla, NO se corta: un DNS que no responde en ese momento
+ * no significa que el dominio no exista, y cortar ahi le decia al usuario "tu
+ * dominio no existe" sobre sitios perfectamente validos. Se reintenta una vez
+ * y, si sigue fallando, decide el fetch, que tiene su propio manejo de error.
  */
 async function assertPublicHost(hostname: string): Promise<void> {
   if (isIP(hostname)) {
-    if (isPrivateAddress(hostname)) throw new AnalyzeError("Esa dirección apunta a una red privada.");
+    if (isPrivateAddress(hostname)) throw new AnalyzeError("Esa direccion apunta a una red privada.");
     return;
   }
-  let addresses: { address: string }[];
-  try {
-    addresses = await lookup(hostname, { all: true });
-  } catch {
-    throw new AnalyzeError(`No se pudo resolver ${hostname}. Revisá que el dominio exista.`);
-  }
-  if (addresses.some((a) => isPrivateAddress(a.address))) {
-    throw new AnalyzeError("Ese dominio resuelve a una red privada y no se puede analizar.");
+
+  for (let intento = 0; intento < 2; intento++) {
+    let addresses: { address: string }[];
+    try {
+      addresses = await lookup(hostname, { all: true });
+    } catch {
+      // Fallo de resolucion: se reintenta y, si no, se deja seguir al fetch.
+      if (intento === 0) await new Promise((r) => setTimeout(r, 250));
+      continue;
+    }
+    if (addresses.some((a) => isPrivateAddress(a.address))) {
+      throw new AnalyzeError("Ese dominio resuelve a una red privada y no se puede analizar.");
+    }
+    return;
   }
 }
 
@@ -206,7 +217,13 @@ export async function crawl(input: string): Promise<CrawlContext> {
   const base = normalizeUrl(input);
   await assertPublicHost(base.hostname);
 
-  const home = await fetchPage(base.toString());
+  // Un fallo de red puntual no deberia tirar abajo el analisis entero: se
+  // reintenta una vez antes de darse por vencido.
+  let home = await fetchPage(base.toString());
+  if (home.status === 0) {
+    await new Promise((r) => setTimeout(r, 400));
+    home = await fetchPage(base.toString());
+  }
   if (!home.ok && home.status === 0) {
     throw new AnalyzeError(
       `No se pudo acceder a ${base.hostname}. Revisá que la URL exista y que el sitio esté online.`,

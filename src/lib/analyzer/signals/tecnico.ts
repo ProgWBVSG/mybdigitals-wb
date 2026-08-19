@@ -1,5 +1,5 @@
 import { extractVisibleText } from "../fetcher";
-import { flag, kb, trim, type Detector } from "./helpers";
+import { flag, kb, sinContenidoLegible, trim, type Detector } from "./helpers";
 import * as cheerio from "cheerio";
 
 /** Señal 4 — sin favicon servido. */
@@ -35,19 +35,18 @@ const noCustom404: Detector = ({ notFound }) => {
   const DEFAULT_404 =
     /^(404|not found|404 not found|this page could not be found|nginx|apache|cannot get|error)/i;
 
-  // Una 404 propia trae el layout del sitio: navegación, enlaces de vuelta, contenido real.
+  // Lo que distingue a una 404 propia no es su largo (suelen ser cortas) sino
+  // que ofrezca salida: navegacion, enlaces de vuelta, el layout del sitio.
   const links = $404("a[href]").length;
-  const sharesLayout =
-    links >= 3 || $404("header, nav, footer").length > 0;
-  const looksDefault = DEFAULT_404.test(text.trim()) && links < 4;
-  if (text.length >= 200 && sharesLayout && !looksDefault) return null;
+  const ofreceSalida = links >= 2 || $404("header, nav, footer").length > 0;
+  const esLaDelFramework = DEFAULT_404.test(text.trim()) && links < 2;
+  if (ofreceSalida && text.length >= 60 && !esLaDelFramework) return null;
 
-  const bare = text.length < 200;
   return flag(
     "no-custom-404",
-    bare
-      ? `La 404 es la genérica del framework o del servidor: solo ${text.length} caracteres y ${links} enlaces.`
-      : "La 404 no comparte el layout del sitio ni ofrece salida: no está personalizada.",
+    ofreceSalida
+      ? `La 404 casi no tiene contenido propio: ${text.length} caracteres.`
+      : `La 404 es la generica del framework o del servidor: ${text.length} caracteres y ${links} enlaces, sin forma de volver.`,
     [trim(text, 120) || `${notFound.status} sin contenido`],
   );
 };
@@ -57,7 +56,7 @@ const emptyViewSource: Detector = ({ $, visibleText, home }) => {
   const bodyText = visibleText.length;
   const rootDiv = $("#root, #app, #__nuxt, [data-reactroot]").first();
   const hasEmptyRoot = rootDiv.length > 0 && rootDiv.text().trim().length < 40;
-  if (bodyText > 400 && !hasEmptyRoot) return null;
+  if (!sinContenidoLegible($, visibleText)) return null;
   return flag(
     "empty-view-source",
     `El HTML que devuelve el servidor trae solo ${bodyText} caracteres de texto${

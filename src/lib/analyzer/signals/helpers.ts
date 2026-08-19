@@ -67,6 +67,19 @@ export function similarity(a: string, b: string): number {
   return shared / Math.max(ta.size, tb.size);
 }
 
+/**
+ * Un HTML sin contenido legible: el cascaron de una SPA sin SSR.
+ *
+ * El umbral es bajo a proposito. Una pagina real, por corta que sea, pasa los
+ * 150 caracteres; un cascaron ronda los 50. Con 400 se marcaban como vacias
+ * paginas chicas pero completas.
+ */
+export function sinContenidoLegible($: cheerio.CheerioAPI, visibleText: string): boolean {
+  const root = $("#root, #app, #__nuxt, [data-reactroot]").first();
+  const contenedorVacio = root.length > 0 && root.text().trim().length < 40;
+  return visibleText.length < 150 || (contenedorVacio && visibleText.length < 400);
+}
+
 export function kb(bytes: number): string {
   return `${Math.round(bytes / 1024)} KB`;
 }
