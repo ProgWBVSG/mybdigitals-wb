@@ -14,8 +14,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        // La demo de invitaciones genera una URL por id: no aporta nada al índice.
-        disallow: ["/api/", "/servicios/web/invitaciones/demo/"],
+        disallow: ["/api/"],
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,

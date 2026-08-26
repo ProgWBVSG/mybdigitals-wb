@@ -27,7 +27,6 @@ const INITIAL_MESSAGES: Message[] = [
     isBot: true,
     options: [
       { label: "🌐 Sitios y Páginas Web", action: "web_menu" },
-      { label: "💌 Invitaciones Web", action: "invitaciones_menu" },
       { label: "🤖 Agentes IA y Automatizaciones", action: "ia_menu" },
       { label: "💰 Consultar Precios", action: "precios_menu" }
     ]
@@ -76,7 +75,6 @@ export default function FloatingWidgets() {
           newOptions = [
             { label: "Landing Page", action: "web_landing", waText: "Me interesa el plan Landing Page de $200 USD." },
             { label: "Presencia Corporativa", action: "web_presencia", waText: "Me interesa el plan de Presencia Digital de $400 USD." },
-            { label: "Invitaciones Digitales", action: "inv_menu_bot" },
             { label: "⬅️ Volver al menú principal", action: "start" }
           ];
           break;
@@ -94,33 +92,6 @@ export default function FloatingWidgets() {
              { label: "⬅️ Volver atrás", action: "web_menu" }
           ];
           break;
-        case "invitaciones_menu":
-          botResponse = "¡Qué excelente noticia! Transformamos eventos en experiencias VIP. Invitaciones interactivas con cuenta regresiva, GPS y confirmación (RSVP) automatizada en Excel. ¿Qué tipo de evento estás planeando?";
-          newOptions = [
-            { label: "💍 Casamiento / Boda", action: "inv_bodas" },
-            { label: "🎉 Mis 15 Años", action: "inv_15s" },
-            { label: "👶 Baby Shower / Otro", action: "inv_otro" },
-            { label: "⬅️ Menú principal", action: "start" }
-          ];
-          break;
-        case "inv_menu_bot":
-          botResponse = "¿Para qué ocasión necesitás la invitación?";
-          newOptions = [
-             { label: "💍 Casamiento / Boda", action: "inv_bodas", waText: "Me interesa una invitación digital para mi casamiento." },
-             { label: "🥂 Fiesta de 15 Años", action: "inv_15s", waText: "Me interesa una invitación digital para una fiesta de 15 años." },
-             { label: "🎉 Otro evento", action: "inv_otro", waText: "Me interesa una invitación digital para un evento." },
-             { label: "⬅️ Volver atrás", action: "web_menu" }
-          ];
-          break;
-        case "inv_bodas":
-        case "inv_15s":
-        case "inv_otro":
-          botResponse = "El precio All-Inclusive (todo incluido) es de $68.999 ARS — pago único y sin costos ocultos. Actualmente tenemos un 50% OFF sobre el precio regular. Entregamos la invitación en 3 días hábiles. ¿Arrancamos?";
-          newOptions = [
-             { label: "📲 Cotizar por WhatsApp", action: "link_wa", waText: `Hola! Quiero reservar una invitación web para ${option.label}` },
-             { label: "⬅️ Volver", action: "invitaciones_menu" }
-          ];
-          break;
         case "ia_menu":
           botResponse = "Nuestros Agentes conversacionales o Automatizaciones te devuelven tiempo y evitan que pierdas clientes. Podemos crear un bot que responda preguntas repetitivas o cargue datos directo a tu Excel. ¿En qué perdés mucho tiempo hoy?";
           newOptions = [
@@ -129,7 +100,7 @@ export default function FloatingWidgets() {
           ];
           break;
         case "precios_menu":
-          botResponse = "Resumen rápido:\n• Invitaciones Eventos: $68.999 ARS\n• Landing Pages Web: $200 USD\n• Webs Ecosistema Pro: $400 USD\n• Agentes IA: Costo variable\n\n¿Qué paquete querías arrancar?";
+          botResponse = "Resumen rápido:\n• Landing Pages Web: $200 USD\n• Webs Ecosistema Pro: $400 USD\n• Agentes IA: Costo variable\n\n¿Qué paquete querías arrancar?";
           newOptions = [
              { label: "📲 Quiero charlar por WhatsApp", action: "link_wa", waText: "Hola, vi sus precios en el chat de la web y quería consultar para arrancar un proyecto." },
              { label: "⬅️ Menú principal", action: "start" }
