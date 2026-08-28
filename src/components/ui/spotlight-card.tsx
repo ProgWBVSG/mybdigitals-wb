@@ -11,6 +11,9 @@ interface GlowCardProps {
   height?: string | number;
   /** Cuando es true ignora `size` y manda lo que venga por width/height o className. */
   customSize?: boolean;
+  /** Fondo de la tarjeta. Por defecto el gris translucido original, que solo
+      funciona sobre fondos oscuros; sobre pagina clara conviene pasar uno. */
+  backdrop?: string;
 }
 
 const glowColorMap = {
@@ -140,6 +143,7 @@ const GlowCard: React.FC<GlowCardProps> = ({
   width,
   height,
   customSize = false,
+  backdrop,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   usePunteroGlobal();
@@ -151,7 +155,7 @@ const GlowCard: React.FC<GlowCardProps> = ({
     "--spread": spread,
     "--radius": "14",
     "--border": "3",
-    "--backdrop": "hsl(0 0% 60% / 0.12)",
+    "--backdrop": backdrop ?? "hsl(0 0% 60% / 0.12)",
     "--backup-border": "var(--backdrop)",
     "--size": "200",
     "--outer": "1",

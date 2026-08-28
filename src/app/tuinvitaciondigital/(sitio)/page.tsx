@@ -70,7 +70,14 @@ function TarjetaEvento({
       className="tid-tarjeta"
       aria-pressed={elegida}
     >
-      <GlowCard glowColor={categoria.glow} customSize className="h-full w-full">
+      {/* La tarjeta es el bloque verde de una página blanca: el spotlight
+          necesita fondo oscuro para leerse, y ahí es donde entra el negro. */}
+      <GlowCard
+        glowColor={categoria.glow}
+        customSize
+        backdrop="#16301f"
+        className="h-full w-full"
+      >
         <div className="tid-tarjeta__cara">
           <span className="tid-tarjeta__icono">
             <Icono size={20} strokeWidth={1.6} aria-hidden="true" />
@@ -154,14 +161,16 @@ export default function Invitaciones() {
         <div className="tid-marco tid-hero__interior">
           <p className="tid-rubro">Invitaciones digitales</p>
           <h1 className="tid-titulo tid-h1 tid-hero__titulo">
-            Mandás un link y te vuelve la lista de{" "}
-            <span className="tid-fuerte">quién viene</span>.
+            La invitación que nadie olvida.{" "}
+            <span className="tid-fuerte">La lista que se arma sola.</span>
           </h1>
           <p className="tid-plomo tid-hero__bajada">
-            Elegí tu evento y mirá los modelos.
+            Elegís el diseño, la mandás por WhatsApp y cada confirmación entra sola a tu lista.
+            Sin perseguir a nadie.
           </p>
 
           <div className="tid-eleccion">
+            <p className="tid-eleccion__guia">¿Qué estás organizando?</p>
             <div className="tid-eleccion__grilla">
               {CATEGORIAS.map((c) => (
                 <TarjetaEvento
@@ -233,7 +242,7 @@ export default function Invitaciones() {
             </section>
 
             {/* Qué incluye */}
-            <section className="tid-seccion">
+            <section className="tid-seccion tid-seccion--tenue">
               <div className="tid-marco">
                 <div className="tid-encabezado">
                   <p className="tid-rubro">Qué incluye</p>
@@ -332,7 +341,7 @@ export default function Invitaciones() {
         )}
 
         {/* Preguntas: valen para cualquier evento, así que están siempre */}
-        <section className="tid-seccion">
+        <section className="tid-seccion tid-seccion--tenue">
           <div className="tid-marco tid-marco--angosto">
             <div className="tid-encabezado tid-encabezado--centro">
               <p className="tid-rubro">Preguntas</p>
