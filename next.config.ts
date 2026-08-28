@@ -13,6 +13,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  /* Las viejas páginas por tipo de evento se unificaron en la página única,
+     donde el visitante elige el evento. Se redirigen para no romper enlaces
+     ya compartidos. */
+  async redirects() {
+    return [
+      { source: '/tuinvitaciondigital/bodas', destination: '/tuinvitaciondigital', permanent: true },
+      { source: '/tuinvitaciondigital/cumples', destination: '/tuinvitaciondigital', permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Sparkles } from "lucide-react";
 import { SITE_URL } from "@/lib/site";
 import { WHATSAPP } from "@/lib/invitaciones";
 
@@ -16,19 +17,14 @@ export default function SitioLayout({ children }: { children: React.ReactNode })
         <header className="tid-barra">
           <div className="tid-marco tid-barra__interior">
             <Link href="/tuinvitaciondigital" className="tid-logo">
-              <span className="tid-logo__marca tid-display">Tu Invitación</span>
-              <span className="tid-logo__cola tid-display tid-cursiva">digital</span>
+              <span className="tid-logo__icono">
+                <Sparkles size={17} strokeWidth={1.8} aria-hidden="true" />
+              </span>
+              Tu Invitación Digital
             </Link>
 
-            <nav className="tid-barra__nav" aria-label="Secciones">
-              <Link href="/tuinvitaciondigital#disenos">Diseños</Link>
-              <Link href="/tuinvitaciondigital#incluye">Qué incluye</Link>
-              <Link href="/tuinvitaciondigital#precios">Precios</Link>
-              <Link href="/tuinvitaciondigital#preguntas">Preguntas</Link>
-            </nav>
-
             <a
-              className="tid-boton tid-boton--lleno tid-barra__cta"
+              className="tid-boton tid-boton--linea tid-barra__cta"
               href={WHATSAPP}
               target="_blank"
               rel="noopener noreferrer"
@@ -41,26 +37,11 @@ export default function SitioLayout({ children }: { children: React.ReactNode })
         <main>{children}</main>
 
         <footer className="tid-pie">
-          <div className="tid-marco">
-            <div className="tid-filete" />
-            <div className="tid-pie__interior">
-              <div>
-                <p className="tid-display tid-pie__marca">
-                  Tu Invitación <span className="tid-cursiva">digital</span>
-                </p>
-                <p className="tid-nota tid-pie__lugar">Córdoba, Argentina</p>
-              </div>
-
-              <nav className="tid-pie__nav" aria-label="Enlaces del pie">
-                <Link href="/tuinvitaciondigital/bodas">Casamientos</Link>
-                <Link href="/tuinvitaciondigital/cumples">Quince años</Link>
-                <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
-                  WhatsApp
-                </a>
-              </nav>
-            </div>
-
-            <p className="tid-nota tid-pie__firma">
+          <div className="tid-marco tid-pie__interior">
+            <p className="tid-nota">
+              © {new Date().getFullYear()} Tu Invitación Digital · Córdoba, Argentina
+            </p>
+            <p className="tid-nota">
               Un producto de{" "}
               <a href={SITE_URL} className="tid-pie__enlace">
                 MYB Digitals
