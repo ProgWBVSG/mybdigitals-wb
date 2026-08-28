@@ -12,14 +12,14 @@ export type Categoria = {
   id: TipoEvento;
   titulo: string;
   gancho: string;
-  /** Color del brillo de la tarjeta. Distingue una categoría de otra. */
-  glow: "green" | "purple" | "blue";
+  /** El brillo va en verde en las tres: la categoría la distingue el icono. */
+  glow: "green";
 };
 
 export const CATEGORIAS: Categoria[] = [
   { id: "bodas", titulo: "Casamiento", gancho: "Para el día que se acuerdan toda la vida", glow: "green" },
-  { id: "cumples", titulo: "Cumpleaños", gancho: "Quince, cincuenta o los que sean", glow: "purple" },
-  { id: "profesional", titulo: "Evento profesional", gancho: "Lanzamientos, cenas y conferencias", glow: "blue" },
+  { id: "cumples", titulo: "Cumpleaños", gancho: "Quince, cincuenta o los que sean", glow: "green" },
+  { id: "profesional", titulo: "Evento profesional", gancho: "Lanzamientos, cenas y conferencias", glow: "green" },
 ];
 
 /* ── Diseños ───────────────────────────────────────────────── */

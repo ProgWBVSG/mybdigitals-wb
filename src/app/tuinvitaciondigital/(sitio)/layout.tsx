@@ -1,5 +1,5 @@
+import Image from "next/image";
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
 import { SITE_URL } from "@/lib/site";
 import { WHATSAPP } from "@/lib/invitaciones";
 
@@ -17,9 +17,14 @@ export default function SitioLayout({ children }: { children: React.ReactNode })
         <header className="tid-barra">
           <div className="tid-marco tid-barra__interior">
             <Link href="/tuinvitaciondigital" className="tid-logo">
-              <span className="tid-logo__icono">
-                <Sparkles size={17} strokeWidth={1.8} aria-hidden="true" />
-              </span>
+              <Image
+                src="/LogoMyB.png"
+                alt=""
+                width={28}
+                height={28}
+                className="tid-logo__marca"
+                priority
+              />
               Tu Invitación Digital
             </Link>
 

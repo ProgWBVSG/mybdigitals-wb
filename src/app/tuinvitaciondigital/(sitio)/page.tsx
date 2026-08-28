@@ -154,7 +154,8 @@ export default function Invitaciones() {
         <div className="tid-marco tid-hero__interior">
           <p className="tid-rubro">Invitaciones digitales</p>
           <h1 className="tid-titulo tid-h1 tid-hero__titulo">
-            La fiesta empieza cuando <span className="tid-fuerte">abren</span> la invitación.
+            Mandás un link y te vuelve la lista de{" "}
+            <span className="tid-fuerte">quién viene</span>.
           </h1>
           <p className="tid-plomo tid-hero__bajada">
             Elegí tu evento y mirá los modelos.

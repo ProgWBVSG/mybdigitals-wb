@@ -8,13 +8,15 @@
   --borde: rgba(255, 255, 255, 0.09);
   --borde-fuerte: rgba(255, 255, 255, 0.18);
 
-  --texto: #f4f4f2;
-  --texto-suave: #a3a49f;
-  --texto-tenue: #6c6d68;
+  --texto: #ffffff;
+  --texto-suave: #a8aca9;
+  --texto-tenue: #71756f;
 
-  /* Un solo acento: champagne. El color lo ponen los brillos de las tarjetas. */
-  --oro: #d4b86a;
-  --oro-hondo: #b99c4e;
+  /* Verde medio oscuro para los rellenos; el claro es para texto chico, que
+     sobre negro necesita mas luz para leerse. */
+  --verde: #2e6f4e;
+  --verde-hondo: #245840;
+  --verde-claro: #6fbf8f;
 
   /* Curvas fuertes: las de CSS por defecto no tienen carácter. */
   --salida: cubic-bezier(0.23, 1, 0.32, 1);
@@ -42,15 +44,15 @@
   inset: 0;
   z-index: 0;
   background:
-    radial-gradient(48rem 30rem at 50% -10%, rgba(212, 184, 106, 0.10), transparent 65%),
+    radial-gradient(48rem 30rem at 50% -10%, rgba(46, 111, 78, 0.28), transparent 65%),
     var(--negro);
   pointer-events: none;
 }
 
 .tid-capa { position: relative; z-index: 1; }
 
-.tid ::selection { background: var(--oro); color: #14120a; }
-.tid :focus-visible { outline: 2px solid var(--oro); outline-offset: 3px; border-radius: 4px; }
+.tid ::selection { background: var(--verde); color: #fff; }
+.tid :focus-visible { outline: 2px solid var(--verde-claro); outline-offset: 3px; border-radius: 4px; }
 
 .tid p, .tid h1, .tid h2, .tid h3, .tid ul, .tid ol { margin: 0; }
 .tid ul, .tid ol { padding: 0; list-style: none; }
@@ -66,7 +68,7 @@
   letter-spacing: -0.035em;
   text-wrap: balance;
 }
-.tid-h1 { font-size: clamp(2.6rem, 7vw, 5rem); }
+.tid-h1 { font-size: clamp(2rem, 4.4vw, 3.3rem); }
 .tid-h2 { font-size: clamp(1.9rem, 4vw, 3rem); }
 .tid-h3 { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; }
 
@@ -78,7 +80,7 @@
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--oro);
+  color: var(--verde-claro);
 }
 
 .tid-plomo { color: var(--texto-suave); font-size: clamp(1rem, 1.4vw, 1.1rem); max-width: var(--medida); }
@@ -104,10 +106,10 @@
   transition: background-color 200ms var(--salida), color 200ms var(--salida),
               border-color 200ms var(--salida), transform 120ms var(--salida);
 }
-.tid-boton--lleno { background: var(--oro); color: #14120a; }
-.tid-boton--lleno:hover { background: var(--oro-hondo); }
+.tid-boton--lleno { background: var(--verde); color: #fff; }
+.tid-boton--lleno:hover { background: var(--verde-hondo); }
 .tid-boton--linea { border-color: var(--borde-fuerte); color: var(--texto); background: transparent; }
-.tid-boton--linea:hover { border-color: var(--oro); color: var(--oro); }
+.tid-boton--linea:hover { border-color: var(--verde-claro); color: var(--verde-claro); }
 /* El botón tiene que acusar recibo del click. */
 .tid-boton:active { transform: scale(0.97); }
 
@@ -121,14 +123,14 @@
 }
 .tid-barra__interior { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: 4.2rem; }
 .tid-logo { display: inline-flex; align-items: center; gap: 0.55rem; font-size: 0.95rem; font-weight: 600; letter-spacing: -0.01em; }
-.tid-logo__icono { color: var(--oro); display: grid; place-items: center; }
+.tid-logo__marca { border-radius: 6px; }
 .tid-barra__cta { padding: 0.62rem 1.2rem; font-size: 0.82rem; }
 
 /* ── Encabezado ────────────────────────────────────────────── */
 
 .tid-hero { padding-top: clamp(3.5rem, 7vw, 6rem); text-align: center; }
 .tid-hero__interior { display: flex; flex-direction: column; align-items: center; }
-.tid-hero__titulo { margin-top: 1.2rem; max-width: 16ch; }
+.tid-hero__titulo { margin-top: 1.2rem; max-width: 26ch; }
 .tid-hero__bajada { margin-top: 1.4rem; text-align: center; }
 
 /* ── Elección de evento: las tres tarjetas con brillo ──────── */
@@ -170,13 +172,13 @@
 .tid-tarjeta__gancho { display: block; margin-top: 0.35rem; font-size: 0.86rem; color: var(--texto-suave); line-height: 1.45; }
 .tid-tarjeta__pie {
   display: inline-flex; align-items: center; gap: 0.4rem;
-  font-size: 0.8rem; font-weight: 600; color: var(--oro);
+  font-size: 0.8rem; font-weight: 600; color: var(--verde-claro);
 }
 .tid-tarjeta__flecha { transition: transform 260ms var(--salida); }
 .tid-tarjeta:hover .tid-tarjeta__flecha { transform: translateX(3px); }
 
 .tid-tarjeta[aria-pressed="true"] .tid-tarjeta__icono {
-  background: var(--oro); border-color: var(--oro); color: #14120a;
+  background: var(--verde); border-color: var(--verde); color: #fff;
 }
 
 /* ── Resultado: aparece recién cuando eligen ───────────────── */
@@ -231,7 +233,7 @@
   padding-block: 0.5rem;
   font-size: 0.92rem; color: var(--texto-suave);
 }
-.tid-incluye__tilde { flex-shrink: 0; margin-top: 0.15rem; color: var(--oro); }
+.tid-incluye__tilde { flex-shrink: 0; margin-top: 0.15rem; color: var(--verde-claro); }
 
 /* ── Precios ───────────────────────────────────────────────── */
 
@@ -244,11 +246,11 @@
   background: var(--superficie);
   border: 1px solid var(--borde); border-radius: 16px;
 }
-.tid-plan--destacado { border-color: var(--oro); background: var(--superficie-alta); }
+.tid-plan--destacado { border-color: var(--verde-claro); background: var(--superficie-alta); }
 .tid-plan__cinta {
   position: absolute; top: -0.65rem; left: 1.5rem;
   padding: 0.22rem 0.65rem; border-radius: 999px;
-  background: var(--oro); color: #14120a;
+  background: var(--verde); color: #fff;
   font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
 }
 .tid-plan__nombre { font-size: 1.15rem; font-weight: 600; }
@@ -261,7 +263,7 @@
 .tid-plan__items li { position: relative; padding-left: 1.15rem; }
 .tid-plan__items li::before {
   content: ""; position: absolute; left: 0; top: 0.6em;
-  width: 0.35rem; height: 0.35rem; border-radius: 50%; background: var(--oro);
+  width: 0.35rem; height: 0.35rem; border-radius: 50%; background: var(--verde-claro);
 }
 .tid-plan__cta { margin-top: auto; width: 100%; }
 
@@ -272,7 +274,7 @@
   padding: 0.2rem 0.6rem; color: var(--texto-suave); cursor: pointer; font-size: 0.75rem; font-weight: 600;
   transition: border-color 180ms var(--salida), color 180ms var(--salida);
 }
-.tid-moneda__boton:hover { border-color: var(--oro); color: var(--oro); }
+.tid-moneda__boton:hover { border-color: var(--verde-claro); color: var(--verde-claro); }
 
 /* ── Reseñas ───────────────────────────────────────────────── */
 
@@ -295,7 +297,7 @@
 .tid-faq__signo { position: relative; flex-shrink: 0; width: 0.85rem; height: 0.85rem; }
 .tid-faq__signo::before,
 .tid-faq__signo::after {
-  content: ""; position: absolute; inset: 0; margin: auto; background: var(--oro);
+  content: ""; position: absolute; inset: 0; margin: auto; background: var(--verde-claro);
   transition: transform 260ms var(--salida), opacity 260ms var(--salida);
 }
 .tid-faq__signo::before { width: 100%; height: 1.5px; }
@@ -323,7 +325,7 @@
 
 .tid-pie { border-top: 1px solid var(--borde); padding-block: 2.5rem 3rem; }
 .tid-pie__interior { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem; }
-.tid-pie__enlace { color: var(--oro); font-weight: 600; }
+.tid-pie__enlace { color: var(--verde-claro); font-weight: 600; }
 
 @media (prefers-reduced-motion: reduce) {
   .tid *, .tid *::before, .tid *::after {
