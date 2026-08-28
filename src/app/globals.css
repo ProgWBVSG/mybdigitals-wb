@@ -131,3 +131,13 @@ button,
   100% { transform: translate3d(-50%, 0, 0); }
 }
 
+
+/* Las sub-marcas traen su propio fondo: la grilla de puntos y el grano del
+   sitio principal no deben pisarlas. */
+body:has(.tid)::before,
+body:has(.tid)::after {
+  display: none;
+}
+body:has(.tid) {
+  background-color: #fbf9f5;
+}

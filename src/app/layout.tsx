@@ -5,7 +5,7 @@ import FloatingWidgets from "@/components/FloatingWidgets";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
-import HideOnSlopcheck from "@/components/HideOnSlopcheck";
+import HideSiteChrome from "@/components/HideSiteChrome";
 import { SITE_URL } from "@/lib/site";
 
 const geistSans = Geist({
@@ -78,17 +78,17 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Saltar al contenido principal
         </a>
-        <HideOnSlopcheck>
+        <HideSiteChrome>
           <CustomCursor />
           <Navbar />
-        </HideOnSlopcheck>
+        </HideSiteChrome>
         <div id="main-content" tabIndex={-1}>
           {children}
         </div>
-        <HideOnSlopcheck>
+        <HideSiteChrome>
           <Footer />
           <FloatingWidgets />
-        </HideOnSlopcheck>
+        </HideSiteChrome>
       </body>
     </html>
   );

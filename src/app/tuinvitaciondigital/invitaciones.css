@@ -1,0 +1,424 @@
+/* Todo el CSS de Tu Invitación Digital vive bajo .tid para no afectar al
+   resto de mybdigitals.com. Es un producto aparte, con su propia identidad. */
+
+.tid {
+  /* Papel y tinta. La base es un marfil cálido, no el beige lavado de siempre. */
+  --papel: #fbf9f5;
+  --niebla: #f1efe6;
+  --tinta: #1e241c;
+  --tinta-suave: #4a5346;
+  --tinta-tenue: #7d857a;
+
+  /* El verde es el ancla: olivo argentino, no esmeralda de plantilla. */
+  --oliva: #3b4d2e;
+  --oliva-hondo: #2b3a20;
+  --eucalipto: #8b9e7a;
+
+  /* Un solo acento, y se usa poco: ciruela seca. */
+  --ciruela: #7a4451;
+
+  /* Oro únicamente para filetes y marcas chicas. */
+  --oro: #c4a55f;
+
+  --linea: rgba(30, 36, 28, 0.12);
+  --linea-fuerte: rgba(30, 36, 28, 0.26);
+
+  --sombra-baja: 0 1px 2px rgba(30, 36, 28, 0.04), 0 4px 16px rgba(30, 36, 28, 0.05);
+  --sombra-alta: 0 24px 70px rgba(30, 36, 28, 0.16);
+
+  --curva: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --ancho: 74rem;
+  --medida: 60ch;
+
+  --display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --texto: var(--font-karla), ui-sans-serif, system-ui, sans-serif;
+
+  color: var(--tinta);
+  font-family: var(--texto);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+.tid *,
+.tid *::before,
+.tid *::after { box-sizing: border-box; }
+
+/* El fondo de papel tapa la grilla de puntos del sitio principal. */
+.tid-fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(60rem 40rem at 78% -8%, rgba(139, 158, 122, 0.20), transparent 62%),
+    radial-gradient(46rem 34rem at 6% 102%, rgba(196, 165, 95, 0.14), transparent 60%),
+    var(--papel);
+  pointer-events: none;
+}
+
+.tid-capa { position: relative; z-index: 1; }
+
+.tid ::selection { background: var(--oliva); color: var(--papel); }
+.tid :focus-visible { outline: 2px solid var(--oliva); outline-offset: 3px; border-radius: 3px; }
+
+.tid p, .tid h1, .tid h2, .tid h3, .tid h4, .tid ul, .tid ol, .tid figure { margin: 0; }
+.tid ul, .tid ol { padding: 0; list-style: none; }
+.tid img { max-width: 100%; display: block; }
+.tid a { color: inherit; text-decoration: none; }
+
+/* ── Tipografía ────────────────────────────────────────────── */
+
+.tid-display {
+  font-family: var(--display);
+  font-weight: 400;
+  font-variation-settings: "SOFT" 40, "WONK" 1, "opsz" 120;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.tid-h1 { font-size: clamp(2.7rem, 7.2vw, 5.4rem); }
+.tid-h2 { font-size: clamp(2rem, 4.4vw, 3.3rem); }
+.tid-h3 { font-size: clamp(1.3rem, 2.2vw, 1.65rem); font-variation-settings: "SOFT" 40, "WONK" 0, "opsz" 40; }
+
+/* La cursiva de Fraunces es el detalle escrito a mano del sistema. */
+.tid-cursiva { font-style: italic; font-variation-settings: "SOFT" 60, "WONK" 1, "opsz" 144; }
+
+.tid-rubro {
+  font-family: var(--texto);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--oliva);
+}
+
+.tid-plomo { color: var(--tinta-suave); font-size: clamp(1.02rem, 1.5vw, 1.16rem); max-width: var(--medida); }
+.tid-nota { font-size: 0.85rem; color: var(--tinta-tenue); }
+
+/* ── Estructura ────────────────────────────────────────────── */
+
+.tid-marco { width: 100%; max-width: var(--ancho); margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 2.5rem); }
+.tid-marco--angosto { max-width: 48rem; }
+.tid-seccion { padding-block: clamp(4.5rem, 9vw, 8rem); }
+.tid-seccion--cenida { padding-block: clamp(3rem, 6vw, 5rem); }
+
+.tid-encabezado { display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+
+/* Filete de oro: separa secciones sin gritar. */
+.tid-filete { height: 1px; background: linear-gradient(to right, var(--oro), transparent); opacity: 0.55; }
+
+/* ── Botones ───────────────────────────────────────────────── */
+
+.tid-boton {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
+  padding: 0.95rem 1.7rem;
+  font-family: var(--texto); font-size: 0.92rem; font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: 999px; border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 200ms var(--curva), color 200ms var(--curva),
+              border-color 200ms var(--curva), transform 200ms var(--curva);
+}
+.tid-boton--lleno { background: var(--oliva); color: var(--papel); }
+.tid-boton--lleno:hover { background: var(--oliva-hondo); transform: translateY(-2px); }
+.tid-boton--linea { border-color: var(--linea-fuerte); color: var(--tinta); background: transparent; }
+.tid-boton--linea:hover { border-color: var(--oliva); color: var(--oliva); transform: translateY(-2px); }
+
+/* ── Barra superior ────────────────────────────────────────── */
+
+.tid-barra {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(251, 249, 245, 0.82);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--linea);
+}
+.tid-barra__interior {
+  display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  min-height: 4.4rem;
+}
+.tid-logo { display: inline-flex; align-items: baseline; gap: 0.3rem; font-size: 1.18rem; }
+.tid-logo__marca { font-weight: 600; }
+.tid-logo__cola { color: var(--oliva); }
+
+.tid-barra__nav { display: none; gap: 1.9rem; font-size: 0.9rem; font-weight: 500; }
+.tid-barra__nav a { color: var(--tinta-suave); transition: color 180ms var(--curva); }
+.tid-barra__nav a:hover { color: var(--oliva); }
+
+.tid-barra__cta { display: none; padding: 0.7rem 1.35rem; font-size: 0.85rem; }
+
+@media (min-width: 62rem) {
+  .tid-barra__nav, .tid-barra__cta { display: inline-flex; }
+}
+
+/* ── Encabezado de página ──────────────────────────────────── */
+
+.tid-hero { padding-top: clamp(3rem, 6vw, 5rem); }
+.tid-hero__interior {
+  display: grid; gap: clamp(3rem, 6vw, 4.5rem);
+  align-items: center;
+}
+.tid-hero__titulo { margin-top: 1.1rem; }
+.tid-hero__bajada { margin-top: 1.5rem; }
+.tid-hero__acciones { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 2.2rem; }
+
+@media (min-width: 62rem) {
+  .tid-hero__interior { grid-template-columns: 1.08fr 0.92fr; }
+}
+
+/* ── El teléfono: el elemento con el que se recuerda la página ── */
+
+.tid-vitrina { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+
+.tid-tel {
+  width: min(19rem, 84vw);
+  border-radius: 2.4rem;
+  padding: 0.55rem;
+  background: linear-gradient(160deg, #2c3327, #171b15);
+  box-shadow: var(--sombra-alta), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+}
+.tid-tel__pantalla {
+  border-radius: 2rem; overflow: hidden;
+  background: #fff;
+  display: flex; flex-direction: column;
+}
+
+.tid-tel__foto { position: relative; aspect-ratio: 4 / 5; }
+.tid-tel__img { object-fit: cover; }
+.tid-tel__velo {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(20, 24, 18, 0.86) 12%, rgba(20, 24, 18, 0.18) 58%, transparent);
+}
+.tid-tel__titulo { position: absolute; left: 0; right: 0; bottom: 1.35rem; text-align: center; color: #fff; padding-inline: 1rem; }
+.tid-tel__ocasion {
+  font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+.tid-tel__nombres { font-size: 2rem; margin-top: 0.2rem; line-height: 1.1; }
+.tid-tel__fecha {
+  font-size: 0.6rem; letter-spacing: 0.18em; margin-top: 0.45rem;
+  color: var(--acento); font-weight: 700;
+}
+
+.tid-tel__cuerpo { padding: 1.15rem 1rem 1.4rem; display: flex; flex-direction: column; gap: 0.85rem; }
+.tid-tel__reloj { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4rem; }
+.tid-tel__unidad {
+  display: flex; flex-direction: column; align-items: center; gap: 0.1rem;
+  padding: 0.5rem 0.2rem; border-radius: 10px;
+  background: color-mix(in srgb, var(--acento) 9%, transparent);
+}
+.tid-tel__num {
+  font-family: var(--display); font-size: 1.1rem; font-weight: 600;
+  font-variant-numeric: tabular-nums; color: var(--acento);
+}
+.tid-tel__etiqueta { font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: #8b8f87; }
+
+.tid-tel__rsvp {
+  width: 100%; padding: 0.8rem 1rem; border: 0; border-radius: 999px; cursor: pointer;
+  background: var(--acento); color: #fff;
+  font-family: var(--texto); font-size: 0.8rem; font-weight: 700;
+  transition: filter 200ms var(--curva), background-color 200ms var(--curva);
+}
+.tid-tel__rsvp:hover { filter: brightness(1.08); }
+.tid-tel__rsvp--ok { background: var(--oliva); }
+.tid-tel__pie { text-align: center; font-size: 0.68rem; color: #9aa094; }
+
+.tid-vitrina__selector { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.tid-muestra {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.45rem 0.9rem; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--linea); background: transparent;
+  font-family: var(--texto); font-size: 0.78rem; font-weight: 600; color: var(--tinta-suave);
+  transition: border-color 180ms var(--curva), color 180ms var(--curva), background-color 180ms var(--curva);
+}
+.tid-muestra__punto { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--acento); }
+.tid-muestra:hover { border-color: var(--linea-fuerte); color: var(--tinta); }
+.tid-muestra--activa { background: var(--tinta); border-color: var(--tinta); color: var(--papel); }
+
+/* ── Tira de datos ─────────────────────────────────────────── */
+
+.tid-tira {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 1.8rem 1rem; padding-block: 2.2rem;
+}
+.tid-tira__item { display: flex; flex-direction: column; gap: 0.15rem; }
+.tid-tira__num { font-size: clamp(1.35rem, 2.6vw, 1.75rem); color: var(--oliva); }
+.tid-tira__texto { font-size: 0.85rem; color: var(--tinta-tenue); }
+
+@media (min-width: 48rem) { .tid-tira { grid-template-columns: repeat(4, 1fr); } }
+
+/* ── Galería ───────────────────────────────────────────────── */
+
+.tid-filtros { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+.tid-filtro {
+  padding: 0.5rem 1.1rem; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--linea); background: transparent;
+  font-family: var(--texto); font-size: 0.85rem; font-weight: 600; color: var(--tinta-suave);
+  transition: border-color 180ms var(--curva), color 180ms var(--curva), background-color 180ms var(--curva);
+}
+.tid-filtro:hover { border-color: var(--oliva); color: var(--oliva); }
+.tid-filtro--activo { background: var(--oliva); border-color: var(--oliva); color: var(--papel); }
+
+.tid-grilla {
+  display: grid; gap: clamp(1rem, 2.4vw, 1.75rem);
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 48rem) { .tid-grilla { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 68rem) { .tid-grilla { grid-template-columns: repeat(4, 1fr); } }
+
+.tid-carta { display: flex; flex-direction: column; gap: 0.8rem; }
+.tid-carta__marco {
+  position: relative; display: block; aspect-ratio: 3 / 4; overflow: hidden;
+  border-radius: 12px; background: var(--niebla);
+  box-shadow: var(--sombra-baja);
+}
+.tid-carta__img { object-fit: cover; transition: transform 600ms var(--curva); }
+.tid-carta:hover .tid-carta__img { transform: scale(1.05); }
+.tid-carta__abrir {
+  position: absolute; inset-inline: 0.6rem; bottom: 0.6rem;
+  padding: 0.5rem; border-radius: 8px; text-align: center;
+  background: rgba(251, 249, 245, 0.94); color: var(--tinta);
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
+  opacity: 0; transform: translateY(0.5rem);
+  transition: opacity 260ms var(--curva), transform 260ms var(--curva);
+}
+.tid-carta:hover .tid-carta__abrir,
+.tid-carta:focus-visible .tid-carta__abrir { opacity: 1; transform: translateY(0); }
+
+.tid-carta__pie { display: flex; flex-direction: column; gap: 0.1rem; }
+.tid-carta__nombre { font-size: 1.15rem; }
+.tid-carta__caracter { font-size: 0.8rem; color: var(--tinta-tenue); }
+
+/* ── Listas de contenido ───────────────────────────────────── */
+
+.tid-lista { display: grid; gap: 2.2rem 2.5rem; grid-template-columns: 1fr; }
+@media (min-width: 44rem) { .tid-lista { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 68rem) { .tid-lista { grid-template-columns: repeat(4, 1fr); } }
+.tid-lista__item { padding-top: 1.1rem; border-top: 1px solid var(--linea); }
+.tid-lista__texto { margin-top: 0.5rem; font-size: 0.92rem; color: var(--tinta-suave); }
+
+/* ── Planes ────────────────────────────────────────────────── */
+
+.tid-planes { display: grid; gap: 1.25rem; grid-template-columns: 1fr; align-items: stretch; }
+@media (min-width: 56rem) { .tid-planes { grid-template-columns: repeat(3, 1fr); } }
+
+.tid-plan {
+  position: relative; display: flex; flex-direction: column;
+  padding: 2rem 1.6rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--linea); border-radius: 16px;
+  box-shadow: var(--sombra-baja);
+}
+.tid-plan--destacado {
+  background: var(--oliva); border-color: var(--oliva); color: var(--papel);
+  box-shadow: var(--sombra-alta);
+}
+.tid-plan__cinta {
+  position: absolute; top: -0.7rem; left: 1.6rem;
+  padding: 0.25rem 0.7rem; border-radius: 999px;
+  background: var(--oro); color: #2b2405;
+  font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+}
+.tid-plan__nombre { font-size: 1.6rem; }
+.tid-plan__para { margin-top: 0.35rem; font-size: 0.88rem; color: var(--tinta-tenue); }
+.tid-plan--destacado .tid-plan__para { color: rgba(251, 249, 245, 0.72); }
+.tid-plan__precio { margin-top: 1.4rem; display: flex; align-items: baseline; gap: 0.4rem; }
+.tid-plan__precio .tid-display { font-size: 2.3rem; }
+.tid-plan__moneda { font-size: 0.75rem; letter-spacing: 0.12em; color: var(--tinta-tenue); }
+.tid-plan--destacado .tid-plan__moneda { color: rgba(251, 249, 245, 0.66); }
+
+.tid-plan__items {
+  margin-top: 1.5rem; margin-bottom: 2rem;
+  display: flex; flex-direction: column; gap: 0.6rem;
+  font-size: 0.9rem; color: var(--tinta-suave);
+}
+.tid-plan--destacado .tid-plan__items { color: rgba(251, 249, 245, 0.9); }
+.tid-plan__items li { position: relative; padding-left: 1.3rem; }
+.tid-plan__items li::before {
+  content: ""; position: absolute; left: 0; top: 0.62em;
+  width: 0.45rem; height: 0.45rem; border-radius: 50%;
+  background: var(--eucalipto);
+}
+.tid-plan--destacado .tid-plan__items li::before { background: var(--oro); }
+
+.tid-plan__cta { margin-top: auto; width: 100%; }
+.tid-plan--destacado .tid-boton--lleno { background: var(--papel); color: var(--oliva-hondo); }
+.tid-plan--destacado .tid-boton--lleno:hover { background: #fff; }
+
+/* ── Pasos ─────────────────────────────────────────────────── */
+
+.tid-pasos { display: grid; gap: 1.75rem; grid-template-columns: 1fr; }
+@media (min-width: 56rem) { .tid-pasos { grid-template-columns: repeat(4, 1fr); } }
+.tid-paso { display: flex; flex-direction: column; gap: 0.9rem; padding-top: 1.2rem; border-top: 1px solid var(--linea); }
+.tid-paso__num { font-size: 2.4rem; line-height: 1; color: var(--eucalipto); }
+
+/* ── Preguntas ─────────────────────────────────────────────── */
+
+.tid-faq { display: flex; flex-direction: column; }
+.tid-faq__item { border-top: 1px solid var(--linea); }
+.tid-faq__item:last-child { border-bottom: 1px solid var(--linea); }
+.tid-faq__boton {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  padding: 1.35rem 0; cursor: pointer; background: transparent; border: 0; text-align: left;
+  font-family: var(--texto); color: var(--tinta);
+}
+.tid-faq__pregunta { font-size: 1.02rem; font-weight: 600; }
+.tid-faq__signo { position: relative; flex-shrink: 0; width: 0.9rem; height: 0.9rem; }
+.tid-faq__signo::before,
+.tid-faq__signo::after {
+  content: ""; position: absolute; inset: 0; margin: auto;
+  background: var(--oliva); transition: transform 260ms var(--curva), opacity 260ms var(--curva);
+}
+.tid-faq__signo::before { width: 100%; height: 1.5px; }
+.tid-faq__signo::after { width: 1.5px; height: 100%; }
+.tid-faq__signo--abierto::after { transform: rotate(90deg); opacity: 0; }
+.tid-faq__respuesta {
+  padding-bottom: 1.5rem; max-width: var(--medida);
+  font-size: 0.95rem; color: var(--tinta-suave);
+}
+
+/* ── Cierre ────────────────────────────────────────────────── */
+
+.tid-cierre__interior {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding-block: clamp(3rem, 6vw, 4.5rem);
+  border-top: 1px solid var(--linea);
+}
+.tid-cierre__titulo { max-width: 20ch; }
+.tid-cierre__bajada { margin-top: 1.2rem; }
+.tid-cierre__acciones { justify-content: center; }
+
+/* ── Pie ───────────────────────────────────────────────────── */
+
+.tid-pie { padding-block: clamp(3rem, 6vw, 4.5rem) 2.5rem; }
+.tid-pie__interior {
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+  gap: 2rem; padding-top: 2.5rem;
+}
+.tid-pie__marca { font-size: 1.5rem; }
+.tid-pie__lugar { margin-top: 0.35rem; }
+.tid-pie__nav { display: flex; flex-wrap: wrap; gap: 1.6rem; font-size: 0.9rem; color: var(--tinta-suave); }
+.tid-pie__nav a { transition: color 180ms var(--curva); }
+.tid-pie__nav a:hover { color: var(--oliva); }
+.tid-pie__firma { margin-top: 3rem; }
+.tid-pie__enlace { color: var(--oliva); font-weight: 600; }
+
+/* ── Superficies compartidas ───────────────────────────────── */
+
+.tid-ficha {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--linea);
+  border-radius: 14px;
+  box-shadow: var(--sombra-baja);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tid *, .tid *::before, .tid *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .tid-boton:hover, .tid-carta:hover .tid-carta__img { transform: none; }
+}

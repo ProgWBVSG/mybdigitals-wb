@@ -273,7 +273,7 @@ export default function CumplesTemplate({ data, guestName }: { data: any; guestN
       {/* ── BOTONES FLOTANTES ── */}
       <motion.button
         initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1 }}
-        onClick={() => router.push(data.id?.includes('bodas') ? '/servicios/web/invitaciones/bodas' : '/servicios/web/invitaciones/cumples')}
+        onClick={() => router.push(data.id?.includes('bodas') ? '/tuinvitaciondigital/bodas' : '/tuinvitaciondigital/cumples')}
         className="fixed top-6 left-6 z-40 bg-black/40 backdrop-blur-xl border border-white/10 text-white px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-black/60 transition-colors"
       >
         <ArrowLeft size={12} /> Salir
