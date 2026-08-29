@@ -76,14 +76,6 @@
 /* El salto de 300 a 700 es lo que le da carácter a Montserrat. */
 .tid-fuerte { font-weight: 700; color: var(--verde); }
 
-.tid-rubro {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--verde);
-}
-
 .tid-plomo { color: var(--gris); font-size: clamp(1rem, 1.4vw, 1.1rem); max-width: var(--medida); }
 .tid-nota { font-size: 0.82rem; color: var(--gris-tenue); }
 
@@ -139,7 +131,6 @@
 /* ── Elección de evento ────────────────────────────────────── */
 
 .tid-eleccion { margin-top: clamp(2.5rem, 5vw, 3.5rem); width: 100%; }
-.tid-eleccion__guia { margin-bottom: 1.1rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gris-tenue); }
 .tid-eleccion__grilla { display: grid; gap: 1rem; grid-template-columns: 1fr; }
 @media (min-width: 46rem) { .tid-eleccion__grilla { grid-template-columns: repeat(3, 1fr); } }
 

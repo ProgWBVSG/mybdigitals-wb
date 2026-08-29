@@ -159,7 +159,6 @@ export default function Invitaciones() {
       {/* ── Encabezado y elección ── */}
       <section className="tid-seccion tid-hero">
         <div className="tid-marco tid-hero__interior">
-          <p className="tid-rubro">Invitaciones digitales</p>
           <h1 className="tid-titulo tid-h1 tid-hero__titulo">
             La invitación que nadie olvida.{" "}
             <span className="tid-fuerte">La lista que se arma sola.</span>
@@ -170,7 +169,6 @@ export default function Invitaciones() {
           </p>
 
           <div className="tid-eleccion">
-            <p className="tid-eleccion__guia">¿Qué estás organizando?</p>
             <div className="tid-eleccion__grilla">
               {CATEGORIAS.map((c) => (
                 <TarjetaEvento
@@ -193,8 +191,9 @@ export default function Invitaciones() {
             <section className="tid-seccion">
               <div className="tid-marco">
                 <div className="tid-encabezado">
-                  <p className="tid-rubro">{categoria.titulo}</p>
-                  <h2 className="tid-titulo tid-h2">Los modelos.</h2>
+                  <h2 className="tid-titulo tid-h2">
+                    Modelos para {categoria.titulo.toLowerCase()}.
+                  </h2>
                   <p className="tid-plomo">
                     Son demos de verdad. Abrí cualquiera y recorrela desde el celular.
                   </p>
@@ -245,7 +244,6 @@ export default function Invitaciones() {
             <section className="tid-seccion tid-seccion--tenue">
               <div className="tid-marco">
                 <div className="tid-encabezado">
-                  <p className="tid-rubro">Qué incluye</p>
                   <h2 className="tid-titulo tid-h2">Todo esto, en un link.</h2>
                 </div>
                 <ul className="tid-incluye">
@@ -263,7 +261,6 @@ export default function Invitaciones() {
             <section className="tid-seccion">
               <div className="tid-marco">
                 <div className="tid-encabezado tid-encabezado--centro">
-                  <p className="tid-rubro">Precios</p>
                   <h2 className="tid-titulo tid-h2">Un pago y listo.</h2>
                   <p className="tid-moneda">
                     Precios en {moneda}
@@ -322,7 +319,6 @@ export default function Invitaciones() {
               <section className="tid-seccion">
                 <div className="tid-marco">
                   <div className="tid-encabezado tid-encabezado--centro">
-                    <p className="tid-rubro">Reseñas</p>
                     <h2 className="tid-titulo tid-h2">Lo que dicen.</h2>
                   </div>
                   <ul className="tid-resenas">
@@ -344,7 +340,6 @@ export default function Invitaciones() {
         <section className="tid-seccion tid-seccion--tenue">
           <div className="tid-marco tid-marco--angosto">
             <div className="tid-encabezado tid-encabezado--centro">
-              <p className="tid-rubro">Preguntas</p>
               <h2 className="tid-titulo tid-h2">Lo que todos preguntan.</h2>
             </div>
             <Preguntas />
