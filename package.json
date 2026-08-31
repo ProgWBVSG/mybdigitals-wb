@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "probar-base": "node --env-file-if-exists=.env.local scripts/probar-base.mjs"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "@splinetool/react-spline": "^4.1.0",
     "@splinetool/runtime": "^1.12.74",
     "cheerio": "^1.2.0",

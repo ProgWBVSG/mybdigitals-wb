@@ -222,7 +222,7 @@ export default function CumplesTemplate({ data, guestName }: { data: any; guestN
   const { dayNum, yearText, monthName, dayName } = extractDateDetails(data.date);
 
   return (
-    <div className={`min-h-screen selection:bg-pink-300 overflow-x-hidden transition-colors duration-1000 ${isDark ? "bg-[#09090b] text-zinc-300" : "bg-[#fdfdfd] text-zinc-800"}`}>
+    <div className={`min-h-svh selection:bg-pink-300 overflow-x-hidden transition-colors duration-1000 ${isDark ? "bg-[#09090b] text-zinc-300" : "bg-[#fdfdfd] text-zinc-800"}`}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
         .font-playfair { font-family: 'Playfair Display', serif; }
@@ -290,7 +290,9 @@ export default function CumplesTemplate({ data, guestName }: { data: any; guestN
       </motion.button>
 
       {/* ── HERO COMPLETO ── */}
-      <section className="relative h-screen flex flex-col items-center justify-end overflow-hidden pb-32">
+      {/* svh y no vh: con 100vh la barra de direcciones del celular corta la
+          foto y aparece un salto al scrollear. svh es el alto mínimo garantizado. */}
+      <section className="relative min-h-svh flex flex-col items-center justify-end overflow-hidden pb-32">
         <motion.div style={{ y: yHero }} className="absolute inset-0 z-0">
           <Image src={data.bgHero} alt="Hero" fill className="object-cover" priority />
           {/* Overlay oscuro siempre activo para garantizar legibilidad del texto */}

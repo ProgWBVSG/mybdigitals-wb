@@ -374,7 +374,7 @@ export default function DemoInvitationPage() {
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, 150]);
 
-  if (!data) return <div className="min-h-screen flex items-center justify-center bg-stone-50 text-stone-500 text-sm">Cargando demo...</div>;
+  if (!data) return <div className="min-h-svh flex items-center justify-center bg-stone-50 text-stone-500 text-sm">Cargando demo...</div>;
 
   const handleEnter = () => {
     setIsEntered(true);
@@ -406,7 +406,7 @@ export default function DemoInvitationPage() {
   const s7 = sectionStyle(false, accent, bgBase);       // Trivia: fondo blanco
 
   return (
-    <div className="min-h-screen text-stone-800 font-sans selection:bg-rose-200 overflow-x-hidden relative" style={{ backgroundColor: bgBase }}>
+    <div className="min-h-svh text-stone-800 font-sans selection:bg-rose-200 overflow-x-hidden relative" style={{ backgroundColor: bgBase }}>
       {/* Textura sutil global para dar efecto "papel texturizado / piedritas" a los fondos lisos */}
       <div 
         className="fixed inset-0 pointer-events-none mix-blend-multiply opacity-[0.04] z-0"
@@ -588,7 +588,9 @@ export default function DemoInvitationPage() {
       </motion.button>
 
       {/* ── 2. HERO — Foto pareja de fondo + degradé ── */}
-      <section className="relative min-h-screen flex flex-col items-center justify-end overflow-hidden pb-20">
+      {/* svh y no vh: con 100vh la barra de direcciones del celular corta la
+          foto y aparece un salto al scrollear. svh es el alto mínimo garantizado. */}
+      <section className="relative min-h-svh flex flex-col items-center justify-end overflow-hidden pb-20">
         {/* Foto de la pareja como fondo completo */}
         <div className="absolute inset-0 z-0">
           <Image

@@ -30,6 +30,11 @@ export type Diseno = {
   nombre: string;
   imagen: string;
   acento: string;
+  /**
+   * Enlace propio, para los modelos nuevos que no viven en /demo/[id].
+   * Si no está, se arma el enlace al motor viejo con el id y el tipo.
+   */
+  enlace?: string;
 };
 
 /**
@@ -37,6 +42,17 @@ export type Diseno = {
  * en /tuinvitaciondigital/demo/[id], que es la demo que abre cada tarjeta.
  */
 export const DISENOS: Diseno[] = [
+  // Rosa es el modelo nuevo y va primero: es el que muestra lo que sabemos
+  // hacer hoy. Los de abajo son del motor viejo.
+  {
+    id: 0,
+    tipo: "bodas",
+    nombre: "Rosa",
+    imagen: "/invitaciones/demo/rosa/carta.jpg",
+    acento: "#7d2f3f",
+    enlace: "/tuinvitaciondigital/i/rosa",
+  },
+
   { id: 1, tipo: "bodas", nombre: "Camelia", imagen: "/fotos_boda/foto1.jpg", acento: "#e11d48" },
   { id: 2, tipo: "bodas", nombre: "Cielo", imagen: "/fotos_boda/foto2.jpg", acento: "#60a5fa" },
   { id: 3, tipo: "bodas", nombre: "Olivar", imagen: "https://images.unsplash.com/photo-1596431940984-7eaf9bd80de5?auto=format&fit=crop&w=1200&q=90", acento: "#4b5548" },
@@ -56,7 +72,8 @@ export const DISENOS: Diseno[] = [
   { id: 8, tipo: "cumples", nombre: "Ámbar", imagen: "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?auto=format&fit=crop&w=1200&q=90", acento: "#ea580c" },
 ];
 
-export const enlaceDemo = (d: Diseno) => `/tuinvitaciondigital/demo/${d.id}?t=${d.tipo}`;
+export const enlaceDemo = (d: Diseno) =>
+  d.enlace ?? `/tuinvitaciondigital/demo/${d.id}?t=${d.tipo}`;
 
 /* ── Qué incluye ───────────────────────────────────────────── */
 
