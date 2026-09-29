@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Flores from "./Flores";
 import Ornamento from "./Ornamento";
 import Fondo from "./Fondo";
@@ -8,6 +8,7 @@ import TituloSeccion from "./TituloSeccion";
 import { usarEnVista } from "./usarEnVista";
 
 import { COMIDAS } from "@/lib/rsvp-comun";
+import type { Personal } from "./personal";
 
 /**
  * Círculo dibujado para elegir. Los radios y checkbox nativos traen el look
@@ -68,27 +69,45 @@ export default function SeccionRsvp({
   cierre,
   invitado,
   flores,
+  personal,
 }: {
   slug: string;
   sello?: string;
   cierre?: string;
   invitado?: string;
   flores?: string;
+  /** Link personal: ya se sabe quién es, sólo se pregunta si vienen y qué comen. */
+  personal?: Personal;
 }) {
   const [seccion, visible] = usarEnVista<HTMLElement>();
   const formRef = useRef<HTMLDivElement>(null);
 
+  const previa = personal?.respuesta ?? null;
   const [abierto, setAbierto] = useState(false);
-  const [enviado, setEnviado] = useState(false);
+  // Si la familia ya había respondido, se le muestra su respuesta, no el sello.
+  const [enviado, setEnviado] = useState(Boolean(previa));
+  const [cerrado, setCerrado] = useState(false);
 
-  const [nombre, setNombre] = useState(invitado ?? "");
-  const [asiste, setAsiste] = useState<boolean | null>(null);
-  const [acompanantes, setAcompanantes] = useState(1);
-  const [comidas, setComidas] = useState<string[]>([]);
+  const [nombre, setNombre] = useState(personal?.nombre ?? invitado ?? "");
+  const [asiste, setAsiste] = useState<boolean | null>(previa ? previa.asiste : null);
+  const [acompanantes, setAcompanantes] = useState(previa?.asiste ? previa.personas : (personal?.cupo ?? 1));
+  const [comidas, setComidas] = useState<string[]>(previa?.comidas ?? []);
   const [cancion, setCancion] = useState("");
   const [falta, setFalta] = useState(false);
   const [enviando, setEnviando] = useState(false);
   const [errorEnvio, setErrorEnvio] = useState("");
+
+  // La invitación general es estática: si el evento es cerrado, se entera
+  // acá, antes de que alguien llene el formulario para nada.
+  useEffect(() => {
+    if (personal) return;
+    fetch(`/api/rsvp/cerrado?slug=${encodeURIComponent(slug)}`)
+      .then((r) => (r.ok ? r.json() : { cerrado: false }))
+      .then((d: { cerrado?: boolean }) => setCerrado(Boolean(d.cerrado)))
+      .catch(() => {});
+  }, [personal, slug]);
+
+  const cupo = personal?.cupo ?? 12;
 
   const abrir = () => {
     setAbierto(true);
@@ -113,7 +132,15 @@ export default function SeccionRsvp({
       const r = await fetch("/api/rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug, nombre, asiste, acompanantes, comidas, cancion }),
+        body: JSON.stringify({
+          slug,
+          nombre,
+          asiste,
+          acompanantes: Math.min(cupo, Math.max(1, acompanantes || 1)),
+          comidas,
+          cancion,
+          familia: personal?.token ?? "",
+        }),
       });
 
       // Sólo se le dice "listo" al invitado si de verdad quedó guardado: dar
@@ -156,11 +183,31 @@ export default function SeccionRsvp({
             </p>
             <Ornamento className="mt-5" />
             <p className="mt-6 max-w-[26ch] text-[1.0625rem] leading-relaxed font-light text-[var(--tinta-tenue)]">
-              {asiste
-                ? `Ya te anotamos${acompanantes > 1 ? ` y a ${acompanantes - 1} más` : ""}. Falta poco.`
-                : "Te vamos a extrañar. Gracias por tomarte el momento de contestar."}
+              {personal
+                ? asiste
+                  ? `Anotamos ${acompanantes === 1 ? "1 persona" : `${acompanantes} personas`} por ${personal.nombre}. Falta poco.`
+                  : "Los vamos a extrañar. Gracias por avisar."
+                : asiste
+                  ? `Ya te anotamos${acompanantes > 1 ? ` y a ${acompanantes - 1} más` : ""}. Falta poco.`
+                  : "Te vamos a extrañar. Gracias por tomarte el momento de contestar."}
             </p>
+            {personal && (
+              <button
+                type="button"
+                onClick={() => {
+                  setEnviado(false);
+                  abrir();
+                }}
+                className="inv-versalita mt-8 text-[0.58rem] underline decoration-[var(--cobre)]/40 underline-offset-4"
+              >
+                Cambiar la respuesta
+              </button>
+            )}
           </div>
+        ) : cerrado ? (
+          <p className="inv-entra mt-[clamp(2.5rem,9vw,4rem)] max-w-[26ch] text-[1.0625rem] leading-relaxed font-light text-[var(--tinta-tenue)]">
+            Esta invitación es personal. Confirmá desde el link que te mandaron los novios.
+          </p>
         ) : (
           <>
             {cierre && (
@@ -220,19 +267,25 @@ export default function SeccionRsvp({
                 ref={formRef}
                 className="inv-entra mt-[clamp(2.5rem,9vw,4rem)] w-full max-w-[20rem] text-left"
               >
-                <label className="block">
-                  <span className="inv-versalita text-[0.58rem]">Tu nombre</span>
-                  <input
-                    className="inv-campo mt-1"
-                    value={nombre}
-                    onChange={(e) => setNombre(e.target.value)}
-                    placeholder="Nombre y apellido"
-                    autoComplete="name"
-                  />
-                </label>
+                {personal ? (
+                  <p className="text-center text-[1.0625rem] font-light text-[var(--tinta-tenue)]">
+                    Confirman por <span className="text-[var(--tinta)]">{personal.nombre}</span>
+                  </p>
+                ) : (
+                  <label className="block">
+                    <span className="inv-versalita text-[0.58rem]">Tu nombre</span>
+                    <input
+                      className="inv-campo mt-1"
+                      value={nombre}
+                      onChange={(e) => setNombre(e.target.value)}
+                      placeholder="Nombre y apellido"
+                      autoComplete="name"
+                    />
+                  </label>
+                )}
 
                 <fieldset className="mt-9">
-                  <legend className="inv-versalita text-[0.58rem]">¿Vas a venir?</legend>
+                  <legend className="inv-versalita text-[0.58rem]">{personal ? "¿Vienen?" : "¿Vas a venir?"}</legend>
                   <div className="mt-2">
                     <Opcion activa={asiste === true} onClick={() => setAsiste(true)}>
                       Ahí voy a estar
@@ -246,18 +299,22 @@ export default function SeccionRsvp({
                 {/* Lo que sigue sólo tiene sentido si viene. */}
                 {asiste === true && (
                   <div className="inv-entra">
+                    {(!personal || cupo > 1) && (
                     <label className="mt-9 block">
-                      <span className="inv-versalita text-[0.58rem]">Cuántos son</span>
+                      <span className="inv-versalita text-[0.58rem]">
+                        {personal && cupo > 1 ? `Cuántos van, de ${cupo}` : "Cuántos son"}
+                      </span>
                       <input
                         className="inv-campo mt-1"
                         type="number"
                         inputMode="numeric"
                         min={1}
-                        max={12}
+                        max={cupo}
                         value={acompanantes}
                         onChange={(e) => setAcompanantes(Number(e.target.value))}
                       />
                     </label>
+                    )}
 
                     <fieldset className="mt-9">
                       <legend className="inv-versalita text-[0.58rem]">
@@ -277,6 +334,7 @@ export default function SeccionRsvp({
                       </div>
                     </fieldset>
 
+                    {!personal && (
                     <label className="mt-9 block">
                       <span className="inv-versalita text-[0.58rem]">
                         Una canción que no puede faltar
@@ -288,6 +346,7 @@ export default function SeccionRsvp({
                         placeholder="Tema y artista"
                       />
                     </label>
+                    )}
                   </div>
                 )}
 

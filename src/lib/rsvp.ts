@@ -56,6 +56,8 @@ export function validar(
       comidas,
       cancion: texto(c.cancion, 120),
       enviada: new Date().toISOString(),
+      // Se valida contra el panel en la ruta: acá sólo se limpia.
+      familia: texto(c.familia, 48).toLowerCase().replace(/[^a-z0-9-]/g, ""),
     },
   };
 }

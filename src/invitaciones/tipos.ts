@@ -74,6 +74,12 @@ export type Diseno = {
 export type Invitacion = {
   slug: string;
   origen: "demo" | "cliente";
+  /**
+   * El plan contratado. Define qué ve el organizador en su panel
+   * (/tuinvitaciondigital/panel/<slug>): Esencial y Completa, la lista de
+   * invitados; Completa +, además el salón, las mesas y el estilo.
+   */
+  plan?: "esencial" | "completa" | "completa-plus";
 
   /** Como lo quieren ver escrito. Ej: "Marti & Tomi". */
   nombres: string;

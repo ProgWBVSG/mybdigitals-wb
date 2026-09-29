@@ -57,6 +57,8 @@ function asegurarTabla() {
         cancion       text        NOT NULL DEFAULT '',
         enviada       timestamptz NOT NULL DEFAULT now()
       )`;
+    // Agregada con los links personales: las tablas viejas la suman solas.
+    await q`ALTER TABLE confirmaciones ADD COLUMN IF NOT EXISTS familia text NOT NULL DEFAULT ''`;
     await q`
       CREATE INDEX IF NOT EXISTS confirmaciones_slug_idx
       ON confirmaciones (slug, enviada DESC)`;
@@ -103,9 +105,9 @@ export async function guardar(slug: string, datos: Confirmacion) {
   if (hayPostgres()) {
     await asegurarTabla();
     await sql()`
-      INSERT INTO confirmaciones (slug, nombre, asiste, acompanantes, comidas, cancion, enviada)
+      INSERT INTO confirmaciones (slug, nombre, asiste, acompanantes, comidas, cancion, enviada, familia)
       VALUES (${slug}, ${datos.nombre}, ${datos.asiste}, ${datos.acompanantes},
-              ${datos.comidas}, ${datos.cancion}, ${datos.enviada})`;
+              ${datos.comidas}, ${datos.cancion}, ${datos.enviada}, ${datos.familia ?? ""})`;
     return;
   }
 
@@ -121,7 +123,7 @@ export async function listar(slug: string): Promise<Confirmacion[]> {
   if (hayPostgres()) {
     await asegurarTabla();
     const filas = await sql()`
-      SELECT nombre, asiste, acompanantes, comidas, cancion, enviada
+      SELECT nombre, asiste, acompanantes, comidas, cancion, enviada, familia
       FROM confirmaciones
       WHERE slug = ${slug}
       ORDER BY enviada DESC
@@ -134,6 +136,7 @@ export async function listar(slug: string): Promise<Confirmacion[]> {
       comidas: Array.isArray(f.comidas) ? f.comidas.map(String) : [],
       cancion: String(f.cancion ?? ""),
       enviada: new Date(f.enviada as string).toISOString(),
+      familia: String(f.familia ?? ""),
     }));
   }
 

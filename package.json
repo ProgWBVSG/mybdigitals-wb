@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "probar-base": "node --env-file-if-exists=.env.local scripts/probar-base.mjs"
+    "probar-base": "node --env-file-if-exists=.env.local scripts/probar-base.mjs",
+    "probar-agente": "node scripts/probar-agente.mjs",
+    "probar-panel": "node scripts/probar-panel.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

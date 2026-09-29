@@ -127,7 +127,7 @@ export const PLANES: Plan[] = [
   {
     nombre: "Esencial",
     precio: { ARS: 44999, USD: 35 },
-    items: ["Diseño personalizado", "Cuenta regresiva y mapa", "Datos del regalo", "Confirmación por WhatsApp"],
+    items: ["Diseño personalizado", "Cuenta regresiva y mapa", "Datos del regalo", "Confirmación por WhatsApp", "Lista de invitados con Excel"],
     destacado: false,
   },
   {
@@ -139,7 +139,7 @@ export const PLANES: Plan[] = [
   {
     nombre: "Completa +",
     precio: { ARS: 94999, USD: 75 },
-    items: ["Todo lo de Completa", "Un link por invitado", "Álbum con QR para las mesas", "Trivia para los invitados", "Exportación a Excel"],
+    items: ["Todo lo de Completa", "Plano del salón con tus medidas", "Mesas y familias, ubicadas solas", "Panel con tus colores", "Un link por invitado", "Álbum con QR para las mesas", "Trivia para los invitados"],
     destacado: false,
   },
 ];

@@ -21,4 +21,6 @@ export type Confirmacion = {
   cancion: string;
   /** ISO. Sirve para ordenar y para saber si alguien cambió de idea. */
   enviada: string;
+  /** Token del link personal con el que confirmó, o "" si fue el general. */
+  familia?: string;
 };

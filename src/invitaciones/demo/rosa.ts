@@ -9,6 +9,8 @@ import type { Invitacion } from "../tipos";
 export const rosa: Invitacion = {
   slug: "rosa",
   origen: "demo",
+  // La demo muestra el panel entero: es el que se vende.
+  plan: "completa-plus",
 
   nombres: "Alan & Sofía",
   volanta: "Nos casamos",
