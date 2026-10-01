@@ -53,7 +53,14 @@ export const DISENOS: Diseno[] = [
     enlace: "/tuinvitaciondigital/i/rosa",
   },
 
-  { id: 1, tipo: "bodas", nombre: "Camelia", imagen: "/fotos_boda/foto1.jpg", acento: "#e11d48" },
+  {
+    id: 1,
+    tipo: "bodas",
+    nombre: "Fotomatón",
+    imagen: "/invitaciones/clientes/luis-y-julieta/miniatura.webp",
+    acento: "#7a0f18",
+    enlace: "/tuinvitaciondigital/i/luis-y-julieta",
+  },
   { id: 2, tipo: "bodas", nombre: "Cielo", imagen: "/fotos_boda/foto2.jpg", acento: "#60a5fa" },
   { id: 3, tipo: "bodas", nombre: "Olivar", imagen: "https://images.unsplash.com/photo-1596431940984-7eaf9bd80de5?auto=format&fit=crop&w=1200&q=90", acento: "#4b5548" },
   { id: 4, tipo: "bodas", nombre: "Bruma", imagen: "/fotos_boda/foto3.jpg", acento: "#4b5563" },
