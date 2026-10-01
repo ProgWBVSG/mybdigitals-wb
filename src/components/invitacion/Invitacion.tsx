@@ -1,6 +1,7 @@
 import type { Invitacion as Datos } from "@/invitaciones/tipos";
 import Carta from "./Carta";
 import InvitacionFotomaton from "./fotomaton/InvitacionFotomaton";
+import InvitacionGarabato from "./garabato/InvitacionGarabato";
 import Hero from "./Hero";
 import type { Personal } from "./personal";
 import SeccionCierre from "./SeccionCierre";
@@ -20,6 +21,9 @@ import SeccionVestimenta from "./SeccionVestimenta";
 export default function Invitacion({ invitacion, personal }: { invitacion: Datos; personal?: Personal }) {
   if (invitacion.estilo === "fotomaton") {
     return <InvitacionFotomaton invitacion={invitacion} personal={personal} />;
+  }
+  if (invitacion.estilo === "garabato") {
+    return <InvitacionGarabato invitacion={invitacion} personal={personal} />;
   }
 
   return (

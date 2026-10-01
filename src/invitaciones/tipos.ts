@@ -161,8 +161,24 @@ export type InvitacionFotomaton = InvitacionBase & {
   fotomaton: Fotomaton;
 };
 
-export type Invitacion = InvitacionRosa | InvitacionFotomaton;
+/**
+ * Garabato: dibujado a mano, una sola tinta roja sobre papel crudo. La pareja
+ * cambia de pose en cada sección. Sin fotos ni assets: todo es SVG.
+ */
+export type InvitacionGarabato = InvitacionBase & {
+  estilo: "garabato";
+  garabato: {
+    /** La imagen que se ve al compartir el link por WhatsApp. */
+    compartir: string;
+  };
+};
+
+export type Invitacion = InvitacionRosa | InvitacionFotomaton | InvitacionGarabato;
 
 /** La imagen de la previsualización en WhatsApp, sea cual sea el estilo. */
 export const imagenCompartir = (inv: Invitacion) =>
-  inv.estilo === "fotomaton" ? inv.fotomaton.compartir : inv.carta.imagen;
+  inv.estilo === "fotomaton"
+    ? inv.fotomaton.compartir
+    : inv.estilo === "garabato"
+      ? inv.garabato.compartir
+      : inv.carta.imagen;

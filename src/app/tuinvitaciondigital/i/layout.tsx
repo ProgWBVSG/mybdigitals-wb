@@ -1,7 +1,8 @@
-import { Bodoni_Moda, Cormorant_Garamond, DM_Mono, Pinyon_Script } from "next/font/google";
+import { Bodoni_Moda, Cormorant_Garamond, DM_Mono, La_Belle_Aurore, Pinyon_Script, Shadows_Into_Light_Two } from "next/font/google";
 import "./invitacion.css";
 import "./fotomaton.css";
 import "./funcion.css";
+import "./garabato.css";
 
 /* Dos familias y ninguna más.
    Pinyon es una spenceriana de verdad: Dancing Script y Great Vibes son las
@@ -42,6 +43,23 @@ const mono = DM_Mono({
   preload: false,
 });
 
+/* Las del estilo garabato: mayúsculas de marcador y birome. Sin precarga. */
+const mano = Shadows_Into_Light_Two({
+  variable: "--font-mano",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  preload: false,
+});
+
+const firma = La_Belle_Aurore({
+  variable: "--font-firma",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  preload: false,
+});
+
 export default function InvitacionLayout({ children }: { children: React.ReactNode }) {
-  return <div className={`inv ${pinyon.variable} ${cormorant.variable} ${bodoni.variable} ${mono.variable}`}>{children}</div>;
+  return <div className={`inv ${pinyon.variable} ${cormorant.variable} ${bodoni.variable} ${mono.variable} ${mano.variable} ${firma.variable}`}>{children}</div>;
 }
