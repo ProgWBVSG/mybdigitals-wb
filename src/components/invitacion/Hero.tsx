@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { Invitacion } from "@/invitaciones/tipos";
+import type { InvitacionRosa as Invitacion } from "@/invitaciones/tipos";
 
 /**
  * La portada: la ilustración de los cisnes con los nombres escritos encima.

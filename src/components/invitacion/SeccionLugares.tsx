@@ -45,7 +45,7 @@ export default function SeccionLugares({
         <ul className="mt-[clamp(2.5rem,9vw,4rem)] flex w-full flex-col items-center">
           {lugares.map((l, i) => (
             <li
-              key={l.titulo}
+              key={`${l.tipo}-${l.titulo}`} /* ceremonia y fiesta pueden ser en el mismo lugar */
               className="inv-sube flex w-full flex-col items-center"
               data-visible={visible}
               style={{ "--d": `${180 + i * 200}ms` } as React.CSSProperties}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Invitacion from "@/components/invitacion/Invitacion";
+import { imagenCompartir } from "@/invitaciones/tipos";
 import { buscarInvitacion, slugsDeInvitaciones } from "@/invitaciones";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${inv.nombres} · ${inv.fecha}`,
       description: inv.volanta,
-      images: [inv.carta.imagen],
+      images: [imagenCompartir(inv)],
     },
   };
 }

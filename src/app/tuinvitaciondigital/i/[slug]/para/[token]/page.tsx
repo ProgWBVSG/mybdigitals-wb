@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Invitacion from "@/components/invitacion/Invitacion";
 import type { Personal } from "@/components/invitacion/personal";
+import { imagenCompartir } from "@/invitaciones/tipos";
 import { buscarInvitacion } from "@/invitaciones";
 import { leerPanel } from "@/lib/panel-almacen";
 import { listar } from "@/lib/rsvp";
@@ -42,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: `${personal.saludo}. ${inv.nombres}, ${inv.fecha}.`,
     // Un link personal no se indexa: tiene el nombre de una familia real.
     robots: { index: false, follow: false },
-    openGraph: { title: `${inv.nombres} · ${inv.fecha}`, description: personal.saludo, images: [inv.carta.imagen] },
+    openGraph: { title: `${inv.nombres} · ${inv.fecha}`, description: personal.saludo, images: [imagenCompartir(inv)] },
   };
 }
 

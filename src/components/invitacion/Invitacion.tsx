@@ -1,5 +1,6 @@
 import type { Invitacion as Datos } from "@/invitaciones/tipos";
 import Carta from "./Carta";
+import InvitacionFotomaton from "./fotomaton/InvitacionFotomaton";
 import Hero from "./Hero";
 import type { Personal } from "./personal";
 import SeccionCierre from "./SeccionCierre";
@@ -17,6 +18,10 @@ import SeccionVestimenta from "./SeccionVestimenta";
  * debajo de la portada y un formulario que ya sabe quién es.
  */
 export default function Invitacion({ invitacion, personal }: { invitacion: Datos; personal?: Personal }) {
+  if (invitacion.estilo === "fotomaton") {
+    return <InvitacionFotomaton invitacion={invitacion} personal={personal} />;
+  }
+
   return (
     <Carta datos={invitacion.carta}>
       <main className="inv-columna inv-grano">

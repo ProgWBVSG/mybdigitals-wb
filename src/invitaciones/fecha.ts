@@ -43,3 +43,11 @@ export function calcularFaltante(objetivo: Date | null): Faltante | null {
     s: Math.floor((resto % 60_000) / 1000),
   };
 }
+
+/** "15 de Noviembre 2026" → "15.11.2026", como lo escribe una cabina de fotos. */
+export function fechaConPuntos(texto: string) {
+  const f = parsearFecha(texto);
+  if (!f) return texto;
+  const dos = (n: number) => String(n).padStart(2, "0");
+  return `${dos(f.getDate())}.${dos(f.getMonth() + 1)}.${f.getFullYear()}`;
+}
