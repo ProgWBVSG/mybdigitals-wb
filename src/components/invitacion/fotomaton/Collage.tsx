@@ -126,14 +126,12 @@ export default function Collage({
   tira,
   fecha,
   fechaPuntos,
-  lugarCorto,
   iniciales,
 }: {
   nombres: string;
   tira: string[];
   fecha: string;
   fechaPuntos: string;
-  lugarCorto: string;
   iniciales: string;
 }) {
   const { abierta, sonando, alternarMusica } = usarEscena();
@@ -186,10 +184,11 @@ export default function Collage({
 
         <div className="fm-pieza fm-pieza--corazon" style={pieza(680)}>
           <Corazon />
-          <p className="fm-pieza__corazon-texto">
-            {fechaPuntos}
-            <br />
-            {lugarCorto}
+          {/* Sólo la fecha. Partida en dos para que pueda ser grande sin
+              salirse del corazón: día y mes arriba, el año más chico. */}
+          <p className="fm-pieza__corazon-texto" aria-label={fechaPuntos}>
+            <span className="fm-corazon__dia">{fechaPuntos.split(".").slice(0, 2).join(".")}</span>
+            <span className="fm-corazon__anio">{fechaPuntos.split(".")[2]}</span>
           </p>
         </div>
 

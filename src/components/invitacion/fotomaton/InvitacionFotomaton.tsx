@@ -27,7 +27,6 @@ export default function InvitacionFotomaton({ invitacion, personal }: { invitaci
           tira={fm.tira}
           fecha={invitacion.fecha}
           fechaPuntos={fechaPuntos}
-          lugarCorto={fm.lugarCorto}
           iniciales={fm.iniciales}
         />
 

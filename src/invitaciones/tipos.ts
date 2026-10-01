@@ -152,8 +152,6 @@ export type Fotomaton = {
   polaroid?: string;
   /** Las iniciales que van en la etiqueta del disco. Ej: "J & L". */
   iniciales: string;
-  /** Lo que va en el corazón debajo de la fecha. Ej: "Córdoba". */
-  lugarCorto: string;
   /** La imagen que se ve al compartir el link por WhatsApp. */
   compartir: string;
 };

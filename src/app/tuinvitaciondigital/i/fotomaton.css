@@ -257,16 +257,33 @@
 
 .fm-pieza__corazon-texto {
   position: absolute;
-  inset: 26% 10% 30%;
-  display: grid;
-  place-items: center;
+  /* La zona ancha del corazón: arriba de la punta y debajo de los lóbulos. */
+  inset: 24% 14% 32%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-family: var(--serif);
-  font-size: max(0.46rem, 3.1cqw);
-  letter-spacing: 0.22em;
-  line-height: 1.7;
-  text-transform: uppercase;
   color: var(--crema);
+  text-shadow: 0 1px 2px rgba(40, 2, 6, 0.45);
   transform: rotate(-8deg);
+}
+
+.fm-corazon__dia {
+  font-size: 8.8cqw;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.fm-corazon__anio {
+  margin-top: 0.35em;
+  font-size: 4.2cqw;
+  letter-spacing: 0.32em;
+  line-height: 1;
+  /* El tracking agrega aire a la derecha de la última cifra: se compensa
+     para que el año quede centrado bajo el día. */
+  margin-right: -0.32em;
 }
 
 /* ── El disco ── */
