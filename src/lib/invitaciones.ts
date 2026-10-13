@@ -38,12 +38,14 @@ export type Diseno = {
 };
 
 /**
- * El `id` y el `tipo` tienen que coincidir con las claves de `demoDataBase`
- * en /tuinvitaciondigital/demo/[id], que es la demo que abre cada tarjeta.
+ * Sólo los modelos que mostramos. Los diseños del motor viejo (Olivar, Bruma,
+ * Ocaso, Granate, Lavanda, Lino y los de cumpleaños) se sacaron del catálogo a
+ * pedido: la ruta /demo/[id] sigue existiendo pero ya nadie llega a ella desde
+ * la página. Un tipo sin modelos muestra "consultá tu diseño" por WhatsApp.
  */
 export const DISENOS: Diseno[] = [
   // Rosa es el modelo nuevo y va primero: es el que muestra lo que sabemos
-  // hacer hoy. Los de abajo son del motor viejo.
+  // hacer hoy.
   {
     id: 0,
     tipo: "bodas",
@@ -69,21 +71,6 @@ export const DISENOS: Diseno[] = [
     acento: "#c41a24",
     enlace: "/tuinvitaciondigital/i/garabato",
   },
-  { id: 3, tipo: "bodas", nombre: "Olivar", imagen: "https://images.unsplash.com/photo-1596431940984-7eaf9bd80de5?auto=format&fit=crop&w=1200&q=90", acento: "#4b5548" },
-  { id: 4, tipo: "bodas", nombre: "Bruma", imagen: "/fotos_boda/foto3.jpg", acento: "#4b5563" },
-  { id: 5, tipo: "bodas", nombre: "Ocaso", imagen: "/fotos_boda/foto4.jpg", acento: "#f0a58f" },
-  { id: 6, tipo: "bodas", nombre: "Granate", imagen: "https://images.unsplash.com/photo-1579549321487-3cb83e5a5960?auto=format&fit=crop&w=1200&q=90", acento: "#611a28" },
-  { id: 7, tipo: "bodas", nombre: "Lavanda", imagen: "https://images.unsplash.com/photo-1543362143-6c84b1ebac1d?auto=format&fit=crop&w=1200&q=90", acento: "#a78bfa" },
-  { id: 8, tipo: "bodas", nombre: "Lino", imagen: "/fotos_boda/foto5.jpg", acento: "#64748b" },
-
-  { id: 1, tipo: "cumples", nombre: "Violeta", imagen: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1200&q=90", acento: "#a855f7" },
-  { id: 2, tipo: "cumples", nombre: "Durazno", imagen: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1200&q=90", acento: "#eaac8b" },
-  { id: 3, tipo: "cumples", nombre: "Dorado", imagen: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=90", acento: "#eab308" },
-  { id: 4, tipo: "cumples", nombre: "Carmín", imagen: "https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?auto=format&fit=crop&w=1200&q=90", acento: "#f43f5e" },
-  { id: 5, tipo: "cumples", nombre: "Índigo", imagen: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=90", acento: "#3b82f6" },
-  { id: 6, tipo: "cumples", nombre: "Nocturno", imagen: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=90", acento: "#818cf8" },
-  { id: 7, tipo: "cumples", nombre: "Fucsia", imagen: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=90", acento: "#db2777" },
-  { id: 8, tipo: "cumples", nombre: "Ámbar", imagen: "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?auto=format&fit=crop&w=1200&q=90", acento: "#ea580c" },
 ];
 
 export const enlaceDemo = (d: Diseno) =>

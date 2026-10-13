@@ -202,6 +202,8 @@
   border: 1px dashed var(--verde-linea); border-radius: 16px; background: var(--verde-vel);
 }
 
+.tid-modelos + .tid-vacio { margin-top: clamp(1.75rem, 4vw, 2.5rem); padding-block: clamp(1.75rem, 4vw, 2.5rem); }
+
 /* ── Qué incluye ───────────────────────────────────────────── */
 
 .tid-incluye { display: grid; gap: 0.4rem 2rem; grid-template-columns: 1fr; }

@@ -199,7 +199,7 @@ export default function Invitaciones() {
                   </p>
                 </div>
 
-                {modelos.length > 0 ? (
+                {modelos.length > 0 && (
                   <ul className="tid-modelos">
                     {modelos.map((d) => (
                       <li key={`${d.tipo}-${d.id}`}>
@@ -219,24 +219,27 @@ export default function Invitaciones() {
                       </li>
                     ))}
                   </ul>
-                ) : (
-                  <div className="tid-vacio">
-                    <p className="tid-plomo">
-                      Todavía no publicamos modelos para eventos profesionales. Contanos qué
-                      necesitás y te armamos una propuesta a medida.
-                    </p>
-                    <a
-                      href={whatsappPara(
-                        "Hola! Quiero una invitación digital para un evento profesional."
-                      )}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="tid-boton tid-boton--lleno"
-                    >
-                      Pedir una propuesta
-                    </a>
-                  </div>
                 )}
+
+                {/* Con o sin modelos publicados, el diseño a medida se consulta:
+                    para cumpleaños y eventos profesionales es la única vía. */}
+                <div className="tid-vacio">
+                  <p className="tid-plomo">
+                    {modelos.length > 0
+                      ? "¿Querés otro estilo? Consultanos y lo diseñamos para vos."
+                      : `Armamos cada diseño para ${categoria.titulo.toLowerCase()} a medida. Contanos qué imaginás y te lo mostramos por WhatsApp.`}
+                  </p>
+                  <a
+                    href={whatsappPara(
+                      `Hola! Quiero consultar un diseño de invitación digital para ${categoria.titulo.toLowerCase()}.`
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="tid-boton tid-boton--lleno"
+                  >
+                    Consultar diseño
+                  </a>
+                </div>
               </div>
             </section>
 
