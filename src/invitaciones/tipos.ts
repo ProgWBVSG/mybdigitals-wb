@@ -173,7 +173,30 @@ export type InvitacionGarabato = InvitacionBase & {
   };
 };
 
-export type Invitacion = InvitacionRosa | InvitacionFotomaton | InvitacionGarabato;
+/**
+ * Cinta: flyer de fiesta en dos tintas (rojo y naranja) sobre crema. Una cinta
+ * roja se traza con el scroll y para confirmar dos manos brindan. Sin fotos.
+ */
+export type InvitacionCinta = InvitacionBase & {
+  estilo: "cinta";
+  cinta: { compartir: string };
+};
+
+/**
+ * Mesa: un banquete visto desde arriba, a tinta negra. La mesa se alarga con
+ * el scroll y se van sentando invitados a los costados; toda la información
+ * va sobre el mantel. En la otra punta hay una silla vacía: la del invitado.
+ */
+export type InvitacionMesa = InvitacionBase & {
+  estilo: "mesa";
+  mesa: {
+    compartir: string;
+    /** Los pasos de la cena, como en una carta de restaurante. */
+    menu: { paso: string; plato: string }[];
+  };
+};
+
+export type Invitacion = InvitacionRosa | InvitacionFotomaton | InvitacionGarabato | InvitacionCinta | InvitacionMesa;
 
 /** La imagen de la previsualización en WhatsApp, sea cual sea el estilo. */
 export const imagenCompartir = (inv: Invitacion) =>
@@ -181,4 +204,8 @@ export const imagenCompartir = (inv: Invitacion) =>
     ? inv.fotomaton.compartir
     : inv.estilo === "garabato"
       ? inv.garabato.compartir
-      : inv.carta.imagen;
+      : inv.estilo === "cinta"
+        ? inv.cinta.compartir
+        : inv.estilo === "mesa"
+          ? inv.mesa.compartir
+          : inv.carta.imagen;

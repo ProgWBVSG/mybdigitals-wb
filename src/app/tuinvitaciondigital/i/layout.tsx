@@ -1,8 +1,10 @@
-import { Bodoni_Moda, Cormorant_Garamond, DM_Mono, La_Belle_Aurore, Pinyon_Script, Shadows_Into_Light_Two } from "next/font/google";
+import { Bodoni_Moda, Cormorant_Garamond, DM_Mono, Cedarville_Cursive, Fraunces, Instrument_Serif, Kaushan_Script, Newsreader, La_Belle_Aurore, Pinyon_Script, Shadows_Into_Light_Two } from "next/font/google";
 import "./invitacion.css";
 import "./fotomaton.css";
 import "./funcion.css";
 import "./garabato.css";
+import "./cinta.css";
+import "./mesa.css";
 
 /* Dos familias y ninguna más.
    Pinyon es una spenceriana de verdad: Dancing Script y Great Vibes son las
@@ -60,6 +62,15 @@ const firma = La_Belle_Aurore({
   preload: false,
 });
 
+/* Las del estilo cinta: pincel para los nombres, birome y un serif blando. */
+const pincel = Kaushan_Script({ variable: "--font-pincel", subsets: ["latin"], weight: "400", display: "swap", preload: false });
+const birome = Cedarville_Cursive({ variable: "--font-birome", subsets: ["latin"], weight: "400", display: "swap", preload: false });
+const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"], display: "swap", preload: false });
+
+/* Las del estilo mesa: un serif de revista para los títulos y uno de libro para leer. */
+const instrument = Instrument_Serif({ variable: "--font-instrument", subsets: ["latin"], weight: "400", style: ["normal", "italic"], display: "swap", preload: false });
+const newsreader = Newsreader({ variable: "--font-newsreader", subsets: ["latin"], style: ["normal", "italic"], display: "swap", preload: false });
+
 export default function InvitacionLayout({ children }: { children: React.ReactNode }) {
-  return <div className={`inv ${pinyon.variable} ${cormorant.variable} ${bodoni.variable} ${mono.variable} ${mano.variable} ${firma.variable}`}>{children}</div>;
+  return <div className={`inv ${pinyon.variable} ${cormorant.variable} ${bodoni.variable} ${mono.variable} ${mano.variable} ${firma.variable} ${pincel.variable} ${birome.variable} ${fraunces.variable} ${instrument.variable} ${newsreader.variable}`}>{children}</div>;
 }

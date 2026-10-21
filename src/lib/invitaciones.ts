@@ -71,6 +71,14 @@ export const DISENOS: Diseno[] = [
     acento: "#c41a24",
     enlace: "/tuinvitaciondigital/i/garabato",
   },
+  {
+    id: 3,
+    tipo: "bodas",
+    nombre: "Mesa",
+    imagen: "/invitaciones/mesa/miniatura.webp",
+    acento: "#1d1b18",
+    enlace: "/tuinvitaciondigital/i/joaquin-y-clara",
+  },
 ];
 
 export const enlaceDemo = (d: Diseno) =>
