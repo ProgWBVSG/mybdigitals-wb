@@ -2,6 +2,7 @@ import type { Invitacion } from "./tipos";
 import { luisYJulieta } from "./clientes/luis-y-julieta";
 import { cinta } from "./demo/cinta";
 import { mesa } from "./demo/mesa";
+import { ariel } from "./demo/ariel";
 import { garabato } from "./demo/garabato";
 import { rosa } from "./demo/rosa";
 
@@ -12,7 +13,7 @@ import { rosa } from "./demo/rosa";
  *
  * Al sumar una invitación: importarla arriba y agregarla a la lista.
  */
-const INVITACIONES: Invitacion[] = [rosa, luisYJulieta, garabato, cinta, mesa];
+const INVITACIONES: Invitacion[] = [rosa, luisYJulieta, garabato, cinta, mesa, ariel];
 
 export const buscarInvitacion = (slug: string) =>
   INVITACIONES.find((i) => i.slug === slug);

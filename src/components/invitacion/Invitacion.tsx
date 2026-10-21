@@ -3,6 +3,7 @@ import Carta from "./Carta";
 import InvitacionFotomaton from "./fotomaton/InvitacionFotomaton";
 import InvitacionCinta from "./cinta/InvitacionCinta";
 import InvitacionMesa from "./mesa/InvitacionMesa";
+import InvitacionCiudad from "./ciudad/InvitacionCiudad";
 import InvitacionGarabato from "./garabato/InvitacionGarabato";
 import Hero from "./Hero";
 import type { Personal } from "./personal";
@@ -23,6 +24,9 @@ import SeccionVestimenta from "./SeccionVestimenta";
 export default function Invitacion({ invitacion, personal }: { invitacion: Datos; personal?: Personal }) {
   if (invitacion.estilo === "fotomaton") {
     return <InvitacionFotomaton invitacion={invitacion} personal={personal} />;
+  }
+  if (invitacion.estilo === "ciudad") {
+    return <InvitacionCiudad invitacion={invitacion} personal={personal} />;
   }
   if (invitacion.estilo === "mesa") {
     return <InvitacionMesa invitacion={invitacion} personal={personal} />;

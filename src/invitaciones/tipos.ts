@@ -196,7 +196,32 @@ export type InvitacionMesa = InvitacionBase & {
   };
 };
 
-export type Invitacion = InvitacionRosa | InvitacionFotomaton | InvitacionGarabato | InvitacionCinta | InvitacionMesa;
+/**
+ * Ciudad: tarjeta blanca sobre lino, enmarcada por casitas de Jerusalén en dos
+ * azules que se construyen con el scroll. Pensada para bar y bat mitzvá.
+ * Al confirmar, la casa del invitado se suma a la ciudad.
+ */
+export type InvitacionCiudad = InvitacionBase & {
+  estilo: "ciudad";
+  ciudad: {
+    compartir: string;
+    /** "Bar Mitzvá" o "Bat Mitzvá". */
+    evento: string;
+    /** El nombre en hebreo, tal cual se escribe. */
+    hebreo: string;
+    /** "nuestro hijo" / "nuestra hija". */
+    vinculo: string;
+    padres: string;
+    agradecimiento: string;
+    /** Verificada en hebcal.com para la fecha y la ciudad del evento. */
+    parasha: { nombre: string; hebreo: string; fechaHebrea: string };
+    kidush: { hora: string; detalle: string };
+    /** Las 13 velas de la fiesta: para quién es cada una. */
+    velas: string[];
+  };
+};
+
+export type Invitacion = InvitacionRosa | InvitacionFotomaton | InvitacionGarabato | InvitacionCinta | InvitacionMesa | InvitacionCiudad;
 
 /** La imagen de la previsualización en WhatsApp, sea cual sea el estilo. */
 export const imagenCompartir = (inv: Invitacion) =>
@@ -208,4 +233,6 @@ export const imagenCompartir = (inv: Invitacion) =>
         ? inv.cinta.compartir
         : inv.estilo === "mesa"
           ? inv.mesa.compartir
-          : inv.carta.imagen;
+          : inv.estilo === "ciudad"
+            ? inv.ciudad.compartir
+            : inv.carta.imagen;
