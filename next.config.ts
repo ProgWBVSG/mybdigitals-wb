@@ -23,6 +23,15 @@ const nextConfig: NextConfig = {
       { source: '/tuinvitaciondigital/cumples', destination: '/tuinvitaciondigital', permanent: true },
     ];
   },
+  /* Páginas legales de Imanía (juego de MyB Digitals). Son HTML estáticos en
+     public/imania/: el texto legal vive ahi tal cual, y estas reglas sirven
+     las URLs sin .html que piden Google Play y la App Store. */
+  async rewrites() {
+    return [
+      { source: '/imania/privacidad', destination: '/imania/privacidad.html' },
+      { source: '/imania/terminos', destination: '/imania/terminos.html' },
+    ];
+  },
 };
 
 export default nextConfig;

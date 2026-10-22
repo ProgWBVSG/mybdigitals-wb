@@ -119,7 +119,13 @@ export default function Footer() {
 
         {/* Bottom row */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 text-xs text-gray-600">
-          <p>© {year} MYB Digitals. Todos los derechos reservados.</p>
+          <p>
+            © {year} MYB Digitals. Todos los derechos reservados.
+            {/* Páginas legales del juego Imanía: las exigen las tiendas de apps. */}
+            <a href="/imania/privacidad" className="ml-3 text-gray-700 hover:text-gray-400 transition-colors">
+              Imanía: Privacidad
+            </a>
+          </p>
           <p className="text-gray-700">
             Hecho con <span className="text-primary">♥</span> en Argentina 🇦🇷
           </p>
