@@ -119,6 +119,14 @@ export const DISENOS: Diseno[] = [
     acento: "#652c38",
     enlace: "/tuinvitaciondigital/i/sobremesa-nexo",
   },
+  {
+    id: 9,
+    tipo: "profesional",
+    nombre: "Órbita",
+    imagen: "/invitaciones/orbita/miniatura.webp",
+    acento: "#596144",
+    enlace: "/tuinvitaciondigital/i/orbita-nexo",
+  },
 ];
 
 export const enlaceDemo = (d: Diseno) =>
