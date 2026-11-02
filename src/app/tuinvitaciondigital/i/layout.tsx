@@ -1,4 +1,4 @@
-import { Alfa_Slab_One, Arvo, Bodoni_Moda, Frank_Ruhl_Libre, Cormorant_Garamond, DM_Mono, Cedarville_Cursive, Fraunces, Instrument_Serif, Kaushan_Script, Newsreader, La_Belle_Aurore, Pinyon_Script, Shadows_Into_Light_Two } from "next/font/google";
+import { Alfa_Slab_One, Arvo, Bodoni_Moda, DM_Sans, DM_Serif_Display, Mrs_Saint_Delafield, Frank_Ruhl_Libre, Cormorant_Garamond, DM_Mono, Cedarville_Cursive, Fraunces, Instrument_Serif, Kaushan_Script, Newsreader, La_Belle_Aurore, Pinyon_Script, Shadows_Into_Light_Two } from "next/font/google";
 import "./invitacion.css";
 import "./fotomaton.css";
 import "./funcion.css";
@@ -6,6 +6,10 @@ import "./garabato.css";
 import "./cinta.css";
 import "./mesa.css";
 import "./ciudad.css";
+import "./scrapbook.css";
+import "./ceramica.css";
+import "./horizonte.css";
+import "./sobremesa.css";
 
 /* Dos familias y ninguna más.
    Pinyon es una spenceriana de verdad: Dancing Script y Great Vibes son las
@@ -78,6 +82,11 @@ const arvo = Arvo({ variable: "--font-arvo", subsets: ["latin"], weight: ["400",
 const alfa = Alfa_Slab_One({ variable: "--font-alfa", subsets: ["latin"], weight: "400", display: "swap", preload: false });
 const frank = Frank_Ruhl_Libre({ variable: "--font-frank", subsets: ["hebrew"], weight: ["700"], display: "swap", preload: false });
 
+/* Las del estilo scrapbook (quince): firma manuscrita, serif de revista y sans para datos. */
+const delafield = Mrs_Saint_Delafield({ variable: "--font-delafield", subsets: ["latin"], weight: "400", display: "swap", preload: false });
+const dmSerif = DM_Serif_Display({ variable: "--font-dmserif", subsets: ["latin"], weight: "400", display: "swap", preload: false });
+const dmSans = DM_Sans({ variable: "--font-dmsans", subsets: ["latin"], display: "swap", preload: false });
+
 export default function InvitacionLayout({ children }: { children: React.ReactNode }) {
-  return <div className={`inv ${pinyon.variable} ${cormorant.variable} ${bodoni.variable} ${mono.variable} ${mano.variable} ${firma.variable} ${pincel.variable} ${birome.variable} ${fraunces.variable} ${instrument.variable} ${newsreader.variable} ${arvo.variable} ${alfa.variable} ${frank.variable}`}>{children}</div>;
+  return <div className={`inv ${pinyon.variable} ${cormorant.variable} ${bodoni.variable} ${mono.variable} ${mano.variable} ${firma.variable} ${pincel.variable} ${birome.variable} ${fraunces.variable} ${instrument.variable} ${newsreader.variable} ${arvo.variable} ${alfa.variable} ${frank.variable} ${delafield.variable} ${dmSerif.variable} ${dmSans.variable}`}>{children}</div>;
 }

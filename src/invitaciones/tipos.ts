@@ -221,7 +221,90 @@ export type InvitacionCiudad = InvitacionBase & {
   };
 };
 
-export type Invitacion = InvitacionRosa | InvitacionFotomaton | InvitacionGarabato | InvitacionCinta | InvitacionMesa | InvitacionCiudad;
+/**
+ * Scrapbook: collage de quince en rosa y plata sobre papel marfil. Bola de
+ * disco, globos foil, banderines y las fotos de la quinceañera recortadas.
+ * Las imágenes vienen generadas por capas (flujo GPT/Gemini), el texto es HTML.
+ */
+export type InvitacionScrapbook = InvitacionBase & {
+  estilo: "scrapbook";
+  scrapbook: {
+    compartir: string;
+    /** Foto de infancia, recortada y en blanco y negro: va en la portada. */
+    fotoInfancia: string;
+    /** Retrato actual, recortado: va en el cierre. */
+    fotoActual: string;
+    horarios: { hora: string; titulo: string; detalle: string }[];
+    comida: string;
+  };
+};
+
+/** Lo que tienen en común los Bar y Bat Mitzvá que vienen de maqueta (Cerámica, Horizonte). */
+export type DatosMitzva = {
+    compartir: string;
+    /** Ej: "Mi Bar Mitzvá". */
+    evento: string;
+    apellido?: string;
+    familia: string;
+    mensaje: string;
+    firma?: string;
+    ciudad: string;
+    notaCeremonia: string;
+    notaFiesta: string;
+    /** Ej: "01:30 hs · domingo · despedida". */
+    finFiesta: string;
+    comida: string;
+    regalos?: string;
+    /** Verificada en hebcal.com para la fecha y la ciudad. */
+    parasha?: { nombre: string; hebreo: string; fechaHebrea: string };
+};
+
+/**
+ * Cerámica: Bar Mitzvá en marfil y azul cobalto, con una guarda de cerámica
+ * impresa que se descubre al bajar. Diseño por capas (flujo GPT) pasado al motor.
+ */
+export type InvitacionCeramica = InvitacionBase & { estilo: "ceramica"; ceramica: DatosMitzva };
+
+/**
+ * Horizonte: Bar Mitzvá en azul noche y acuarela, con un panorama dibujado que
+ * se descubre y un sobre que se abre al entrar. Diseño por capas (flujo GPT).
+ */
+export type InvitacionHorizonte = InvitacionBase & { estilo: "horizonte"; horizonte: DatosMitzva };
+
+/**
+ * Sobremesa: cena ejecutiva en blanco cálido y borgoña, con una copa a gran
+ * escala y tipografía editorial. Diseño por capas (flujo GPT).
+ */
+export type InvitacionSobremesa = InvitacionBase & {
+  estilo: "sobremesa";
+  sobremesa: {
+    compartir: string;
+    /** Ej: "Executive Dinner". */
+    tipo: string;
+    anfitrion: string;
+    mensaje: string;
+    agenda: { hora: string; titulo: string; detalle: string }[];
+    menu: { nombre: string; plato: string }[];
+    bebidas: string;
+    /** Ej: "Salón privado · primer piso". */
+    salon: string;
+    /** Ej: "Invitación individual". */
+    cupo: string;
+    ciudad: string;
+  };
+};
+
+export type Invitacion =
+  | InvitacionRosa
+  | InvitacionFotomaton
+  | InvitacionGarabato
+  | InvitacionCinta
+  | InvitacionMesa
+  | InvitacionCiudad
+  | InvitacionScrapbook
+  | InvitacionCeramica
+  | InvitacionHorizonte
+  | InvitacionSobremesa;
 
 /** La imagen de la previsualización en WhatsApp, sea cual sea el estilo. */
 export const imagenCompartir = (inv: Invitacion) =>
@@ -235,4 +318,12 @@ export const imagenCompartir = (inv: Invitacion) =>
           ? inv.mesa.compartir
           : inv.estilo === "ciudad"
             ? inv.ciudad.compartir
-            : inv.carta.imagen;
+            : inv.estilo === "scrapbook"
+              ? inv.scrapbook.compartir
+              : inv.estilo === "ceramica"
+                ? inv.ceramica.compartir
+                : inv.estilo === "horizonte"
+                  ? inv.horizonte.compartir
+                  : inv.estilo === "sobremesa"
+                    ? inv.sobremesa.compartir
+                    : inv.carta.imagen;

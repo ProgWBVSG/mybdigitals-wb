@@ -18,7 +18,7 @@ export type Categoria = {
 
 export const CATEGORIAS: Categoria[] = [
   { id: "bodas", titulo: "Casamiento", gancho: "Para el día que se acuerdan toda la vida", glow: "green" },
-  { id: "cumples", titulo: "Cumpleaños", gancho: "Quince, cincuenta o los que sean", glow: "green" },
+  { id: "cumples", titulo: "Cumpleaños", gancho: "Quince, Bar Mitzvá o los que sean", glow: "green" },
   { id: "profesional", titulo: "Evento profesional", gancho: "Lanzamientos, cenas y conferencias", glow: "green" },
 ];
 
@@ -78,6 +78,46 @@ export const DISENOS: Diseno[] = [
     imagen: "/invitaciones/mesa/miniatura.webp",
     acento: "#1d1b18",
     enlace: "/tuinvitaciondigital/i/joaquin-y-clara",
+  },
+  {
+    id: 4,
+    tipo: "cumples",
+    nombre: "Disco Scrapbook",
+    imagen: "/invitaciones/scrapbook/miniatura.webp",
+    acento: "#bf527d",
+    enlace: "/tuinvitaciondigital/i/valentina-15",
+  },
+  {
+    id: 5,
+    tipo: "cumples",
+    nombre: "Ciudad",
+    imagen: "/invitaciones/ciudad/miniatura.webp",
+    acento: "#1b3a78",
+    enlace: "/tuinvitaciondigital/i/ariel-bar-mitzva",
+  },
+  {
+    id: 6,
+    tipo: "cumples",
+    nombre: "Cerámica",
+    imagen: "/invitaciones/ceramica/miniatura.webp",
+    acento: "#153f83",
+    enlace: "/tuinvitaciondigital/i/benjamin-bar-mitzva",
+  },
+  {
+    id: 7,
+    tipo: "cumples",
+    nombre: "Horizonte",
+    imagen: "/invitaciones/horizonte/miniatura.webp",
+    acento: "#192b49",
+    enlace: "/tuinvitaciondigital/i/tomer-bar-mitzva",
+  },
+  {
+    id: 8,
+    tipo: "profesional",
+    nombre: "Sobremesa",
+    imagen: "/invitaciones/sobremesa/miniatura.webp",
+    acento: "#652c38",
+    enlace: "/tuinvitaciondigital/i/sobremesa-nexo",
   },
 ];
 
