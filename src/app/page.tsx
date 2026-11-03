@@ -13,7 +13,7 @@ import ScrollJourney from "@/components/ScrollJourney";
 import Magnetic from "@/components/Magnetic";
 import SporeRiver from "@/components/SporeRiver";
 import BrandsCarousel from "@/components/BrandsCarousel";
-import { SITE_URL } from "@/lib/site";
+import { EMPRESA_ID, FUNDADORES_JSONLD, SITE_URL } from "@/lib/site";
 
 // Animations
 const fadeIn = {
@@ -56,7 +56,9 @@ export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    "@id": EMPRESA_ID,
     "name": "MYB Digitals",
+    "founder": FUNDADORES_JSONLD,
     "description": "Agencia líder en Córdoba de Desarrollo Web Premium y Automatización con Inteligencia Artificial.",
     "address": {
       "@type": "PostalAddress",

@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { 
+import { EMPRESA_ID, FUNDADORES_JSONLD, SITE_URL } from "@/lib/site";
+import {
   Building2, 
   Clock, 
   Target, 
@@ -41,7 +42,21 @@ const slideInLeft = {
 export default function Nosotros() {
   return (
     <main className="flex min-h-[100vh] flex-col overflow-hidden bg-background text-foreground bg-mesh">
-      
+      {/* Mismos datos que la home (mismo @id): Google une los dos nodos. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "@id": EMPRESA_ID,
+            name: "MYB Digitals",
+            url: SITE_URL,
+            founder: FUNDADORES_JSONLD,
+          }),
+        }}
+      />
+
       {/* ══════════════════════════════════════════════════════
           SECCIÓN 1 – HERO
       ══════════════════════════════════════════════════════ */}
@@ -190,7 +205,7 @@ export default function Nosotros() {
           >
             <Users className="w-12 h-12 text-primary mx-auto mb-6" />
             <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
-              Somos <span className="text-primary italic">Benjamín y Matías.</span>
+              Somos <span className="text-primary italic">Benjamín Vidal y Matías König</span>, los fundadores.
             </h2>
             <p className="text-xl text-gray-300 leading-relaxed text-balance">
               Vimos a demasiadas empresas gastar fortunas en soluciones que no servían para nada. Por eso creamos MYB Digitals: queríamos ser una agencia transparente, rápida y enfocada únicamente en hacer crecer tu negocio.
@@ -205,7 +220,7 @@ export default function Nosotros() {
               className="bg-white/[0.02] border border-white/5 rounded-3xl p-8 hover:bg-white/[0.04] transition-colors"
             >
                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-transparent rounded-full mb-6 border border-primary/20 flex items-center justify-center text-2xl font-black text-primary">B</div>
-               <h3 className="text-2xl font-bold text-white mb-1">Benjamín</h3>
+               <h3 className="text-2xl font-bold text-white mb-1">Benjamín Vidal</h3>
                <p className="text-primary text-sm font-bold mb-4 tracking-wide uppercase">Estrategia & Consultoría</p>
                <p className="text-gray-400 text-sm leading-relaxed">
                  Apasionado por la optimización de procesos y el diagnóstico de negocios. Se asegura de que la solución técnica realmente resuelva el dolor financiero de la empresa antes de escribir una sola línea de código.
@@ -219,7 +234,7 @@ export default function Nosotros() {
               className="bg-white/[0.02] border border-white/5 rounded-3xl p-8 hover:bg-white/[0.04] transition-colors"
             >
                <div className="w-20 h-20 bg-gradient-to-br from-cyan-500/20 to-transparent rounded-full mb-6 border border-cyan-500/20 flex items-center justify-center text-2xl font-black text-cyan-400">M</div>
-               <h3 className="text-2xl font-bold text-white mb-1">Matías</h3>
+               <h3 className="text-2xl font-bold text-white mb-1">Matías König</h3>
                <p className="text-cyan-400 text-sm font-bold mb-4 tracking-wide uppercase">Ingeniería Web & IA</p>
                <p className="text-gray-400 text-sm leading-relaxed">
                  Diseñador de ecosistemas digitales y arquitecto de software. Su objetivo no es solo implementar tecnología, sino orquestar flujos de trabajo hiper-optimizados que operen como el motor silencioso de la marca.

@@ -127,7 +127,7 @@ export default function Footer() {
             </a>
           </p>
           <p className="text-gray-700">
-            Hecho con <span className="text-primary">♥</span> en Argentina 🇦🇷
+            Fundada por Benjamín Vidal y Matías König · Hecho con <span className="text-primary">♥</span> en Argentina 🇦🇷
           </p>
         </div>
 
