@@ -10,6 +10,8 @@ window.MARCA = {
   pinDemo: "1234",
   diasInactivo: 45,
   horasEntreSellosNfc: 12,
+  // Cuota mensual. Poner null si el negocio no la ofrece.
+  membresia: { nombre: "Club Hair", precio: 30000, detalle: "Cortes ilimitados de lunes a jueves" },
   // Ubicación del local para el aviso por cercanía. Es de ejemplo: cargar la dirección real.
   local: { lat: -31.4201, lng: -64.1888, radio: 150 },
   // Verde botella, crema y mostaza.

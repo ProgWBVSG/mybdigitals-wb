@@ -7,15 +7,15 @@
 <title>Mi tarjeta | {marca}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=Bebas+Neue&family=Oswald:wght@400;500;600&family=Yellowtail&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Bebas+Neue&family=Big+Shoulders+Display:wght@600;700;800;900&family=Yellowtail&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../app.css">
 </head>
 <body>
 <div class="notif" id="notif" role="status"><i id="notif-inicial"></i><div><b id="notif-titulo"></b><span id="notif-texto"></span></div></div>
 
 <main class="col">
-  <div class="logo" data-logo></div>
-  <p class="saludo" id="saludo"></p>
+  <div class="logo entra" data-logo></div>
+  <p class="saludo entra" style="--i:1" id="saludo"></p>
 
   <!-- Todavía no tiene tarjeta -->
   <section id="alta" hidden style="margin-top:28px">
@@ -36,22 +36,31 @@
 
   <!-- Tarjeta -->
   <section id="vista" hidden>
-    <div class="escena">
+    <div class="escena entra" style="--i:2">
       <div class="papel">
         <div class="huecos" id="huecos" role="img"></div>
       </div>
     </div>
 
-    <div class="estado" aria-live="polite">
+    <div class="estado entra" style="--i:3" aria-live="polite">
       <h1 id="estado-1"></h1>
       <p id="estado-2"></p>
     </div>
 
-    <button class="btn" id="ver-codigo" type="button">Mostrar mi código</button>
+    <button class="btn brilla entra" style="--i:4" id="ver-codigo" type="button">Mostrar mi código</button>
     <a class="btn linea" id="turno" target="_blank" rel="noopener" hidden style="margin-top:12px">Pedir turno</a>
 
-    <div class="hitos" id="hitos"></div>
-    <button class="btn linea cerca" id="cerca" type="button" aria-pressed="false">Avisarme cuando pase cerca</button>
+    <div class="hitos entra" style="--i:5" id="hitos"></div>
+    <section class="club foco entra" style="--i:6" id="club" aria-live="polite"></section>
+    <button class="btn linea cerca entra" style="--i:7" id="cerca" type="button" aria-pressed="false">Avisarme cuando pase cerca</button>
+
+    <section class="prueba" id="prueba" hidden>
+      <p class="rotulo">Para probar la demo</p>
+      <div class="pila">
+        <button class="btn linea chico" type="button" data-probar="nfc">Acercar el celular al NFC</button>
+        <button class="btn linea chico" type="button" data-probar="cerca">Pasar cerca del local</button>
+      </div>
+    </section>
   </section>
 </main>
 
@@ -66,6 +75,19 @@
   </div>
 </dialog>
 
+<dialog id="hoja-club" aria-labelledby="titulo-club">
+  <div class="hoja">
+    <h2 id="titulo-club"></h2>
+    <p class="club-precio" id="club-precio"></p>
+    <p id="club-detalle"></p>
+    <div class="pila" style="margin-top:18px">
+      <button class="btn" type="button" id="club-si">Sumarme</button>
+      <button class="btn linea" type="button" id="club-no">Ahora no</button>
+    </div>
+    <p class="nota" style="margin-top:12px;color:var(--tinta-suave)">En esta demo no se cobra nada.</p>
+  </div>
+</dialog>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script src="marca.js"></script>
 <script src="../datos.js"></script>
@@ -77,6 +99,30 @@
   let previos = -1;
 
   T.vestir();
+
+  // Cambia un texto con un fundido suave, sólo si de verdad cambió.
+  function poner(sel, valor, esHtml) {
+    const el = $(sel);
+    if (el.dataset.v === valor) return;
+    const primera = el.dataset.v === undefined;
+    el.dataset.v = valor;
+    if (esHtml) el.innerHTML = valor; else el.textContent = valor;
+    if (primera) return;
+    el.classList.remove("cambia"); void el.offsetWidth; el.classList.add("cambia");
+  }
+
+  function pintarClub(c) {
+    const M = K.membresia, caja = $("#club");
+    if (!M) { caja.hidden = true; return; }
+    const al = T.alDia(c);
+    const h = !c.socio
+      ? "<h2>" + T.esc(M.nombre) + '</h2><p class="club-precio"><b>' + T.pesos(M.precio) + "</b> por mes</p><p>" + T.esc(M.detalle) + '</p><button class="btn linea" type="button" data-club="alta">Sumarme al club</button>'
+      : al
+        ? "<h2>Sos socio</h2><p>" + T.esc(M.detalle) + '</p><p class="rotulo" style="margin-top:10px">Próximo cobro ' + T.cuando(c.socio.pagoHasta) + '</p><button class="enlace" type="button" data-club="baja">Darme de baja</button>'
+        : "<h2>Tu cuota venció</h2><p>" + T.esc(M.nombre) + " · " + T.pesos(M.precio) + ' por mes</p><button class="btn linea" type="button" data-club="pagar">Pagar la cuota</button>';
+    caja.classList.toggle("socio", al);
+    if (caja.dataset.v !== h) { caja.dataset.v = h; caja.innerHTML = h; }
+  }
 
   function pintar() {
     const c = codigo ? T.porCodigo(codigo) : null;
@@ -106,14 +152,14 @@
 
     const p = T.proximo(c), completa = n >= total;
     if (completa) {
-      $("#estado-1").textContent = "¡Tarjeta completa!";
-      $("#estado-2").innerHTML = "Tu próximo corte abre <em>una nueva</em>";
+      poner("#estado-1", "¡Tarjeta completa!");
+      poner("#estado-2", "Tu próximo corte abre <em>una nueva</em>", true);
     } else if (p.faltan === 1) {
-      $("#estado-1").textContent = "Tu próximo corte";
-      $("#estado-2").innerHTML = "tiene <em>" + p.pct + "% de descuento</em>";
+      poner("#estado-1", "Tu próximo corte");
+      poner("#estado-2", "tiene <em>" + p.pct + "% de descuento</em>", true);
     } else {
-      $("#estado-1").textContent = "Te faltan " + p.faltan + " cortes";
-      $("#estado-2").innerHTML = "para tu <em>" + p.pct + "% de descuento</em>";
+      poner("#estado-1", "Te faltan " + p.faltan + " cortes");
+      poner("#estado-2", "para tu <em>" + p.pct + "% de descuento</em>", true);
     }
 
     $("#hitos").innerHTML = K.hitos.map((h) => {
@@ -121,6 +167,8 @@
       return '<div class="hito-caja' + (usado ? " usado" : sigue ? " sigue" : "") + '"><b>−' + h.pct + "%</b><small>" +
         (usado ? "Usado" : h.en + ".º corte") + "</small></div>";
     }).join("");
+
+    pintarClub(c);
 
     const turno = $("#turno");
     if (K.whatsapp) {
@@ -192,6 +240,57 @@
     if (d.tipo === "cerca") avisarCerca();
     if (d.tipo === "nfc") selloNfc();
   });
+
+  /* Cuota mensual */
+  const hojaClub = $("#hoja-club");
+  $("#club").addEventListener("click", (ev) => {
+    const b = ev.target.closest("[data-club]");
+    if (!b) return;
+    const M = K.membresia, accion = b.dataset.club;
+    if (accion === "alta") {
+      $("#titulo-club").textContent = M.nombre;
+      $("#club-precio").innerHTML = "<b>" + T.pesos(M.precio) + "</b> por mes";
+      $("#club-detalle").textContent = M.detalle;
+      hojaClub.showModal();
+    } else if (accion === "baja") {
+      if (confirm("¿Darte de baja de " + M.nombre + "?")) T.bajaSocio(codigo);
+    } else if (accion === "pagar") {
+      if (T.cobrarCuota(codigo).ok) notificar(M.nombre, "Cuota al día. ¡Gracias!");
+    }
+  });
+  $("#club-si").addEventListener("click", () => {
+    hojaClub.close();
+    if (T.altaSocio(codigo).ok) notificar("Ya sos socio de " + K.membresia.nombre, K.membresia.detalle + ".");
+  });
+  $("#club-no").addEventListener("click", () => hojaClub.close());
+  hojaClub.addEventListener("click", (ev) => { if (ev.target === hojaClub) hojaClub.close(); });
+
+  /* Botones de prueba: sólo con ?demo=1 */
+  if (new URLSearchParams(location.search).get("demo") === "1") $("#prueba").hidden = false;
+  $("#prueba").addEventListener("click", (ev) => {
+    const b = ev.target.closest("[data-probar]");
+    if (!b) return;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (b.dataset.probar === "nfc") selloNfc(); else avisarCerca();
+  });
+
+  /* Detalles de movimiento, sólo con mouse: la tarjeta se inclina y las cajas tienen un foco de luz. */
+  if (matchMedia("(hover:hover) and (pointer:fine)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const escena = document.querySelector(".escena"), papel = document.querySelector(".papel");
+    escena.addEventListener("pointermove", (ev) => {
+      const r = papel.getBoundingClientRect();
+      const x = (ev.clientX - r.left) / r.width - 0.5, y = (ev.clientY - r.top) / r.height - 0.5;
+      papel.style.transform = "rotate(-2.5deg) rotateX(" + (-y * 9).toFixed(2) + "deg) rotateY(" + (x * 11).toFixed(2) + "deg)";
+    });
+    escena.addEventListener("pointerleave", () => { papel.style.transform = ""; });
+    document.addEventListener("pointermove", (ev) => {
+      const caja = ev.target.closest && ev.target.closest(".foco");
+      if (!caja) return;
+      const r = caja.getBoundingClientRect();
+      caja.style.setProperty("--mx", ev.clientX - r.left + "px");
+      caja.style.setProperty("--my", ev.clientY - r.top + "px");
+    });
+  }
 
   $("#form-alta").addEventListener("submit", (e) => {
     e.preventDefault();

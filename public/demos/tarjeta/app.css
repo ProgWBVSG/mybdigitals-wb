@@ -11,8 +11,8 @@
 }
 *{box-sizing:border-box;margin:0}
 html{-webkit-text-size-adjust:100%}
-body{font-family:"Barlow Semi Condensed",system-ui,sans-serif;font-size:18px;line-height:1.4;color:var(--crema);background:var(--carbon) var(--ruido);min-height:100vh;min-height:100dvh;text-align:center;display:flex;flex-direction:column;overflow-x:hidden}
-h1,h2,h3{font-family:"Oswald",Impact,sans-serif;font-weight:600;line-height:1.08;letter-spacing:.005em}
+body{font-family:"Archivo",system-ui,sans-serif;font-size:18px;line-height:1.4;color:var(--crema);background:var(--carbon) var(--ruido);min-height:100vh;min-height:100dvh;text-align:center;display:flex;flex-direction:column;overflow-x:hidden}
+h1,h2,h3{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:600;line-height:1.08;letter-spacing:.005em}
 button,input{font:inherit;color:inherit}
 button{-webkit-tap-highlight-color:transparent}
 :focus-visible{outline:3px solid var(--crema);outline-offset:3px;border-radius:6px}
@@ -24,12 +24,12 @@ button{-webkit-tap-highlight-color:transparent}
 /* Logo: manuscrito por defecto; "recto" para marcas de letra de imprenta */
 .logo{font-family:"Yellowtail",cursive;font-size:2.5rem;line-height:.82;color:var(--crema);display:inline-block;transform:rotate(-5deg);text-align:left}
 .logo span{display:block;padding:0 0 5px .75em;border-bottom:2px solid var(--crema)}
-[data-letra=recto] .logo{font-family:"Bebas Neue","Oswald",sans-serif;font-size:3.1rem;line-height:.84;letter-spacing:.07em;transform:none;text-align:center}
+[data-letra=recto] .logo{font-family:"Bebas Neue","Big Shoulders Display",sans-serif;font-size:3.1rem;line-height:.84;letter-spacing:.07em;transform:none;text-align:center}
 [data-letra=recto] .logo span{padding:5px 0 0;margin-top:4px;border-bottom:0;border-top:2px solid var(--acento);font-size:.4em;letter-spacing:.56em;text-indent:.56em;color:var(--acento)}
 .saludo{margin-top:16px;color:var(--gris);font-size:1.05rem}
 
 /* Botones */
-.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:58px;padding:14px 20px;border:0;border-radius:7px;background:var(--acento) var(--ruido);color:var(--sobre-acento);font-family:"Oswald",sans-serif;font-weight:600;font-size:1.3rem;letter-spacing:.01em;text-decoration:none;cursor:pointer;box-shadow:0 4px 0 var(--acento-2);transition:transform 140ms var(--sal),box-shadow 140ms var(--sal)}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:58px;padding:14px 20px;border:0;border-radius:7px;background:var(--acento) var(--ruido);color:var(--sobre-acento);font-family:"Big Shoulders Display",sans-serif;font-weight:600;font-size:1.3rem;letter-spacing:.01em;text-decoration:none;cursor:pointer;box-shadow:0 4px 0 var(--acento-2);transition:transform 140ms var(--sal),box-shadow 140ms var(--sal)}
 .btn:active{transform:translateY(3px) scale(.985);box-shadow:0 1px 0 var(--acento-2)}
 .btn.linea{background:none;border:2px solid var(--crema-2);color:var(--crema);box-shadow:none;font-size:1.08rem;min-height:52px}
 .btn.linea:active{transform:scale(.97)}
@@ -50,7 +50,7 @@ input::placeholder{color:var(--gris)}
   background-color:var(--madera);border-top:2px solid rgba(255,255,255,.2);box-shadow:0 14px 22px rgba(0,0,0,.5)}
 .papel{position:relative;z-index:1;transform:rotate(-2.5deg);border-radius:5px;padding:24px 18px 22px;color:var(--tinta);background:var(--crema) var(--ruido-papel);box-shadow:0 1px 0 #B9AE93,0 16px 26px rgba(0,0,0,.6)}
 .huecos{display:grid;grid-template-columns:repeat(5,1fr);gap:14px 9px}
-.hueco{position:relative;aspect-ratio:1;border-radius:50%;border:2px dashed rgba(26,26,26,.38);display:grid;place-items:center;font-family:"Oswald",sans-serif;font-weight:500;font-size:1rem;color:rgba(26,26,26,.5)}
+.hueco{position:relative;aspect-ratio:1;border-radius:50%;border:2px dashed rgba(26,26,26,.38);display:grid;place-items:center;font-family:"Big Shoulders Display",sans-serif;font-weight:500;font-size:1rem;color:rgba(26,26,26,.5)}
 .hueco.premio{border-color:var(--acento-2);color:var(--acento-2);font-weight:600;font-size:.86rem}
 .hueco.lleno{border-color:transparent}
 .sello{position:absolute;inset:-7%;width:114%;height:114%;color:var(--tinta);transform:rotate(var(--giro));mix-blend-mode:multiply;opacity:.9}
@@ -60,11 +60,11 @@ input::placeholder{color:var(--gris)}
 
 .estado{margin:30px 0 22px}
 .estado h1{font-size:clamp(2rem,9.5vw,2.7rem)}
-.estado p{font-family:"Oswald",sans-serif;font-weight:400;font-size:clamp(1.2rem,5.6vw,1.45rem);margin-top:4px}
+.estado p{font-family:"Big Shoulders Display",sans-serif;font-weight:400;font-size:clamp(1.2rem,5.6vw,1.45rem);margin-top:4px}
 .estado em{font-style:normal;color:var(--acento);font-weight:600}
 .hitos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
 .hito-caja{background:var(--panel);border:2px solid transparent;border-radius:8px;padding:12px 6px 10px}
-.hito-caja b{display:block;font-family:"Oswald",sans-serif;font-weight:600;font-size:1.7rem;line-height:1;color:var(--crema)}
+.hito-caja b{display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:600;font-size:1.7rem;line-height:1;color:var(--crema)}
 .hito-caja small{display:block;margin-top:5px;font-size:.88rem;color:var(--gris)}
 .hito-caja.sigue{border-color:var(--acento)}
 .hito-caja.sigue b{color:var(--acento)}
@@ -74,7 +74,7 @@ input::placeholder{color:var(--gris)}
 /* Aviso tipo notificación del celular */
 .notif{position:fixed;top:10px;left:50%;z-index:60;width:min(94vw,400px);display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:#F6F1E3;color:var(--tinta);text-align:left;box-shadow:0 14px 34px rgba(0,0,0,.55);transform:translate(-50%,-150%);transition:transform 320ms var(--sal)}
 .notif.ver{transform:translate(-50%,0)}
-.notif i{flex:none;width:40px;height:40px;border-radius:10px;background:var(--acento);color:var(--sobre-acento);display:grid;place-items:center;font:600 1.3rem "Oswald",sans-serif;font-style:normal}
+.notif i{flex:none;width:40px;height:40px;border-radius:10px;background:var(--acento);color:var(--sobre-acento);display:grid;place-items:center;font:600 1.3rem "Big Shoulders Display",sans-serif;font-style:normal}
 .notif b{display:block;font-weight:600;line-height:1.2}
 .notif span{display:block;font-size:.95rem;line-height:1.25;color:#4A443A}
 
@@ -91,7 +91,7 @@ dialog[open] .hoja{animation:entrar 220ms var(--sal)}
 .hoja input[type=text],.hoja input[type=tel]{background:#F7F1E2;border-color:#B9AE93;color:var(--tinta)}
 .qr{width:200px;height:200px;margin:18px auto 10px;padding:10px;background:#fff;border-radius:6px;display:grid;place-items:center}
 .qr svg{width:100%;height:100%;display:block}
-.numero{font-family:"Oswald",sans-serif;font-weight:600;font-size:2.4rem;letter-spacing:.14em;margin-bottom:16px}
+.numero{font-family:"Big Shoulders Display",sans-serif;font-weight:600;font-size:2.4rem;letter-spacing:.14em;margin-bottom:16px}
 .pila{display:grid;gap:10px}
 .enlace-nfc{margin:14px 0;padding:10px;border:1.5px dashed #9C917A;border-radius:6px;font-size:.86rem;word-break:break-all;color:var(--tinta)!important}
 
@@ -99,7 +99,7 @@ dialog[open] .hoja{animation:entrar 220ms var(--sal)}
 .barra{padding:22px 18px 6px}
 .barra .logo{font-size:2.1rem}
 [data-letra=recto] .barra .logo{font-size:2.6rem}
-.barra p{margin-top:14px;font-family:"Oswald",sans-serif;font-size:1rem;letter-spacing:.24em;text-indent:.24em;text-transform:uppercase;color:var(--gris)}
+.barra p{margin-top:14px;font-family:"Big Shoulders Display",sans-serif;font-size:1rem;letter-spacing:.24em;text-indent:.24em;text-transform:uppercase;color:var(--gris)}
 .panel{width:100%;max-width:1080px;margin:0 auto;padding:22px 16px 30px;display:grid;gap:26px}
 .lado{display:grid;gap:26px}
 
@@ -110,7 +110,7 @@ dialog[open] .hoja{animation:entrar 220ms var(--sal)}
 .ticket::before{bottom:100%;transform:scaleY(-1)}
 .ticket div{padding:2px 4px;border-left:1.5px dashed #A99E86}
 .ticket div:first-child{border-left:0}
-.ticket b{display:block;font-family:"Oswald",sans-serif;font-weight:600;font-size:clamp(2rem,8vw,2.6rem);line-height:1}
+.ticket b{display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:600;font-size:clamp(2rem,8vw,2.6rem);line-height:1}
 .ticket div:last-child b{color:var(--acento-2)}
 .ticket span{display:block;margin-top:5px;font-size:.9rem;line-height:1.15;color:var(--tinta-suave)}
 
@@ -127,13 +127,13 @@ dialog[open] .hoja{animation:entrar 220ms var(--sal)}
 .renglon{width:100%;display:grid;grid-template-columns:1.25fr 1fr 1fr;align-items:center;gap:10px;padding:15px 4px;background:none;border:0;border-top:1px solid rgba(26,26,26,.22);color:inherit;cursor:pointer;transition:background-color 150ms ease}
 .renglon:active{background:rgba(26,26,26,.09)}
 @media (hover:hover) and (pointer:fine){.renglon:hover{background:rgba(26,26,26,.06)}}
-.renglon b{font-family:"Oswald",sans-serif;font-weight:500;font-size:1.18rem;line-height:1.15}
+.renglon b{font-family:"Big Shoulders Display",sans-serif;font-weight:500;font-size:1.18rem;line-height:1.15}
 .marcas{display:inline-flex;justify-content:center;gap:3px}
 .marcas i{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--tinta)}
 .marcas i.on{background:var(--tinta)}
 .marcas i.meta{border-color:var(--acento-2)}
 .marcas i.meta.on{background:var(--acento);border-color:var(--acento)}
-.timbre{justify-self:center;display:inline-block;border:2px solid currentColor;border-radius:3px;padding:1px 8px;font-family:"Oswald",sans-serif;font-weight:600;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--acento-2);transform:rotate(-3deg);white-space:nowrap}
+.timbre{justify-self:center;display:inline-block;border:2px solid currentColor;border-radius:3px;padding:1px 8px;font-family:"Big Shoulders Display",sans-serif;font-weight:600;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--acento-2);transform:rotate(-3deg);white-space:nowrap}
 .timbre.quieto{color:var(--tinta-suave);border-style:dashed;transform:none}
 .vacio{padding:26px 10px;color:var(--tinta-suave);border-top:1px solid rgba(26,26,26,.22)}
 
@@ -141,7 +141,7 @@ dialog[open] .hoja{animation:entrar 220ms var(--sal)}
 .movs h2{font-size:1.25rem;letter-spacing:.04em;margin-bottom:6px}
 .movs ul{list-style:none;padding:0}
 .movs li{padding:12px 0;border-top:1px solid var(--linea)}
-.movs b{display:block;font-family:"Oswald",sans-serif;font-weight:500;font-size:1.08rem}
+.movs b{display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:500;font-size:1.08rem}
 .movs span{font-size:.94rem;color:var(--gris)}
 .movs em{font-style:normal;color:var(--acento);font-weight:600}
 .acciones{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
@@ -152,7 +152,7 @@ dialog[open] .hoja{animation:entrar 220ms var(--sal)}
 .puntos i.on{background:var(--tinta)}
 .puntos i.meta{border-color:var(--acento-2)}
 .puntos i.meta.on{background:var(--acento);border-color:var(--acento)}
-.descuento{margin:14px 0 4px;padding:10px;border-radius:6px;background:var(--acento);color:var(--sobre-acento)!important;font-family:"Oswald",sans-serif;font-weight:600;font-size:1.25rem}
+.descuento{margin:14px 0 4px;padding:10px;border-radius:6px;background:var(--acento);color:var(--sobre-acento)!important;font-family:"Big Shoulders Display",sans-serif;font-weight:600;font-size:1.25rem}
 .aviso{position:fixed;left:50%;bottom:20px;transform:translate(-50%,160%);background:var(--crema);color:var(--tinta);padding:13px 18px;border-radius:7px;font-weight:600;width:max-content;max-width:calc(100vw - 28px);transition:transform 260ms var(--sal);z-index:40;box-shadow:0 10px 26px rgba(0,0,0,.5)}
 .aviso.ver{transform:translate(-50%,0)}
 .mal{animation:temblor 240ms}
@@ -198,3 +198,92 @@ dialog[open] .hoja{animation:entrar 220ms var(--sal)}
   .sello.nuevo,dialog[open] .hoja,.mal{animation:none}
   .notif,.aviso,.btn{transition-duration:1ms}
 }
+
+/* ---------- Tipografía: letras de cartel para los títulos, Archivo para leer ---------- */
+body{font-size:17px}
+h1,h2,h3{font-weight:800;text-transform:uppercase;letter-spacing:.012em;line-height:.96}
+.rotulo,.ticket span,.hito-caja small,.barra p,.planilla .fecha,.cuota .rotulo{font-family:"Archivo",sans-serif;font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.14em;line-height:1.3}
+.estado h1{font-size:clamp(2.7rem,13vw,3.6rem);text-shadow:.04em .045em 0 var(--acento-2)}
+.estado p{font-weight:700;font-size:clamp(1.35rem,6.2vw,1.7rem);text-transform:uppercase;letter-spacing:.03em;margin-top:8px}
+.estado em{font-weight:800}
+.btn{font-weight:800;font-size:1.5rem;text-transform:uppercase;letter-spacing:.045em}
+.btn.linea{font-size:1.18rem;font-weight:700}
+.btn.chico{font-size:1.08rem}
+.hueco{font-family:"Big Shoulders Display",sans-serif;font-weight:700;font-size:1.15rem}
+.hueco.premio{font-weight:800;font-size:1.02rem}
+.hito-caja b{font-weight:900;font-size:2.1rem}
+.ticket b{font-weight:900;font-size:clamp(2.4rem,9vw,3rem)}
+.planilla h2{font-size:2.1rem}
+.renglon b{font-weight:800;font-size:1.4rem;text-transform:uppercase;letter-spacing:.02em}
+.renglon b small{display:block;margin-top:3px;font-family:"Archivo",sans-serif;font-size:.64rem;font-weight:600;letter-spacing:.16em;color:var(--acento-2)}
+.timbre{font-weight:800;font-size:.95rem;letter-spacing:.06em}
+.movs h2{font-size:1.5rem}
+.movs b{font-weight:700;font-size:1.25rem;text-transform:uppercase;letter-spacing:.02em}
+.hoja h2{font-size:2.2rem}
+.numero{font-weight:900;font-size:3rem}
+.descuento{font-weight:800;font-size:1.4rem;text-transform:uppercase;letter-spacing:.03em}
+.notif i{font-weight:900;font-size:1.5rem}
+.muestra h1{font-size:clamp(2.2rem,6.4vw,3.6rem);text-shadow:.04em .045em 0 var(--acento-2)}
+.vista h2{font-size:1.7rem}
+.pestana{font-size:.95rem}
+
+/* ---------- Cuota mensual ---------- */
+.club{margin-top:14px;padding:22px 16px 18px;border-radius:10px;background:var(--panel);border:1.5px dashed var(--linea)}
+.club.socio{border-style:solid;border-color:var(--acento)}
+.club h2{font-size:2rem}
+.club p{margin-top:6px;color:var(--crema-2)}
+.club-precio{font-size:1rem}
+.club-precio b{font-family:"Big Shoulders Display",sans-serif;font-weight:900;font-size:2.9rem;line-height:1;color:var(--acento);margin-right:4px}
+.hoja .club-precio b{color:var(--acento-2)}
+.club .btn{margin-top:16px}
+.cuota{padding:20px 14px 6px;border-radius:8px;background:var(--panel)}
+.cuota h2{font-size:1.5rem}
+.cuota .monto b{display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:900;font-size:clamp(2.8rem,10vw,3.5rem);line-height:1.05;color:var(--acento)}
+.cuota .rotulo{color:var(--gris)}
+.cuota ul{list-style:none;padding:0;margin-top:14px}
+.cuota li{border-top:1px solid var(--linea)}
+.socio{width:100%;padding:11px 0;background:none;border:0;cursor:pointer;display:block}
+.socio b{display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:700;font-size:1.2rem;text-transform:uppercase;letter-spacing:.02em}
+.socio span{font-size:.9rem;color:var(--gris)}
+.socio em{font-style:normal;font-weight:600;color:var(--acento)}
+.prueba{margin-top:26px;padding:16px 14px;border:1.5px dashed var(--linea);border-radius:10px}
+.prueba .rotulo{color:var(--gris);margin-bottom:12px}
+
+/* ---------- Movimiento ---------- */
+@view-transition{navigation:auto}
+.entra{animation:entra 600ms var(--sal) both;animation-delay:calc(var(--i,0)*70ms)}
+@keyframes entra{from{opacity:0;transform:translateY(16px);filter:blur(8px)}}
+.cambia{animation:cambia 340ms var(--sal)}
+@keyframes cambia{from{opacity:0;transform:translateY(8px);filter:blur(6px)}}
+dialog::backdrop{animation:velo 240ms ease}
+@keyframes velo{from{opacity:0}}
+/* Brillo que barre el botón principal */
+.btn:not(.linea){position:relative;overflow:hidden}
+.btn:not(.linea)::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.3) 50%,transparent 64%);transform:translateX(-130%);pointer-events:none}
+.btn.brilla::after{animation:brillo 1100ms var(--sal) 1000ms both}
+@keyframes brillo{to{transform:translateX(130%)}}
+@media (hover:hover) and (pointer:fine){
+  .btn:not(.linea):hover::after{transform:translateX(130%);transition:transform 800ms var(--sal)}
+  .btn.linea{transition:transform 140ms var(--sal),background-color 200ms ease,color 200ms ease}
+  .btn.linea:hover{background:var(--crema);color:var(--tinta)}
+  .hoja .btn.linea:hover{background:var(--tinta);color:var(--crema)}
+  .socio:hover b{color:var(--acento)}
+}
+/* La tarjeta se inclina hacia el puntero */
+.escena{perspective:900px}
+.papel{transition:transform 420ms var(--sal);will-change:transform}
+/* Foco de luz que sigue al puntero */
+.foco{position:relative;overflow:hidden}
+.foco::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 320ms ease;background:radial-gradient(240px circle at var(--mx,50%) var(--my,0px),rgba(255,255,255,.1),transparent 70%)}
+@media (hover:hover) and (pointer:fine){.foco:hover::before{opacity:1}}
+/* Raya de la pestaña activa */
+.pestanas{position:relative}
+.planilla .pestana[aria-selected=true]{border-bottom-color:transparent}
+.tab-linea{position:absolute;left:0;top:0;height:3px;width:0;background:var(--acento);border-radius:2px;pointer-events:none;transition:transform 300ms var(--sal),width 300ms var(--sal)}
+.socio,.renglon,.pestana{transition:color 160ms ease,background-color 160ms ease}
+@media (prefers-reduced-motion:reduce){
+  .entra,.cambia,.btn.brilla::after,dialog::backdrop{animation:none}
+  .papel,.tab-linea{transition:none}
+}
+
+@media (max-width:959px){.cuota ul{display:none}.cuota{padding-bottom:18px}}

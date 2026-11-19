@@ -9,10 +9,11 @@
     id: "demo", nombre: "Tu barbería", logo: ["Tu", "Barbería"], logoEstilo: "script",
     sellos: 10, hitos: [{ en: 5, pct: 10 }, { en: 7, pct: 20 }, { en: 10, pct: 70 }],
     whatsapp: "", pinDemo: "1234", diasInactivo: 45, horasEntreSellosNfc: 12,
+    membresia: { nombre: "Club", precio: 30000, detalle: "Cortes ilimitados de lunes a jueves" },
     local: { lat: 0, lng: 0, radio: 150 }, tema: {},
   }, window.MARCA || {});
 
-  const CLAVE = CONFIG.id + ".tarjetas.v3";
+  const CLAVE = CONFIG.id + ".tarjetas.v4";
   const DIA = 864e5;
   const hace = (d) => new Date(Date.now() - d * DIA).toISOString();
   const hitoEn = (n) => CONFIG.hitos.find((h) => h.en === n) || null;
@@ -34,6 +35,10 @@
       nombre, tel: "", alta: hace(dias[0]), ciclo: 1, desde: 0,
       visitas: dias.map((d, k) => ({ fecha: hace(d), descuento: hitoEn(k + 1) ? hitoEn(k + 1).pct : 0, origen: k % 3 ? "nfc" : "panel" })),
     }));
+    // Socios de la cuota mensual: tres al día y uno con la cuota vencida.
+    [[0, 70, 18], [2, 41, 11], [6, 130, 24], [3, 100, -12]].forEach(([i, desde, hasta]) => {
+      clientes[i].socio = { desde: hace(desde), pagoHasta: hace(-hasta) };
+    });
     return { clientes, sig: 101 + base.length };
   }
 
@@ -143,6 +148,9 @@
       hoy: lista.reduce((n, c) => n + c.visitas.filter((v) => new Date(v.fecha).toDateString() === hoy).length, 0),
       activos: lista.filter((c) => c.visitas.length && diasSin(c) <= CONFIG.diasInactivo).length,
       conDescuento: lista.filter((c) => descuentoAhora(c) > 0).length,
+      socios: lista.filter(alDia).length,
+      vencidas: lista.filter((c) => c.socio && !alDia(c)).length,
+      ingreso: lista.filter(alDia).length * (CONFIG.membresia ? CONFIG.membresia.precio : 0),
     };
   }
 
@@ -155,6 +163,20 @@
     })));
     return todos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha)).slice(0, cuantos || 6);
   }
+
+  /* Cuota mensual: quién es socio y hasta cuándo tiene paga la cuota. */
+  const alDia = (c) => !!c.socio && new Date(c.socio.pagoHasta).getTime() > Date.now();
+  const unMesDesde = (t) => new Date(t + 30 * DIA).toISOString();
+  const altaSocio = (codigo) => cambiar(codigo, (c) => {
+    const ahora = new Date().toISOString();
+    c.socio = { desde: ahora, pagoHasta: unMesDesde(Date.now()) };
+  });
+  const bajaSocio = (codigo) => cambiar(codigo, (c) => { delete c.socio; });
+  const cobrarCuota = (codigo) => cambiar(codigo, (c) => {
+    if (!c.socio) return { ok: false, motivo: "no-socio" };
+    c.socio.pagoHasta = unMesDesde(Math.max(Date.now(), new Date(c.socio.pagoHasta).getTime()));
+  });
+  const pesos = (n) => "$" + Math.round(n).toLocaleString("es-AR");
 
   function reiniciar() {
     memoria = null;
@@ -224,6 +246,6 @@
 
   window.TARJETA = {
     CONFIG, guardado, clientes, porCodigo, buscar, sellosDe, sellosVigentes, descuentoAhora, proximo, hitoEn, ultima, diasSin,
-    crear, sumar, deshacer, resumen, movimientos, reiniciar, distanciaAlLocal, textoCerca, haceCuanto, cuando, esc, vestir, sello,
+    crear, sumar, deshacer, alDia, altaSocio, bajaSocio, cobrarCuota, pesos, resumen, movimientos, reiniciar, distanciaAlLocal, textoCerca, haceCuanto, cuando, esc, vestir, sello,
   };
 })();
