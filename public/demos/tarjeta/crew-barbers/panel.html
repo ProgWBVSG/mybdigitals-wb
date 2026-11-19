@@ -149,7 +149,8 @@
   };
   function timbre(c) {
     const d = T.descuentoAhora(c);
-    if (d) return '<span class="timbre">Le toca −' + d + "%</span>";
+    // En la lista de los que no vienen importa más cuánto hace que el descuento.
+    if (d && filtro !== "dormidos") return '<span class="timbre">Le toca −' + d + "%</span>";
     if (dormido(c)) return '<span class="timbre quieto">' + T.diasSin(c) + " días sin venir</span>";
     return '<span class="nota" style="color:var(--tinta-suave)">' + (c.visitas.length ? T.haceCuanto(T.diasSin(c)) : "sin cortes") + "</span>";
   }
