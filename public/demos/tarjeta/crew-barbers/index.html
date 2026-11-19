@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Mi tarjeta | {marca}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=Bebas+Neue&family=Oswald:wght@400;500;600&family=Yellowtail&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../app.css">
+</head>
+<body>
+<div class="notif" id="notif" role="status"><i id="notif-inicial"></i><div><b id="notif-titulo"></b><span id="notif-texto"></span></div></div>
+
+<main class="col">
+  <div class="logo" data-logo></div>
+  <p class="saludo" id="saludo"></p>
+
+  <!-- Todavía no tiene tarjeta -->
+  <section id="alta" hidden style="margin-top:28px">
+    <h1 style="font-size:2.2rem;margin-bottom:8px">Sacá tu tarjeta</h1>
+    <p class="nota" style="margin-bottom:22px">Cada corte suma un sello.</p>
+    <form id="form-alta">
+      <div class="campo">
+        <label for="a-nombre">Tu nombre</label>
+        <input id="a-nombre" type="text" autocomplete="name" maxlength="60" required>
+      </div>
+      <div class="campo">
+        <label for="a-tel">Tu celular (opcional)</label>
+        <input id="a-tel" type="tel" autocomplete="tel" inputmode="tel" maxlength="20">
+      </div>
+      <button class="btn" type="submit">Crear mi tarjeta</button>
+    </form>
+  </section>
+
+  <!-- Tarjeta -->
+  <section id="vista" hidden>
+    <div class="escena">
+      <div class="papel">
+        <div class="huecos" id="huecos" role="img"></div>
+      </div>
+    </div>
+
+    <div class="estado" aria-live="polite">
+      <h1 id="estado-1"></h1>
+      <p id="estado-2"></p>
+    </div>
+
+    <button class="btn" id="ver-codigo" type="button">Mostrar mi código</button>
+    <a class="btn linea" id="turno" target="_blank" rel="noopener" hidden style="margin-top:12px">Pedir turno</a>
+
+    <div class="hitos" id="hitos"></div>
+    <button class="btn linea cerca" id="cerca" type="button" aria-pressed="false">Avisarme cuando pase cerca</button>
+  </section>
+</main>
+
+<p class="firma">Hecho por <a href="https://www.mybdigitals.com" target="_blank" rel="noopener">MYB Digitals</a></p>
+
+<dialog id="hoja-codigo" aria-labelledby="titulo-codigo">
+  <div class="hoja">
+    <h2 id="titulo-codigo">Mostráselo a tu barbero</h2>
+    <div class="qr" id="qr"></div>
+    <p class="numero" id="numero"></p>
+    <button class="btn linea" type="button" id="cerrar-codigo">Cerrar</button>
+  </div>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="marca.js"></script>
+<script src="../datos.js"></script>
+<script>
+(function () {
+  "use strict";
+  const T = window.TARJETA, K = T.CONFIG, $ = (s) => document.querySelector(s);
+  let codigo = new URLSearchParams(location.search).get("c") || T.guardado.leer("miTarjeta");
+  let previos = -1;
+
+  T.vestir();
+
+  function pintar() {
+    const c = codigo ? T.porCodigo(codigo) : null;
+    $("#alta").hidden = !!c;
+    $("#vista").hidden = !c;
+    $("#saludo").textContent = c ? "Hola, " + c.nombre.split(" ")[0] : "";
+    if (!c) return;
+
+    const n = T.sellosDe(c).length, total = K.sellos;
+    let html = "";
+    for (let i = 0; i < total; i++) {
+      const hito = T.hitoEn(i + 1), lleno = i < n, nuevo = previos >= 0 && i >= previos && lleno;
+      html += '<div class="hueco' + (hito ? " premio" : "") + (lleno ? " lleno" : "") + '">' +
+        (lleno ? T.sello(i, c.codigo, !!hito, nuevo) : hito ? "−" + hito.pct + "%" : i + 1) + "</div>";
+    }
+    const huecos = $("#huecos");
+    huecos.innerHTML = html;
+    huecos.setAttribute("aria-label", n + " de " + total + " sellos");
+    // Al terminar de estamparse, el sello queda como cualquier otro.
+    huecos.querySelectorAll(".sello.nuevo").forEach((s) => {
+      const soltar = () => s.classList.remove("nuevo");
+      s.addEventListener("animationend", soltar, { once: true });
+      setTimeout(soltar, 700);
+    });
+    if (previos >= 0 && n > previos && navigator.vibrate) navigator.vibrate(35);
+    previos = n;
+
+    const p = T.proximo(c), completa = n >= total;
+    if (completa) {
+      $("#estado-1").textContent = "¡Tarjeta completa!";
+      $("#estado-2").innerHTML = "Tu próximo corte abre <em>una nueva</em>";
+    } else if (p.faltan === 1) {
+      $("#estado-1").textContent = "Tu próximo corte";
+      $("#estado-2").innerHTML = "tiene <em>" + p.pct + "% de descuento</em>";
+    } else {
+      $("#estado-1").textContent = "Te faltan " + p.faltan + " cortes";
+      $("#estado-2").innerHTML = "para tu <em>" + p.pct + "% de descuento</em>";
+    }
+
+    $("#hitos").innerHTML = K.hitos.map((h) => {
+      const usado = n >= h.en, sigue = !completa && h.en === p.en;
+      return '<div class="hito-caja' + (usado ? " usado" : sigue ? " sigue" : "") + '"><b>−' + h.pct + "%</b><small>" +
+        (usado ? "Usado" : h.en + ".º corte") + "</small></div>";
+    }).join("");
+
+    const turno = $("#turno");
+    if (K.whatsapp) {
+      turno.hidden = false;
+      turno.href = "https://wa.me/" + K.whatsapp + "?text=" + encodeURIComponent("Hola, soy " + c.nombre + " (tarjeta " + c.codigo + "). Quiero pedir un turno.");
+    }
+  }
+
+  /* Aviso con forma de notificación */
+  let reloj;
+  function notificar(titulo, texto) {
+    $("#notif-inicial").textContent = K.nombre.charAt(0);
+    $("#notif-titulo").textContent = titulo;
+    $("#notif-texto").textContent = texto;
+    const n = $("#notif");
+    n.classList.add("ver");
+    clearTimeout(reloj);
+    reloj = setTimeout(() => n.classList.remove("ver"), 5200);
+    // Si el cliente dio permiso, también sale como notificación del sistema.
+    try { if (window.Notification && Notification.permission === "granted") new Notification(titulo, { body: texto }); } catch (e) { /* algunos celulares no lo permiten desde la página */ }
+  }
+  function avisarCerca() {
+    const c = T.porCodigo(codigo);
+    if (c) notificar("Estás cerca de " + K.nombre, T.textoCerca(c));
+  }
+
+  /* Aviso por cercanía: funciona mientras la tarjeta está abierta. */
+  let vigilando = null;
+  function vigilar() {
+    if (vigilando !== null || !navigator.geolocation) return;
+    vigilando = navigator.geolocation.watchPosition((pos) => {
+      const metros = T.distanciaAlLocal(pos.coords.latitude, pos.coords.longitude);
+      const ultimo = Number(T.guardado.leer("ultimoAviso")) || 0;
+      if (metros <= K.local.radio && Date.now() - ultimo > 6 * 36e5) {
+        T.guardado.poner("ultimoAviso", String(Date.now()));
+        avisarCerca();
+      }
+    }, () => {}, { enableHighAccuracy: false, maximumAge: 60000 });
+  }
+  function pintarCerca() {
+    const activo = T.guardado.leer("avisos") === "1";
+    const b = $("#cerca");
+    b.setAttribute("aria-pressed", activo);
+    b.textContent = activo ? "Avisos por cercanía activados" : "Avisarme cuando pase cerca";
+    if (activo) vigilar();
+  }
+  $("#cerca").addEventListener("click", () => {
+    if (T.guardado.leer("avisos") === "1") {
+      T.guardado.poner("avisos", "0");
+      if (vigilando !== null) { navigator.geolocation.clearWatch(vigilando); vigilando = null; }
+    } else {
+      T.guardado.poner("avisos", "1");
+      try { if (window.Notification && Notification.permission === "default") Notification.requestPermission(); } catch (e) { /* sin soporte */ }
+    }
+    pintarCerca();
+  });
+
+  /* Sello por NFC, cuando la página de ejemplo lo simula. */
+  function selloNfc() {
+    const c = T.porCodigo(codigo);
+    if (!c) return;
+    const r = T.sumar(c.codigo, "nfc");
+    if (!r.ok) return notificar(K.nombre, "Ya sumaste tu sello de hoy.");
+    notificar("Sello " + r.numero + " de " + K.sellos, r.descuento ? "Este corte tiene " + r.descuento + "% de descuento." : "Sumaste un sello en " + K.nombre + ".");
+  }
+  window.addEventListener("message", (ev) => {
+    const d = ev.data || {};
+    if (d.marca !== K.id) return;
+    if (d.tipo === "cerca") avisarCerca();
+    if (d.tipo === "nfc") selloNfc();
+  });
+
+  $("#form-alta").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const nombre = $("#a-nombre").value.trim();
+    if (!nombre) return;
+    const c = T.crear({ nombre, tel: $("#a-tel").value });
+    codigo = c.codigo;
+    T.guardado.poner("miTarjeta", codigo);
+    history.replaceState(null, "", "?c=" + codigo);
+    previos = -1;
+    pintar();
+  });
+
+  const hoja = $("#hoja-codigo");
+  $("#ver-codigo").addEventListener("click", () => {
+    const c = T.porCodigo(codigo);
+    if (!c) return;
+    $("#numero").textContent = c.codigo;
+    const caja = $("#qr");
+    if (typeof qrcode === "function") {
+      const q = qrcode(0, "M");
+      q.addData(new URL("panel.html?c=" + c.codigo, location.href).href);
+      q.make();
+      caja.innerHTML = q.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+      caja.hidden = false;
+    } else {
+      caja.hidden = true; // sin conexión: alcanza con el número
+    }
+    hoja.showModal();
+  });
+  $("#cerrar-codigo").addEventListener("click", () => hoja.close());
+  hoja.addEventListener("click", (e) => { if (e.target === hoja) hoja.close(); });
+
+  window.addEventListener("tarjeta:cambio", pintar);
+  if (codigo && T.porCodigo(codigo)) T.guardado.poner("miTarjeta", codigo);
+  pintar();
+  pintarCerca();
+})();
+</script>
+</body>
+</html>
