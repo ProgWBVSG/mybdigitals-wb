@@ -214,7 +214,7 @@
     Object.keys(CONFIG.tema).forEach((k) => raiz.style.setProperty(k, CONFIG.tema[k]));
     raiz.dataset.letra = CONFIG.logoEstilo;
     if (CONFIG.css) { const st = document.createElement("style"); st.textContent = CONFIG.css; document.head.appendChild(st); }
-    document.querySelectorAll("[data-logo]").forEach((el) => { el.innerHTML = esc(CONFIG.logo[0]) + "<span>" + esc(CONFIG.logo[1]) + "</span>"; });
+    document.querySelectorAll("[data-logo]").forEach((el) => { el.innerHTML = CONFIG.logoHtml || (esc(CONFIG.logo[0]) + "<span>" + esc(CONFIG.logo[1]) + "</span>"); });
     document.querySelectorAll("[data-marca]").forEach((el) => { el.textContent = CONFIG.nombre; });
     document.title = document.title.replace("{marca}", CONFIG.nombre);
     if (!document.getElementById("tarjeta-defs")) {

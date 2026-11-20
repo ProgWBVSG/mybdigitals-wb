@@ -3,7 +3,9 @@ window.MARCA = {
   id: "roy",
   nombre: "Roy Barbería",
   logo: ["Roy", "Barbería"],
-  logoEstilo: "recto", // "script" (manuscrito) o "recto" (letra de imprenta)
+  logoEstilo: "recto",
+  // Logo: una R con una corona encima.
+  logoHtml: "<svg class=\"corona\" viewBox=\"0 0 60 34\" aria-hidden=\"true\"><path d=\"M5 31 9 10l12 11L30 5l9 16 12-11 4 21z\" fill=\"currentColor\"/><circle cx=\"9\" cy=\"8\" r=\"3\" fill=\"currentColor\"/><circle cx=\"30\" cy=\"3.5\" r=\"3\" fill=\"currentColor\"/><circle cx=\"51\" cy=\"8\" r=\"3\" fill=\"currentColor\"/></svg>R<span>Roy Barbería</span>", // "script" (manuscrito) o "recto" (letra de imprenta)
   sellos: 10,
   hitos: [{ en: 5, pct: 10 }, { en: 7, pct: 20 }, { en: 10, pct: 70 }],
   whatsapp: "", // número del local con código de país, sin + ni espacios

@@ -287,3 +287,6 @@ dialog::backdrop{animation:velo 240ms ease}
 }
 
 @media (max-width:959px){.cuota ul{display:none}.cuota{padding-bottom:18px}}
+
+/* Logo con corona (marcas que traen su propio dibujo) */
+.logo .corona{display:block;width:.8em;height:auto;margin:0 auto .1em;color:var(--crema)}
