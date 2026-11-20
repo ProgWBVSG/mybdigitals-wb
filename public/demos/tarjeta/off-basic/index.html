@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Bebas+Neue&family=Big+Shoulders+Display:wght@600;700;800;900&family=Yellowtail&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../app.css">
+<link rel="stylesheet" href="turnos.css">
 </head>
 <body>
 <div class="notif" id="notif" role="status"><i id="notif-inicial"></i><div><b id="notif-titulo"></b><span id="notif-texto"></span></div></div>
@@ -47,8 +48,8 @@
       <p id="estado-2"></p>
     </div>
 
-    <button class="btn brilla entra" style="--i:4" id="ver-codigo" type="button">Mostrar mi código</button>
-    <a class="btn linea" id="turno" target="_blank" rel="noopener" hidden style="margin-top:12px">Pedir turno</a>
+    <section class="turno-caja foco entra" style="--i:4" id="turno-caja" aria-live="polite"></section>
+    <button class="btn linea entra" style="--i:5;margin-top:14px" id="ver-codigo" type="button">Mostrar mi código</button>
 
     <div class="hitos entra" style="--i:5" id="hitos"></div>
     <section class="club foco entra" style="--i:6" id="club" aria-live="polite"></section>
@@ -59,6 +60,7 @@
       <div class="pila">
         <button class="btn linea chico" type="button" data-probar="nfc">Acercar el celular al NFC</button>
         <button class="btn linea chico" type="button" data-probar="cerca">Pasar cerca del local</button>
+        <button class="btn linea chico" type="button" data-probar="recordatorio">Recibir el recordatorio del turno</button>
       </div>
     </section>
   </section>
@@ -72,6 +74,32 @@
     <div class="qr" id="qr"></div>
     <p class="numero" id="numero"></p>
     <button class="btn linea" type="button" id="cerrar-codigo">Cerrar</button>
+  </div>
+</dialog>
+
+<dialog id="hoja-turno" aria-labelledby="titulo-turno">
+  <div class="hoja ancha">
+    <h2 id="titulo-turno">Pedí tu turno</h2>
+    <p class="antes" id="turno-antes" hidden></p>
+    <div id="selector"></div>
+    <p class="resumen-turno" id="turno-resumen">Elegí un horario</p>
+    <div class="pila">
+      <button class="btn" type="button" id="turno-ok" disabled>Reservar turno</button>
+      <button class="btn linea" type="button" id="turno-cerrar">Volver</button>
+    </div>
+    <p class="politica" id="turno-politica"></p>
+  </div>
+</dialog>
+
+<dialog id="hoja-cancelar" aria-labelledby="titulo-cancelar">
+  <div class="hoja">
+    <h2 id="titulo-cancelar">¿Cancelás tu turno?</h2>
+    <p id="cancelar-que" style="margin-top:8px;font-weight:600"></p>
+    <p class="politica" id="cancelar-pol"></p>
+    <div class="pila" style="margin-top:18px">
+      <button class="btn" type="button" id="cancelar-cambiar">Mejor lo cambio de día</button>
+      <button class="btn linea" type="button" id="cancelar-si">Sí, cancelar</button>
+    </div>
   </div>
 </dialog>
 
@@ -91,6 +119,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script src="marca.js"></script>
 <script src="../datos.js"></script>
+<script src="turnos.js"></script>
 <script>
 (function () {
   "use strict";
@@ -170,11 +199,93 @@
 
     pintarClub(c);
 
-    const turno = $("#turno");
-    if (K.whatsapp) {
-      turno.hidden = false;
-      turno.href = "https://wa.me/" + K.whatsapp + "?text=" + encodeURIComponent("Hola, soy " + c.nombre + " (tarjeta " + c.codigo + "). Quiero pedir un turno.");
+    pintarTurno(c);
+  }
+
+  /* ---------- Turnos ---------- */
+  const TU = window.TURNOS, KT = TU.K;
+  function pintarTurno(c) {
+    const caja = $("#turno-caja"), t = TU.proximoDe(c.codigo);
+    let h;
+    if (t) {
+      const s = TU.servicio(t.servicio);
+      h = '<p class="rotulo">Tu próximo turno</p><h2>' + TU.conMayus(TU.cuandoDia(TU.clave(t.inicio))) + " · <em>" + TU.hora(t.inicio) + "</em></h2>" +
+        "<p>" + T.esc(s.nombre) + " con " + T.esc(TU.barbero(t.barbero).nombre) + " · " + T.pesos(s.precio) + "</p>" +
+        '<span class="estado-turno' + (t.confirmado ? " ok" : "") + '">' + (t.confirmado ? "✓ Confirmado" : "Sin confirmar") + "</span>" +
+        (t.confirmado ? "" : '<button class="btn brilla" type="button" data-turno="confirmar">Confirmo que voy</button>') +
+        '<button class="btn linea" type="button" data-turno="cambiar"' + (t.confirmado ? "" : ' style="margin-top:10px"') + ">Cambiar día u hora</button>" +
+        '<div class="fila"><button class="enlace" type="button" data-turno="cancelar">Cancelar turno</button>' +
+        '<a class="enlace" target="_blank" rel="noopener" href="' + TU.calendario(t) + '">Agendar en mi calendario</a></div>';
+    } else {
+      const esp = TU.enEspera(c.codigo)[0];
+      h = "<h2>Pedí tu turno</h2><p>Elegí servicio, barbero y horario. Te llega la confirmación acá.</p>" +
+        (esp ? '<p class="rotulo" style="margin-top:12px;color:var(--acento)">Estás en lista de espera para el ' + TU.cuandoDia(esp.dia) + "</p>" : "") +
+        '<button class="btn brilla" type="button" data-turno="pedir">Pedir turno</button>';
     }
+    caja.classList.toggle("tiene", !!t);
+    if (caja.dataset.v !== h) { caja.dataset.v = h; caja.innerHTML = h; }
+  }
+
+  const hojaTurno = $("#hoja-turno"), hojaCancelar = $("#hoja-cancelar");
+  let modo = "pedir", elegidoTurno = null, sel = null;
+  function abrirSelector(m) {
+    const c = T.porCodigo(codigo), t = TU.proximoDe(codigo);
+    modo = m; elegidoTurno = null;
+    $("#titulo-turno").textContent = m === "cambiar" ? "Cambiá tu turno" : "Pedí tu turno";
+    $("#turno-ok").textContent = m === "cambiar" ? "Pasar mi turno acá" : "Reservar turno";
+    $("#turno-politica").textContent = "Podés cambiarlo o cancelarlo sin costo hasta " + KT.cancelarHasta + " horas antes.";
+    const antes = $("#turno-antes");
+    antes.hidden = m !== "cambiar" || !t;
+    if (m === "cambiar" && t) antes.innerHTML = "Tenías: <s>" + TU.fechaTurno(t) + "</s> · " + T.esc(TU.servicio(t.servicio).nombre);
+    sel = TU.selector($("#selector"), {
+      servicio: m === "cambiar" && t ? t.servicio : null, barbero: m === "cambiar" && t ? t.barbero : null, ignorar: m === "cambiar" && t ? t.id : null,
+      cambio: (r) => { elegidoTurno = r; $("#turno-resumen").textContent = r ? r.texto : "Elegí un horario"; $("#turno-ok").disabled = !r; },
+      espera: (dia) => { const r = TU.anotar(c.codigo, c.nombre, dia); hojaTurno.close(); notificar("Te anotamos en la lista de espera", "Si alguien cancela el " + TU.cuandoDia(dia) + ", te avisamos primero."); },
+    });
+    hojaTurno.showModal();
+  }
+  $("#turno-ok").addEventListener("click", () => {
+    const c = T.porCodigo(codigo); if (!c || !elegidoTurno) return;
+    const r = modo === "cambiar" ? TU.reprogramar(TU.proximoDe(codigo).id, elegidoTurno.inicio, elegidoTurno.barbero)
+                                 : TU.reservar({ codigo: c.codigo, nombre: c.nombre, barbero: elegidoTurno.barbero, servicio: elegidoTurno.servicio, inicio: elegidoTurno.inicio });
+    if (!r.ok) { notificar(K.nombre, "Ese horario se acaba de ocupar. Elegí otro."); sel.repintar(); return; }
+    hojaTurno.close();
+    if (modo === "cambiar") notificar("Turno cambiado", "Ahora: " + TU.fechaTurno(r.turno) + ". Tu horario anterior quedó libre para otro cliente.");
+    else notificar("Turno reservado", TU.conMayus(TU.fechaTurno(r.turno)) + " con " + TU.barbero(r.turno.barbero).nombre + ". Te lo recordamos el día antes.");
+  });
+  $("#turno-cerrar").addEventListener("click", () => hojaTurno.close());
+  hojaTurno.addEventListener("click", (ev) => { if (ev.target === hojaTurno) hojaTurno.close(); });
+
+  function abrirCancelar() {
+    const t = TU.proximoDe(codigo); if (!t) return;
+    const h = TU.horasAntes(t);
+    $("#cancelar-que").textContent = TU.conMayus(TU.fechaTurno(t)) + " · " + TU.servicio(t.servicio).nombre + " con " + TU.barbero(t.barbero).nombre;
+    $("#cancelar-pol").textContent = h >= KT.cancelarHasta
+      ? "Faltan más de " + KT.cancelarHasta + " horas: lo cancelás sin problema y el horario queda libre para otro cliente."
+      : "Falta menos de " + KT.cancelarHasta + " horas. Podés cancelarlo igual, pero al local le llega que fue sobre la hora.";
+    hojaCancelar.showModal();
+  }
+  $("#cancelar-si").addEventListener("click", () => {
+    const t = TU.proximoDe(codigo); hojaCancelar.close(); if (!t) return;
+    if (TU.cancelar(t.id, "cliente").ok) notificar("Turno cancelado", "Liberamos el horario para otro cliente. Cuando quieras, pedí otro.");
+  });
+  $("#cancelar-cambiar").addEventListener("click", () => { hojaCancelar.close(); abrirSelector("cambiar"); });
+  hojaCancelar.addEventListener("click", (ev) => { if (ev.target === hojaCancelar) hojaCancelar.close(); });
+
+  $("#turno-caja").addEventListener("click", (ev) => {
+    const b = ev.target.closest("[data-turno]"); if (!b) return;
+    const a = b.dataset.turno, t = TU.proximoDe(codigo);
+    if (a === "pedir") abrirSelector("pedir");
+    else if (a === "cambiar") abrirSelector("cambiar");
+    else if (a === "cancelar") abrirCancelar();
+    else if (a === "confirmar" && t && TU.confirmar(t.id).ok) notificar("¡Listo, te esperamos!", TU.conMayus(TU.fechaTurno(t)) + " con " + TU.barbero(t.barbero).nombre + ".");
+  });
+  function recordatorio() {
+    const t = TU.proximoDe(codigo);
+    if (!t) return notificar(K.nombre, "No tenés turnos pedidos. Pedí uno desde tu tarjeta.");
+    notificar("Recordatorio de tu turno", TU.conMayus(TU.fechaTurno(t)) + " con " + TU.barbero(t.barbero).nombre + ". ¿Confirmás o lo cambiás?");
+    const caja = $("#turno-caja"); caja.scrollIntoView({ behavior: "smooth", block: "center" });
+    caja.classList.remove("recuerda"); void caja.offsetWidth; caja.classList.add("recuerda");
   }
 
   /* Aviso con forma de notificación */
@@ -239,6 +350,7 @@
     if (d.marca !== K.id) return;
     if (d.tipo === "cerca") avisarCerca();
     if (d.tipo === "nfc") selloNfc();
+    if (d.tipo === "recordatorio") recordatorio();
   });
 
   /* Cuota mensual */
@@ -270,6 +382,7 @@
   $("#prueba").addEventListener("click", (ev) => {
     const b = ev.target.closest("[data-probar]");
     if (!b) return;
+    if (b.dataset.probar === "recordatorio") return recordatorio();
     window.scrollTo({ top: 0, behavior: "smooth" });
     if (b.dataset.probar === "nfc") selloNfc(); else avisarCerca();
   });
