@@ -30,6 +30,10 @@ const nextConfig: NextConfig = {
     return [
       { source: '/imania/privacidad', destination: '/imania/privacidad.html' },
       { source: '/imania/terminos', destination: '/imania/terminos.html' },
+      /* Home nueva de MYB, conviviendo con la actual: HTML estático en
+         public/nueva/, generado con output/myb-home-v3/publicar.py. */
+      { source: '/nueva', destination: '/nueva/index.html' },
+      { source: '/nueva/:pagina(area-[a-z]+|soluciones)', destination: '/nueva/:pagina.html' },
     ];
   },
 };

@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Soluciones | MYB Digitals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Schibsted+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --papel:#F3F4ED; --tinta:#0D0E0B; --lima:#C3D809; --lima-suave:#E4EC8C;
+  --oliva:#4F5D0C; --gris:#5A5C53; --raya:#0D0E0B;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--papel);color:var(--tinta);font-family:"Hanken Grotesk",system-ui,sans-serif;font-size:17px;line-height:1.55;text-align:center;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,.serif{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:800;letter-spacing:-.035em;line-height:1.02}
+h1{font-size:clamp(2.1rem,6.6vw,5.4rem);max-width:20ch;margin:0 auto}
+h1,h2,h3,p{text-wrap:balance}
+h2{font-size:clamp(2rem,4.4vw,3.5rem);max-width:18ch;margin:0 auto}
+h3{font-size:clamp(1.35rem,2.2vw,1.7rem);line-height:1.12}
+p{max-width:56ch;margin-left:auto;margin-right:auto}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--lima);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+.seccion{padding:clamp(72px,10vw,128px) 0}
+.bajada{font-size:clamp(1.05rem,1.5vw,1.25rem);color:var(--gris);margin-top:22px}
+
+/* Barra */
+.barra{display:flex;align-items:center;justify-content:space-between;padding:22px 20px}
+.logo{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:700;font-size:1.3rem;text-decoration:none;letter-spacing:-.02em}
+.logo b{font-weight:400;background:var(--lima);padding:0 .28em;border-radius:5px}
+.barra nav{display:flex;gap:30px}
+.barra nav a{text-decoration:none;font-size:.95rem;font-weight:500}
+.barra nav a:hover{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px;text-decoration-color:var(--lima)}
+.pildora{background:var(--lima);color:var(--tinta);text-decoration:none;font-weight:600;font-size:.95rem;padding:11px 20px;border-radius:999px;border:1.5px solid var(--tinta);box-shadow:0 3px 0 var(--tinta);transition:transform .12s,box-shadow .12s}
+.pildora:hover{transform:translateY(2px);box-shadow:0 1px 0 var(--tinta)}
+
+/* Apertura */
+.apertura{padding-top:clamp(40px,7vw,84px)}
+.boton-wa{display:inline-flex;align-items:center;gap:14px;text-align:left;background:var(--tinta);color:var(--papel);text-decoration:none;padding:12px 22px 12px 12px;border-radius:14px;margin-top:34px;transition:transform .12s}
+.boton-wa:hover{transform:translateY(-2px)}
+.boton-wa .icono{width:46px;height:46px;border-radius:9px;background:var(--lima);display:grid;place-items:center;flex:none}
+.boton-wa strong{display:block;font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:700;font-weight:400;font-size:1.08rem;line-height:1.2}
+.boton-wa span{font-size:.86rem;color:#B9BBAF}
+.escalera{display:block;width:100%;height:auto;margin-top:clamp(28px,5vw,56px)}
+.escalera text{font-family:"Hanken Grotesk",sans-serif;font-weight:600;fill:var(--tinta)}
+.solo-celu{display:none}
+
+/* Franjas */
+.franjas{height:44px;background:linear-gradient(var(--tinta) 0 25%,var(--oliva) 25% 50%,var(--lima) 50% 75%,var(--lima-suave) 75%)}
+
+/* Límite */
+.oscura{background:var(--tinta);color:var(--papel)}
+.oscura .bajada{color:#B9BBAF}
+.grilla{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
+.tarjeta{border:1.5px dashed rgba(13,14,11,.55);border-radius:16px;padding:30px 24px 32px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.oscura .tarjeta{border-color:rgba(243,244,237,.4)}
+.tarjeta p{font-size:1rem}
+.oscura .tarjeta p{color:#CFD1C5}
+.hora{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:700;font-size:clamp(2rem,3.4vw,2.7rem);color:var(--lima);line-height:1}
+.remate{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1.2;max-width:26ch;margin:60px auto 0}
+.remate em{-webkit-box-decoration-break:clone;box-decoration-break:clone;font-style:normal;background:var(--lima);color:var(--tinta);padding:0 .22em;border-radius:5px}
+
+/* Qué hacemos */
+.tarjeta svg.iso{width:100%;max-width:240px;height:auto;margin-bottom:6px}
+.claras .tarjeta{background:#FAFBF6}
+.claras .tarjeta p{color:var(--gris)}
+.nota{margin-top:44px;color:var(--gris);font-size:1rem}
+
+/* Proceso */
+.pasos{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px;position:relative}
+.pasos::before{content:"";position:absolute;left:16.6%;right:16.6%;top:27px;border-top:1.5px dashed var(--tinta)}
+.paso{display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 8px}
+.numero{width:56px;height:56px;border-radius:50%;background:var(--lima);border:1.5px solid var(--tinta);display:grid;place-items:center;font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:700;font-size:1.5rem;position:relative}
+.paso p{color:var(--gris);font-size:1rem}
+
+/* Clientes */
+.clientes{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 14px;margin-top:44px;list-style:none;padding:0}
+.clientes li{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:700;font-size:clamp(1.1rem,2vw,1.5rem);border:1.5px dashed rgba(13,14,11,.55);border-radius:999px;padding:10px 22px;background:#FAFBF6}
+
+/* Fundadores */
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,300px));justify-content:center;gap:22px;margin-top:52px}
+.marco{aspect-ratio:4/5;border:1.5px dashed rgba(13,14,11,.55);border-radius:16px;background:var(--lima-suave);display:grid;place-items:center;font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:700;font-size:4.4rem;color:var(--oliva)}
+.duo h3{margin-top:16px}
+.duo p{color:var(--gris);font-size:.98rem}
+
+/* Preguntas */
+.preguntas{max-width:760px;margin:48px auto 0;display:grid;gap:12px}
+details{border:1.5px dashed rgba(13,14,11,.55);border-radius:14px;background:#FAFBF6;padding:0 22px}
+summary{cursor:pointer;list-style:none;font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:700;font-size:1.22rem;padding:20px 0;line-height:1.2}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";display:inline-block;margin-left:10px;color:var(--oliva);transition:transform .15s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 0 22px;color:var(--gris)}
+
+/* Cierre */
+.cierre h2{font-size:clamp(2.3rem,6vw,4.8rem);max-width:14ch}
+.boton-lima{display:inline-block;margin-top:36px;background:var(--lima);color:var(--tinta);text-decoration:none;font-weight:600;font-size:1.1rem;padding:18px 34px;border-radius:14px;box-shadow:0 5px 0 var(--oliva);transition:transform .12s,box-shadow .12s}
+.boton-lima:hover{transform:translateY(3px);box-shadow:0 2px 0 var(--oliva)}
+.pie{padding:26px 0 34px;font-size:.9rem;color:#B9BBAF}
+.pie a{text-underline-offset:4px}
+
+.grilla.cuatro{grid-template-columns:repeat(4,1fr);gap:18px}
+.grilla.cuatro .tarjeta{padding:26px 18px 28px}
+@media (max-width:1040px){.grilla.cuatro{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.grilla.cuatro{grid-template-columns:1fr}}
+
+/* Test */
+.test{margin-top:44px;display:grid;gap:30px}
+.test fieldset{border:0;padding:0;min-width:0}
+.test legend{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:700;font-size:clamp(1.4rem,2.6vw,2rem);line-height:1.15;margin:0 auto 16px;padding:0}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:900px;margin:0 auto}
+.chip{cursor:pointer}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{display:block;border:1.5px dashed rgba(243,244,237,.5);border-radius:999px;padding:10px 18px;font-size:.98rem;line-height:1.25;transition:background .15s,color .15s,border-color .15s}
+.chip:hover span{border-color:var(--lima)}
+.chip input:checked+span{background:var(--lima);color:var(--tinta);border:1.5px solid var(--lima);font-weight:600}
+.chip input:focus-visible+span{outline:3px solid var(--lima);outline-offset:3px}
+.fila[hidden]{display:none}
+.fila.marcada{background:var(--lima);margin:0 -10px;padding-left:10px;padding-right:10px;font-weight:500}
+.fila.receta{display:block;background:var(--lima-suave);margin:0 -10px;padding:10px;border-bottom:1px dashed #9aa04a}
+.fila.receta small{display:block;font-size:.72rem;letter-spacing:.08em;color:var(--oliva)}
+.oscura .boton-lima{margin-top:46px}
+.aclaracion{font-size:.92rem;color:#B9BBAF;margin-top:18px}
+.aclaracion.clara{color:var(--gris);margin-top:30px;font-size:1rem}
+.aclaracion a{font-weight:600;text-decoration-color:var(--lima);text-decoration-thickness:2px;text-underline-offset:5px}
+
+/* Ticket */
+.ticket{width:min(100%,410px);margin:56px auto 0;background:#FBFBF6;color:var(--tinta);font-family:"DM Mono",ui-monospace,monospace;font-size:.9rem;line-height:1.4;padding:26px 24px 22px;text-align:left;transform:rotate(-1.4deg);position:relative}
+.ticket::after{content:"";position:absolute;left:0;right:0;top:100%;height:10px;background:linear-gradient(135deg,#FBFBF6 25%,transparent 25%) -10px 0/20px 20px,linear-gradient(225deg,#FBFBF6 25%,transparent 25%) -10px 0/20px 20px}
+.fila{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:9px 0;border-bottom:1px dashed #B5B7AA}
+.fila span:last-child{flex:none}
+.fila.cabeza{justify-content:center;text-align:center;border:0;padding:2px 0}
+.fila.cabeza strong{font-weight:500;font-size:1.15rem;letter-spacing:.08em}
+.fila.cabeza+.fila:not(.cabeza){border-top:1px dashed #B5B7AA;margin-top:14px}
+.fila.total{border-bottom:0;font-weight:500;font-size:1.1rem;padding-top:16px}
+.fila.total mark{background:var(--lima);color:var(--tinta);padding:2px 8px}
+.fila.pie-ticket{display:block;border:0;text-align:center;font-size:.76rem;color:var(--gris);padding-top:14px}
+.barras{height:34px;margin:0 auto 8px;width:70%;background:repeating-linear-gradient(90deg,var(--tinta) 0 2px,transparent 2px 5px,var(--tinta) 5px 9px,transparent 9px 11px,var(--tinta) 11px 12px,transparent 12px 16px)}
+
+/* Animaciones: escalera que se dibuja y ticket que se imprime */
+.escalera path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.5s cubic-bezier(.65,0,.2,1)}
+.escalera text{opacity:0;transform:translateY(8px);transition:opacity .45s ease-out,transform .45s ease-out}
+.escalera.ver path{stroke-dashoffset:0}
+.escalera.ver text{opacity:1;transform:none}
+.ticket .fila{opacity:0;transform:translateY(-8px)}
+.ticket.ver .fila{transition:opacity .3s ease-out,transform .3s ease-out;transition-delay:calc(var(--i)*90ms)}
+.ticket.ver .fila{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.escalera path{stroke-dashoffset:0}.escalera text,.ticket .fila{opacity:1;transform:none}}
+
+@media (max-width:820px){
+  .barra nav{display:none}
+  .grilla:not(.cuatro),.pasos{grid-template-columns:1fr}
+  .pasos::before{display:none}
+  .pasos{gap:40px}
+  .solo-compu{display:none}
+  .solo-celu{display:block}
+  .duo{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .marco{font-size:3rem}
+  .franjas{height:32px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="wrap barra">
+  <a class="logo" href="/nueva"><b>MYB</b> Digitals</a>
+  <nav aria-label="Secciones">
+    <a href="/nueva#analisis">Analizá tu negocio</a>
+    <a href="/nueva#como-trabajamos">Cómo trabajamos</a>
+    <a href="/nueva/soluciones">Soluciones</a>
+    <a href="/nueva#nosotros">Nosotros</a>
+  </nav>
+  <a class="pildora" href="https://wa.me/5493513781063" target="_blank" rel="noopener">Escribinos</a>
+</header>
+
+<main>
+  <section class="apertura">
+    <div class="wrap">
+      <h1>Soluciones listas para insertar en tu negocio.</h1>
+      <p class="bajada">Sistemas que ya armamos para otros negocios. Si tu problema se parece a alguno, el camino ya está recorrido.</p>
+    </div>
+  </section>
+  <section class="seccion claras" style="padding-top:56px">
+    <div class="wrap">
+      <div class="grilla cuatro" style="margin-top:0">
+        <article class="tarjeta">
+          <svg class="iso" id="iso-celular" viewBox="0 0 240 170" aria-hidden="true"></svg>
+          <h3>Barra sin fila</h3>
+          <p>Para boliches y bares. Tus clientes piden y pagan desde el celular, sin esperar en la barra.</p>
+        </article>
+        <article class="tarjeta">
+          <svg class="iso" id="iso-caja" viewBox="0 0 240 170" aria-hidden="true"></svg>
+          <h3>Caja que hace las cuentas</h3>
+          <p>Para mercados y ferreterías. Escaneás el producto, se descuenta del stock y el cierre del día ya está hecho.</p>
+        </article>
+        <article class="tarjeta">
+          <svg class="iso" id="iso-web" viewBox="0 0 240 170" aria-hidden="true"></svg>
+          <h3>Web que trae clientes</h3>
+          <p>Para cualquier negocio. Te encuentran, entienden qué vendés y te escriben.</p>
+        </article>
+        <article class="tarjeta">
+          <svg class="iso" id="iso-vuelven" viewBox="0 0 240 170" aria-hidden="true"></svg>
+          <h3>Tarjeta de fidelización</h3>
+          <p>Para comercios con clientes frecuentes. Suman en cada compra y tienen un motivo para volver.</p>
+        </article>
+      </div>
+
+      <p class="aclaracion clara">¿Tu cuello de botella es otro? <a href="/nueva#analisis">Analizá tu negocio</a> y armamos el sistema a medida.</p>
+    </div>
+  </section>
+  <div class="franjas" aria-hidden="true"></div>
+  <section class="seccion">
+    <div class="wrap">
+      <h2>Negocios que ya trabajan con nosotros.</h2>
+      <ul class="clientes">
+        <li>Reinventadas 5.0</li>
+        <li>Elevare Consulting</li>
+        <li>Erika Rios</li>
+        <li>Imperio de la moda</li>
+        <li>Fernando Berberian Producciones</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<div class="franjas" aria-hidden="true" style="transform:scaleY(-1)"></div>
+<footer class="oscura cierre">
+  <div class="wrap seccion" style="padding-bottom:64px">
+    <h2>Encontremos tu cuello de botella.</h2>
+    <p class="bajada">Pedí el análisis de tu negocio. Te decimos qué sistema lo resuelve y cuánto sale.</p>
+    <a class="boton-lima" href="https://wa.me/5493513781063?text=Hola,%20quiero%20que%20analicen%20los%20cuellos%20de%20botella%20de%20mi%20negocio." target="_blank" rel="noopener">Pedir el análisis por WhatsApp</a>
+  </div>
+  <p class="pie wrap">MYB Digitals. Córdoba, Argentina. <a href="https://www.instagram.com/mybdigitals.ai" target="_blank" rel="noopener">Instagram</a></p>
+</footer>
+
+<script>
+const NS="http://www.w3.org/2000/svg";
+const C={tinta:"#0D0E0B",oliva:"#4F5D0C",lima:"#C3D809",suave:"#E4EC8C",papel:"#F3F4ED"};
+function el(svg,tag,attrs){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);svg.appendChild(e);return e}
+
+/* Escalera de franjas: cada escalón es un resultado */
+function escalera(id,W,H,s,fs,textos){
+  const svg=document.getElementById(id);if(!svg)return;const n=textos.length,ancho=W/n;
+  const abajo=H-s*4,arriba=fs*2.6,salto=(abajo-arriba)/(n-1);
+  let d=`M${-80},${abajo}`;
+  for(let i=0;i<n;i++){const y=abajo-i*salto;d+=` H${(i+1)*ancho}`;if(i<n-1)d+=` V${y-salto}`}
+  d+=` H${W+80}`;
+  [C.tinta,C.oliva,C.lima,C.suave].forEach((color,k)=>el(svg,"path",{d,fill:"none",stroke:color,"stroke-width":s,"stroke-linejoin":"miter",pathLength:1,style:`transition-delay:${k*110}ms`,transform:`translate(${k*s},${k*s})`}));
+  textos.forEach((t,i)=>{const y=abajo-i*salto;el(svg,"text",{x:(i+.5)*ancho,y:y-s/2-fs*.75,"text-anchor":"middle","font-size":fs,style:`transition-delay:${350+i*(900/n)}ms`}).textContent=t});
+}
+escalera("escalera-compu",1440,400,20,18,["Atendés a más clientes","Cobrás más rápido","Te vuelven a comprar","Trabajás menos horas"]);
+escalera("escalera-celu",390,250,11,12.5,["Más clientes","Más ventas","Menos horas"]);
+
+/* Ilustraciones isométricas hechas con bloques */
+const T={blanco:["#FFFFFF","#DADCD0","#C2C4B7"],lima:[C.lima,"#A8BA07","#8D9C05"],suave:[C.suave,"#CBD46F","#B3BC5A"],tinta:["#2A2C25",C.tinta,C.tinta]};
+function iso(id,ox,bloques){
+  const svg=document.getElementById(id);if(!svg)return;const u=14,oy=46;
+  const p=(x,y,z)=>`${(ox+(x-y)*.866*u).toFixed(1)},${(oy+(x+y)*.5*u-z*u).toFixed(1)}`;
+  const cara=(pts,fill)=>el(svg,"polygon",{points:pts.join(" "),fill,stroke:C.tinta,"stroke-width":1.4,"stroke-linejoin":"round"});
+  bloques.forEach(([x,y,z,w,d,h,tono])=>{const t=T[tono];
+    cara([p(x,y+d,z+h),p(x+w,y+d,z+h),p(x+w,y+d,z),p(x,y+d,z)],t[1]);
+    cara([p(x+w,y,z+h),p(x+w,y+d,z+h),p(x+w,y+d,z),p(x+w,y,z)],t[2]);
+    cara([p(x,y,z+h),p(x+w,y,z+h),p(x+w,y+d,z+h),p(x,y+d,z+h)],t[0]);
+  });
+}
+iso("iso-celular",128,[[0,0,0,4,7,.45,"tinta"],[.35,.35,.45,3.3,6.3,.06,"blanco"],[.8,1,.51,2.4,.45,.08,"suave"],[.8,2,.51,1.6,.45,.08,"suave"],[.8,4.9,.51,2.4,1,.3,"lima"],[5.3,1.2,1.4,2.2,3,.1,"blanco"]]);
+iso("iso-vuelven",120,[[0,0,0,5,5,.5,"blanco"],[0,0,1,5,5,.5,"suave"],[0,0,2,5,5,.5,"lima"],[1.8,1.8,2.5,1.4,1.4,.5,"tinta"]]);
+iso("iso-web",120,[[0,0,0,7,5,.35,"blanco"],[0,0,.35,7,.9,.12,"tinta"],[.6,1.6,.35,2.6,2.7,.3,"lima"],[3.8,1.7,.35,2.6,.5,.08,"suave"],[3.8,2.7,.35,2.6,.5,.08,"suave"],[3.8,3.7,.35,1.6,.5,.08,"suave"]]);
+iso("iso-caja",92,[[0,0,0,8.4,2.6,.45,"blanco"],[.6,.6,.45,1.4,1.4,1.2,"blanco"],[3.2,.6,.45,1.4,1.4,1.2,"suave"],[6.3,.2,.45,1.7,2.2,2.2,"tinta"],[6.6,2.4,1.5,1.1,.1,.6,"lima"]]);
+
+const RUBROS=[["un bar o boliche","TU BAR"],["un mercado o almacén","TU MERCADO"],["una ferretería","TU FERRETERÍA"],["un local de ropa","TU LOCAL"],["un restaurante o café","TU RESTAURANTE"],["un negocio de servicios","TU NEGOCIO"],["una tienda online","TU TIENDA"],["otro negocio","TU NEGOCIO"]],FUGAS=[["la gente espera mucho para que la atiendan","Pedido y pago desde el celular","Atendés a más gente con el mismo equipo."],["tardo en contestar consultas y presupuestos","Una web con precios y respuestas a la vista","El cliente se responde solo y vos cerrás más rápido."],["no sé qué stock me queda","Caja con lector que descuenta el stock","Sabés qué falta antes de quedarte sin vender."],["anoto ventas y fiados en un cuaderno","Registro de ventas y fiados en un solo lugar","Cobrás todo lo que vendiste."],["cierro la caja a mano","Cierre de caja automático","Esa hora de cada noche vuelve a ser tuya."],["los clientes no vuelven","Tarjeta de fidelización con tu base de clientes","Tenés a quién avisarle y un motivo para que vuelva."],["nadie me encuentra en internet","Una web que vende, hecha para que te encuentren","Llegan clientes que hoy no saben que existís."]];
+const test=document.getElementById("test");
+if(test){
+  const ticket=document.getElementById("ticket"),$=id=>document.getElementById(id);
+  test.addEventListener("change",()=>{
+    const r=test.rubro.value,f=test.fuga.value;
+    if(r!=="")$("ticket-nombre").textContent=RUBROS[r][1];
+    ticket.querySelectorAll("[data-f]").forEach(x=>x.classList.toggle("marcada",x.dataset.f===f));
+    if(f!==""){
+      $("receta-1").hidden=$("receta-2").hidden=false;
+      $("receta-1").lastElementChild.textContent=FUGAS[f][1];
+      $("receta-2").lastElementChild.textContent=FUGAS[f][2];
+      $("ticket-total").textContent="LO MEDIMOS JUNTOS";
+    }
+    let m="Hola, quiero que analicen mi negocio.";
+    if(r!==""&&f!=="")m="Hola, tengo "+RUBROS[r][0]+" y lo que más me frena es que "+FUGAS[f][0]+". Quiero que analicen mi negocio.";
+    else if(r!=="")m="Hola, tengo "+RUBROS[r][0]+" y quiero que analicen mi negocio.";
+    $("enviar-ticket").href="https://wa.me/5493513781063?text="+encodeURIComponent(m);
+    ticket.classList.remove("ver");void ticket.offsetWidth;ticket.classList.add("ver");
+  });
+}
+const animados=document.querySelectorAll(".escalera,.ticket");
+if("IntersectionObserver" in window){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("ver");io.unobserve(e.target)}}),{threshold:.25});
+  animados.forEach(a=>io.observe(a));
+}else animados.forEach(a=>a.classList.add("ver"));
+</script>
+</body>
+</html>
