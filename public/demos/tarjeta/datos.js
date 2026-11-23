@@ -176,7 +176,8 @@
     if (!c.socio) return { ok: false, motivo: "no-socio" };
     c.socio.pagoHasta = unMesDesde(Math.max(Date.now(), new Date(c.socio.pagoHasta).getTime()));
   });
-  const pesos = (n) => "$" + Math.round(n).toLocaleString("es-AR");
+  const miles = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  const pesos = (n) => (CONFIG.moneda === "eur" ? miles(n) + " €" : "$" + Math.round(n).toLocaleString("es-AR"));
 
   function reiniciar() {
     memoria = null;
@@ -194,7 +195,7 @@
   // Texto del aviso que recibe el cliente cuando pasa cerca.
   function textoCerca(c) {
     const d = descuentoAhora(c), p = proximo(c);
-    return d ? "Tu próximo corte tiene " + d + "% de descuento. ¿Pasás hoy?"
+    return d ? "Tu próximo corte tiene " + d + "% de descuento. " + (CONFIG.moneda === "eur" ? "¿Pasas hoy?" : "¿Pasás hoy?")
              : "Te faltan " + p.faltan + " cortes para tu " + p.pct + "% de descuento.";
   }
 
@@ -238,10 +239,11 @@
       '<g filter="url(#t-tinta)">' +
       (esHito ? '<circle cx="50" cy="50" r="47" fill="currentColor"/>'
               : '<circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="3.4"/>') +
+      (CONFIG.selloIcono ? CONFIG.selloIcono(trazo) : (
       '<g fill="none" stroke="' + trazo + '" stroke-linecap="round">' +
       '<rect x="41" y="28" width="18" height="44" rx="2" stroke-width="2.6"/>' +
       '<g clip-path="url(#t-palo)" stroke-width="5"><path d="M34 40 66 28M34 53 66 41M34 66 66 54M34 79 66 67"/></g></g>' +
-      '<g fill="' + trazo + '"><rect x="37" y="21" width="26" height="6" rx="2"/><rect x="37" y="73" width="26" height="6" rx="2"/><circle cx="50" cy="17" r="3.6"/></g>' +
+      '<g fill="' + trazo + '"><rect x="37" y="21" width="26" height="6" rx="2"/><rect x="37" y="73" width="26" height="6" rx="2"/><circle cx="50" cy="17" r="3.6"/></g>') ) +
       "</g></svg>";
   }
 
