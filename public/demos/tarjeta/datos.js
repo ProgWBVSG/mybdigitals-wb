@@ -20,7 +20,7 @@
   let memoria = null;
 
   function semilla() {
-    const base = [
+    const base = CONFIG.semilla || [
       ["Tomás Agüero", [150, 122, 96, 70, 41, 30, 20, 3]],
       ["Lautaro Paz", [228, 200, 171, 140, 112, 85, 60, 33, 9]],
       ["Franco Medina", [95, 66, 38, 12]],
