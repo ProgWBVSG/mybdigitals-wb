@@ -1,0 +1,129 @@
+/* Fuentes servidas desde el propio servidor: la app anda aunque el wifi del boliche sea malo */
+@font-face {
+  font-family: 'Big Shoulders Display';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/demos/arena/fonts/big-shoulders-display-600.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Big Shoulders Display';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(/demos/arena/fonts/big-shoulders-display-800.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Big Shoulders Display';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(/demos/arena/fonts/big-shoulders-display-900.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/demos/arena/fonts/ibm-plex-mono-500.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/demos/arena/fonts/ibm-plex-mono-600.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(/demos/arena/fonts/instrument-sans-400.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(/demos/arena/fonts/instrument-sans-500.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(/demos/arena/fonts/instrument-sans-600.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(/demos/arena/fonts/instrument-sans-700.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root{
+  --noche:#0B0A10;      /* fondo: luz negra apagada */
+  --humo:#181621;       /* superficies */
+  --humo-2:#2E2940;
+  --linea:rgba(244,240,230,.10);
+  --ficha:#F4F0E6;      /* papel térmico de la comanda */
+  --ficha-2:#E7E1D2;
+  --tinta:#1A1726;
+  --gris:#A39DB5;
+  --uv:#9B7BFF;         /* luz ultravioleta */
+  --cereza:#6D4DF2;     /* acción: violeta neón de Arena */
+  --cereza-osc:#5438D4;
+  --ambar:#FFB547;      /* happy hour / atención */
+  --listo:#3DDC97;      /* listo para retirar */
+  --display:"Big Shoulders Display",Impact,sans-serif;
+  --texto:"Instrument Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--noche);color:var(--ficha);font-family:var(--texto);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--uv);outline-offset:3px;border-radius:8px}
+.num{font-family:var(--display);font-weight:800;letter-spacing:.01em;font-variant-numeric:tabular-nums}
+.mono{font-family:var(--mono)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* La ficha: papel térmico con muescas a los costados y borde troquelado */
+.ficha{position:relative;background:var(--ficha);color:var(--tinta);border-radius:14px;
+  -webkit-mask:radial-gradient(circle 11px at 0 var(--muesca,62%),#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% var(--muesca,62%),#0000 98%,#000) right/51% 100% no-repeat;
+          mask:radial-gradient(circle 11px at 0 var(--muesca,62%),#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% var(--muesca,62%),#0000 98%,#000) right/51% 100% no-repeat}
+.troquel{height:0;border-top:2px dashed rgba(26,23,38,.22);margin:0 18px}
+
+.boton{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 22px;border-radius:14px;background:var(--cereza);color:#fff;font-weight:700;font-size:1.02rem;letter-spacing:.005em;
+  box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 10px 30px -10px rgba(109,77,242,.75);transition:transform .12s,background .15s}
+.boton:hover{background:#ff6079}
+.boton:active{transform:scale(.98)}
+.boton[disabled]{opacity:.45;cursor:default;box-shadow:none}
+.boton.sec{background:var(--humo-2);box-shadow:none;color:var(--ficha)}
+.boton.sec:hover{background:#3a3450}
+
+@keyframes late{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
+.punto{width:8px;height:8px;border-radius:50%;background:var(--listo);display:inline-block;animation:late 1.6s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* marca Arena: edificio de neón + nombre */
+.marca{display:flex;align-items:center;gap:10px}
+.marca .mk{height:34px;width:auto;flex:none;filter:drop-shadow(0 0 10px rgba(140,107,255,.45))}
+.marca .tx{display:block;line-height:.88}
