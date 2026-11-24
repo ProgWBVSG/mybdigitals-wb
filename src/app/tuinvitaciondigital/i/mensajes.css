@@ -1,0 +1,271 @@
+/* Estilo "Mensajes": la invitación como una charla entre los novios.
+   Criterios: .claude/skills/invitacion-mensajes/SKILL.md */
+
+.inv {
+  --mj-papel: #f7ecdc;
+  --mj-crema: #fdf6e8;
+  --mj-tinta: #3a2217;
+  --mj-tinta-suave: #6b5242;
+  --mj-brasa-hondo: #b8461a;
+  --mj-malvavisco: #f6c9d3;
+  --mj-linea: rgba(58, 34, 23, 0.14);
+  --mj-sans: var(--font-dmsans), "Helvetica Neue", Arial, sans-serif;
+  --mj-serif: var(--font-fraunces), Georgia, serif;
+}
+
+/* En desktop la charla es una columna de celular sobre un papel más hondo.
+   El contenedor `.inv` pinta el papel rosado: hay que cambiarle el fondo a él. */
+.inv:has(.inv-columna.mj),
+body:has(.inv-columna.mj) { background: #ecd9bb; }
+
+.inv-columna.mj {
+  min-height: 100svh;
+  background: var(--mj-papel);
+  color: var(--mj-tinta);
+  font-family: var(--mj-sans);
+  /* El chat se lee desde la izquierda: lo centrado es de la invitación de papel. */
+  text-align: left;
+}
+.mj ::selection { background: var(--mj-malvavisco); color: var(--mj-tinta); }
+.mj :focus-visible { outline: 2px solid var(--mj-brasa-hondo); outline-offset: 3px; }
+
+/* ── Cabecera ──
+   Centrada a propósito: el botón "Volver" del catálogo es fijo y vive arriba
+   a la izquierda; con las caras al centro no se pisan. */
+.mj .mj-cabecera{
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.85rem 1rem 0.7rem;
+  background: rgba(247, 236, 220, 0.9);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--mj-linea);
+}
+.mj .mj-caras{ display: flex; }
+.mj .mj-cara{ width: 2.5rem; height: 2.5rem; border-radius: 50%; object-fit: cover; border: 2px solid var(--mj-papel); }
+.mj .mj-cara + .mj-cara{ margin-left: -0.55rem; }
+.mj .mj-quienes{ margin: 0.3rem 0 0; font: 600 1.05rem/1.2 var(--mj-serif); }
+.mj .mj-estado{ margin: 0.1rem 0 0; display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: var(--mj-tinta-suave); }
+.mj .mj-estado__punto{ width: 0.5rem; height: 0.5rem; border-radius: 50%; background: #3f9b5a; }
+
+/* ── La charla ── */
+.mj .mj-charla{ display: flex; flex-direction: column; gap: 0.55rem; padding: 1.4rem 0.85rem 2.4rem; }
+
+.mj .mj-fila{ display: flex; align-items: flex-end; gap: 0.5rem; min-height: 2.6rem; }
+.mj .mj-fila--1{ flex-direction: row-reverse; }
+.mj .mj-fila--yo{ justify-content: flex-end; }
+/* Hasta que no llega el invitado, la fila sólo guarda su lugar. */
+.mj .mj-fila:not([data-visible="true"]){ visibility: hidden; }
+.mj .mj-fila[data-listo="false"] .mj-contenido{ display: none; }
+
+.mj .mj-avatar{ width: 2rem; height: 2rem; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.mj .mj-hueco{ width: 2rem; flex-shrink: 0; }
+.mj .mj-contenido{ min-width: 0; max-width: min(82%, 22rem); }
+.mj .mj-fila[data-listo="true"] .mj-contenido{ animation: mj-entra 320ms var(--salida) both; transform-origin: bottom left; }
+.mj .mj-fila--1[data-listo="true"] .mj-contenido,
+.mj .mj-fila--yo[data-listo="true"] .mj-contenido{ transform-origin: bottom right; }
+@keyframes mj-entra {
+  from { opacity: 0; transform: translateY(8px) scale(0.94); }
+  to { opacity: 1; transform: none; }
+}
+
+.mj .mj-burbuja{
+  margin: 0;
+  padding: 0.6rem 0.95rem;
+  border-radius: 1.2rem;
+  font-size: 1.0625rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.mj .mj-fila--0 .mj-burbuja{ background: var(--mj-malvavisco); color: var(--mj-tinta); border-bottom-left-radius: 0.35rem; }
+.mj .mj-fila--1 .mj-burbuja{ background: var(--mj-brasa-hondo); color: var(--mj-crema); border-bottom-right-radius: 0.35rem; }
+.mj .mj-burbuja--yo{ background: var(--mj-tinta); color: var(--mj-crema); border-bottom-right-radius: 0.35rem; }
+
+/* "Escribiendo…" */
+.mj .mj-puntos{ display: inline-flex; gap: 0.28rem; padding: 0.9rem 1rem; border-radius: 1.2rem; background: var(--mj-malvavisco); }
+.mj .mj-fila--1 .mj-puntos{ background: var(--mj-brasa-hondo); }
+.mj .mj-puntos i{ width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--mj-tinta); opacity: 0.45; animation: mj-salta 1s ease-in-out infinite; }
+.mj .mj-fila--1 .mj-puntos i{ background: var(--mj-crema); }
+.mj .mj-puntos i:nth-child(2){ animation-delay: 0.15s; }
+.mj .mj-puntos i:nth-child(3){ animation-delay: 0.3s; }
+@keyframes mj-salta {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+  30% { transform: translateY(-0.2rem); opacity: 1; }
+}
+
+/* ── Las fotos, como fotos enviadas ── */
+.mj .mj-foto{ margin: 0; width: min(68vw, 17rem); padding: 0.28rem; border-radius: 1.2rem; }
+.mj .mj-fila--0 .mj-foto{ background: var(--mj-malvavisco); border-bottom-left-radius: 0.35rem; }
+.mj .mj-fila--1 .mj-foto{ background: var(--mj-brasa-hondo); color: var(--mj-crema); border-bottom-right-radius: 0.35rem; }
+.mj .mj-foto__marco{ position: relative; border-radius: 0.95rem; overflow: hidden; }
+.mj .mj-foto__img{ object-fit: cover; }
+.mj .mj-foto__pie{ padding: 0.5rem 0.6rem 0.35rem; font-size: 1.0625rem; line-height: 1.4; }
+
+/* ── El calendario ── */
+.mj .mj-calendario{
+  width: 10.5rem;
+  overflow: hidden;
+  text-align: center;
+  background: var(--mj-crema);
+  border: 1px solid var(--mj-linea);
+  border-radius: 1.1rem;
+  border-bottom-left-radius: 0.35rem;
+}
+.mj .mj-fila--1 .mj-calendario{ border-bottom-left-radius: 1.1rem; border-bottom-right-radius: 0.35rem; }
+.mj .mj-calendario__mes{ margin: 0; padding: 0.45rem; background: var(--mj-brasa-hondo); color: var(--mj-crema); font: 600 0.92rem/1.2 var(--mj-sans); letter-spacing: 0.14em; text-transform: uppercase; }
+.mj .mj-calendario__dia{ margin: 0; padding-top: 0.5rem; font: 600 4.4rem/1 var(--mj-serif); font-variant-numeric: lining-nums; }
+.mj .mj-calendario__semana{ margin: 0; padding-bottom: 0.75rem; font: italic 400 1.2rem/1.2 var(--mj-serif); color: var(--mj-tinta-suave); }
+
+/* ── Las tarjetas de información ── */
+.mj .mj-tarjeta{
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: min(14rem, 100%);
+  padding: 1rem 1.1rem;
+  background: var(--mj-crema);
+  border: 1px solid var(--mj-linea);
+  border-radius: 1.15rem;
+}
+.mj .mj-fila--0 .mj-tarjeta{ border-bottom-left-radius: 0.35rem; }
+.mj .mj-fila--1 .mj-tarjeta{ border-bottom-right-radius: 0.35rem; }
+.mj .mj-tarjeta__titulo{ margin: 0; font: 600 1.3rem/1.2 var(--mj-serif); }
+.mj .mj-tarjeta__hora{ margin: 0; font: 600 1.05rem/1.3 var(--mj-sans); color: var(--mj-brasa-hondo); font-variant-numeric: tabular-nums; }
+.mj .mj-tarjeta__texto{ margin: 0; font-size: 1.0625rem; line-height: 1.45; color: var(--mj-tinta-suave); }
+.mj .mj-tarjeta__chico{ margin: 0.5rem 0 0; font-size: 0.92rem; color: var(--mj-tinta-suave); }
+
+.mj .mj-orden{ margin: 0; padding: 0; list-style: none; display: grid; gap: 0.6rem; }
+.mj .mj-orden li{ display: grid; grid-template-columns: 3.6rem 1fr; gap: 0.6rem; font-size: 1.0625rem; line-height: 1.35; }
+.mj .mj-orden__hora{ font-weight: 600; color: var(--mj-brasa-hondo); font-variant-numeric: tabular-nums; }
+
+.mj .mj-dato{ margin: 0.7rem 0 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 0.6rem; }
+.mj .mj-dato__etiqueta{ font-size: 0.92rem; font-weight: 600; color: var(--mj-tinta-suave); }
+.mj .mj-dato__valor{ order: 3; flex: 0 0 100%; font-size: 1.0625rem; font-weight: 500; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.mj .mj-copiar{
+  min-height: 44px;
+  padding: 0 0.3rem;
+  background: none;
+  border: 0;
+  color: var(--mj-brasa-hondo);
+  font: 600 0.95rem var(--mj-sans);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* ── Botones ── */
+.mj .mj-boton{
+  text-transform: none;
+  letter-spacing: normal;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.7rem 1.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--mj-brasa-hondo);
+  color: var(--mj-crema);
+  font: 600 1rem var(--mj-sans);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 200ms var(--salida), transform 140ms var(--salida);
+}
+.mj .mj-boton:hover{ background: #9c3a14; }
+.mj .mj-boton:active{ transform: scale(0.97); }
+.mj .mj-boton:disabled{ opacity: 0.6; cursor: default; }
+.mj .mj-boton--chico{ align-self: flex-start; margin-top: 0.6rem; }
+.mj .mj-enlace{
+  align-self: flex-end;
+  min-height: 44px;
+  background: none;
+  border: 0;
+  color: var(--mj-brasa-hondo);
+  font: 600 1rem var(--mj-sans);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* ── Contestar ── */
+.mj .mj-responder{ display: flex; flex-direction: column; align-items: flex-end; gap: 0.7rem; margin-top: 0.4rem; }
+.mj .mj-chips{ display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem; }
+.mj .mj-chip{
+  min-height: 44px;
+  padding: 0.55rem 1.1rem;
+  border: 1.5px solid var(--mj-brasa-hondo);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--mj-brasa-hondo);
+  font: 600 1rem var(--mj-sans);
+  cursor: pointer;
+  transition: background-color 200ms var(--salida), color 200ms var(--salida), transform 140ms var(--salida);
+}
+.mj .mj-chip:active{ transform: scale(0.97); }
+.mj .mj-chip[aria-pressed="true"]{ background: var(--mj-brasa-hondo); color: var(--mj-crema); }
+.mj .mj-chip--chico{ font-size: 0.95rem; }
+
+.mj .mj-formulario{
+  width: min(100%, 22rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  background: var(--mj-crema);
+  border: 1px solid var(--mj-linea);
+  border-radius: 1.15rem;
+  border-bottom-right-radius: 0.35rem;
+  transform-origin: bottom right;
+  animation: mj-entra 320ms var(--salida) both;
+}
+.mj .mj-campo{ display: flex; flex-direction: column; gap: 0.35rem; margin: 0; padding: 0; border: 0; min-width: 0; }
+.mj .mj-campo > span,
+.mj .mj-campo legend{ padding: 0; font-size: 0.95rem; font-weight: 600; color: var(--mj-tinta-suave); }
+.mj .mj-campo legend{ margin-bottom: 0.4rem; }
+.mj .mj-campo input{
+  width: 100%;
+  min-height: 44px;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--mj-linea);
+  border-radius: 0.8rem;
+  background: #fffaf1;
+  color: var(--mj-tinta);
+  font: 400 1.0625rem var(--mj-sans);
+}
+.mj .mj-campo input:focus{ outline: none; border-color: var(--mj-brasa-hondo); }
+.mj .mj-aviso{ margin: 0; color: #a8321a; font-size: 1rem; }
+
+/* ── El malvavisco que se tuesta ── */
+.mj .mj-tostado{ display: flex; flex-direction: column; align-items: center; margin-top: 1rem; }
+.mj .mj-malv{ width: 10rem; height: auto; overflow: visible; }
+.mj .mj-malv__palo{ stroke: #7a5230; stroke-width: 3.2; stroke-linecap: round; }
+.mj .mj-malv__pieza{
+  fill: #fbf1df;
+  stroke: var(--mj-tinta);
+  stroke-width: 1.6;
+  animation: mj-tuesta 3.6s ease-in-out both;
+  animation-delay: calc(0.4s + var(--i) * 0.5s);
+}
+@keyframes mj-tuesta {
+  0% { fill: #fbf1df; }
+  55% { fill: #e3b265; }
+  100% { fill: #cf8a3c; }
+}
+.mj .mj-tostado__pie{ margin: 0.4rem 0 0; font: italic 400 1.2rem/1.3 var(--mj-serif); color: var(--mj-tinta-suave); animation: mj-entra 600ms var(--salida) 3.4s both; }
+
+/* ── Pie ── */
+.mj .mj-pie{ margin-inline: 0.85rem; padding: 1.6rem 1rem calc(3rem + env(safe-area-inset-bottom)); text-align: center; border-top: 1px solid var(--mj-linea); }
+.mj .mj-pie__firma{ margin: 0; font: italic 400 1.15rem/1.4 var(--mj-serif); color: var(--mj-tinta-suave); }
+.mj .mj-pie__datos{ margin: 0.5rem 0 0; font-size: 0.95rem; color: var(--mj-tinta-suave); }
+
+@media (prefers-reduced-motion: reduce) {
+  .mj .mj-fila[data-listo="true"] .mj-contenido,
+  .mj .mj-formulario,
+  .mj .mj-tostado__pie{ animation: none; }
+  .mj .mj-puntos i{ animation: none; }
+  .mj .mj-malv__pieza{ animation: none; fill: #cf8a3c; }
+}

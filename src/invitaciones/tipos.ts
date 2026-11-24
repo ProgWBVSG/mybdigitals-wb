@@ -385,6 +385,63 @@ export type InvitacionEjecutiva = InvitacionBase & {
   };
 };
 
+/**
+ * Guirnalda: una noche de luces cálidas sobre verde profundo. La foto de la
+ * pareja ocupa la portada entera, una guirnalda de focos se enciende uno por
+ * uno al llegar a ella, y en el cronograma cada hora es un foco que se prende
+ * cuando el invitado llega. Las fotos son de la pareja, no hay ilustración.
+ */
+export type InvitacionGuirnalda = InvitacionBase & {
+  estilo: "guirnalda";
+  guirnalda: {
+    /** La imagen que se ve al compartir el link por WhatsApp. */
+    compartir: string;
+    /** Foto vertical a pantalla completa. Los nombres van sobre su parte baja. */
+    portada: { src: string; alt: string };
+    /** Foto enmarcada en un arco, a mitad de la invitación. */
+    arco: { src: string; alt: string; pie: string };
+    /** Lo último que se lee, debajo de los nombres. */
+    cierre: string;
+  };
+};
+
+/** Una línea de la charla: `quien` es 0 para el primer nombre y 1 para el segundo. */
+export type LineaCharla = { quien: 0 | 1; texto: string };
+
+/**
+ * Mensajes: la invitación es una charla entre los novios que se va escribiendo
+ * mientras se baja. Cada dato del casamiento llega como un mensaje, con puntos
+ * de "escribiendo…" antes, y las fotos van como fotos enviadas. Confirmar es
+ * contestar. El tono es de humor; la información, la de siempre.
+ */
+export type InvitacionMensajes = InvitacionBase & {
+  estilo: "mensajes";
+  mensajes: {
+    compartir: string;
+    /** Las caras de cada uno, en el orden de `nombres`. */
+    avatares: [string, string];
+    /** Cómo arranca la charla, antes de la primera foto. */
+    apertura: LineaCharla[];
+    fotoFogon: { src: string; alt: string; pie: string; quien: 0 | 1 };
+    fotoMesa: { src: string; alt: string; pie: string; quien: 0 | 1 };
+    /** Qué dice cada uno antes de cada dato. En `cuenta`, {d} es los días que faltan. */
+    avisos: {
+      fecha: LineaCharla;
+      cuenta: LineaCharla;
+      ceremonia: LineaCharla;
+      fiesta: LineaCharla;
+      orden: LineaCharla;
+      vestimenta: LineaCharla;
+      regalo: LineaCharla;
+      pregunta: LineaCharla;
+    };
+    /** Lo que contestan al confirmar y al decir que no. */
+    respuestaSi: LineaCharla[];
+    respuestaNo: LineaCharla[];
+    firma: string;
+  };
+};
+
 export type Invitacion =
   | InvitacionRosa
   | InvitacionFotomaton
@@ -399,11 +456,17 @@ export type Invitacion =
   | InvitacionOrbita
   | InvitacionJardin
   | InvitacionCincuenta
-  | InvitacionEjecutiva;
+  | InvitacionEjecutiva
+  | InvitacionGuirnalda
+  | InvitacionMensajes;
 
 /** La imagen de la previsualización en WhatsApp, sea cual sea el estilo. */
 export const imagenCompartir = (inv: Invitacion) =>
-  inv.estilo === "fotomaton"
+  inv.estilo === "guirnalda"
+    ? inv.guirnalda.compartir
+    : inv.estilo === "mensajes"
+    ? inv.mensajes.compartir
+    : inv.estilo === "fotomaton"
     ? inv.fotomaton.compartir
     : inv.estilo === "garabato"
       ? inv.garabato.compartir

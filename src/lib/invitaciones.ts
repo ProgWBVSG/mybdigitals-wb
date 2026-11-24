@@ -80,6 +80,22 @@ export const DISENOS: Diseno[] = [
     enlace: "/tuinvitaciondigital/i/joaquin-y-clara",
   },
   {
+    id: 12,
+    tipo: "bodas",
+    nombre: "Guirnalda",
+    imagen: "/invitaciones/guirnalda/miniatura.webp",
+    acento: "#e6b865",
+    enlace: "/tuinvitaciondigital/i/lucia-y-nicolas",
+  },
+  {
+    id: 13,
+    tipo: "bodas",
+    nombre: "Mensajes",
+    imagen: "/invitaciones/mensajes/miniatura.webp",
+    acento: "#b8461a",
+    enlace: "/tuinvitaciondigital/i/lu-y-nico",
+  },
+  {
     id: 4,
     tipo: "cumples",
     nombre: "Disco Scrapbook",

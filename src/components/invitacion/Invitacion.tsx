@@ -13,6 +13,8 @@ import InvitacionJardin from "./jardin/InvitacionJardin";
 import InvitacionCincuenta from "./cincuenta/InvitacionCincuenta";
 import InvitacionEjecutiva from "./ejecutiva/InvitacionEjecutiva";
 import InvitacionGarabato from "./garabato/InvitacionGarabato";
+import InvitacionGuirnalda from "./guirnalda/InvitacionGuirnalda";
+import InvitacionMensajes from "./mensajes/InvitacionMensajes";
 import Hero from "./Hero";
 import type { Personal } from "./personal";
 import SeccionCierre from "./SeccionCierre";
@@ -68,6 +70,12 @@ export default function Invitacion({ invitacion, personal }: { invitacion: Datos
   }
   if (invitacion.estilo === "garabato") {
     return <InvitacionGarabato invitacion={invitacion} personal={personal} />;
+  }
+  if (invitacion.estilo === "guirnalda") {
+    return <InvitacionGuirnalda invitacion={invitacion} personal={personal} />;
+  }
+  if (invitacion.estilo === "mensajes") {
+    return <InvitacionMensajes invitacion={invitacion} personal={personal} />;
   }
 
   return (
