@@ -15,7 +15,8 @@ import "./jardin.css";
 import "./cincuenta.css";
 import "./ejecutiva.css";
 import "./guirnalda.css";
-import "./mensajes.css";
+import "./rosedal.css";
+import "./rasgado.css";
 
 /* Dos familias y ninguna más.
    Pinyon es una spenceriana de verdad: Dancing Script y Great Vibes son las
@@ -32,7 +33,7 @@ const pinyon = Pinyon_Script({
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
   display: "swap",
 });

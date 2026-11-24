@@ -100,6 +100,12 @@ export default async function ListaRsvp({ params, searchParams }: Props) {
                 </p>
               )}
 
+              {c.mensaje && (
+                <p className="mt-1 text-[0.9rem] font-light italic text-[var(--tinta-tenue)]">
+                  “{c.mensaje}”
+                </p>
+              )}
+
               <p className="inv-versalita mt-2 text-[0.5rem]">
                 {new Date(c.enviada).toLocaleString("es-AR", {
                   day: "2-digit",

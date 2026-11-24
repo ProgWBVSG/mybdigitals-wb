@@ -14,7 +14,8 @@ import InvitacionCincuenta from "./cincuenta/InvitacionCincuenta";
 import InvitacionEjecutiva from "./ejecutiva/InvitacionEjecutiva";
 import InvitacionGarabato from "./garabato/InvitacionGarabato";
 import InvitacionGuirnalda from "./guirnalda/InvitacionGuirnalda";
-import InvitacionMensajes from "./mensajes/InvitacionMensajes";
+import InvitacionRasgado from "./rasgado/InvitacionRasgado";
+import InvitacionRosedal from "./rosedal/InvitacionRosedal";
 import Hero from "./Hero";
 import type { Personal } from "./personal";
 import SeccionCierre from "./SeccionCierre";
@@ -74,8 +75,11 @@ export default function Invitacion({ invitacion, personal }: { invitacion: Datos
   if (invitacion.estilo === "guirnalda") {
     return <InvitacionGuirnalda invitacion={invitacion} personal={personal} />;
   }
-  if (invitacion.estilo === "mensajes") {
-    return <InvitacionMensajes invitacion={invitacion} personal={personal} />;
+  if (invitacion.estilo === "rasgado") {
+    return <InvitacionRasgado invitacion={invitacion} personal={personal} />;
+  }
+  if (invitacion.estilo === "rosedal") {
+    return <InvitacionRosedal invitacion={invitacion} personal={personal} />;
   }
 
   return (

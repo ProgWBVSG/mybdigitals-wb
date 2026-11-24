@@ -21,8 +21,9 @@ const nextConfig: NextConfig = {
     return [
       { source: '/tuinvitaciondigital/bodas', destination: '/tuinvitaciondigital', permanent: true },
       { source: '/tuinvitaciondigital/cumples', destination: '/tuinvitaciondigital', permanent: true },
-      // Mensajes se llamaba lu-y-nico: ya no lleva nombres de pareja.
-      { source: '/tuinvitaciondigital/i/lu-y-nico', destination: '/tuinvitaciondigital/i/mensajes', permanent: true },
+      // El estilo Mensajes (chat) se retiró. Sus links siguen abriendo la invitación de las mismas fotos.
+      { source: '/tuinvitaciondigital/i/lu-y-nico', destination: '/tuinvitaciondigital/i/fogata', permanent: true },
+      { source: '/tuinvitaciondigital/i/mensajes', destination: '/tuinvitaciondigital/i/fogata', permanent: true },
     ];
   },
   /* Páginas legales de Imanía (juego de MyB Digitals). Son HTML estáticos en

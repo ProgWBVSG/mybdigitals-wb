@@ -1,9 +1,7 @@
 import type { Hito, Lugar, Regalo } from "../tipos";
 
 /**
- * La pareja de las dos demos con fotos propias: Guirnalda (la formal) y
- * Mensajes (la de humor). Es la misma boda en las dos: cambia el estilo, no los
- * datos. Nombres, fecha y lugares son inventados; el CBU es inválido a propósito.
+ * La pareja de la demo Guirnalda. Nombres, fecha y lugares son inventados; el CBU es inválido a propósito.
  *
  * Las fotos son de la pareja real que pasó el material y viven en
  * public/invitaciones/demo/lucia-y-nicolas/.

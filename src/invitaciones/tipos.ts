@@ -405,46 +405,61 @@ export type InvitacionGuirnalda = InvitacionBase & {
   };
 };
 
-/** Una línea de la charla: `quien` es 0 para el primer nombre y 1 para el segundo. */
-export type LineaCharla = { quien: 0 | 1; texto: string };
+/**
+ * Rosedal: hermano de Rosa. Sobre lacrado, papel y flores, pero con la foto de
+ * la pareja dentro del arco y rosas rojas.
+ */
+export type InvitacionRosedal = InvitacionBase & {
+  estilo: "rosedal";
+  carta: Carta;
+  rosedal: {
+    compartir: string;
+    /** Qué se celebra, para el calendario. Ej: "Nuestra boda". */
+    evento: string;
+    /** El arco de flores, recortado con alpha. Va sobre la foto. */
+    arco: string;
+    /** Dos cenefas: rosas y botánica. */
+    flores: [string, string];
+    sello: string;
+    portada: { src: string; alt: string };
+    foto: { src: string; alt: string; pie: string };
+    paleta: { nombre: string; color: string }[];
+  };
+};
 
 /**
- * Mensajes: la invitación es una charla entre los novios que se va escribiendo
- * mientras se baja. Cada dato del casamiento llega como un mensaje, con puntos
- * de "escribiendo…" antes, y las fotos van como fotos enviadas. Confirmar es
- * contestar. El tono es de humor; la información, la de siempre.
+ * Rasgado: papel crema y azul polvo, con las fotos de la pareja asomando por
+ * bordes de papel rasgado. La entrada es un papel que el invitado rasga con el
+ * dedo. Todo el borde es SVG generado: sirve cualquier foto.
  */
-export type InvitacionMensajes = InvitacionBase & {
-  estilo: "mensajes";
-  mensajes: {
+export type FotoRasgada = {
+  src: string;
+  alt: string;
+  /** Ancho sobre alto del recorte visible. */
+  proporcion: number;
+  /** Dónde está la pareja, para que el recorte no la corte. Ej: "50% 30%". */
+  foco?: string;
+};
+
+export type InvitacionRasgado = InvitacionBase & {
+  estilo: "rasgado";
+  rasgado: {
     compartir: string;
-    /** Las caras de cada uno. Sin nombres: la charla se entiende por las caras. */
-    avatares: [string, string];
-    /** Qué se celebra, en una palabra. Va en el resumen fijado y en el calendario. Ej: "Boda". */
+    /** Título del evento en el calendario. */
     evento: string;
-    /** Lo primero que se lee: le dice al invitado qué es esto y qué tiene que hacer. */
-    intro: string;
-    /** Colores sugeridos para la vestimenta, con nombre para que se entiendan. */
-    paleta: { nombre: string; color: string }[];
-    /** Cómo arranca la charla, antes de la primera foto. */
-    apertura: LineaCharla[];
-    fotoFogon: { src: string; alt: string; pie: string; quien: 0 | 1 };
-    fotoMesa: { src: string; alt: string; pie: string; quien: 0 | 1 };
-    /** Qué dice cada uno antes de cada dato. En `cuenta`, {d} es los días que faltan. */
-    avisos: {
-      fecha: LineaCharla;
-      cuenta: LineaCharla;
-      ceremonia: LineaCharla;
-      fiesta: LineaCharla;
-      orden: LineaCharla;
-      vestimenta: LineaCharla;
-      regalo: LineaCharla;
-      pregunta: LineaCharla;
-    };
-    /** Lo que contestan al confirmar y al decir que no. */
-    respuestaSi: LineaCharla[];
-    respuestaNo: LineaCharla[];
-    firma: string;
+    /** "fogata": el papel se quema en vez de sólo rasgarse, con brasas y granate. */
+    tema?: "fogata";
+    /** Las dos iniciales: la primera en caligrafía, la segunda en romana. Sin iniciales va el emblema del tema. */
+    monograma?: [string, string];
+    fotos: Record<"portada" | "lugar" | "vestimenta" | "pausa" | "cierre", FotoRasgada>;
+    bendicion: string;
+    padres: { titulo: string; nombres: string[] }[];
+    listaRegalos?: { titulo: string; boton: string; enlace: string };
+    sobres?: { titulo: string; detalle: string };
+    /** El pase que se ve en la demo. Con un link personal sale el de la familia. */
+    pase: { invitado: string; lugares: number };
+    soloAdultos?: string;
+    gracias: string;
   };
 };
 
@@ -464,14 +479,17 @@ export type Invitacion =
   | InvitacionCincuenta
   | InvitacionEjecutiva
   | InvitacionGuirnalda
-  | InvitacionMensajes;
+  | InvitacionRosedal
+  | InvitacionRasgado;
 
 /** La imagen de la previsualización en WhatsApp, sea cual sea el estilo. */
 export const imagenCompartir = (inv: Invitacion) =>
-  inv.estilo === "guirnalda"
+  inv.estilo === "rasgado"
+    ? inv.rasgado.compartir
+    : inv.estilo === "rosedal"
+    ? inv.rosedal.compartir
+    : inv.estilo === "guirnalda"
     ? inv.guirnalda.compartir
-    : inv.estilo === "mensajes"
-    ? inv.mensajes.compartir
     : inv.estilo === "fotomaton"
     ? inv.fotomaton.compartir
     : inv.estilo === "garabato"

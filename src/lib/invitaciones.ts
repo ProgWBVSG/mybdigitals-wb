@@ -90,10 +90,10 @@ export const DISENOS: Diseno[] = [
   {
     id: 13,
     tipo: "bodas",
-    nombre: "Mensajes",
-    imagen: "/invitaciones/mensajes/miniatura.webp",
-    acento: "#b8461a",
-    enlace: "/tuinvitaciondigital/i/mensajes",
+    nombre: "Rosedal",
+    imagen: "/invitaciones/rosedal/miniatura.webp",
+    acento: "#8f1d2b",
+    enlace: "/tuinvitaciondigital/i/rosedal",
   },
   {
     id: 14,
@@ -102,6 +102,22 @@ export const DISENOS: Diseno[] = [
     imagen: "/invitaciones/cine-chateau/miniatura.webp",
     acento: "#b68b50",
     enlace: "/invitaciones/cine-chateau/index.html",
+  },
+  {
+    id: 15,
+    tipo: "bodas",
+    nombre: "Rasgado",
+    imagen: "/invitaciones/rasgado/miniatura.webp",
+    acento: "#3b476f",
+    enlace: "/tuinvitaciondigital/i/renata-y-tomas",
+  },
+  {
+    id: 16,
+    tipo: "bodas",
+    nombre: "Fogata",
+    imagen: "/invitaciones/fogata/miniatura.webp",
+    acento: "#8a1f2e",
+    enlace: "/tuinvitaciondigital/i/fogata",
   },
   {
     id: 4,
