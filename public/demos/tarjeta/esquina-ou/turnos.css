@@ -1,0 +1,90 @@
+/* Turnos de Off Basic: caja del turno en la tarjeta, selector en la hoja y agenda del panel. */
+
+/* ---------- Tarjeta del cliente ---------- */
+.turno-caja{margin-top:14px;padding:22px 16px 18px;border-radius:10px;background:var(--panel);border:1.5px dashed var(--linea)}
+.turno-caja.tiene{border-style:solid;border-color:var(--acento)}
+.turno-caja .rotulo{color:var(--gris)}
+.turno-caja h2{font-size:2.3rem;margin-top:6px}
+.turno-caja h2 em{font-style:normal;color:var(--acento)}
+.turno-caja p{margin-top:6px;color:var(--crema-2)}
+.turno-caja .btn{margin-top:16px}
+.turno-caja .fila{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 14px;margin-top:6px}
+.estado-turno{display:inline-block;margin-top:10px;padding:3px 10px;border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border:1.5px solid var(--crema-2);color:var(--crema-2)}
+.estado-turno.ok{border-color:var(--acento);color:var(--acento)}
+.turno-caja.recuerda{animation:recuerda 1.2s var(--sal) 2}
+@keyframes recuerda{40%{box-shadow:0 0 0 6px color-mix(in srgb,var(--acento) 35%,transparent)}}
+
+/* ---------- Selector (en una hoja de papel) ---------- */
+.hoja.ancha{width:min(94vw,440px);text-align:left;padding:24px 18px 18px}
+.hoja.ancha h2,.hoja.ancha>p{text-align:center}
+.paso{margin:18px 0 8px;font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--tinta-suave)!important}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{flex:1 1 auto;min-height:48px;padding:8px 12px;border:2px solid #B9AE93;border-radius:8px;background:#F7F1E2;color:var(--tinta);font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:1.12rem;text-transform:uppercase;letter-spacing:.03em;cursor:pointer;line-height:1.05;transition:background-color 150ms ease,color 150ms ease,border-color 150ms ease,transform 120ms var(--sal)}
+.chip small{display:block;margin-top:3px;font-family:"Archivo",sans-serif;font-weight:500;font-size:.72rem;letter-spacing:.04em;text-transform:none;color:var(--tinta-suave)}
+.chip.on{background:var(--tinta);border-color:var(--tinta);color:var(--crema)}
+.chip.on small{color:var(--crema-2)}
+.chip:active{transform:scale(.97)}
+.chip:disabled{opacity:.4;cursor:default;text-decoration:line-through}
+.dias{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(78px,1fr);gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.dias::-webkit-scrollbar{display:none}
+.horas{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.horas .chip{font-size:1.05rem;padding:8px 4px}
+.sin-lugar{padding:14px;border:1.5px dashed #9C917A;border-radius:8px;text-align:center}
+.sin-lugar p{margin-bottom:10px}
+.hoja .sin-lugar .btn.linea{width:100%}
+.resumen-turno{margin:18px 0 12px;padding:12px;border-radius:8px;background:rgba(18,18,20,.07);text-align:center;font-weight:600;color:var(--tinta)!important;min-height:48px}
+.politica{margin-top:10px;font-size:.88rem;text-align:center}
+.antes{margin-top:6px;font-size:.95rem}
+.antes s{text-decoration-thickness:2px}
+
+/* ---------- Agenda del panel ---------- */
+.agenda{grid-column:1/-1;color:var(--tinta);background:var(--crema) var(--ruido-papel);border-radius:4px;padding:24px 14px 16px;box-shadow:0 18px 30px rgba(0,0,0,.45)}
+.agenda h2{font-size:2.1rem}
+.agenda .cuenta{margin:4px 0 14px;font-size:.92rem;color:var(--tinta-suave)}
+.agenda .dias{margin:0 auto 16px;max-width:720px}
+.agenda .chip small{color:var(--tinta-suave)}
+.columnas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.columna h3{font-size:1.5rem;padding-bottom:8px;border-bottom:2px solid var(--tinta)}
+.franjas{list-style:none;padding:0}
+.franja{display:grid;grid-template-columns:46px 1fr;align-items:stretch;gap:6px;border-top:1px solid rgba(18,18,20,.14);min-height:40px}
+.franja>span{padding-top:9px;font-size:.8rem;font-weight:600;color:var(--tinta-suave);text-align:left}
+.bloque{margin:4px 0;padding:6px 8px;border-radius:6px;border:2px solid var(--tinta);background:transparent;color:var(--tinta);text-align:left;cursor:pointer;width:100%;font:inherit;line-height:1.15}
+.bloque b{display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:1.05rem;text-transform:uppercase;letter-spacing:.02em}
+.bloque small{display:block;font-size:.76rem;color:var(--tinta-suave)}
+.bloque.confirmado{background:rgba(18,18,20,.07)}
+.bloque.tarjeta b::after{content:" ★";color:var(--acento)}
+.bloque.atendido{border-color:rgba(18,18,20,.25);color:var(--tinta-suave)}
+.bloque.atendido b::before{content:"✓ ";color:var(--acento)}
+.bloque.ausente{border-style:dashed;border-color:var(--acento-2)}
+.bloque.ausente small{color:var(--acento-2);font-weight:600}
+.bloque.cancelado{border:2px dashed #9C917A;background:repeating-linear-gradient(135deg,transparent 0 8px,rgba(18,18,20,.04) 8px 16px)}
+.bloque.cancelado b{text-decoration:line-through;text-decoration-thickness:2px;color:var(--tinta-suave)}
+.bloque.cancelado em{display:inline-block;margin-top:5px;padding:2px 8px;border-radius:999px;background:var(--acento);color:var(--sobre-acento);font-style:normal;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.libre{margin:4px 0;padding:8px;font-size:.76rem;color:#8B816C;text-align:left;border-radius:6px;border:1.5px dashed transparent}
+.agenda .leyenda{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 16px;margin-top:14px;font-size:.8rem;color:var(--tinta-suave)}
+
+/* Lista de espera (al costado del panel) */
+.espera{padding:20px 14px 10px;border-radius:8px;background:var(--panel)}
+.espera h2{font-size:1.5rem}
+.espera .rotulo{color:var(--gris)}
+.espera ul{list-style:none;padding:0;margin-top:12px}
+.espera li{padding:11px 0;border-top:1px solid var(--linea)}
+.espera b{display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:700;font-size:1.2rem;text-transform:uppercase;letter-spacing:.02em}
+.espera span{font-size:.9rem;color:var(--gris)}
+.historial{list-style:none;padding:0;margin:12px 0 0;text-align:left}
+.historial li{padding:7px 0;border-top:1px solid rgba(18,18,20,.15);font-size:.9rem;color:#4A443A}
+
+@media (max-width:560px){
+  .columnas{gap:8px}
+  .franja{grid-template-columns:38px 1fr;gap:4px}
+  .bloque{padding:5px 6px}
+  .bloque b{font-size:.95rem}
+}
+@media (min-width:960px){.agenda{padding:26px 22px 18px}}
+@media (prefers-reduced-motion:reduce){.turno-caja.recuerda{animation:none}.chip{transition:none}}
+.btn:disabled{opacity:.42;cursor:default;box-shadow:none}
+.btn:disabled::after{display:none}
+.panel>*{min-width:0}
+.agenda .dias{max-width:100%}
+.libre.paso-ya{border:0;padding:6px 8px;color:transparent}
+@media (max-width:959px){.agenda{order:-2}}
