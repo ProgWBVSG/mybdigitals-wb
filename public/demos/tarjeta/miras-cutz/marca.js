@@ -35,7 +35,7 @@ window.MARCA = {
   tema: {
     "--carbon": "#17181A", "--panel": "#232527", "--linea": "#3B3E41", "--gris": "#A6AAAE",
     "--crema": "#F0F2F3", "--crema-2": "#C4C8CB", "--tinta": "#1B1C1E", "--tinta-suave": "#565A5E",
-    "--acento": "#F0F2F3", "--acento-2": "#8B9094", "--sobre-acento": "#17181A", "--sobre-sello": "#F0F2F3",
+    "--acento": "#DC2F1E", "--acento-2": "#9A1D11", "--sobre-acento": "#FFFFFF", "--sobre-sello": "#FFFFFF",
     "--madera": "#3A3D41", "--ruido-papel": "none",
   },
   // Sello de taller: un engranaje (la rueda del garaje) en vez del poste de barbero.

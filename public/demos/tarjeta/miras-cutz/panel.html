@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es-ES">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#77797B">
+<title>Panel | {marca}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Bebas+Neue&family=Big+Shoulders+Display:wght@600;700;800;900&family=Saira+Stencil+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../app.css">
+<link rel="stylesheet" href="turnos.css">
+<link rel="stylesheet" href="tema.css">
+<link rel="stylesheet" href="garaje.css">
+<link rel="stylesheet" href="panel.css">
+</head>
+<body class="p">
+
+<div class="garaje" id="garaje" data-modo="acceso">
+  <div class="g-sombra"></div>
+  <div class="g-hueco"><div class="g-puerta"><div class="g-dorso"></div><div class="g-cara">
+    <div class="g-medio">
+      <form class="g-etiqueta" id="form-acceso" autocomplete="off" aria-label="Entrar al panel">
+        <i></i><i></i><i></i><i></i>
+        <h1>miras.cutz</h1>
+        <div class="g-campos">
+          <div><label for="a-usuario">Usuario</label><input id="a-usuario" type="text" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off" maxlength="40" required></div>
+          <div><label for="a-clave">Contraseña</label><input id="a-clave" class="oculta" type="text" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off" maxlength="60" required></div>
+        </div>
+        <button class="entrar" type="submit">Abrir</button>
+        <p id="a-nota" role="status"></p>
+      </form>
+      <button class="g-maneta" type="submit" form="form-acceso" aria-label="Abrir el garaje"></button></div>
+    <span class="g-placa" aria-hidden="true"></span>
+  </div></div></div>
+  <div class="g-jamba"></div><div class="g-jamba de"></div><div class="g-dintel"></div>
+</div>
+<script>try { if (sessionStorage.getItem("miracutz.sesion") === "1") document.getElementById("garaje").hidden = true; } catch (e) { /* sin almacenamiento */ }</script>
+<script src="garaje.js"></script>
+
+<div class="app" id="app" hidden>
+  <header class="cab">
+    <div class="logo" data-logo></div>
+    <nav class="nav" id="nav" aria-label="Secciones">
+      <button type="button" data-ir="hoy"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>Hoy<i hidden></i></button>
+      <button type="button" data-ir="agenda"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Agenda</button>
+      <button type="button" data-ir="clientes"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.6"/><path d="M2.5 20c.6-3.8 3.2-5.6 6.5-5.6s5.900 1.800 6.500 5.600M16 4.800a3.500 3.500 0 0 1 0 6.600M18 14.800c2 .8 3.200 2.500 3.500 5.200"/></svg>Clientes</button>
+      <button type="button" data-ir="numeros"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg>Números</button>
+      <button type="button" data-ir="ajustes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.200"/><circle cx="9" cy="17" r="2.200"/></svg>Ajustes</button>
+    </nav>
+    <button class="salir" type="button" data-salir><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V8l8-4 8 4v12M7 20V11h10v9M7 14h10M7 17h10"/></svg>Cerrar el garaje</button>
+    <button class="bt fija" type="button" data-abrir="cita"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Nueva cita</button>
+  </header>
+  <main class="vistas-p" id="main"></main>
+</div>
+
+<dialog id="hoja-ficha"><div class="hoja" id="ficha"></div></dialog>
+<dialog id="hoja-tp"><div class="hoja" id="tp"></div></dialog>
+
+<dialog id="hoja-rep" aria-labelledby="titulo-rep">
+  <div class="hoja ancha">
+    <h2 id="titulo-rep">Mover la cita</h2>
+    <p class="antes" id="rep-antes"></p>
+    <div id="rep-selector"></div>
+    <div class="pie-hoja"><p class="resumen-turno" id="rep-resumen">Elige un horario</p><div class="fila"><button class="bt" type="button" data-cerrar>Volver</button><button class="bt si" type="button" id="rep-ok" disabled>Mover la cita</button></div></div>
+  </div>
+</dialog>
+
+<dialog id="hoja-cita" aria-labelledby="titulo-cita">
+  <form class="hoja ancha" id="form-cita">
+    <h2 id="titulo-cita">Nueva cita</h2>
+    <div class="campo"><label for="c-nombre">Cliente</label><input id="c-nombre" type="text" list="c-lista" maxlength="60" autocomplete="off" required><datalist id="c-lista"></datalist></div>
+    <div class="campo"><label for="c-tel">Móvil (opcional)</label><input id="c-tel" type="tel" inputmode="tel" maxlength="20"></div>
+    <label class="tilde"><input type="checkbox" id="c-tarjeta" checked> Si es nuevo, crearle su tarjeta</label>
+    <div id="c-selector"></div>
+    <div class="suave"><button class="enlace" type="button" id="c-bloquear">Bloquear este hueco</button></div>
+    <div class="pie-hoja"><p class="resumen-turno" id="c-resumen">Elige un horario</p><div class="fila"><button class="bt" type="button" data-cerrar>Volver</button><button class="bt si" type="submit" id="c-ok" disabled>Guardar cita</button></div></div>
+  </form>
+</dialog>
+
+<dialog id="hoja-nuevo" aria-labelledby="titulo-nuevo">
+  <div class="hoja">
+    <h2 id="titulo-nuevo">Nuevo cliente</h2>
+    <form id="form-nuevo" style="margin-top:16px">
+      <div class="campo"><label for="n-nombre">Nombre</label><input id="n-nombre" type="text" maxlength="60" required></div>
+      <div class="campo"><label for="n-tel">Móvil (opcional)</label><input id="n-tel" type="tel" inputmode="tel" maxlength="20"></div>
+      <label class="tilde" style="justify-content:center"><input type="checkbox" id="n-sello" checked> Sumar el sello de hoy</label>
+      <div class="fila"><button class="bt" type="button" data-cerrar>Cancelar</button><button class="bt si" type="submit">Crear tarjeta</button></div>
+    </form>
+  </div>
+</dialog>
+
+<dialog id="hoja-nfc" aria-labelledby="titulo-nfc">
+  <div class="hoja">
+    <h2 id="titulo-nfc">Sello por NFC</h2>
+    <p style="margin-top:8px">El cliente acerca su móvil a la tarjeta del mostrador y el sello se suma solo. Queda registrado aquí.</p>
+    <p class="enlace-nfc" id="enlace-nfc"></p>
+    <p class="nota" style="color:var(--tinta-suave)">Este es el enlace que se graba en la tarjeta NFC.</p>
+    <div class="fila"><button class="bt" type="button" data-cerrar>Cerrar</button><button class="bt si" type="button" id="copiar-nfc">Copiar enlace</button></div>
+  </div>
+</dialog>
+
+<div class="aviso" id="aviso" role="status"></div>
+
+<script src="marca.js"></script>
+<script src="../datos.js"></script>
+<script src="turnos.js"></script>
+<script src="panel.js"></script>
+</body>
+</html>

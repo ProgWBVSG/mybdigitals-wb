@@ -113,8 +113,26 @@
 
   /* ---------- Agenda ---------- */
   const PX = 1.6;
+  const fechaDe = (k) => { const [a, m, d] = k.split("-").map(Number); return new Date(a, m - 1, d); };
+  function semanaAg() {
+    const l = TU.lunesDe(fechaDe(diaAg)), f = TU.mas(l, 6), hoy = TU.clave(Date.now()), min = TU.mas(TU.lunesDe(Date.now()), -56), max = TU.mas(TU.lunesDe(Date.now()), 35);
+    const titulo = l.getDate() + (l.getMonth() !== f.getMonth() ? " " + TU.MESES[l.getMonth()].slice(0, 3) : "") + " al " + f.getDate() + " " + TU.MESES[f.getMonth()].slice(0, 3);
+    return '<div class="sem-nav"><button type="button" data-semana="-1" aria-label="Semana anterior"' + (l <= min ? " disabled" : "") + '>‹</button><b>' + titulo + '</b><button type="button" data-semana="1" aria-label="Semana siguiente"' + (l >= max ? " disabled" : "") + '>›</button><button type="button" class="ir-hoy" data-semana="0"' + (diaAg === hoyK() ? " disabled" : "") + ">Hoy</button></div>" +
+      '<div class="semana">' + TU.LETRAS.map((x, i) => { const d = TU.mas(l, i), k = TU.clave(d), ab = TU.abre(d), c = ab ? citasDe(k) : [], p = ab ? Math.min(100, Math.round(minutos(c) / TU.capacidad() * 100)) : 0;
+        return '<button type="button" class="' + (k === diaAg ? "on" : "") + (k === hoy ? " hoy" : "") + '" data-dia="' + k + '" aria-pressed="' + (k === diaAg) + '" aria-label="' + TU.DIAS[d.getDay()] + " " + d.getDate() + ", " + (ab ? pl(c.length, "cita", "citas") : "cerrado") + '"' + (ab ? "" : " disabled") + "><span>" + x + "</span><b>" + d.getDate() + "</b><i><u style=\"width:" + p + '%"></u></i></button>'; }).join("") + "</div>";
+  }
+  function moverSemana(n) {
+    if (!n) { diaAg = hoyK(); return; }
+    const d = TU.mas(fechaDe(diaAg), n * 7), l = TU.lunesDe(d), dias = Array.from({ length: 7 }, (_, i) => TU.mas(l, i)).filter(TU.abre).map(TU.clave);
+    diaAg = dias.includes(TU.clave(d)) ? TU.clave(d) : dias[0] || diaAg;
+  }
+  // Pasar de día deslizando sobre la agenda.
+  function otroDia(n) { let d = fechaDe(diaAg); for (let i = 0; i < 14; i++) { d = TU.mas(d, n); if (TU.abre(d)) { diaAg = TU.clave(d); return; } } }
+  let toque = null;
+  document.addEventListener("touchstart", (ev) => { const r = ev.target.closest && ev.target.closest(".rejilla"); toque = r && r.scrollWidth <= r.clientWidth + 2 && ev.touches.length === 1 ? [ev.touches[0].clientX, ev.touches[0].clientY] : null; }, { passive: true });
+  document.addEventListener("touchend", (ev) => { if (!toque) return; const t = ev.changedTouches[0], x = t.clientX - toque[0], y = t.clientY - toque[1]; toque = null; if (Math.abs(x) > 70 && Math.abs(x) > Math.abs(y) * 2) { otroDia(x < 0 ? 1 : -1); pintar(); } }, { passive: true });
   function vAgenda() {
-    const dias = TU.abiertos(7); if (!dias.includes(diaAg)) diaAg = dias[0];
+    if (!TU.abre(fechaDe(diaAg))) diaAg = hoyK();
     const r = TU.resumenDia(diaAg), lista = TU.delDia(diaAg), [a, m, d] = diaAg.split("-").map(Number), ahora = Date.now();
     const alto = (KT.hasta - KT.desde) * 60 * PX, base = new Date(a, m - 1, d, KT.desde).getTime(), y = (ms) => (ms - base) / MIN * PX;
     const esp = TU.espera().filter((x) => x.dia === diaAg).length, bs = barbAg === "todos" ? KT.barberos : KT.barberos.filter((b) => b.id === barbAg);
@@ -138,7 +156,7 @@
     let horas = ""; for (let i = KT.desde; i <= KT.hasta; i++) horas += '<span style="top:' + ((i - KT.desde) * 60 * PX + 2) + 'px">' + String(i).padStart(2, "0") + ":00</span>";
     return '<div class="vp-h"><div><h1>Agenda</h1><p class="sub">' + enTitulo(diaAg) + ": " + pl(r.turnos, "cita", "citas") + ", " + pl(r.libres, "hueco", "huecos") + " para un corte" + (r.ausentes ? ", " + pl(r.ausentes, "no ha venido", "no han venido") : "") + "</p></div>" +
       (KT.barberos.length > 1 ? '<div class="seg" role="group" aria-label="Barbero">' + [{ id: "todos", nombre: "Todos" }].concat(KT.barberos).map((b) => '<button data-barbero="' + b.id + '" aria-pressed="' + (b.id === barbAg) + '">' + e(b.nombre) + "</button>").join("") + "</div>" : "") + "</div>" +
-      '<section class="agenda"><div class="dias">' + dias.map((k) => '<button type="button" class="chip' + (k === diaAg ? " on" : "") + '" data-dia="' + k + '" aria-pressed="' + (k === diaAg) + '">' + TU.corto(k) + "<small>" + pl(citasDe(k).length, "cita", "citas") + "</small></button>").join("") + "</div>" +
+      '<section class="agenda">' + semanaAg() +
       '<div class="rejilla"><div class="horas-ag" style="height:' + (alto + 12) + 'px">' + horas + '</div><div class="cols">' + cols + "</div></div>" +
       '<p class="leyenda"><span><i></i>Confirmada</span><span><i class="r"></i>Sin confirmar</span><span><i class="h"></i>Hueco por cancelación</span><span>★ Tiene tarjeta</span></p></section>';
   }
@@ -165,7 +183,7 @@
     const base = T.buscar(texto);
     $("#pestanas").innerHTML = Object.keys(filtros).map((k) => '<button class="pestana" role="tab" type="button" data-filtro="' + k + '" aria-selected="' + (k === filtro) + '"' + (k === filtro ? ' style="border-bottom-color:var(--acento)"' : "") + ">" + filtros[k].n + " (" + base.filter(filtros[k].fn).length + ")</button>").join("");
     const l = base.filter(filtros[filtro].fn).sort((a, b) => filtro === "dormidos" ? T.diasSin(b) - T.diasSin(a) : new Date(T.ultima(b)) - new Date(T.ultima(a)));
-    $("#clientes").innerHTML = l.length ? l.map((c) => { const n = T.sellosDe(c).length; return '<li><button class="renglon" type="button" data-ficha="' + c.codigo + '"><b>' + e(c.nombre) + (c.socio ? "<small>" + (T.alDia(c) ? "Socio" : "Cuota vencida") + "</small>" : "") + '</b><span class="marcas" role="img" aria-label="' + n + " de " + K.sellos + ' sellos">' + marcas(n) + "</span>" + timbre(c) + "</button></li>"; }).join("") : '<li class="vacio">Nadie con ese criterio.</li>';
+    $("#clientes").innerHTML = l.length ? l.map((c) => { const n = T.sellosDe(c).length; return '<li><button class="renglon" type="button" data-ficha="' + c.codigo + '"><b>' + e(c.nombre) + (c.socio ? (T.alDia(c) ? "<small>Socio</small>" : "<small class=\"mal\">Cuota vencida</small>") : "") + '</b><span class="marcas" role="img" aria-label="' + n + " de " + K.sellos + ' sellos">' + marcas(n) + "</span>" + timbre(c) + "</button></li>"; }).join("") : '<li class="vacio">Nadie con ese criterio.</li>';
   }
 
   /* ---------- Números ---------- */
@@ -190,7 +208,7 @@
       '<div class="barras" role="img" aria-label="' + barras.map((b) => b[0] + ": " + Math.round(b[1]) + " euros").join(", ") + '">' + barras.map((b, i) => '<div style="--n:' + i + '"' + (b[1] === max ? ' class="max"' : "") + "><b>" + T.pesos(b[1]) + "</b><i style=\"height:" + Math.round(b[1] / max * 150) + 'px"></i><span>' + b[0] + "</span></div>").join("") + "</div></section>" +
       (M ? '<section class="caja-n"><h2>' + e(M.nombre) + '</h2><p class="grande">' + eur(R.ingreso) + "</p><p>fijos por mes, " + pl(R.socios, "socio", "socios") + " a " + eur(M.precio) + '</p><ul class="filas">' + soc.map((c) => '<li><button data-ficha="' + c.codigo + '"><span style="color:inherit">' + e(c.nombre) + "</span>" + (T.alDia(c) ? "<span>cobro " + T.cuando(c.socio.pagoHasta) + "</span>" : "<em>vencida</em>") + "</button></li>").join("") + "</ul></section>" : "") +
       '<section class="caja-n"><h2>Agenda ocupada</h2><p class="grande n">' + ocup + " %</p><p>" + pl(at.length, "corte hecho", "cortes hechos") + ", " + eur(at.length ? Math.round(tot / at.length * 100) / 100 : 0) + " de media</p></section>" +
-      '<section class="caja-n"><h2>No han venido</h2><p class="grande n">' + aus + "</p><p>y " + pl(canc, "cancelación con aviso", "cancelaciones con aviso") + "</p></section>" +
+      '<section class="caja-n"><h2>No han venido</h2><p class="grande n' + (aus ? " mal" : "") + '">' + aus + "</p><p>y " + pl(canc, "cancelación con aviso", "cancelaciones con aviso") + "</p></section>" +
       '<section class="caja-n"><h2>Descuentos por aplicar</h2><p class="grande n">' + R.conDescuento + "</p><p>" + (R.conDescuento === 1 ? "cliente lo tiene" : "clientes los tienen") + " en su próximo corte</p></section>" +
       '<section class="caja-n medio"><h2>Por barbero</h2><ul class="filas">' + porB.map((x) => fila(x[0] + ", " + pl(x[2], "corte", "cortes"), x[1], porB[0][1], eur(Math.round(x[1])))).join("") + "</ul></section>" +
       '<section class="caja-n medio"><h2>Lo más pedido</h2><ul class="filas">' + porS.map((x) => fila(x[0], x[1], porS[0][1], x[1])).join("") + "</ul></section></div>" +
@@ -255,7 +273,7 @@
     $("#rep-antes").innerHTML = e(t.nombre) + " · antes: <s>" + TU.fechaTurno(t) + "</s>";
     $("#rep-ok").disabled = true; $("#rep-resumen").textContent = "Elige un horario";
     TU.selector($("#rep-selector"), { servicio: t.servicio, barbero: t.barbero, ignorar: t.id, cambio: (r) => { repSel = r; $("#rep-resumen").textContent = r ? r.texto : "Elige un horario"; $("#rep-ok").disabled = !r; } });
-    hojaRep.showModal();
+    hojaRep.showModal(); hojaRep.firstElementChild.scrollTop = 0;
   }
   $("#rep-ok").addEventListener("click", () => {
     if (!repSel) return; const r = TU.reprogramar(repId, repSel.inicio, repSel.barbero);
@@ -271,7 +289,7 @@
     $("#form-cita").reset(); $("#c-lista").innerHTML = T.clientes().map((c) => '<option value="' + e(c.nombre) + '">').join("");
     $("#c-bloquear").hidden = !hueco; $("#c-ok").disabled = true;
     TU.selector($("#c-selector"), { barbero: barb, dia: ini ? TU.clave(ini) : vista === "agenda" ? diaAg : null, inicio: ini, cambio: (r) => { nueva = r; $("#c-resumen").textContent = r ? r.texto : "Elige un horario"; $("#c-ok").disabled = !r; } });
-    hojaCita.showModal(); $("#c-nombre").focus();
+    hojaCita.showModal(); hojaCita.firstElementChild.scrollTop = 0; $("#c-nombre").focus({ preventScroll: true });
   }
   $("#form-cita").addEventListener("submit", (ev) => {
     ev.preventDefault(); const nombre = $("#c-nombre").value.trim().replace(/\s+/g, " "); if (!nombre || !nueva) return;
@@ -307,6 +325,7 @@
     else if (D.ficha) { elegido = D.ficha; turnoSel = ""; if (hojaTp.open) hojaTp.close(); pintarFicha(); }
     else if (D.slot && D.barb) abrirNueva(D.slot, D.barb);
     else if (D.dia && b.closest(".agenda")) { diaAg = D.dia; pintar(); }
+    else if (D.semana) { moverSemana(Number(D.semana)); pintar(); }
     else if (D.barbero) { barbAg = D.barbero; pintar(); }
     else if (D.periodo) { periodo = D.periodo; pintar(); }
     else if (D.filtro) { filtro = D.filtro; pintarLista(); }

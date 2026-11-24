@@ -44,8 +44,8 @@ button.g-maneta{cursor:pointer}
 .g-etiqueta label{display:block;margin:0 0 5px;font-size:.95rem;font-weight:500;color:#C4C8CB}
 .g-etiqueta input{display:block;width:100%;min-height:50px;margin:0 0 14px;padding:10px 14px;border:0;border-radius:5px;background:#F0F2F3;color:#1B1C1E;font:500 1.08rem "Archivo",system-ui,sans-serif;text-align:left;box-shadow:inset 0 2px 3px rgba(0,0,0,.22)}
 .g-etiqueta .oculta{-webkit-text-security:disc;letter-spacing:.08em}
-.g-etiqueta .entrar{display:block;width:100%;min-height:54px;margin-top:4px;border:0;border-radius:5px;background:#F0F2F3;color:#17181A;font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;font-size:1.45rem;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 0 #8B9094;transition:transform 120ms ease}
-.g-etiqueta .entrar:active{transform:translateY(2px);box-shadow:0 1px 0 #8B9094}
+.g-etiqueta .entrar{display:block;width:100%;min-height:54px;margin-top:4px;border:0;border-radius:5px;background:#DC2F1E;color:#fff;font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;font-size:1.45rem;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 0 #8F1A0F;transition:transform 120ms ease}
+.g-etiqueta .entrar:active{transform:translateY(2px);box-shadow:0 1px 0 #8F1A0F}
 .g-etiqueta p{min-height:1.4em;margin:12px 0 0;font-size:.95rem;line-height:1.4;text-align:center;color:#C4C8CB}
 .g-etiqueta p.error{color:#fff;font-weight:600}
 .g-etiqueta :focus-visible,.g-maneta:focus-visible{outline:3px solid #fff;outline-offset:3px}

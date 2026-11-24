@@ -221,24 +221,45 @@
   }
 
   /* Selector de turno (servicio, barbero, día y horario), el mismo para el cliente y para el panel */
+  const LETRAS = ["L", "M", "X", "J", "V", "S", "D"], MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+  const lunesDe = (f) => { const d = inicioDia(f); d.setDate(d.getDate() - (d.getDay() + 6) % 7); return d; };
+  const mas = (f, n) => { const d = new Date(f); d.setDate(d.getDate() + n); return d; };
   function selector(caja, o) {
     const est = { srv: o.servicio || visibles()[0].id, barb: o.barbero || "cualquiera", dia: o.dia || null, slot: null };
-    let pedido = o.inicio || null;
-    const dias = abiertos(7);
-    const chip = (attr, val, on, txt, sub, apagado) => '<button type="button" class="chip' + (on ? " on" : "") + '" ' + attr + '="' + val + '"' + (apagado ? " disabled" : "") + ">" + txt + (sub ? "<small>" + sub + "</small>" : "") + "</button>";
+    let pedido = o.inicio || null, semanas = 2, abierto = !o.compacto, cache = {};
+    const TOPE = 5; // semanas para adelante
+    const chip = (attr, val, on, txt, sub) => '<button type="button" class="chip' + (on ? " on" : "") + '" ' + attr + '="' + val + '" aria-pressed="' + !!on + '">' + txt + (sub ? "<small>" + sub + "</small>" : "") + "</button>";
+    const libres = (k) => cache[k] || (cache[k] = horarios(k, est.barb, est.srv, o.ignorar));
+    const todos = () => { const l = lunesDe(Date.now()), hoy = clave(Date.now()); return Array.from({ length: TOPE * 7 }, (_, i) => mas(l, i)).filter((d) => clave(d) >= hoy && abre(d)).map(clave); };
+    function celda(d, hoy) {
+      const k = clave(d), pas = k < hoy, ab = abre(d), n = !pas && ab ? libres(k).length : 0, lleno = !pas && ab && !n, apagado = pas || !ab || (lleno && !o.espera);
+      const txt = pas ? "ya pasó" : !ab ? "cerrado" : lleno ? "lleno" : n + (n === 1 ? " hueco" : " huecos");
+      return '<button type="button" class="dia' + (k === est.dia ? " on" : "") + (k === hoy ? " hoy" : "") + (lleno ? " lleno" : "") + (!ab ? " cerrado" : "") + '" data-dia="' + k + '" aria-pressed="' + (k === est.dia) + '" aria-label="' + DIAS[d.getDay()] + " " + d.getDate() + " de " + MESES[d.getMonth()] + ", " + txt + '"' + (apagado ? " disabled" : "") + "><b>" + d.getDate() + "</b><i>" + (lleno ? "lleno" : n ? "<u></u>".repeat(n > 7 ? 3 : n > 3 ? 2 : 1) : "") + "</i></button>";
+    }
     function pintar() {
-      const conLugar = dias.filter((k) => horarios(k, est.barb, est.srv, o.ignorar).length);
-      if (!est.dia || !dias.includes(est.dia)) est.dia = conLugar[0] || dias[0];
-      const libres = horarios(est.dia, est.barb, est.srv, o.ignorar);
-      if (pedido) { est.slot = libres.find((x) => x.inicio === pedido) || null; pedido = null; }
-      if (est.slot && !libres.some((s) => s.inicio === est.slot.inicio)) est.slot = null;
+      cache = {};
+      const dias = todos(), hoy = clave(Date.now()), l0 = lunesDe(Date.now());
+      if (!est.dia || !dias.includes(est.dia)) est.dia = dias.find((k) => libres(k).length) || dias[0];
+      while (semanas < TOPE && est.dia >= clave(mas(l0, semanas * 7))) semanas++;
+      const hs = libres(est.dia);
+      if (pedido) { est.slot = hs.find((x) => x.inicio === pedido) || null; pedido = null; }
+      if (est.slot && !hs.some((x) => x.inicio === est.slot.inicio)) est.slot = null;
+      // Lo más cercano, de días distintos: con un toque queda elegido el día y la hora.
+      const cerca = []; for (const k of dias) { if (cerca.length === 3) break; const h = libres(k)[0]; if (h) cerca.push([k, h]); }
+      const fin = mas(l0, semanas * 7 - 1), mes = conMayus(MESES[l0.getMonth()]) + (fin.getMonth() !== l0.getMonth() ? " y " + MESES[fin.getMonth()] : "");
+      const grupo = (t, l) => l.length ? '<p class="parte-dia">' + t + '</p><div class="horas">' + l.map((x) => chip("data-slot", x.inicio, est.slot && est.slot.inicio === x.inicio, x.hora)).join("") + "</div>" : "";
+      const sv = servicio(est.srv), bb = est.barb === "cualquiera" ? "el primero libre" : barbero(est.barb).nombre;
       caja.innerHTML =
-        (o.sinServicio ? "" : '<p class="paso">Servicio</p><div class="chips">' + visibles().map((s) => chip("data-srv", s.id, s.id === est.srv, s.nombre, T.pesos(s.precio) + " · " + s.min + " min")).join("") + "</div>") +
-        '<p class="paso">Barbero</p><div class="chips">' + [{ id: "cualquiera", nombre: "El primero libre" }].concat(K.barberos).map((b) => chip("data-barb", b.id, b.id === est.barb, b.nombre)).join("") + "</div>" +
-        '<p class="paso">Día</p><div class="dias">' + dias.map((k) => { const n = horarios(k, est.barb, est.srv, o.ignorar).length; return chip("data-dia", k, k === est.dia, corto(k), n ? n + (n === 1 ? " libre" : " libres") : k === clave(Date.now()) ? "sin lugar" : "lleno"); }).join("") + "</div>" +
-        '<p class="paso">Horario</p>' +
-        (libres.length ? '<div class="horas">' + libres.map((s) => chip("data-slot", s.inicio, est.slot && est.slot.inicio === s.inicio, s.hora)).join("") + "</div>"
-          : '<div class="sin-lugar"><p>No quedan citas para ' + elDia(est.dia) + ".</p>" + (o.espera ? '<button type="button" class="btn linea chico" data-espera="' + est.dia + '">Avisarme si se libera una</button>' : "") + "</div>");
+        (abierto ? '<p class="paso">Servicio</p><div class="chips">' + visibles().map((x) => chip("data-srv", x.id, x.id === est.srv, x.nombre, T.pesos(x.precio) + " · " + x.min + " min")).join("") + "</div>" +
+          '<p class="paso">Barbero</p><div class="chips">' + [{ id: "cualquiera", nombre: "El primero libre" }].concat(K.barberos).map((b) => chip("data-barb", b.id, b.id === est.barb, b.nombre)).join("") + "</div>"
+          : '<button type="button" class="resumen-srv" data-abrir-srv="1"><span>' + T.esc(sv.nombre) + " con " + T.esc(bb) + "</span><em>Cambiar</em></button>") +
+        (cerca.length ? '<p class="paso">Lo más cercano</p><div class="cerca-sel">' + cerca.map(([k, h]) => chip("data-cerca", h.inicio, est.slot && est.slot.inicio === h.inicio, conMayus(cuandoDia(k).length > 8 ? corto(k) : cuandoDia(k)), h.hora)).join("") + "</div>" : "") +
+        '<p class="paso">Elige el día</p><div class="cal"><p class="mes">' + mes + '</p><div class="cal-g">' + LETRAS.map((x) => "<span>" + x + "</span>").join("") +
+        Array.from({ length: semanas * 7 }, (_, i) => celda(mas(l0, i), hoy)).join("") + "</div>" +
+        (semanas < TOPE ? '<button type="button" class="mas-dias" data-mas-dias="1">Ver más días</button>' : "") + "</div>" +
+        '<div class="zona-horas" aria-live="polite"><p class="paso">' + conMayus(elDia(est.dia)) + "</p>" +
+        (hs.length ? grupo("Por la mañana", hs.filter((x) => x.hora < "14:00")) + grupo("Por la tarde", hs.filter((x) => x.hora >= "14:00"))
+          : '<div class="sin-lugar"><p>No quedan citas para ' + elDia(est.dia) + ".</p>" + (o.espera ? '<button type="button" class="btn linea chico" data-espera="' + est.dia + '">Avisarme si se libera una</button>' : "") + "</div>") + "</div>";
       o.cambio && o.cambio(resultado());
     }
     function resultado() {
@@ -247,13 +268,21 @@
     }
     caja.onclick = (ev) => {
       const b = ev.target.closest("button"); if (!b || b.disabled) return;
-      if (b.dataset.srv) { est.srv = b.dataset.srv; est.slot = null; }
-      else if (b.dataset.barb) { est.barb = b.dataset.barb; est.slot = null; }
-      else if (b.dataset.dia) { est.dia = b.dataset.dia; est.slot = null; }
-      else if (b.dataset.slot) { const s = horarios(est.dia, est.barb, est.srv, o.ignorar).find((x) => x.inicio === b.dataset.slot); est.slot = s || null; }
-      else if (b.dataset.espera) { o.espera && o.espera(b.dataset.espera); return; }
+      const D = b.dataset; let mirar = false;
+      if (D.srv) { est.srv = D.srv; est.slot = null; }
+      else if (D.barb) { est.barb = D.barb; est.slot = null; }
+      else if (D.abrirSrv) abierto = true;
+      else if (D.masDias) semanas = Math.min(TOPE, semanas + 2);
+      else if (D.dia) { est.dia = D.dia; est.slot = null; mirar = true; }
+      else if (D.cerca) { est.dia = clave(D.cerca); est.slot = horarios(est.dia, est.barb, est.srv, o.ignorar).find((x) => x.inicio === D.cerca) || null; }
+      else if (D.slot) est.slot = horarios(est.dia, est.barb, est.srv, o.ignorar).find((x) => x.inicio === D.slot) || null;
+      else if (D.espera) { o.espera && o.espera(D.espera); return; }
       else return;
+      const foco = ["srv", "barb", "dia", "cerca", "slot"].find((a) => D[a]), val = foco && D[foco];
       pintar();
+      const n = foco && caja.querySelector("[data-" + foco + '="' + val + '"]'); if (n) n.focus({ preventScroll: true });
+      // Al elegir el día, las horas quedan a la vista sin tener que bajar.
+      if (mirar) caja.querySelector(".zona-horas").scrollIntoView({ block: "nearest", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     };
     pintar();
     return { resultado, repintar: pintar };
@@ -261,7 +290,7 @@
 
   window.TURNOS = {
     K, leer, reiniciar, abiertos, horarios, buscar, proximoDe, ultimoCanceladoDe, reservar, cancelar, reprogramar, confirmar, llego, noVino,
-    anotar, quitarEspera, espera, enEspera, delDia, resumenDia, cancelacionesTarde, ausencias, calendario, selector, deshacer, bloquear, desbloquear, importe, entre, capacidad, visibles, elDia,
+    anotar, quitarEspera, espera, enEspera, delDia, resumenDia, cancelacionesTarde, ausencias, calendario, selector, deshacer, bloquear, desbloquear, importe, entre, capacidad, visibles, elDia, lunesDe, mas, abre, LETRAS, MESES, DIAS,
     servicio, barbero, hora, clave, corto, cuandoDia, fechaTurno, conMayus, horasAntes, vigente, fin,
   };
 })();

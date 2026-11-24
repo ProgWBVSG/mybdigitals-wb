@@ -89,3 +89,46 @@
 .agenda .dias{max-width:100%}
 .libre.paso-ya{border:0;padding:6px 8px;color:transparent}
 @media (max-width:959px){.agenda{order:-2}}
+
+/* ---------- Elegir día y hora ---------- */
+.resumen-srv{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:52px;margin-top:14px;padding:10px 14px;border:0;border-radius:8px;background:#E1E4E7;color:var(--tinta);font-weight:600;text-align:left;cursor:pointer}
+.resumen-srv em{font-style:normal;font-weight:500;text-decoration:underline;text-underline-offset:4px}
+.cerca-sel{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cerca-sel .chip{min-height:58px;padding:8px 4px;text-align:center}
+.cerca-sel .chip small{font-size:.95rem;font-weight:600;letter-spacing:0;color:var(--tinta)}
+.cal{padding:12px 10px 6px;border-radius:10px;background:#E1E4E7}
+.hoja .mes{margin:0 4px 8px;font-weight:600;color:var(--tinta);text-align:left}
+.cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.cal-g>span{padding-bottom:2px;text-align:center;font-size:.85rem;font-weight:600;color:var(--tinta-suave)}
+.dia{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;height:54px;padding:0;border:0;border-radius:8px;background:#fff;color:var(--tinta);cursor:pointer;transition:transform 120ms var(--sal),background-color 140ms ease}
+.dia:active{transform:scale(.94)}
+.dia b{font-weight:600;font-size:1.18rem;line-height:1;font-variant-numeric:tabular-nums}
+.dia i{display:flex;gap:3px;align-items:center;height:9px;font-style:normal;font-size:.72rem;line-height:1;font-weight:500;color:var(--tinta-suave)}
+.dia u{width:5px;height:5px;border-radius:50%;background:#7C8286}
+.dia.hoy{box-shadow:inset 0 0 0 2px #8B9094}
+.dia.on{background:var(--acento);color:#fff;box-shadow:none}
+.dia.on i{color:#fff}.dia.on u{background:#fff}
+.dia.lleno:not(.on){background:#EEF0F1;color:var(--tinta-suave)}
+.dia:disabled{background:none;color:#A0A5A9;cursor:default}
+.dia.cerrado b{text-decoration:line-through;text-decoration-thickness:1px}
+.mas-dias{width:100%;min-height:46px;margin-top:2px;border:0;background:none;color:var(--tinta);font-weight:600;cursor:pointer}
+.hoja .parte-dia{margin:10px 0 6px;font-size:.95rem;color:var(--tinta-suave)}
+.zona-horas{scroll-margin-bottom:150px}
+.horas .chip,.cerca-sel .chip{font-variant-numeric:tabular-nums}
+.horas .chip.on,.cerca-sel .chip.on{background:var(--acento);border-color:var(--acento);color:#fff}
+.cerca-sel .chip.on small{color:#fff}
+.hoja .paso{margin:18px 0 8px;font-size:1rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--tinta)!important}
+.pie-hoja{position:sticky;bottom:-18px;z-index:3;margin:14px -18px -18px;padding:10px 18px calc(16px + env(safe-area-inset-bottom));background:var(--crema);border-top:1px solid #CDD1D4}
+.pie-hoja .resumen-turno{margin:0 0 10px;padding:0;min-height:0;background:none;font-size:1rem}
+.pie-hoja>div:not(.fila){display:grid;grid-template-columns:1fr 1.9fr;gap:10px}
+.pie-hoja .fila{margin:0}
+.pie-hoja .btn{min-height:56px;font-size:1.3rem;padding:10px}
+@media (max-width:560px){
+  /* En el móvil la hoja sube desde abajo: todo queda cerca del pulgar */
+  dialog:has(.hoja.ancha){margin:auto 0 0;width:100%}
+  .hoja.ancha{width:100vw;max-height:94vh;max-height:94dvh;border-radius:16px 16px 0 0}
+  dialog[open] .hoja.ancha{animation:sube-hoja 260ms var(--sal)}
+}
+@keyframes sube-hoja{from{transform:translateY(40px);opacity:0}}
+@media (min-width:700px){.hoja.ancha{width:min(94vw,520px)}}
+@media (prefers-reduced-motion:reduce){dialog[open] .hoja.ancha{animation:none}.dia{transition:none}}

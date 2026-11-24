@@ -2,70 +2,10 @@
 <html lang="es-ES">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#77797B">
-<title>Tarjeta digital | {marca}</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Bebas+Neue&family=Big+Shoulders+Display:wght@600;700;800;900&family=Saira+Stencil+One&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../app.css">
-<link rel="stylesheet" href="turnos.css">
-<link rel="stylesheet" href="tema.css">
+<title>Miras.cutz</title>
+<script>location.replace("../miras-cutz/demo.html" + location.search + location.hash);</script>
+<noscript><meta http-equiv="refresh" content="0; url=../miras-cutz/demo.html"></noscript>
 </head>
-<body>
-<main class="muestra">
-  <div class="logo entra" data-logo></div>
-  <h1 class="entra" style="--i:1">Tu tarjeta de sellos, en el móvil.</h1>
-  <p>Pide, cambia o cancela una cita, y prueba las dos formas de sumar un sello.</p>
-
-  <div class="controles">
-    <button class="btn linea chico" type="button" data-simular="nfc">Acercar el móvil al NFC</button>
-    <button class="btn linea chico" type="button" data-simular="cerca">Pasar cerca del local</button>
-    <button class="btn linea chico" type="button" data-simular="recordatorio">Recordatorio de la cita</button>
-  </div>
-
-  <div class="selector" role="tablist">
-    <button class="pestana" type="button" role="tab" data-vista="cliente" aria-selected="true">Tu cliente</button>
-    <button class="pestana" type="button" role="tab" data-vista="dueno" aria-selected="false">Tú</button>
-  </div>
-
-  <div class="vistas entra" style="--i:3">
-    <section class="vista activa" data-vista="cliente">
-      <h2>Lo que ve <em>tu cliente</em></h2>
-      <div class="celular"><iframe id="marco-cliente" src="index.html?c=0101" title="Tarjeta del cliente"></iframe></div>
-    </section>
-    <section class="vista" data-vista="dueno">
-      <h2>Lo que ves <em>tú</em></h2>
-      <div class="celular"><iframe src="panel.html?demo=1" title="Panel del dueño"></iframe></div>
-    </section>
-  </div>
-</main>
-<p class="firma">Hecho por <a href="https://www.mybdigitals.com" target="_blank" rel="noopener">MYB Digitals</a></p>
-
-<script src="marca.js"></script>
-<script src="../datos.js"></script>
-<script>
-(function () {
-  "use strict";
-  const T = window.TARJETA;
-  T.vestir();
-  function mostrar(vista) {
-    document.querySelectorAll(".selector [data-vista]").forEach((b) => b.setAttribute("aria-selected", b.dataset.vista === vista));
-    document.querySelectorAll(".vista").forEach((v) => v.classList.toggle("activa", v.dataset.vista === vista));
-  }
-  document.querySelector(".selector").addEventListener("click", (e) => {
-    const boton = e.target.closest("[data-vista]");
-    if (boton) mostrar(boton.dataset.vista);
-  });
-  // Los botones de prueba le hablan a la tarjeta del cliente, que es donde pasa todo.
-  document.querySelector(".controles").addEventListener("click", (e) => {
-    const boton = e.target.closest("[data-simular]");
-    if (!boton) return;
-    mostrar("cliente");
-    document.getElementById("marco-cliente").contentWindow.postMessage({ marca: T.CONFIG.id, tipo: boton.dataset.simular }, "*");
-  });
-})();
-</script>
-</body>
+<body><a href="../miras-cutz/demo.html">Abrir Miras.cutz</a></body>
 </html>

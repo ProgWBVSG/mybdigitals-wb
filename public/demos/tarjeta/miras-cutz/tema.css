@@ -1,19 +1,21 @@
-/* Estilo de garaje: chapa blanca, dintel gris, maneta negra y piso de hormigón. Sin colores. */
+/* Estilo de garaje: chapa blanca, negro de maneta y un solo color, el rojo de la caja de herramientas.
+   El rojo marca sólo lo que hay que tocar o mirar primero. */
 :root{
   --carbon:#17181A;--panel:#232527;--linea:#3B3E41;--gris:#A6AAAE;
   --crema:#F0F2F3;--crema-2:#C4C8CB;--tinta:#1B1C1E;--tinta-suave:#565A5E;
-  --acento:#F0F2F3;--acento-2:#8B9094;--sobre-acento:#17181A;--sobre-sello:#F0F2F3;--madera:#3A3D41;--ruido-papel:none;
+  --acento:#DC2F1E;--acento-2:#9A1D11;--sobre-acento:#FFFFFF;--sobre-sello:#FFFFFF;--rojo:#DC2F1E;--rojo-luz:#FF6B5C;--madera:#3A3D41;--ruido-papel:none;
   --chapa:repeating-linear-gradient(90deg,rgba(30,33,36,.1) 0 1px,rgba(255,255,255,.7) 1px 2px,transparent 2px 13px,rgba(30,33,36,.06) 14px,transparent 18px 28px);
 }
 /* Sobre la chapa blanca el contraste lo da el negro de la maneta */
-.papel,.hoja,.planilla,.ticket,.agenda{--acento:#1B1C1E;--acento-2:#43474B;--sobre-acento:#FFFFFF}
+.papel,.hoja,.planilla,.ticket,.agenda{--acento:#D02A1A;--acento-2:#B32114;--sobre-acento:#FFFFFF}
 body::before{content:"";position:fixed;left:0;right:0;top:0;height:9px;z-index:60;background:linear-gradient(#828588,#747779);border-bottom:1px solid #55585A}
 [data-letra=recto] .logo{font-family:"Saira Stencil One","Big Shoulders Display",sans-serif;font-size:2.35rem;letter-spacing:.03em;line-height:.95}
 [data-letra=recto] .logo span{font-family:"Big Shoulders Display",sans-serif;font-size:.36em;letter-spacing:.5em;text-indent:.5em;margin-top:8px;padding-top:6px;border-top:2px solid #77797B;color:var(--gris)}
 .logo .corona{width:1.05em;margin-bottom:.18em}
 .estado h1,.muestra h1{text-shadow:none}
-.btn:not(.linea){box-shadow:0 4px 0 #8B9094}
-.hoja .btn:not(.linea){box-shadow:0 4px 0 #6E7377}
+.btn:not(.linea){box-shadow:0 4px 0 #8F1A0F}
+.btn:disabled{background:#B9BDC0;color:#fff;opacity:1;box-shadow:none!important}
+.enlace,.hoja .enlace{text-decoration-color:currentColor;text-decoration-thickness:1px}
 
 /* La tarjeta de sellos es una chapa de la puerta */
 .papel{border-radius:3px;padding:34px 18px 26px;background:var(--chapa),#E9EBED;box-shadow:0 16px 26px rgba(0,0,0,.6)}
@@ -32,5 +34,13 @@ body::before{content:"";position:fixed;left:0;right:0;top:0;height:9px;z-index:6
 .notif i{background:#1B1C1E;color:#fff}
 .notif span{color:#4A4E52}
 .descuento{border-radius:4px}
-/* Sin color, los sellos con premio se distinguen por la forma. */
+/* Los sellos con premio se distinguen por color y por forma. */
 .marcas i.meta,.puntos i.meta{border-radius:3px}
+/* El rojo como texto sobre fondo oscuro va más claro para que se lea */
+.estado em,.turno-caja h2 em,.club-precio b,.cortes em,.hito-caja.sigue b{color:var(--rojo-luz)}
+.turno-caja.tiene{border-color:var(--linea)}
+.club.socio{border-color:var(--linea)}
+.estado-turno.ok{border-color:var(--crema);color:var(--crema)}
+.renglon b small{color:var(--tinta-suave)}
+.renglon b small.mal{color:var(--acento-2)}
+.pestana[aria-selected=true]{border-bottom-color:var(--tinta)}
