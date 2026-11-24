@@ -4,14 +4,28 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#77797B">
 <title>Mi tarjeta | {marca}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Bebas+Neue&family=Big+Shoulders+Display:wght@600;700;800;900&family=Yellowtail&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Bebas+Neue&family=Big+Shoulders+Display:wght@600;700;800;900&family=Saira+Stencil+One&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../app.css">
 <link rel="stylesheet" href="turnos.css">
+<link rel="stylesheet" href="tema.css">
+<link rel="stylesheet" href="garaje.css">
+<link rel="stylesheet" href="cliente.css">
 </head>
 <body>
+<div class="garaje" id="garaje" data-modo="carga" aria-hidden="true">
+  <div class="g-sombra"></div>
+  <div class="g-hueco"><div class="g-puerta"><div class="g-dorso"></div><div class="g-cara">
+    <div class="g-medio">
+      <span class="g-nombre">mira.cutz</span><span class="g-maneta"></span></div>
+    <span class="g-placa" aria-hidden="true"></span>
+  </div></div></div>
+  <div class="g-jamba"></div><div class="g-jamba de"></div><div class="g-dintel"></div>
+</div>
+<script src="garaje.js"></script>
 <div class="notif" id="notif" role="status"><i id="notif-inicial"></i><div><b id="notif-titulo"></b><span id="notif-texto"></span></div></div>
 
 <main class="col">
@@ -37,6 +51,7 @@
 
   <!-- Tarjeta -->
   <section id="vista" hidden>
+    <div data-parte="tarjeta">
     <div class="escena entra" style="--i:2">
       <div class="papel">
         <div class="huecos" id="huecos" role="img"></div>
@@ -48,23 +63,39 @@
       <p id="estado-2"></p>
     </div>
 
-    <section class="turno-caja foco entra" style="--i:4" id="turno-caja" aria-live="polite"></section>
-    <button class="btn linea entra" style="--i:5;margin-top:14px" id="ver-codigo" type="button">Mostrar mi código</button>
-
+    <button class="proxima entra" style="--i:4" id="proxima" type="button" data-parte-ir="cita"></button>
     <div class="hitos entra" style="--i:5" id="hitos"></div>
-    <section class="club foco entra" style="--i:6" id="club" aria-live="polite"></section>
-    <button class="btn linea cerca entra" style="--i:7" id="cerca" type="button" aria-pressed="false">Avisarme cuando pase cerca</button>
+    </div>
 
-    <section class="prueba" id="prueba" hidden>
-      <p class="rotulo">Para probar la demo</p>
+    <div data-parte="cita" hidden>
+    <h1 class="titulo-parte">Tu cita</h1>
+    <section class="turno-caja foco" id="turno-caja" aria-live="polite"></section>
+    <button class="btn linea cerca" id="cerca" type="button" aria-pressed="false">Avisarme cuando pase cerca</button>
+    </div>
+
+    <div data-parte="club" hidden>
+    <h1 class="titulo-parte" id="titulo-parte-club"></h1>
+    <section class="club foco" id="club" aria-live="polite"></section>
+    <section class="cortes" id="cortes"></section>
+    </div>
+
+    <section class="prueba" id="prueba" hidden><details>
+      <summary>Para probar la demo</summary>
       <div class="pila">
         <button class="btn linea chico" type="button" data-probar="nfc">Acercar el móvil al NFC</button>
         <button class="btn linea chico" type="button" data-probar="cerca">Pasar cerca del local</button>
-        <button class="btn linea chico" type="button" data-probar="recordatorio">Recibir el recordatorio del turno</button>
+        <button class="btn linea chico" type="button" data-probar="recordatorio">Recibir el recordatorio de la cita</button>
       </div>
-    </section>
+    </details></section>
   </section>
 </main>
+
+<nav class="abajo" id="abajo" aria-label="Secciones" hidden>
+  <button type="button" data-parte-ir="tarjeta"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8" cy="10" r="1.400"/><circle cx="12" cy="10" r="1.400"/><circle cx="16" cy="10" r="1.400"/><path d="M7 15h6"/></svg>Tarjeta</button>
+  <button type="button" data-parte-ir="cita"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.500" y="5" width="17" height="15.500" rx="2"/><path d="M3.500 10h17M8 3v4M16 3v4"/></svg>Cita</button>
+  <button type="button" id="ver-codigo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5M8 8h3v3H8zM13 13h3v3h-3zM13 8h3M8 13v3"/></svg>Mi código</button>
+  <button type="button" data-parte-ir="club"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.500 2.600 5.400 5.900.8-4.300 4.100 1 5.900-5.200-2.800-5.200 2.800 1-5.900L3.500 9.700l5.900-.8z"/></svg>Club</button>
+</nav>
 
 <p class="firma">Hecho por <a href="https://www.mybdigitals.com" target="_blank" rel="noopener">MYB Digitals</a></p>
 
@@ -79,12 +110,12 @@
 
 <dialog id="hoja-turno" aria-labelledby="titulo-turno">
   <div class="hoja ancha">
-    <h2 id="titulo-turno">Pide tu turno</h2>
+    <h2 id="titulo-turno">Pide tu cita</h2>
     <p class="antes" id="turno-antes" hidden></p>
     <div id="selector"></div>
     <p class="resumen-turno" id="turno-resumen">Elige un horario</p>
     <div class="pila">
-      <button class="btn" type="button" id="turno-ok" disabled>Reservar turno</button>
+      <button class="btn" type="button" id="turno-ok" disabled>Reservar cita</button>
       <button class="btn linea" type="button" id="turno-cerrar">Volver</button>
     </div>
     <p class="politica" id="turno-politica"></p>
@@ -93,11 +124,11 @@
 
 <dialog id="hoja-cancelar" aria-labelledby="titulo-cancelar">
   <div class="hoja">
-    <h2 id="titulo-cancelar">¿Cancelas tu turno?</h2>
+    <h2 id="titulo-cancelar">¿Cancelas tu cita?</h2>
     <p id="cancelar-que" style="margin-top:8px;font-weight:600"></p>
     <p class="politica" id="cancelar-pol"></p>
     <div class="pila" style="margin-top:18px">
-      <button class="btn" type="button" id="cancelar-cambiar">Mejor lo cambio de día</button>
+      <button class="btn" type="button" id="cancelar-cambiar">Mejor la cambio de día</button>
       <button class="btn linea" type="button" id="cancelar-si">Sí, cancelar</button>
     </div>
   </div>
@@ -145,7 +176,7 @@
     if (!M) { caja.hidden = true; return; }
     const al = T.alDia(c);
     const h = !c.socio
-      ? "<h2>" + T.esc(M.nombre) + '</h2><p class="club-precio"><b>' + T.pesos(M.precio) + "</b> por mes</p><p>" + T.esc(M.detalle) + '</p><button class="btn linea" type="button" data-club="alta">Sumarme al club</button>'
+      ? '<p class="club-precio"><b>' + T.pesos(M.precio) + "</b> por mes</p><p>" + T.esc(M.detalle) + '</p><button class="btn linea" type="button" data-club="alta">Sumarme al club</button>'
       : al
         ? "<h2>Eres socio</h2><p>" + T.esc(M.detalle) + '</p><p class="rotulo" style="margin-top:10px">Próximo cobro ' + T.cuando(c.socio.pagoHasta) + '</p><button class="enlace" type="button" data-club="baja">Darme de baja</button>'
         : "<h2>Tu cuota venció</h2><p>" + T.esc(M.nombre) + " · " + T.pesos(M.precio) + ' por mes</p><button class="btn linea" type="button" data-club="pagar">Pagar la cuota</button>';
@@ -156,7 +187,7 @@
   function pintar() {
     const c = codigo ? T.porCodigo(codigo) : null;
     $("#alta").hidden = !!c;
-    $("#vista").hidden = !c;
+    $("#vista").hidden = !c; $("#abajo").hidden = !c;
     $("#saludo").textContent = c ? "Hola, " + c.nombre.split(" ")[0] : "";
     if (!c) return;
 
@@ -200,7 +231,25 @@
     pintarClub(c);
 
     pintarTurno(c);
+    pintarCortes(c);
   }
+
+  /* ---------- Partes: Tarjeta, Cita y Club ---------- */
+  let parte = "tarjeta";
+  function verParte(p) {
+    parte = ["tarjeta", "cita", "club"].includes(p) ? p : "tarjeta";
+    document.querySelectorAll("[data-parte]").forEach((x) => { x.hidden = x.dataset.parte !== parte; if (!x.hidden) { x.classList.remove("cambia"); void x.offsetWidth; x.classList.add("cambia"); } });
+    document.querySelectorAll("#abajo [data-parte-ir]").forEach((b) => { if (b.dataset.parteIr === parte) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
+    window.scrollTo(0, 0);
+  }
+  document.addEventListener("click", (ev) => { const b = ev.target.closest("[data-parte-ir]"); if (b) verParte(b.dataset.parteIr); });
+  function pintarCortes(c) {
+    const l = c.visitas.slice(-5).reverse();
+    const h = "<h2>Tus últimos cortes</h2>" + (l.length ? "<ul>" + l.map((v) => { const i = c.visitas.indexOf(v) % K.sellos + 1; return "<li><span>" + T.conAnio(v.fecha) + "</span><b>Sello " + i + (v.descuento ? " <em>−" + v.descuento + "%</em>" : "") + "</b></li>"; }).join("") + "</ul>" : "<p>Todavía no tienes cortes.</p>");
+    const caja = $("#cortes"); if (caja.dataset.v !== h) { caja.dataset.v = h; caja.innerHTML = h; }
+    $("#titulo-parte-club").textContent = K.membresia ? K.membresia.nombre : "Tus cortes";
+  }
+  T.conAnio = (iso) => new Date(iso).toLocaleDateString("es-ES", { day: "numeric", month: "long" });
 
   /* ---------- Turnos ---------- */
   const TU = window.TURNOS, KT = TU.K;
@@ -209,19 +258,20 @@
     let h;
     if (t) {
       const s = TU.servicio(t.servicio);
-      h = '<p class="rotulo">Tu próximo turno</p><h2>' + TU.conMayus(TU.cuandoDia(TU.clave(t.inicio))) + " · <em>" + TU.hora(t.inicio) + "</em></h2>" +
+      h = '<h2>' + TU.conMayus(TU.cuandoDia(TU.clave(t.inicio))) + " · <em>" + TU.hora(t.inicio) + "</em></h2>" +
         "<p>" + T.esc(s.nombre) + " con " + T.esc(TU.barbero(t.barbero).nombre) + " · " + T.pesos(s.precio) + "</p>" +
-        '<span class="estado-turno' + (t.confirmado ? " ok" : "") + '">' + (t.confirmado ? "✓ Confirmado" : "Sin confirmar") + "</span>" +
+        '<span class="estado-turno' + (t.confirmado ? " ok" : "") + '">' + (t.confirmado ? "✓ Confirmada" : "Sin confirmar") + "</span>" +
         (t.confirmado ? "" : '<button class="btn brilla" type="button" data-turno="confirmar">Confirmo que voy</button>') +
         '<button class="btn linea" type="button" data-turno="cambiar"' + (t.confirmado ? "" : ' style="margin-top:10px"') + ">Cambiar día u hora</button>" +
-        '<div class="fila"><button class="enlace" type="button" data-turno="cancelar">Cancelar turno</button>' +
-        '<a class="enlace" target="_blank" rel="noopener" href="' + TU.calendario(t) + '">Agendar en mi calendario</a></div>';
+        '<div class="fila"><button class="enlace" type="button" data-turno="cancelar">Cancelar cita</button>' +
+        '<a class="enlace" target="_blank" rel="noopener" href="' + TU.calendario(t) + '">Añadir a mi calendario</a></div>';
     } else {
       const esp = TU.enEspera(c.codigo)[0];
-      h = "<h2>Pide tu turno</h2><p>Elige servicio, barbero y horario. Te llega la confirmación aquí.</p>" +
-        (esp ? '<p class="rotulo" style="margin-top:12px;color:var(--acento)">Estás en lista de espera para el ' + TU.cuandoDia(esp.dia) + "</p>" : "") +
-        '<button class="btn brilla" type="button" data-turno="pedir">Pedir turno</button>';
+      h = "<h2>Pide tu cita</h2><p>Elige servicio, barbero y horario. Te llega la confirmación aquí.</p>" +
+        (esp ? '<p class="rotulo" style="margin-top:12px;color:var(--acento)">Estás en lista de espera para ' + TU.elDia(esp.dia) + "</p>" : "") +
+        '<button class="btn brilla" type="button" data-turno="pedir">Pedir cita</button>';
     }
+    $("#proxima").innerHTML = t ? "<span>Tu próxima cita</span><b>" + TU.conMayus(TU.cuandoDia(TU.clave(t.inicio))) + ", " + TU.hora(t.inicio) + "</b>" + (t.confirmado ? "" : "<em>Confirmar</em>") : "<span>No tienes cita</span><b>Pide la próxima</b>";
     caja.classList.toggle("tiene", !!t);
     if (caja.dataset.v !== h) { caja.dataset.v = h; caja.innerHTML = h; }
   }
@@ -231,16 +281,16 @@
   function abrirSelector(m) {
     const c = T.porCodigo(codigo), t = TU.proximoDe(codigo);
     modo = m; elegidoTurno = null;
-    $("#titulo-turno").textContent = m === "cambiar" ? "Cambia tu turno" : "Pide tu turno";
-    $("#turno-ok").textContent = m === "cambiar" ? "Pasar mi turno aquí" : "Reservar turno";
-    $("#turno-politica").textContent = "Puedes cambiarlo o cancelarlo sin costo hasta " + KT.cancelarHasta + " horas antes.";
+    $("#titulo-turno").textContent = m === "cambiar" ? "Cambia tu cita" : "Pide tu cita";
+    $("#turno-ok").textContent = m === "cambiar" ? "Pasar mi cita aquí" : "Reservar cita";
+    $("#turno-politica").textContent = "Puedes cambiarla o cancelarla sin coste hasta " + KT.cancelarHasta + " horas antes.";
     const antes = $("#turno-antes");
     antes.hidden = m !== "cambiar" || !t;
     if (m === "cambiar" && t) antes.innerHTML = "Tenías: <s>" + TU.fechaTurno(t) + "</s> · " + T.esc(TU.servicio(t.servicio).nombre);
     sel = TU.selector($("#selector"), {
       servicio: m === "cambiar" && t ? t.servicio : null, barbero: m === "cambiar" && t ? t.barbero : null, ignorar: m === "cambiar" && t ? t.id : null,
       cambio: (r) => { elegidoTurno = r; $("#turno-resumen").textContent = r ? r.texto : "Elige un horario"; $("#turno-ok").disabled = !r; },
-      espera: (dia) => { const r = TU.anotar(c.codigo, c.nombre, dia); hojaTurno.close(); notificar("Te anotamos en la lista de espera", "Si alguien cancela el " + TU.cuandoDia(dia) + ", te avisamos primero."); },
+      espera: (dia) => { const r = TU.anotar(c.codigo, c.nombre, dia); hojaTurno.close(); notificar("Te anotamos en la lista de espera", "Si alguien cancela " + TU.elDia(dia) + ", te avisamos."); },
     });
     hojaTurno.showModal();
   }
@@ -250,8 +300,8 @@
                                  : TU.reservar({ codigo: c.codigo, nombre: c.nombre, barbero: elegidoTurno.barbero, servicio: elegidoTurno.servicio, inicio: elegidoTurno.inicio });
     if (!r.ok) { notificar(K.nombre, "Ese horario se acaba de ocupar. Elige otro."); sel.repintar(); return; }
     hojaTurno.close();
-    if (modo === "cambiar") notificar("Turno cambiado", "Ahora: " + TU.fechaTurno(r.turno) + ". Tu horario anterior quedó libre para otro cliente.");
-    else notificar("Turno reservado", TU.conMayus(TU.fechaTurno(r.turno)) + " con " + TU.barbero(r.turno.barbero).nombre + ". Te lo recordamos el día antes.");
+    if (modo === "cambiar") notificar("Cita cambiada", "Ahora: " + TU.fechaTurno(r.turno) + ". Tu hora anterior queda libre para otro cliente.");
+    else notificar("Cita reservada", TU.conMayus(TU.fechaTurno(r.turno)) + " con " + TU.barbero(r.turno.barbero).nombre + ". Te la recordamos el día antes.");
   });
   $("#turno-cerrar").addEventListener("click", () => hojaTurno.close());
   hojaTurno.addEventListener("click", (ev) => { if (ev.target === hojaTurno) hojaTurno.close(); });
@@ -261,13 +311,13 @@
     const h = TU.horasAntes(t);
     $("#cancelar-que").textContent = TU.conMayus(TU.fechaTurno(t)) + " · " + TU.servicio(t.servicio).nombre + " con " + TU.barbero(t.barbero).nombre;
     $("#cancelar-pol").textContent = h >= KT.cancelarHasta
-      ? "Faltan más de " + KT.cancelarHasta + " horas: lo cancelas sin problema y el horario queda libre para otro cliente."
-      : "Falta menos de " + KT.cancelarHasta + " horas. Puedes cancelarlo igual, pero al local le llega que fue sobre la hora.";
+      ? "Faltan más de " + KT.cancelarHasta + " horas: la cancelas sin problema y la hora queda libre para otro cliente."
+      : "Falta menos de " + KT.cancelarHasta + " horas. Puedes cancelarla igual, pero el local verá que fue a última hora.";
     hojaCancelar.showModal();
   }
   $("#cancelar-si").addEventListener("click", () => {
     const t = TU.proximoDe(codigo); hojaCancelar.close(); if (!t) return;
-    if (TU.cancelar(t.id, "cliente").ok) notificar("Turno cancelado", "Liberamos el horario para otro cliente. Cuando quieras, pide otro.");
+    if (TU.cancelar(t.id, "cliente").ok) notificar("Cita cancelada", "Dejamos la hora libre para otro cliente. Cuando quieras, pide otra.");
   });
   $("#cancelar-cambiar").addEventListener("click", () => { hojaCancelar.close(); abrirSelector("cambiar"); });
   hojaCancelar.addEventListener("click", (ev) => { if (ev.target === hojaCancelar) hojaCancelar.close(); });
@@ -282,9 +332,9 @@
   });
   function recordatorio() {
     const t = TU.proximoDe(codigo);
-    if (!t) return notificar(K.nombre, "No tienes turnos pedidos. Pide uno desde tu tarjeta.");
-    notificar("Recordatorio de tu turno", TU.conMayus(TU.fechaTurno(t)) + " con " + TU.barbero(t.barbero).nombre + ". ¿Confirmas o lo cambias?");
-    const caja = $("#turno-caja"); caja.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (!t) return notificar(K.nombre, "No tienes citas pedidas. Pide una desde tu tarjeta.");
+    notificar("Recordatorio de tu cita", TU.conMayus(TU.fechaTurno(t)) + " con " + TU.barbero(t.barbero).nombre + ". ¿Confirmas o la cambias?");
+    verParte("cita"); const caja = $("#turno-caja"); caja.scrollIntoView({ behavior: "smooth", block: "center" });
     caja.classList.remove("recuerda"); void caja.offsetWidth; caja.classList.add("recuerda");
   }
 
@@ -383,7 +433,7 @@
     const b = ev.target.closest("[data-probar]");
     if (!b) return;
     if (b.dataset.probar === "recordatorio") return recordatorio();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    verParte("tarjeta");
     if (b.dataset.probar === "nfc") selloNfc(); else avisarCerca();
   });
 
@@ -440,6 +490,7 @@
   window.addEventListener("tarjeta:cambio", pintar);
   if (codigo && T.porCodigo(codigo)) T.guardado.poner("miTarjeta", codigo);
   pintar();
+  verParte(location.hash.slice(1));
   pintarCerca();
 })();
 </script>

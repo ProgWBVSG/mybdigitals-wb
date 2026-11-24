@@ -1,0 +1,36 @@
+/* Estilo de garaje: chapa blanca, dintel gris, maneta negra y piso de hormigón. Sin colores. */
+:root{
+  --carbon:#17181A;--panel:#232527;--linea:#3B3E41;--gris:#A6AAAE;
+  --crema:#F0F2F3;--crema-2:#C4C8CB;--tinta:#1B1C1E;--tinta-suave:#565A5E;
+  --acento:#F0F2F3;--acento-2:#8B9094;--sobre-acento:#17181A;--sobre-sello:#F0F2F3;--madera:#3A3D41;--ruido-papel:none;
+  --chapa:repeating-linear-gradient(90deg,rgba(30,33,36,.1) 0 1px,rgba(255,255,255,.7) 1px 2px,transparent 2px 13px,rgba(30,33,36,.06) 14px,transparent 18px 28px);
+}
+/* Sobre la chapa blanca el contraste lo da el negro de la maneta */
+.papel,.hoja,.planilla,.ticket,.agenda{--acento:#1B1C1E;--acento-2:#43474B;--sobre-acento:#FFFFFF}
+body::before{content:"";position:fixed;left:0;right:0;top:0;height:9px;z-index:60;background:linear-gradient(#828588,#747779);border-bottom:1px solid #55585A}
+[data-letra=recto] .logo{font-family:"Saira Stencil One","Big Shoulders Display",sans-serif;font-size:2.35rem;letter-spacing:.03em;line-height:.95}
+[data-letra=recto] .logo span{font-family:"Big Shoulders Display",sans-serif;font-size:.36em;letter-spacing:.5em;text-indent:.5em;margin-top:8px;padding-top:6px;border-top:2px solid #77797B;color:var(--gris)}
+.logo .corona{width:1.05em;margin-bottom:.18em}
+.estado h1,.muestra h1{text-shadow:none}
+.btn:not(.linea){box-shadow:0 4px 0 #8B9094}
+.hoja .btn:not(.linea){box-shadow:0 4px 0 #6E7377}
+
+/* La tarjeta de sellos es una chapa de la puerta */
+.papel{border-radius:3px;padding:34px 18px 26px;background:var(--chapa),#E9EBED;box-shadow:0 16px 26px rgba(0,0,0,.6)}
+.papel::before{content:"";position:absolute;left:0;right:0;top:0;height:12px;border-radius:3px 3px 0 0;background:linear-gradient(#828588,#747779);border-bottom:1px solid #55585A}
+.papel::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;border-radius:0 0 3px 3px;background:#2A2C2E}
+.hueco{border-color:rgba(27,28,30,.4);color:rgba(27,28,30,.6)}
+.escena::after{background:repeating-linear-gradient(90deg,rgba(0,0,0,.22) 0 2px,transparent 2px 160px),linear-gradient(rgba(255,255,255,.16),rgba(0,0,0,.25));background-color:#4A4D50;border-top:2px solid #777A7D}
+.ticket,.planilla,.hoja,.agenda{border-top:6px solid #77797B}
+.ticket{margin-top:0!important}.ticket::before{display:none}
+.ticket div{border-color:#A9ADB0!important}
+.hoja p,.historial li{color:#4A4E52}
+.hoja input[type=text],.hoja input[type=tel]{background:#fff;border-color:#B6BBBF}
+.enlace-nfc{border-color:#8E9397}
+.planilla input::placeholder{color:#7A7F83}
+.notif{background:#F0F2F3}
+.notif i{background:#1B1C1E;color:#fff}
+.notif span{color:#4A4E52}
+.descuento{border-radius:4px}
+/* Sin color, los sellos con premio se distinguen por la forma. */
+.marcas i.meta,.puntos i.meta{border-radius:3px}

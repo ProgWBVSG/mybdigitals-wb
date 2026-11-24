@@ -1,0 +1,91 @@
+/* Puerta de garaje clásica (basculante): chapa blanca acanalada, dintel gris y maneta negra.
+   La misma puerta es la pantalla de carga del cliente y el acceso del dueño. */
+.garaje{--dur:500ms;--m:clamp(25px,3.1vw,46px);position:fixed;inset:0;z-index:200;overflow:hidden;color:#1B1C1E;font-family:"Archivo",system-ui,sans-serif;contain:strict}
+.garaje[hidden]{display:none!important}
+html.garaje-cerrado,html.garaje-cerrado body{overflow:hidden}
+.g-sombra{position:absolute;inset:0;background:#0B0C0D}
+.g-hueco{position:absolute;inset:30px 10px 0;perspective:2100px;perspective-origin:50% 46%}
+.g-puerta{position:absolute;inset:0;transform-origin:50% 0;transform-style:preserve-3d;will-change:transform}
+.g-cara,.g-dorso{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+
+/* Chapa: cada módulo tiene una arista, un paño plano y una acanaladura suave */
+.g-cara{overflow:hidden;background:#E5E7E9;border:1px solid #B9BCBE;box-shadow:inset 0 3px 0 #F5F6F7,inset 0 -8px 0 #D3D5D7}
+.g-cara::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.34),transparent 30%,transparent 62%,rgba(20,22,24,.1)),
+    repeating-linear-gradient(90deg,
+      rgba(30,33,36,.21) 0 1.5px,rgba(255,255,255,.75) 1.5px 3px,
+      transparent 3px calc(var(--m)*.48),
+      rgba(30,33,36,.13) calc(var(--m)*.5),rgba(30,33,36,.035) calc(var(--m)*.55) calc(var(--m)*.63),rgba(255,255,255,.55) calc(var(--m)*.67),
+      transparent calc(var(--m)*.7) var(--m))}
+.g-cara::after{content:"";position:absolute;inset:0;z-index:4;background:#0B0C0D;opacity:0;pointer-events:none}
+.g-dorso{transform:rotateX(180deg);background:repeating-linear-gradient(90deg,#8D9194 0 2px,#A7ABAE 2px 60px)}
+.g-dorso::before{content:"";position:absolute;inset:0;background:linear-gradient(#6C7073,#6C7073) 0 18%/100% 16px no-repeat,linear-gradient(#6C7073,#6C7073) 0 52%/100% 16px no-repeat,linear-gradient(#6C7073,#6C7073) 0 86%/100% 16px no-repeat}
+
+.g-dintel{position:absolute;z-index:5;left:0;right:0;top:0;height:30px;background:linear-gradient(#828588,#747779);border-bottom:2px solid #55585A;box-shadow:0 3px 7px rgba(0,0,0,.28)}
+.g-jamba{position:absolute;z-index:4;top:0;bottom:0;width:10px;background:linear-gradient(90deg,#4E5153,#74777A)}
+.g-jamba.de{right:0;transform-origin:100% 0;background:linear-gradient(270deg,#4E5153,#74777A)}
+
+.g-medio{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(22px,5vh,52px);padding:20px 16px 8vh}
+/* El nombre va pintado: queda por debajo de las canaletas */
+.g-nombre{position:relative;z-index:1;font-family:"Saira Stencil One","Big Shoulders Display",Impact,sans-serif;font-weight:400;font-size:clamp(3.7rem,18.6vw,12rem);line-height:.9;letter-spacing:.01em;color:#2A2C2F;white-space:nowrap}
+.g-maneta{position:relative;z-index:3;flex:none;width:clamp(54px,7vh,74px);aspect-ratio:1;padding:0;border:0;border-radius:50%;background:radial-gradient(circle at 40% 32%,#5B5E61,#3A3C3F 62%,#2A2C2E);box-shadow:0 0 0 3px #232527,0 3px 5px rgba(0,0,0,.4),inset 0 2px 2px rgba(255,255,255,.18);transition:transform 190ms cubic-bezier(.3,0,.2,1)}
+.g-maneta::before{content:"";position:absolute;left:14%;right:14%;top:50%;height:13%;transform:translateY(-50%);border-radius:99px;background:#16181A;box-shadow:0 1px 0 rgba(255,255,255,.2)}
+button.g-maneta{cursor:pointer}
+.g-placa{position:absolute;z-index:3;left:50%;bottom:9vh;width:26px;height:13px;transform:translateX(-50%);border-radius:3px;background:linear-gradient(#F4F5F6,#BFC3C6);border:1px solid #85898C;box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.g-placa::before{content:"";position:absolute;left:50%;top:50%;width:3px;height:7px;transform:translate(-50%,-50%);border-radius:2px;background:#2A2C2E}
+
+/* Etiqueta atornillada a la puerta */
+.g-etiqueta{position:relative;z-index:3;width:min(100%,348px);padding:24px 24px 22px;border-radius:7px;background:linear-gradient(160deg,#34373A,#26282B);color:#F0F2F3;box-shadow:0 0 0 1px #16181A,inset 0 0 0 1.5px rgba(255,255,255,.13),0 9px 18px rgba(0,0,0,.34);text-align:left}
+.g-etiqueta>i{position:absolute;width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#DDE0E2,#8A8E92);box-shadow:0 1px 1px rgba(0,0,0,.6)}
+.g-etiqueta>i::before{content:"";position:absolute;left:2px;right:2px;top:5px;height:1px;background:#4A4D50;transform:rotate(var(--g,35deg))}
+.g-etiqueta>i:nth-of-type(1){left:9px;top:9px}.g-etiqueta>i:nth-of-type(2){right:9px;top:9px;--g:-20deg}.g-etiqueta>i:nth-of-type(3){left:9px;bottom:9px;--g:80deg}.g-etiqueta>i:nth-of-type(4){right:9px;bottom:9px;--g:10deg}
+.g-etiqueta h1{margin:0 0 16px;font-family:"Saira Stencil One","Big Shoulders Display",Impact,sans-serif;font-weight:400;font-size:2.1rem;line-height:1;letter-spacing:.02em;text-transform:none;text-align:center}
+.g-etiqueta label{display:block;margin:0 0 5px;font-size:.95rem;font-weight:500;color:#C4C8CB}
+.g-etiqueta input{display:block;width:100%;min-height:50px;margin:0 0 14px;padding:10px 14px;border:0;border-radius:5px;background:#F0F2F3;color:#1B1C1E;font:500 1.08rem "Archivo",system-ui,sans-serif;text-align:left;box-shadow:inset 0 2px 3px rgba(0,0,0,.22)}
+.g-etiqueta .oculta{-webkit-text-security:disc;letter-spacing:.08em}
+.g-etiqueta .entrar{display:block;width:100%;min-height:54px;margin-top:4px;border:0;border-radius:5px;background:#F0F2F3;color:#17181A;font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;font-size:1.45rem;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 0 #8B9094;transition:transform 120ms ease}
+.g-etiqueta .entrar:active{transform:translateY(2px);box-shadow:0 1px 0 #8B9094}
+.g-etiqueta p{min-height:1.4em;margin:12px 0 0;font-size:.95rem;line-height:1.4;text-align:center;color:#C4C8CB}
+.g-etiqueta p.error{color:#fff;font-weight:600}
+.g-etiqueta :focus-visible,.g-maneta:focus-visible{outline:3px solid #fff;outline-offset:3px}
+[data-modo=acceso] .g-medio{padding-bottom:12vh}
+
+/* ---------- Abrir y cerrar ---------- */
+.abriendo .g-puerta{animation:g-sube var(--dur) cubic-bezier(.55,.02,.25,1) var(--espera,0ms) both}
+.abriendo .g-cara::after{animation:g-oscurece var(--dur) ease-in var(--espera,0ms) both}
+.abriendo .g-sombra{animation:g-luz calc(var(--dur)*.8) ease-out calc(var(--espera,0ms) + var(--dur)*.2) both}
+.abriendo .g-dintel{animation:g-dintel 260ms ease-in calc(var(--espera,0ms) + var(--dur)*.74) both}
+.abriendo .g-jamba{animation:g-jamba 260ms ease-in calc(var(--espera,0ms) + var(--dur)*.74) both}
+.abriendo,.abriendo *{pointer-events:none}
+.abriendo .g-maneta,.cerrando .g-maneta{transform:rotate(90deg)}
+[data-modo=acceso]{--dur:950ms}
+[data-modo=acceso].abriendo{--espera:190ms}
+@keyframes g-sube{0%{transform:none}9%{transform:translateY(-3px) rotateX(1.2deg)}100%{transform:translateY(-4%) rotateX(91deg)}}
+@keyframes g-oscurece{to{opacity:.42}}
+@keyframes g-luz{0%{opacity:1}60%{opacity:.28}100%{opacity:0}}
+@keyframes g-dintel{to{transform:translateY(-110%)}}
+@keyframes g-jamba{to{transform:scaleX(0)}}
+.cerrando{--espera:0ms}
+.cerrando .g-puerta{animation:g-sube 700ms cubic-bezier(.4,0,.7,.2) reverse both}
+.cerrando .g-cara::after{animation:g-oscurece 700ms ease-in reverse both}
+.cerrando .g-sombra{animation:g-luz 600ms ease-in reverse both}
+.niega .g-puerta{animation:g-traba 340ms linear}
+.niega .g-maneta{animation:g-gira 340ms ease}
+@keyframes g-traba{0%,100%{transform:none}18%{transform:translateY(-4px) rotateX(.9deg)}36%{transform:translateY(1px)}56%{transform:translateY(-3px) rotateX(.6deg)}76%{transform:translateY(1px)}}
+@keyframes g-gira{40%{transform:rotate(22deg)}}
+/* Si el código no carga, la puerta no deja a nadie afuera */
+[data-modo=carga]{animation:g-escape 1ms linear 4s both}
+@keyframes g-escape{to{visibility:hidden}}
+
+@media (max-height:640px){
+  .g-medio{gap:14px;padding:10px 16px 12px!important}
+  .g-placa,[data-modo=acceso] .g-maneta{display:none}
+  .g-etiqueta{padding:16px 22px 12px}.g-etiqueta h1{font-size:1.6rem;margin-bottom:10px}.g-etiqueta input{min-height:44px;margin-bottom:9px}.g-etiqueta p{margin-top:8px}
+}
+@media (max-height:440px){.g-etiqueta{width:min(100%,560px)}.g-campos{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.g-etiqueta .entrar{min-height:46px}}
+@media (prefers-reduced-motion:reduce){
+  .abriendo .g-puerta,.abriendo .g-cara::after,.abriendo .g-dintel,.abriendo .g-jamba,.cerrando .g-puerta,.cerrando .g-cara::after,.niega .g-puerta{animation:none}
+  .abriendo{animation:g-funde 180ms linear both}.g-maneta{transition:none}
+  @keyframes g-funde{to{opacity:0}}
+}

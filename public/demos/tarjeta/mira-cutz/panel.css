@@ -1,0 +1,212 @@
+/* Panel del dueño. Blanco pleno sólo para lo que hay que tocar o mirar primero. */
+body.p{text-align:left;font-size:16px}
+body.p .firma{text-align:center}
+body.p .aviso{z-index:80;bottom:calc(86px + env(safe-area-inset-bottom));visibility:hidden;transition:transform 260ms var(--sal),visibility 0s 260ms}
+body.p .aviso.ver{visibility:visible;transition:transform 260ms var(--sal)}
+.app{display:block;flex:1}
+
+/* ---------- Marco ---------- */
+.cab{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 16px 12px;background:var(--carbon)}
+[data-letra=recto] .cab .logo{font-size:1.5rem;text-align:left}
+.cab .logo .corona{display:none}
+[data-letra=recto] .cab .logo span{display:none}
+.nav{position:fixed;z-index:40;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);background:var(--panel);border-top:1px solid var(--linea);padding:4px 4px calc(4px + env(safe-area-inset-bottom))}
+.nav button{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:56px;padding:8px 2px 4px;border:0;border-radius:8px;background:none;color:var(--gris);font-size:.8rem;font-weight:500;cursor:pointer;transition:color 160ms ease}
+.nav svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav button[aria-current=page]{color:var(--acento)}
+.nav i{position:absolute;top:5px;left:calc(50% + 7px);min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--acento);color:var(--sobre-acento);font:700 .72rem/18px "Archivo",sans-serif;text-align:center}
+.vistas-p{padding:8px 16px calc(96px + env(safe-area-inset-bottom));max-width:1180px}
+.vp{animation:entra 340ms var(--sal) both}
+.vp-h{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;margin-bottom:18px}
+.vp h1{font-size:clamp(2.1rem,8vw,2.9rem)}
+.vp h2{font-size:1.5rem}
+.sub{color:var(--gris);margin-top:4px;font-size:.98rem}
+
+/* Botones compactos */
+.bt{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:8px 16px;border:2px solid var(--crema-2);border-radius:7px;background:none;color:var(--crema);font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:.03em;text-transform:uppercase;text-decoration:none;white-space:nowrap;cursor:pointer;transition:transform 120ms var(--sal),background-color 160ms ease,color 160ms ease}
+.bt:active{transform:scale(.97)}
+.bt.si{background:var(--acento);border-color:var(--acento);color:var(--sobre-acento)}
+.salir{display:none;align-items:center;gap:13px;min-height:44px;padding:8px 14px;border:0;background:none;color:var(--gris);font-size:1rem;font-weight:500;text-align:left;cursor:pointer}
+.salir svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}
+.salir:hover{color:var(--crema)}
+.bt svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
+@media (hover:hover) and (pointer:fine){.bt:not(.si):hover{background:var(--crema);color:var(--tinta)}.bt.si:hover{filter:brightness(1.07)}.nav button:hover{color:var(--crema)}}
+.hoja .bt,.agenda .bt,.planilla .bt{color:var(--tinta);border-color:var(--tinta)}
+.seg{display:inline-flex;padding:3px;border:1px solid var(--linea);border-radius:9px;background:var(--panel);max-width:100%;overflow-x:auto;scrollbar-width:none}
+.seg button{min-height:42px;padding:6px 15px;border:0;border-radius:7px;background:none;color:var(--gris);font-weight:600;font-size:.95rem;white-space:nowrap;cursor:pointer;transition:background-color 160ms ease,color 160ms ease}
+.seg button[aria-pressed=true]{background:var(--crema);color:var(--tinta)}
+
+/* ---------- Hoy ---------- */
+body.p .ticket{grid-template-columns:repeat(2,1fr);margin:8px 0 34px;padding:8px 6px}
+body.p .ticket div{padding:12px 12px;border-left:0;text-align:left}
+body.p .ticket div:nth-child(even){border-left:1.5px dashed #A9ADB0}
+body.p .ticket div:nth-child(n+3){border-top:1.5px dashed #A9ADB0}
+body.p .ticket b{font-size:clamp(2rem,8.6vw,2.7rem)}
+body.p .ticket div:last-child b{color:inherit}
+body.p .ticket div.ojo b{color:var(--acento-2)}
+body.p .ticket span{font-size:.9rem;font-weight:500;letter-spacing:0;text-transform:none}
+.hoy-g{display:grid;gap:30px}
+.sillas{display:grid;gap:14px;margin-top:12px}
+.silla{border-radius:10px;background:var(--panel);padding:16px 16px 6px}
+.silla>header{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.silla h3{font-size:1.15rem;color:var(--gris);letter-spacing:.04em}
+.silla header span{color:var(--gris);font-size:.92rem}
+.ahora{margin:10px 0 14px}
+.ahora b{display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:1.8rem;line-height:1.05;text-transform:uppercase}
+.ahora b em{font-style:normal;color:var(--acento);margin-right:8px}
+.ahora p{color:var(--crema-2);margin-top:3px}
+.ahora .fila{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.ahora .fila .si{flex:1 1 150px}
+.cola{list-style:none;padding:0}
+.cola button{display:grid;grid-template-columns:52px 1fr auto;gap:10px;align-items:baseline;width:100%;min-height:46px;padding:11px 0;border:0;border-top:1px solid var(--linea);background:none;text-align:left;cursor:pointer}
+.cola time{color:var(--crema-2);font-weight:600;font-variant-numeric:tabular-nums}
+.cola b{font-weight:600}
+.cola span{color:var(--gris);font-size:.92rem}
+.pend{list-style:none;padding:0;margin-top:12px;display:grid;gap:10px}
+.pend li{padding:14px 16px;border-radius:10px;background:var(--panel)}
+.pend li.plata{background:var(--acento);color:var(--sobre-acento)}
+.pend b{display:block;font-size:1.06rem;font-weight:600;line-height:1.3}
+.pend p{color:var(--gris);font-size:.95rem;margin-top:2px}
+.pend .plata p{color:inherit}
+.pend .fila{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}
+.pend .plata .bt{border-color:var(--sobre-acento);color:var(--sobre-acento)}
+.pend .plata .bt.si{background:var(--sobre-acento);color:var(--acento)}
+.nada{padding:20px 16px;border:1.5px dashed var(--linea);border-radius:10px;color:var(--gris)}
+
+/* ---------- Agenda ---------- */
+body.p .agenda{padding:14px;overflow:hidden}
+body.p .agenda .dias{max-width:100%;margin:0 0 14px}
+body.p .agenda .chip{text-align:center;min-height:56px;white-space:nowrap;padding:8px 6px}
+body.p .agenda .chip.on small{color:var(--crema-2)}
+.rejilla{display:grid;grid-template-columns:46px minmax(0,1fr);overflow-x:auto}
+.horas-ag{position:relative;margin-top:44px}
+.horas-ag span{position:absolute;left:0;transform:translateY(-50%);font-size:.85rem;font-weight:600;color:var(--tinta-suave);font-variant-numeric:tabular-nums}
+.cols{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(132px,1fr);gap:8px}
+.cols h3{height:44px;font-size:1.35rem;line-height:38px}
+.lienzo{position:relative;border-top:2px solid var(--tinta)}
+.slot{position:absolute;left:0;right:0;padding:0 8px;border:0;border-bottom:1px solid rgba(23,20,14,.13);background:none;text-align:left;color:transparent;font-weight:600;font-size:.9rem;cursor:pointer;transition:background-color 140ms ease,color 140ms ease}
+.slot::before{content:"+ Dar cita"}
+.slot:disabled{cursor:default}.slot:disabled::before{content:""}
+.slot:focus-visible{color:var(--tinta)}
+@media (hover:hover) and (pointer:fine){.slot:not(:disabled):hover{background:rgba(27,28,30,.12);color:var(--tinta)}}
+@media (hover:none){.slot:not(:disabled){color:rgba(23,20,14,.38)}.slot::before{content:"+"}}
+.cita{position:absolute;left:0;right:0;display:flex;flex-direction:column;justify-content:flex-start;overflow:hidden;padding:4px 9px;border:0;border-left:5px solid var(--tinta);border-radius:5px;background:#D3D7DA;color:var(--tinta);text-align:left;cursor:pointer;line-height:1.16;transition:transform 120ms var(--sal)}
+.cita:active{transform:scale(.985)}
+.cita b{display:block;font-weight:600;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cita small{display:block;font-size:.82rem;color:var(--tinta-suave);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cita.reservado{background:repeating-linear-gradient(135deg,#E9EBED 0 7px,#DADDE0 7px 14px);border-left-color:#9CA1A5}
+.cita.atendido{background:#E6E8EA;border-left-color:#B6BBBF;color:var(--tinta-suave)}
+.cita.ausente{background:none;border:1.5px dashed var(--acento-2);border-left-width:5px}
+.cita.ausente small{color:var(--acento-2);font-weight:600}
+.cita.cancelado{background:#1B1C1E;border:2px dashed #8B9094}
+.cita.cancelado b{color:#fff;text-decoration:none}
+.cita.cancelado small{color:#C4C8CB;font-weight:600}
+.cita.bloqueado{background:rgba(23,20,14,.12);border-left-color:transparent;color:var(--tinta-suave)}
+.linea-ahora{position:absolute;z-index:3;left:-4px;right:0;border-top:2px solid #1B1C1E;pointer-events:none}
+.linea-ahora::before{content:"";position:absolute;left:-4px;top:-5px;width:8px;height:8px;border-radius:50%;background:#1B1C1E;box-shadow:0 0 0 2px #F0F2F3}
+body.p .agenda .leyenda{justify-content:flex-start;font-size:.88rem;gap:6px 18px}
+.leyenda i{display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:6px;vertical-align:-2px;background:#D3D7DA;border-left:4px solid var(--tinta)}
+.leyenda i.r{background:repeating-linear-gradient(135deg,#E9EBED 0 4px,#C3C7CA 4px 8px);border-left-color:#9CA1A5}
+.leyenda i.h{background:#1B1C1E;border:1.5px dashed #8B9094}
+
+/* ---------- Clientes ---------- */
+body.p .planilla{padding:16px}
+body.p .planilla input[type=search]{text-align:left;padding-left:2px;font-size:1.1rem}
+body.p .pestanas{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:10px 0 0}
+.pestana{white-space:nowrap}
+body.p .renglon{grid-template-columns:minmax(0,1.3fr) auto minmax(0,1fr);text-align:left;padding:13px 4px;gap:4px 18px}
+body.p .renglon b small{text-transform:none;letter-spacing:0;font-size:.86rem}
+body.p .renglon .timbre{justify-self:end}
+body.p .renglon .nota{justify-self:end;text-align:right}
+
+/* ---------- Números ---------- */
+.num-g{display:grid;gap:14px}
+.caja-n{border-radius:10px;background:var(--panel);padding:18px 18px 20px;min-width:0}
+.caja-n .grande{font-family:"Big Shoulders Display",sans-serif;font-weight:900;font-size:clamp(2.6rem,11vw,3.8rem);line-height:1;color:var(--acento);margin-top:6px}
+.caja-n .grande.n{color:var(--crema);font-size:clamp(2.1rem,9vw,2.8rem)}
+.caja-n h2{font-size:1.2rem;color:var(--crema-2)}
+.caja-n>p{color:var(--gris);margin-top:5px}
+.caja-n p strong{color:var(--crema);font-weight:600}
+.barras{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:8px;align-items:end;height:210px;margin-top:18px}
+.barras div{display:flex;flex-direction:column;justify-content:flex-end;height:100%;text-align:center;min-width:0}
+.barras b{font-weight:600;font-size:.92rem;margin-bottom:5px;font-variant-numeric:tabular-nums}
+.barras i{display:block;border-radius:4px 4px 0 0;background:#6F747A;min-height:2px;transform-origin:bottom;animation:crece 520ms var(--sal) both;animation-delay:calc(var(--n)*40ms)}
+.barras .max i{background:var(--acento)}
+@keyframes crece{from{transform:scaleY(0)}}
+.barras span{padding-top:7px;border-top:1px solid var(--linea);color:var(--gris);font-size:.86rem;white-space:nowrap}
+.filas{list-style:none;padding:0;margin-top:12px}
+.filas li{padding:10px 0;border-top:1px solid var(--linea)}
+.filas li>div{display:flex;justify-content:space-between;gap:12px}
+.filas b{font-weight:600;font-variant-numeric:tabular-nums}
+.filas u{display:block;height:6px;margin-top:7px;border-radius:3px;background:var(--linea);text-decoration:none;overflow:hidden}
+.filas u i{display:block;height:100%;background:var(--crema-2);border-radius:3px}
+.filas button{width:100%;display:flex;justify-content:space-between;gap:12px;padding:0;border:0;background:none;text-align:left;min-height:26px;cursor:pointer}
+.filas em{font-style:normal;color:var(--acento);font-weight:600}
+.filas span{color:var(--gris)}
+
+/* ---------- Ajustes ---------- */
+.aj{display:grid;gap:14px}
+.aj .caja-n h2{color:var(--crema);font-size:1.4rem;margin-bottom:12px}
+.aj label{font-size:.92rem;margin-bottom:5px;color:var(--gris)}
+.aj input[type=text],.aj input[type=number],.aj select{width:100%;min-height:46px;padding:8px 12px;border:2px solid var(--linea);border-radius:7px;background:var(--carbon);color:var(--crema);text-align:left;font:inherit}
+.srv{display:grid;grid-template-columns:minmax(0,1fr) 92px 104px;gap:8px;align-items:end;padding:10px 0;border-top:1px solid var(--linea)}
+.srv:first-of-type{border-top:0}
+.srv .nom{grid-column:1/-1}
+.srv .ver{display:flex;align-items:center;gap:8px;min-height:46px;margin:0;color:var(--crema-2);cursor:pointer}
+.aj input[type=checkbox]{width:20px;height:20px;accent-color:var(--acento)}
+.dias-aj{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:14px}
+.dias-aj button{min-height:46px;border:2px solid var(--linea);border-radius:7px;background:none;color:var(--gris);font-weight:600;font-size:.9rem;cursor:pointer;padding:0}
+.dias-aj button[aria-pressed=true]{background:var(--crema);border-color:var(--crema);color:var(--tinta)}
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tres{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.aj .mas{margin-top:12px}
+.guardar-aj{position:sticky;bottom:calc(76px + env(safe-area-inset-bottom));z-index:5;margin:0 -16px;padding:12px 16px;background:var(--carbon);border-top:1px solid var(--linea)}
+
+/* ---------- Hojas ---------- */
+body.p .hoja h2{font-size:2rem}
+.hoja .bt.si{color:var(--sobre-acento);border-color:var(--acento)}
+.hoja .fila{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.hoja .fila .bt{flex:1 1 130px}
+.hoja .suave{display:flex;flex-wrap:wrap;justify-content:center;gap:0 14px;margin-top:8px}
+.hoja.ancha .campo{margin:14px 0 0}
+.hoja.ancha .campo input{text-align:left}
+.hoja.ancha>.fila{position:sticky;bottom:-18px;z-index:2;margin:0 -18px;padding:12px 18px;background:var(--crema)}
+.hoja .tilde{display:flex;gap:10px;align-items:center;margin:12px 0 0;cursor:pointer}
+.hoja .tilde input{width:22px;height:22px;accent-color:var(--acento-2)}
+.importe{font-family:"Big Shoulders Display",sans-serif;font-weight:900;font-size:2.4rem;line-height:1;color:var(--tinta)!important;margin-top:10px}
+
+@media (min-width:640px){
+  body.p .ticket{grid-template-columns:repeat(4,1fr)}
+  body.p .ticket div:nth-child(n+3){border-top:0}
+  body.p .ticket div:nth-child(3){border-left:1.5px dashed #A9ADB0}
+  .srv{grid-template-columns:minmax(0,1fr) 110px 110px 104px}.srv .nom{grid-column:auto}
+}
+@media (max-width:560px){
+  body.p .renglon{grid-template-columns:minmax(0,1fr) auto}
+  body.p .renglon .marcas{grid-column:1;grid-row:2;justify-self:start}
+  body.p .renglon>:last-child{grid-column:2;grid-row:1/3;align-self:center}
+}
+@media (min-width:960px){
+  .app{display:grid;grid-template-columns:232px minmax(0,1fr)}
+  .cab{position:sticky;top:10px;align-self:start;height:calc(100vh - 10px);flex-direction:column;align-items:stretch;justify-content:flex-start;gap:26px;padding:30px 18px 22px;border-right:1px solid var(--linea)}
+  [data-letra=recto] .cab .logo{font-size:2rem;text-align:center}
+  .cab .logo .corona{display:block}
+  .nav{position:static;display:grid;grid-template-columns:1fr;gap:4px;background:none;border:0;padding:0}
+  .nav button{flex-direction:row;gap:13px;min-height:48px;padding:8px 14px;font-size:1.05rem}
+  .nav button[aria-current=page]{background:var(--panel);color:var(--crema)}
+  .nav button[aria-current=page] svg{color:var(--acento)}
+  .nav i{position:static;margin-left:auto}
+  .salir{display:flex;margin-top:auto}
+  .cab>.bt{min-height:54px;font-size:1.25rem}
+  .vistas-p{padding:34px 36px 40px;width:100%;margin:0 auto}
+  body.p .aviso{bottom:22px}
+  .hoy-g{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:36px}
+  .num-g{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .num-g>*{grid-column:span 2}.num-g>.ancho{grid-column:span 4}.num-g>.medio{grid-column:span 3}
+  .aj{grid-template-columns:1fr 1fr;align-items:start}
+  .aj>.ancho{grid-column:1/-1}
+  .guardar-aj{grid-column:1/-1;bottom:0;margin:0}
+  .guardar-aj .bt{min-width:240px}
+  body.p .agenda,body.p .planilla{padding:22px}
+}
+@media (min-width:960px) and (max-width:1180px){.vistas-p{padding:30px 22px}.hoy-g{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.vp,.barras i{animation:none}}
