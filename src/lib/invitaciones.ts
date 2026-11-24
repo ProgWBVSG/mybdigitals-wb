@@ -96,6 +96,14 @@ export const DISENOS: Diseno[] = [
     enlace: "/tuinvitaciondigital/i/mensajes",
   },
   {
+    id: 14,
+    tipo: "bodas",
+    nombre: "Cine Château",
+    imagen: "/invitaciones/cine-chateau/miniatura.webp",
+    acento: "#b68b50",
+    enlace: "/invitaciones/cine-chateau/index.html",
+  },
+  {
     id: 4,
     tipo: "cumples",
     nombre: "Disco Scrapbook",
