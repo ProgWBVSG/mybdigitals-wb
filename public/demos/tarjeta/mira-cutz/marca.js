@@ -2,20 +2,20 @@
 window.MARCA = {
   id: "miracutz",
   moneda: "eur",
-  nombre: "Mira.cutz",
-  logo: ["Mira.cutz", "Peluquería"],
+  nombre: "Miras.cutz",
+  logo: ["Miras.cutz", "Peluquería"],
   logoEstilo: "recto",
   // Logo: un portón de garaje arriba y el nombre en letra de plantilla.
-  logoHtml: "<svg class=\"corona\" viewBox=\"0 0 60 36\" aria-hidden=\"true\"><path d=\"M4 34V12L30 3l26 9v22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linejoin=\"round\"/><path d=\"M12 34V17h36v17M12 23h36M12 29h36\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\"/></svg>Mira.cutz<span>Peluquería</span>",
+  logoHtml: "<svg class=\"corona\" viewBox=\"0 0 60 36\" aria-hidden=\"true\"><path d=\"M4 34V12L30 3l26 9v22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linejoin=\"round\"/><path d=\"M12 34V17h36v17M12 23h36M12 29h36\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\"/></svg>Miras.cutz<span>Peluquería</span>",
   sellos: 10,
   hitos: [{ en: 5, pct: 10 }, { en: 7, pct: 20 }, { en: 10, pct: 70 }],
   whatsapp: "", // número del local con código de país, sin + ni espacios
   // Acceso de ejemplo. En la versión real la contraseña se guarda cifrada en el servidor.
-  acceso: { usuario: "mira", clave: "1234" },
+  acceso: { usuario: "miras", clave: "1234" },
   diasInactivo: 45,
   horasEntreSellosNfc: 12,
   // Cuota mensual. Poner null si el negocio no la ofrece.
-  membresia: { nombre: "Club Mira", precio: 30, detalle: "Cortes ilimitados de martes a jueves" },
+  membresia: { nombre: "Club Miras", precio: 30, detalle: "Cortes ilimitados de martes a jueves" },
   // Ubicación del local para el aviso por cercanía. Es de ejemplo: cargar la dirección real.
   local: { lat: 40.4168, lng: -3.7038, radio: 150 },
   // Citas: precios, horarios y barberos son de ejemplo.

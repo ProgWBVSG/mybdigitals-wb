@@ -1,4 +1,4 @@
-/* Citas de Mira.cutz: pedir, confirmar, cancelar, cambiar y lista de espera.
+/* Citas de Miras.cutz: pedir, confirmar, cancelar, cambiar y lista de espera.
    Usa la misma marca (window.MARCA.turnos) y la tarjeta de sellos (window.TARJETA): cuando el
    barbero marca que el cliente llegó, se suma el sello solo. En la demo los datos viven en el
    navegador; en la versión real leer() y guardar() pasan a un servidor. */
