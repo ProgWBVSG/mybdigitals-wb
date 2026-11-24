@@ -112,14 +112,6 @@ export const DISENOS: Diseno[] = [
     enlace: "/tuinvitaciondigital/i/renata-y-tomas",
   },
   {
-    id: 16,
-    tipo: "bodas",
-    nombre: "Fogata",
-    imagen: "/invitaciones/fogata/miniatura.webp",
-    acento: "#8a1f2e",
-    enlace: "/tuinvitaciondigital/i/fogata",
-  },
-  {
     id: 4,
     tipo: "cumples",
     nombre: "Disco Scrapbook",
