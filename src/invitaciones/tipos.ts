@@ -418,8 +418,14 @@ export type InvitacionMensajes = InvitacionBase & {
   estilo: "mensajes";
   mensajes: {
     compartir: string;
-    /** Las caras de cada uno, en el orden de `nombres`. */
+    /** Las caras de cada uno. Sin nombres: la charla se entiende por las caras. */
     avatares: [string, string];
+    /** Qué se celebra, en una palabra. Va en el resumen fijado y en el calendario. Ej: "Boda". */
+    evento: string;
+    /** Lo primero que se lee: le dice al invitado qué es esto y qué tiene que hacer. */
+    intro: string;
+    /** Colores sugeridos para la vestimenta, con nombre para que se entiendan. */
+    paleta: { nombre: string; color: string }[];
     /** Cómo arranca la charla, antes de la primera foto. */
     apertura: LineaCharla[];
     fotoFogon: { src: string; alt: string; pie: string; quien: 0 | 1 };

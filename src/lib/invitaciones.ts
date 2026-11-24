@@ -93,7 +93,7 @@ export const DISENOS: Diseno[] = [
     nombre: "Mensajes",
     imagen: "/invitaciones/mensajes/miniatura.webp",
     acento: "#b8461a",
-    enlace: "/tuinvitaciondigital/i/lu-y-nico",
+    enlace: "/tuinvitaciondigital/i/mensajes",
   },
   {
     id: 4,
