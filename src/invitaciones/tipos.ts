@@ -27,7 +27,7 @@ export type Carta = {
 /* ── Bloques de contenido ──────────────────────────────────── */
 
 /** Un momento del día. Ej: 21:00 · Cena. */
-export type Hito = { hora: string; titulo: string };
+export type Hito = { hora: string; titulo: string; detalle?: string };
 
 export type Lugar = {
   tipo: "Ceremonia" | "Fiesta" | "Civil";
@@ -463,6 +463,37 @@ export type InvitacionRasgado = InvitacionBase & {
   };
 };
 
+/**
+ * Invitaciones hechas sobre una referencia, con una entrada interactiva propia.
+ * Comparten formulario, mapa, música y calendario (components/invitacion/comun).
+ *  - cupido: papel arrugado y tinta roja; se tensa el arco y la flecha abre.
+ *  - hilo: crema, blanco y negro y un hilo rojo; se tira del moño.
+ *  - dijosi: teatro, telón y tele retro; se tira del cordón.
+ *  - vinilo: granate, polaroids y un disco; se baja la púa.
+ *  - xoxo: rojo, pincel y parches; se despega el corazón.
+ */
+export type FotoEscena = { src: string; alt: string; foco?: string };
+export type InvitacionEscena = InvitacionBase & {
+  estilo: "cupido" | "hilo" | "dijosi" | "vinilo" | "xoxo";
+  escena: {
+    compartir: string;
+    /** Título del evento en el calendario. */
+    evento: string;
+    /** El saludo a los invitados. */
+    intro: string[];
+    fotos: Record<string, FotoEscena>;
+    /** Colores o telas sugeridas. `imagen` si la muestra es una tela. */
+    paleta?: { nombre: string; color: string; imagen?: string }[];
+    /** Pedidos y avisos, en frases cortas. */
+    notas?: string[];
+    /** Preferencias de bebida del formulario. */
+    bebidas?: string[];
+    /** XOXO: las palabras imantadas. */
+    palabras?: string[];
+    gracias: string;
+  };
+};
+
 export type Invitacion =
   | InvitacionRosa
   | InvitacionFotomaton
@@ -480,11 +511,14 @@ export type Invitacion =
   | InvitacionEjecutiva
   | InvitacionGuirnalda
   | InvitacionRosedal
-  | InvitacionRasgado;
+  | InvitacionRasgado
+  | InvitacionEscena;
 
 /** La imagen de la previsualización en WhatsApp, sea cual sea el estilo. */
 export const imagenCompartir = (inv: Invitacion) =>
-  inv.estilo === "rasgado"
+  "escena" in inv
+    ? inv.escena.compartir
+    : inv.estilo === "rasgado"
     ? inv.rasgado.compartir
     : inv.estilo === "rosedal"
     ? inv.rosedal.compartir

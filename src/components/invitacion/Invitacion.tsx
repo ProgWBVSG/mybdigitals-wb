@@ -14,6 +14,11 @@ import InvitacionCincuenta from "./cincuenta/InvitacionCincuenta";
 import InvitacionEjecutiva from "./ejecutiva/InvitacionEjecutiva";
 import InvitacionGarabato from "./garabato/InvitacionGarabato";
 import InvitacionGuirnalda from "./guirnalda/InvitacionGuirnalda";
+import InvitacionCupido from "./cupido/InvitacionCupido";
+import InvitacionHilo from "./hilo/InvitacionHilo";
+import InvitacionDijoSi from "./dijosi/InvitacionDijoSi";
+import InvitacionVinilo from "./vinilo/InvitacionVinilo";
+import InvitacionXoxo from "./xoxo/InvitacionXoxo";
 import InvitacionRasgado from "./rasgado/InvitacionRasgado";
 import InvitacionRosedal from "./rosedal/InvitacionRosedal";
 import Hero from "./Hero";
@@ -74,6 +79,20 @@ export default function Invitacion({ invitacion, personal }: { invitacion: Datos
   }
   if (invitacion.estilo === "guirnalda") {
     return <InvitacionGuirnalda invitacion={invitacion} personal={personal} />;
+  }
+  if ("escena" in invitacion) {
+    switch (invitacion.estilo) {
+      case "cupido":
+        return <InvitacionCupido invitacion={invitacion} personal={personal} />;
+      case "hilo":
+        return <InvitacionHilo invitacion={invitacion} personal={personal} />;
+      case "dijosi":
+        return <InvitacionDijoSi invitacion={invitacion} personal={personal} />;
+      case "vinilo":
+        return <InvitacionVinilo invitacion={invitacion} personal={personal} />;
+      case "xoxo":
+        return <InvitacionXoxo invitacion={invitacion} personal={personal} />;
+    }
   }
   if (invitacion.estilo === "rasgado") {
     return <InvitacionRasgado invitacion={invitacion} personal={personal} />;
