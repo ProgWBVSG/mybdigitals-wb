@@ -39,7 +39,7 @@ export type Diseno = {
 
 /**
  * Sólo los modelos que mostramos. Los diseños del motor viejo (Olivar, Bruma,
- * Ocaso, Granate, Lavanda, Lino y los de cumpleaños) se sacaron del catálogo a
+ * Ocaso, Granate, la Lavanda vieja, Lino y los de cumpleaños) se sacaron del catálogo a
  * pedido: la ruta /demo/[id] sigue existiendo pero ya nadie llega a ella desde
  * la página. Un tipo sin modelos muestra "consultá tu diseño" por WhatsApp.
  */
@@ -110,6 +110,14 @@ export const DISENOS: Diseno[] = [
     imagen: "/invitaciones/rasgado/miniatura.webp",
     acento: "#3b476f",
     enlace: "/tuinvitaciondigital/i/renata-y-tomas",
+  },
+  {
+    id: 16,
+    tipo: "bodas",
+    nombre: "Lavanda",
+    imagen: "/invitaciones/lavanda/miniatura.webp",
+    acento: "#5a4a6c",
+    enlace: "/tuinvitaciondigital/i/lavanda",
   },
   {
     id: 4,

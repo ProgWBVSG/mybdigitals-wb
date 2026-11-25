@@ -15,6 +15,7 @@ import { garabato } from "./demo/garabato";
 import { rosa } from "./demo/rosa";
 import { guirnalda } from "./demo/guirnalda";
 import { rosedal } from "./demo/rosedal";
+import { lavanda } from "./demo/lavanda";
 import { rasgado } from "./demo/rasgado";
 import { fogata } from "./demo/fogata";
 import { referencias } from "./demo/referencias";
@@ -26,7 +27,7 @@ import { referencias } from "./demo/referencias";
  *
  * Al sumar una invitación: importarla arriba y agregarla a la lista.
  */
-const INVITACIONES: Invitacion[] = [rosa, luisYJulieta, garabato, cinta, mesa, ariel, valentina, benjamin, tomer, sobremesa, orbita, jardin, cincuenta, privado, platos, guirnalda, rosedal, rasgado, fogata, ...referencias];
+const INVITACIONES: Invitacion[] = [rosa, luisYJulieta, garabato, cinta, mesa, ariel, valentina, benjamin, tomer, sobremesa, orbita, jardin, cincuenta, privado, platos, guirnalda, rosedal, lavanda, rasgado, fogata, ...referencias];
 
 export const buscarInvitacion = (slug: string) =>
   INVITACIONES.find((i) => i.slug === slug);

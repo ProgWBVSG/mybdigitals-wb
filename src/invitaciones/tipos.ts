@@ -471,10 +471,11 @@ export type InvitacionRasgado = InvitacionBase & {
  *  - dijosi: teatro, telón y tele retro; se tira del cordón.
  *  - vinilo: granate, polaroids y un disco; se baja la púa.
  *  - xoxo: rojo, pincel y parches; se despega el corazón.
+ *  - lavanda: sobre lila con lacre plateado; se toca el lacre y sale la tarjeta.
  */
 export type FotoEscena = { src: string; alt: string; foco?: string };
 export type InvitacionEscena = InvitacionBase & {
-  estilo: "cupido" | "hilo" | "dijosi" | "vinilo" | "xoxo";
+  estilo: "cupido" | "hilo" | "dijosi" | "vinilo" | "xoxo" | "lavanda";
   escena: {
     compartir: string;
     /** Título del evento en el calendario. */
@@ -490,6 +491,11 @@ export type InvitacionEscena = InvitacionBase & {
     bebidas?: string[];
     /** XOXO: las palabras imantadas. */
     palabras?: string[];
+    /** Lavanda: las iniciales del sobre. El lacre se hace con las mismas. */
+    monograma?: [string, string];
+    lacre?: string;
+    /** Lavanda: pedidos con título. */
+    deseos?: { titulo: string; texto: string }[];
     gracias: string;
   };
 };

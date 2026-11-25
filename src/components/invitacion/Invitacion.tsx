@@ -21,6 +21,7 @@ import InvitacionVinilo from "./vinilo/InvitacionVinilo";
 import InvitacionXoxo from "./xoxo/InvitacionXoxo";
 import InvitacionRasgado from "./rasgado/InvitacionRasgado";
 import InvitacionRosedal from "./rosedal/InvitacionRosedal";
+import InvitacionLavanda from "./lavanda/InvitacionLavanda";
 import Hero from "./Hero";
 import type { Personal } from "./personal";
 import SeccionCierre from "./SeccionCierre";
@@ -92,6 +93,8 @@ export default function Invitacion({ invitacion, personal }: { invitacion: Datos
         return <InvitacionVinilo invitacion={invitacion} personal={personal} />;
       case "xoxo":
         return <InvitacionXoxo invitacion={invitacion} personal={personal} />;
+      case "lavanda":
+        return <InvitacionLavanda invitacion={invitacion} personal={personal} />;
     }
   }
   if (invitacion.estilo === "rasgado") {
