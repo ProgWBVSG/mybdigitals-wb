@@ -30,7 +30,7 @@ header .reloj{margin-left:auto;font:500 15px var(--mono);color:var(--gris);white
 .llamado button{height:40px;padding:0 14px;border-radius:8px;background:#E0A93B;color:#1A1408;font-weight:700;font-size:14px}
 main{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;padding:12px clamp(14px,3vw,24px) 24px;align-items:start}
 .vacio{grid-column:1/-1;padding:80px 20px;text-align:center;color:var(--gris);font-size:16px}
-.t{display:flex;flex-direction:column;min-height:min(62vh,520px);background:var(--papel);color:var(--tinta);border-radius:6px;overflow:hidden;animation:entra .45s cubic-bezier(.2,.8,.2,1)}
+.t{display:flex;flex-direction:column;min-height:min(46vh,420px);background:var(--papel);color:var(--tinta);border-radius:6px;overflow:hidden;animation:entra .45s cubic-bezier(.2,.8,.2,1)}
 .t.nuevo{box-shadow:0 0 0 3px #7FB069}
 .t .cab{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;color:#fff;background:var(--gris-t)}
 .t .cab b{font:700 17px var(--mono);letter-spacing:.04em}.t .cab span{font:600 15px var(--mono)}
@@ -66,7 +66,7 @@ main{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:
 <section class="salieron" id="salieron"></section>
 <div class="aviso" id="aviso"></div>
 <script type="module">
-import { leer, guardar, alCambiar, esc, ic } from './datos.js';
+import { leer, guardar, alCambiar, esc, ic, TXT_LLAMADO } from './datos.js';
 const $ = s => document.querySelector(s);
 // pedidos de ejemplo de otras mesas (para que la pantalla no arranque vacía)
 let base; try { base = +sessionStorage.getItem('laesquina-cocina-base'); } catch {} if (!base) { base = Date.now(); try { sessionStorage.setItem('laesquina-cocina-base', base); } catch {} }
@@ -83,13 +83,13 @@ function aviso(t) { const a = $('#aviso'); a.innerHTML = ic('campana', 20) + t; 
 function pintar() { const ps = todos(), ahora = Date.now(), abiertos = ps.filter(p => p.estado === 'cocina'), hechos = ps.filter(p => p.estado !== 'cocina').sort((a, b) => (b.listoEn || b.creado) - (a.listoEn || a.creado)).slice(0, 8);
   const ids = new Set(abiertos.map(p => p.id)); if (vistos) for (const p of abiertos) if (!vistos.has(p.id)) aviso(`Pedido nuevo · Mesa ${esc(p.mesa)}`); vistos = ids;
   $('#cont').innerHTML = `<b>${abiertos.length}</b> en marcha`;
-  $('#tickets').innerHTML = abiertos.length ? abiertos.map(p => { const t = ahora - p.creado; return `<article class="t ${color(t)} ${t < 20000 ? 'nuevo' : ''}"><div class="cab"><b>MESA ${esc(p.mesa)}</b><span data-t="${p.creado}">${mmss(t)}</span></div><div class="sub"><span>${p.real ? 'Desde la carta' : 'Mozo'}</span><span>${new Date(p.creado).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false })}</span></div>
+  $('#tickets').innerHTML = abiertos.length ? abiertos.map(p => { const t = ahora - p.creado; return `<article class="t ${color(t)} ${t < 20000 ? 'nuevo' : ''}"><div class="cab"><b>MESA ${esc(p.mesa)}</b><span data-t="${p.creado}">${mmss(t)}</span></div><div class="sub"><span>${p.rapido ? 'Pedido rápido · mozo' : p.real ? 'Desde la carta' : 'Mozo'}</span><span>${new Date(p.creado).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false })}</span></div>
     <ul>${p.items.map((i, k) => `<li class="${tachados.has(p.id + k) ? 'hecho' : ''}" data-tachar="${p.id + k}"><span class="n">${i.cant}</span><span class="tx"><b>${esc(i.nombre)}</b>${i.mods.map(m => `<span class="m">— ${esc(m).toUpperCase()}</span>`).join('')}${i.nota ? `<span class="nt">“${esc(i.nota)}”</span>` : ''}</span></li>`).join('')}</ul>
     <button class="listo" data-listo="${p.id}">${ic('check', 20)} LISTO</button></article>`; }).join('') : '<p class="vacio">No hay pedidos en marcha. Cuando una mesa pida desde la carta, aparece acá.</p>';
   $('#salieron').innerHTML = hechos.length ? `<h2>SALIERON</h2>${hechos.map(p => `<div class="fila"><b>MESA ${esc(p.mesa)}</b><span>${p.items.map(i => `${i.cant} ${esc(i.nombre)}`).join(' · ')}</span>${p.estado === 'listo' ? `<button data-volver="${p.id}">Volver a abrir</button>` : '<span style="flex:none">Pagado</span>'}</div>`).join('')}` : '';
   const ll = leer().llamados.filter(l => !l.atendido).slice(-6);
-  $('#llamados').innerHTML = ll.map(l => `<div class="llamado">${ic(l.tipo === 'cuenta' ? 'cuenta' : 'campana', 22)}<span><b>MESA ${esc(l.mesa)}</b><span>${l.tipo === 'cuenta' ? `Pide la cuenta · ${l.medio === 'posnet' ? 'con posnet' : 'efectivo'}` : 'Llama al mozo'}</span></span><button data-atender="${l.id}">Voy</button></div>`).join('');
-  if (window.__llam != null && ll.length > window.__llam) aviso(`Mesa ${esc(ll[ll.length - 1].mesa)} ${ll[ll.length - 1].tipo === 'cuenta' ? 'pide la cuenta' : 'llama al mozo'}`); window.__llam = ll.length; }
+  $('#llamados').innerHTML = ll.map(l => `<div class="llamado">${ic(l.tipo === 'cuenta' ? 'cuenta' : 'campana', 22)}<span><b>MESA ${esc(l.mesa)}</b><span>${l.tipo === 'cuenta' ? `Pide la cuenta${l.medio ? ' · ' + (l.medio === 'posnet' ? 'con posnet' : 'efectivo') : ''}${l.partes > 1 ? ' · dividida en ' + l.partes : ''}` : TXT_LLAMADO[l.tipo] || 'Llama al mozo'}</span></span><button data-atender="${l.id}">Voy</button></div>`).join('');
+  if (window.__llam != null && ll.length > window.__llam) aviso(`Mesa ${esc(ll[ll.length - 1].mesa)} ${(TXT_LLAMADO[ll[ll.length - 1].tipo] || 'Llama al mozo').toLowerCase()}`); window.__llam = ll.length; }
 document.body.addEventListener('click', e => { const t = e.target.closest('[data-listo],[data-tachar],[data-volver],[data-atender]'); if (!t) return;
   if (t.dataset.tachar) { const k = t.dataset.tachar; tachados.has(k) ? tachados.delete(k) : tachados.add(k); t.classList.toggle('hecho'); return; }
   if (t.dataset.listo) { const id = t.dataset.listo; if (id.startsWith('ej')) { estadoEj[id] = 'listo'; estadoEj[id + 't'] = Date.now(); pintar(); } else guardar(s => { const p = s.pedidos.find(x => x.id === id); if (p) { p.estado = 'listo'; p.listoEn = Date.now(); } }); }

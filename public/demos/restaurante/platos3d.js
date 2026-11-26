@@ -45,8 +45,8 @@ export function crearPlatos(THREE) {
   // empanadas de carne con repulgue
   function empanadas() { const g = new THREE.Group(); plato(g, .13);
     [[-.035, -.02, .3], [.04, .015, -.5], [-.01, .055, 2.6]].forEach(([x, z, ry], k) => { const e = new THREE.Group(); const s = new THREE.Shape(); s.moveTo(-.058, 0); s.absarc(0, 0, .058, Math.PI, 0, true); s.lineTo(-.058, 0);
-      const geo = new THREE.ExtrudeGeometry(s, { depth: .004, bevelEnabled: true, bevelThickness: .013, bevelSize: .009, bevelSegments: 5, curveSegments: 28 }); geo.rotateX(-Math.PI / 2); m(geo, k % 2 ? M2.masaOsc : M2.masa, 0, .018, 0, e);
-      for (let i = 0; i <= 12; i++) { const a = Math.PI - i / 12 * Math.PI, b = m(new THREE.SphereGeometry(.0075, 10, 8), M2.masaOsc, Math.cos(a) * .064, .02, -Math.sin(a) * .064, e); b.scale.set(1.25, .55, .8); b.rotation.y = -a; }
+      const geo = new THREE.ExtrudeGeometry(s, { depth: .004, bevelEnabled: true, bevelThickness: .013, bevelSize: .009, bevelSegments: 3, curveSegments: 20 }); geo.rotateX(-Math.PI / 2); m(geo, k % 2 ? M2.masaOsc : M2.masa, 0, .018, 0, e);
+      for (let i = 0; i <= 12; i++) { const a = Math.PI - i / 12 * Math.PI, b = m(new THREE.SphereGeometry(.0075, 8, 6), M2.masaOsc, Math.cos(a) * .064, .02, -Math.sin(a) * .064, e); b.scale.set(1.25, .55, .8); b.rotation.y = -a; }
       e.position.set(x, 0, z); e.rotation.y = ry; g.add(e); });
     return g; }
   // provoleta en sartén de hierro

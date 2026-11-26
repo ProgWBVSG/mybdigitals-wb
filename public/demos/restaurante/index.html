@@ -11,6 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..700;1,9..144,500..700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preload" as="image" href="fotos/milanesa-ancha.webp" fetchpriority="high">
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
@@ -40,6 +42,11 @@
 <div class="velo" id="velo"></div>
 <section class="hoja" id="hoja" role="dialog" aria-modal="true"></section>
 <div class="aviso" id="aviso" role="status"></div>
+<div class="ar-ui" id="arUI" hidden>
+  <div class="ar-top"><button class="ar-x" data-ar-cerrar aria-label="Cerrar la cámara"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><b data-ar-titulo></b></div>
+  <p class="ar-estado" data-ar-estado data-tipo="buscar">Buscando la mesa…</p>
+  <div class="ar-abajo"><p class="ar-pista" data-ar-pista></p><div class="ar-btns"><button class="ar-sec" data-ar-mover hidden>Mover</button><button class="ar-sec" data-ar-girar hidden>Girar</button><button class="btn" data-ar-agregar>Agregar</button></div></div>
+</div>
 <script type="module" src="cliente.js"></script>
 </body>
 </html>

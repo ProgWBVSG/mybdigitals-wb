@@ -109,7 +109,7 @@ td .cat{display:block;font-size:12px;color:var(--gris)}
 <nav class="lado" id="nav"></nav>
 <main id="vista"></main>
 <script type="module">
-import { CATS, CARTA, porId, pesos, esc, leer, guardar, alCambiar, hace, ic, foto } from './datos.js';
+import { CATS, CARTA, porId, pesos, esc, leer, guardar, alCambiar, hace, ic, foto, TXT_LLAMADO } from './datos.js';
 const $ = s => document.querySelector(s);
 let vista = (location.hash || '#resumen').slice(1);
 const SECC = [['resumen', 'Resumen', 'grafico'], ['carta', 'Carta', 'lista'], ['clientes', 'Clientes', 'personas'], ['resenas', 'Reseñas', 'estrella']];
@@ -128,7 +128,7 @@ function resumen(s) { const vivos = s.pedidos.filter(p => p.estado === 'cocina' 
   const dias = ['L', 'M', 'X', 'J', 'V', 'S', 'D'], vals = [.3, .22, .45, .55, .92, 1, .6], hoy = (new Date().getDay() + 6) % 7;
   return `<h1>Esta semana</h1><p class="sub">Lo que pasó en el salón y lo que está pasando ahora.</p>
   <div class="kpis"><div class="kpi"><span>Pedidos por la carta</span><b>${ped.toLocaleString('es-AR')}</b><em>+18 % que la semana pasada</em></div><div class="kpi"><span>Ticket promedio</span><b>${pesos(21400)}</b><em>+9 % con las sugerencias de vino</em></div><div class="kpi"><span>Clientes en tu lista</span><b>${cli}</b><em>+${41 + s.clientes.length} nuevos</em></div><div class="kpi"><span>Reseña promedio</span><b>${prom.toFixed(1).replace('.', ',')} ★</b><em>${res.length + 140} reseñas en Google</em></div></div>
-  <div class="dos"><section><h2>Ahora en el salón</h2><div class="sup vivo">${ll.map(l => `<div class="fila"><b>Mesa ${esc(l.mesa)}</b><span>${l.tipo === 'cuenta' ? 'Pidió la cuenta' : 'Llamó al mozo'} · ${hace(l.ts)}</span><span class="est a">Esperando</span></div>`).join('')}${vivos.map(p => `<div class="fila"><b>Mesa ${esc(p.mesa)}</b><span>${p.items.map(i => `${i.cant} ${esc(i.nombre)}`).join(' · ')}</span><span class="est ${p.estado === 'listo' ? 'ok' : ''}">${p.estado === 'listo' ? 'Salió' : 'En cocina'}</span></div>`).join('')}${!ll.length && !vivos.length ? `<p class="vacio">Sin pedidos abiertos. Pedí algo desde la <a href="./" target="_blank" style="color:var(--terra)">carta</a> y aparece acá al instante.</p>` : ''}</div>
+  <div class="dos"><section><h2>Ahora en el salón</h2><div class="sup vivo">${ll.map(l => `<div class="fila"><b>Mesa ${esc(l.mesa)}</b><span>${TXT_LLAMADO[l.tipo] || 'Llama al mozo'} · ${hace(l.ts)}</span><span class="est a">Esperando</span></div>`).join('')}${vivos.map(p => `<div class="fila"><b>Mesa ${esc(p.mesa)}</b><span>${p.items.map(i => `${i.cant} ${esc(i.nombre)}`).join(' · ')}</span><span class="est ${p.estado === 'listo' ? 'ok' : ''}">${p.estado === 'listo' ? 'Salió' : 'En cocina'}</span></div>`).join('')}${!ll.length && !vivos.length ? `<p class="vacio">Sin pedidos abiertos. Pedí algo desde la <a href="./" target="_blank" style="color:var(--terra)">carta</a> y aparece acá al instante.</p>` : ''}</div>
   <h2 style="margin-top:30px">Platos más pedidos</h2><div class="barras">${top.map(([id, n]) => `<div class="f"><div><span>${porId(id).nombre}</span><b>${n}</b></div><i><s style="width:${n / max * 100}%"></s></i></div>`).join('')}</div></section>
   <section><h2>Mesas ocupadas por día</h2><div class="cols">${dias.map((d, i) => `<div class="c ${i === hoy ? 'hoy' : ''}"><i style="height:${vals[i] * 100}%"></i><span>${d}</span></div>`).join('')}</div>
   <p class="sub" style="margin-top:14px">Martes y lunes son los días flojos. Una promo para tu lista los martes llena mesas sin bajar el precio el fin de semana.</p>
