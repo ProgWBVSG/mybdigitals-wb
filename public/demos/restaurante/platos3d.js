@@ -14,17 +14,46 @@ export function crearPlatos(THREE) {
   const rnd = n => { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
   function plato(padre, r = .14) { const pl = [[0, 0], [r * .7, 0], [r * .93, .011], [r, .019], [r * .97, .021], [r * .74, .008], [0, .008]].map(([x, y]) => new THREE.Vector2(x, y)); m(new THREE.LatheGeometry(pl, 64), M.plato, 0, 0, 0, padre); }
   // milanesa napolitana con papas fritas (cebolla opcional)
+  /* texturas pintadas a mano en un lienzo (viajan dentro del GLB y del USDZ) */
+  const texCache = {};
+  function textura(nombre, fn, lado = 512) { if (texCache[nombre]) return texCache[nombre]; const c = document.createElement('canvas'); c.width = c.height = lado; const g = c.getContext('2d'); fn(g, lado);
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; t.userData.mimeType = 'image/jpeg'; return texCache[nombre] = t; }
+  const motas = (g, L, n, colores, rMin, rMax, semilla, a = [.5, .95]) => { for (let i = 0; i < n; i++) { g.globalAlpha = a[0] + rnd(semilla + i * 3.1) * (a[1] - a[0]); g.fillStyle = colores[i % colores.length]; g.beginPath(); g.ellipse(rnd(semilla + i) * L, rnd(semilla + i * 1.7) * L, rMin + rnd(semilla + i * 2.3) * (rMax - rMin), rMin + rnd(semilla + i * 5.9) * (rMax - rMin), rnd(i) * 3, 0, 7); g.fill(); } g.globalAlpha = 1; };
+  const TX = {
+    rebozado: () => textura('rebozado', (g, L) => { const gr = g.createRadialGradient(L / 2, L / 2, L * .1, L / 2, L / 2, L * .52); gr.addColorStop(0, '#D49544'); gr.addColorStop(.75, '#C4823A'); gr.addColorStop(1, '#93531F'); g.fillStyle = gr; g.fillRect(0, 0, L, L);
+      motas(g, L, 60, ['#A8622A', '#B8702E'], 10, 26, 11, [.25, .5]); motas(g, L, 2600, ['#8E4E1C', '#E4AE62', '#A35F27', '#F0C47E', '#7A4116'], .8, 2.6, 7); }),
+    salsa: () => textura('salsa', (g, L) => { g.fillStyle = '#B42D1B'; g.fillRect(0, 0, L, L); motas(g, L, 40, ['#C93C22', '#9A2416'], 6, 15, 3, [.3, .55]); motas(g, L, 260, ['#7E1A10', '#D85A36', '#9C2817'], .6, 2, 5); }, 256),
+    gratinado: () => textura('gratinado', (g, L) => { const gr = g.createRadialGradient(L / 2, L / 2, 0, L / 2, L / 2, L * .55); gr.addColorStop(0, '#F6E7B6'); gr.addColorStop(.8, '#F1DC9C'); gr.addColorStop(1, '#E8C877'); g.fillStyle = gr; g.fillRect(0, 0, L, L);
+      motas(g, L, 26, ['#DDAE5E', '#D49A48'], 10, 34, 21, [.35, .65]); motas(g, L, 90, ['#B9772E', '#C88A3C'], 2, 7, 23, [.5, .85]); motas(g, L, 300, ['#FFF6DA'], 1, 3, 29, [.3, .6]); }),
+    jamon: () => textura('jamon', (g, L) => { g.fillStyle = '#E0948C'; g.fillRect(0, 0, L, L); motas(g, L, 30, ['#F2B9B1', '#C9746B'], 3, 11, 31, [.25, .5]); }, 128),
+    papa: () => textura('papa', (g, L) => { const gr = g.createLinearGradient(0, 0, L, 0); gr.addColorStop(0, '#C98A2E'); gr.addColorStop(.12, '#EBC060'); gr.addColorStop(.88, '#F0C866'); gr.addColorStop(1, '#C07F28'); g.fillStyle = gr; g.fillRect(0, 0, L, L); motas(g, L, 160, ['#D9A447', '#F7D985'], 1, 4, 41, [.3, .6]); }, 128),
+  };
+  // óvalo blando: una esfera aplastada con borde irregular suave y relieve arriba. UV plano desde arriba (la textura no se estira).
+  function ovalo({ a, b, h, borde = [], relieve = 0, base = .35, sem = 1, seg = 72 }) {
+    const geo = new THREE.SphereGeometry(1, seg, Math.round(seg / 2)), p = geo.attributes.position, v = new THREE.Vector3();
+    for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i); const ang = Math.atan2(v.z, v.x); let f = 1; for (const [amp, fr, fase] of borde) f += amp * Math.sin(ang * fr + fase);
+      let y = v.y > 0 ? v.y : v.y * base; if (v.y > 0 && relieve) { const x = v.x * a, z = v.z * b; y += relieve * v.y * (Math.sin(x * 260 + sem) * Math.sin(z * 240 + sem * 2) + .6 * Math.sin(x * 610 + z * 430 + sem * 3)); }
+      p.setXYZ(i, v.x * a * f, y * h, v.z * b * f); }
+    geo.computeBoundingBox(); const bb = geo.boundingBox, uv = geo.attributes.uv;
+    for (let i = 0; i < p.count; i++) uv.setXY(i, (p.getX(i) - bb.min.x) / (bb.max.x - bb.min.x), (p.getZ(i) - bb.min.z) / (bb.max.z - bb.min.z));
+    geo.computeVertexNormals(); return geo; }
+  const conTex = (tex, r = .7, extra = {}) => new THREE.MeshStandardMaterial({ map: tex, roughness: r, ...extra });
+  // milanesa napolitana con papas fritas (cebolla opcional): capas apoyadas una sobre otra, sin huecos
   function milanesa(cebolla = false) { const g = new THREE.Group(); plato(g);
-    const forma = new THREE.Shape(); for (let i = 0; i <= 40; i++) { const a = i / 40 * Math.PI * 2, rr = .085 + .01 * Math.sin(a * 3) + .006 * Math.sin(a * 7); forma[i ? 'lineTo' : 'moveTo'](Math.cos(a) * rr * 1.15, Math.sin(a) * rr * .8); }
-    const ext = new THREE.ExtrudeGeometry(forma, { depth: .011, bevelEnabled: true, bevelThickness: .004, bevelSize: .005, bevelSegments: 3 }); ext.rotateX(-Math.PI / 2);
-    const mi = m(ext, M.mila, -.025, .012, .0, g);
-    const sal = new THREE.Shape(); for (let i = 0; i <= 40; i++) { const a = i / 40 * Math.PI * 2, rr = .068 + .007 * Math.sin(a * 4 + 1); sal[i ? 'lineTo' : 'moveTo'](Math.cos(a) * rr * 1.12, Math.sin(a) * rr * .74); }
-    const sg = new THREE.ExtrudeGeometry(sal, { depth: .002, bevelEnabled: true, bevelThickness: .0015, bevelSize: .003, bevelSegments: 2 }); sg.rotateX(-Math.PI / 2); m(sg, M.salsa, -.025, .03, 0, g);
-    for (let i = 0; i < 3; i++) { const j = m(new THREE.CylinderGeometry(.03, .03, .003, 20), M.jamon, -.06 + i * .03, .034, -.01 + (i % 2) * .02, g); j.scale.z = .8; }
-    for (let i = 0; i < 14; i++) { const q = m(new THREE.SphereGeometry(.018 + rnd(i) * .008, 14, 10), M.queso, -.08 + rnd(i * 3) * .11, .036, -.04 + rnd(i * 7) * .08, g); q.scale.y = .28; }
-    for (let i = 0; i < 22; i++) m(new THREE.BoxGeometry(.003, .001, .003), M.oregano, -.08 + rnd(i * 5) * .11, .041, -.04 + rnd(i * 9) * .08, g);
-    for (let i = 0; i < 16; i++) { const f = m(new THREE.BoxGeometry(.042 + rnd(i) * .016, .0065, .0065), i % 3 ? M.papa : M.papaOsc, .085 + rnd(i * 2) * .025, .014 + (i % 3) * .008, -.05 + rnd(i * 4) * .1, g); f.rotation.y = rnd(i * 6) * Math.PI; f.rotation.z = (rnd(i) - .5) * .3; }
-    if (cebolla) for (let i = 0; i < 7; i++) { const c = m(new THREE.TorusGeometry(.012 + (i % 3) * .004, .0028, 6, 18), M.cebolla, -.07 + i * .017, .044, (i % 2) * .018 - .009, g); c.rotation.x = Math.PI / 2 + (i - 3) * .15; }
+    const cx = -.032, piso = .008, alto = .0074; // la milanesa mide ~1,2 cm de alto
+    m(ovalo({ a: .094, b: .07, h: alto, borde: [[.05, 2, .7], [.03, 3, 2.1], [.015, 5, .3]], relieve: .09, base: .4, sem: 2, seg: 60 }), conTex(TX.rebozado(), .82), cx, piso + alto * .4, 0, g);
+    const tope = piso + alto * 1.4; // arriba del rebozado
+    m(ovalo({ a: .076, b: .055, h: .0016, borde: [[.07, 3, 1.2], [.04, 5, .2], [.025, 8, 2.4]], base: .2, sem: 4, seg: 40 }), conTex(TX.salsa(), .38), cx + .002, tope - .0004, .001, g);
+    for (const [x, z, r] of [[-.022, -.018, .03], [.014, .02, .028]]) m(ovalo({ a: r, b: r * .86, h: .0012, borde: [[.04, 4, r * 90]], base: .2, sem: 6, seg: 32 }), conTex(TX.jamon(), .55), cx + x, tope + .0012, z, g);
+    const queso = m(ovalo({ a: .072, b: .053, h: .0046, borde: [[.08, 3, .4], [.05, 5, 1.7], [.03, 9, .9]], relieve: .2, base: .15, sem: 8, seg: 60 }), conTex(TX.gratinado(), .42), cx, tope + .0018, 0, g);
+    const yq = tope + .0018 + .0046;
+    for (let i = 0; i < 40; i++) { const a = rnd(i * 5) * 6.283, r = Math.sqrt(rnd(i * 9)) * .9, o = m(new THREE.BoxGeometry(.0028, .0006, .0016), M.oregano, cx + Math.cos(a) * r * .062, yq - (r * r) * .0028, Math.sin(a) * r * .045, g); o.rotation.y = rnd(i) * 3; }
+    // papas: apiladas dentro del plato, cada una apoyada en la de abajo
+    const papa = conTex(TX.papa(), .6), papaOsc = conTex(TX.papa(), .6, { color: '#E2B98A' }); let puestas = 0;
+    for (let i = 0; i < 80 && puestas < 26; i++) { const L = .045 + rnd(i * 2.3) * .02, capa = puestas < 15 ? 0 : 1, x = .074 + rnd(i * 3.7) * .036, z = -.055 + rnd(i * 6.1) * .11, ang = Math.PI / 2 + (rnd(i * 8.3) - .5) * 1.1;
+      const ex = Math.cos(ang) * L / 2, ez = Math.sin(ang) * L / 2; if (Math.hypot(x + Math.abs(ex), Math.abs(z) + Math.abs(ez)) > .124) continue;
+      const f = m(new THREE.BoxGeometry(L, .009, .009), puestas % 4 ? papa : papaOsc, x, piso + .0045 + capa * .0087, z, g); f.rotation.set(0, -ang, (rnd(i) - .5) * (capa ? .18 : .05)); puestas++; }
+    if (cebolla) for (let i = 0; i < 7; i++) { const c = m(new THREE.TorusGeometry(.011 + (i % 3) * .003, .0022, 8, 24), M.cebolla, cx - .04 + i * .013, yq + .0018, (i % 2) * .016 - .008, g); c.rotation.x = Math.PI / 2; c.scale.z = .5; }
     return g; }
   function noquis() { const g = new THREE.Group(); plato(g);
     const sal = m(new THREE.CylinderGeometry(.095, .1, .006, 40), M.salsa, 0, .012, 0, g); sal.scale.z = .9;

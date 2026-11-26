@@ -146,7 +146,7 @@ async function iniciarVisor(p) {
   caja.onpointermove = e => { if (!V.arr) return; const dx = e.clientX - V.arr.x, dy = e.clientY - V.arr.y; V.arr = { x: e.clientX, y: e.clientY }; V.vel = dx * .012; V.rot += V.vel; if (!V.real) V.elev = Math.max(.2, Math.min(1.1, V.elev + dy * .004)); };
   caja.onpointerup = caja.onpointercancel = () => { V.arr = null; };
   const svg = $('#medida'), radio = p.r3d || .14, etiqueta = (p.medida || '').match(/(\d+)\s*cm/)?.[1];
-  const dist = p.d3d || Math.max(.6, radio * 6.4), mira = p.y3d ?? .025;
+  const dist = p.d3d || Math.max(.45, radio * 4.7), mira = p.y3d ?? .025;
   let el = V.elev, t0 = performance.now(), primero = true;
   const cuadro = now => { if (!V || !V.vivo) return; const dt = Math.min(.05, (now - t0) / 1000); t0 = now;
     if (!V.arr) { V.vel *= .94; V.rot += V.vel + (V.auto && !V.real ? dt * .45 : 0); }
