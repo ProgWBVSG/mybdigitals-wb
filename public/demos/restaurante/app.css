@@ -294,3 +294,21 @@ a.btn{text-decoration:none;position:relative}
 .tag{margin-right:8px}
 .pie.fila-pie .btn{white-space:nowrap;padding:0 14px;font-size:16px}
 #barra .btn{white-space:nowrap;font-size:16px;padding:0 14px}
+
+/* ---------- encabezado fijo: marca, mesa y campana arriba, pestañas abajo, todo en una barra sólida ---------- */
+.encab{position:sticky;top:0;z-index:15;background:var(--crema);padding-top:env(safe-area-inset-top);border-bottom:1.5px solid var(--linea);transition:box-shadow .25s}
+.encab.sombra{box-shadow:0 8px 20px -12px rgba(60,40,20,.4)}
+.encab .cab{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:12px 16px 6px;text-align:center}
+.encab .cab .mesa{position:static;justify-self:start;display:inline-flex;align-items:center;height:34px;padding:0 12px;border:1.5px solid var(--terra);border-radius:17px;font-size:11px;letter-spacing:.14em;border-bottom-width:1.5px}
+.encab .cab .campana{position:static;justify-self:end;width:44px;height:44px;border:1.5px solid var(--linea);background:var(--papel)}
+.encab .marca b{transition:font-size .25s var(--ease)}
+.encab .marca small{transition:opacity .2s,max-height .25s;max-height:16px;overflow:hidden}
+.encab.chico .cab{padding-top:8px;padding-bottom:2px}
+.encab.chico .marca b{font-size:21px}
+.encab.chico .marca small{opacity:0;max-height:0;margin-top:0}
+.encab .tabs{position:static;background:none;backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:0;padding-top:4px}
+.sec{scroll-margin-top:124px}
+.aviso{opacity:0;visibility:hidden;transition:transform .4s var(--ease),opacity .3s,visibility .4s}
+.aviso.ve{opacity:1;visibility:visible}
+.encab .cab .mesa{white-space:nowrap}
+.encab .marca small{white-space:nowrap}

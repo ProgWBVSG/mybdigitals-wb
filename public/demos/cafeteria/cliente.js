@@ -271,6 +271,9 @@ function pintarSellos(nuevo) { $('#sellos').innerHTML = Array.from({ length: 6 }
 function pintarEstrellas() { document.querySelectorAll('#estr button').forEach(b => b.classList.toggle('on', +b.dataset.e <= estrellas)); const r = $('#resena'); if (!estrellas) { r.innerHTML = ''; return; }
   r.innerHTML = estrellas >= 4 ? `<button class="btn borde" id="rGoogle" style="margin-top:14px">Publicar reseña en Google</button>` : `<p class="gris" style="font-size:14px;margin-top:10px">Contanos qué pasó. Le llega directo al dueño, no se publica.</p><textarea class="nota" id="rTxt" maxlength="300" placeholder="Lo que tendríamos que mejorar"></textarea><button class="btn" id="rPriv" style="margin-top:12px">Mandárselo a la casa</button>`; }
 
+/* ---------- encabezado: se achica al bajar y suma sombra ---------- */
+const topEl = $('#top'); const alBajar = () => { const c = scrollY > 24; topEl.classList.toggle('chico', c); topEl.classList.toggle('sombra', c); }; addEventListener('scroll', alBajar, { passive: true }); alBajar();
+
 /* ---------- todo junto ---------- */
 function pintarTodo() { const y = scrollY; pintarCarta(); pintarEstado(); pintarBarra(); observar(); scrollTo(0, y); }
 for (const l of misLlamados()) vistos.llamado[l.id] = !!l.atendido; for (const p of misPedidos()) vistos.etapa[p.id] = etapa(p);

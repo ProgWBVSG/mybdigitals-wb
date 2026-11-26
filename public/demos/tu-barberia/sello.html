@@ -43,6 +43,8 @@
   "use strict";
   const T = window.TARJETA, K = T.CONFIG, $ = (s) => document.querySelector(s);
   T.vestir();
+  // Modo prueba (para mostrar la demo): cada toque al NFC suma un sello, sin esperar a la próxima visita.
+  if (new URLSearchParams(location.search).has("prueba")) K.horasEntreSellosNfc = 0;
   const codigo = T.guardado.leer("miTarjeta");
   const c = codigo ? T.porCodigo(codigo) : null;
 
