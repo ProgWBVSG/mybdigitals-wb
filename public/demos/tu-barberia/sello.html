@@ -22,7 +22,7 @@
 </head>
 <body>
 <div id="carga" role="status" aria-label="Cargando Tu Barbería"><div class="poste"><i></i></div><b>TU BARBERÍA</b><span><i></i></span></div>
-<script>(function(){var t0=performance.now(),hecho;function fuera(){if(hecho)return;hecho=1;setTimeout(function(){var c=document.getElementById('carga');if(!c)return;c.classList.add('fuera');setTimeout(function(){c.remove()},320)},Math.max(0,600-(performance.now()-t0)))}document.addEventListener('DOMContentLoaded',fuera);setTimeout(fuera,2200)})();</script>
+<script>(function(){var t0=performance.now(),hecho;function fuera(){if(hecho)return;hecho=1;setTimeout(function(){var c=document.getElementById('carga');if(!c)return;c.classList.add('fuera');setTimeout(function(){c.remove()},320)},Math.max(0,600-(performance.now()-t0)))}addEventListener('load',function(){document.fonts.ready.then(fuera)});setTimeout(fuera,2500)})();</script>
 
 <!-- Esta es la página que abre la tarjeta NFC del mostrador. -->
 <main class="col">

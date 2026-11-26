@@ -19,12 +19,398 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Bebas+Neue&family=Big+Shoulders+Display:wght@600;700;800;900&display=swap" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="app.css">
-<link rel="stylesheet" href="turnos.css">
+<style>
+/* Tarjeta de fidelización: estilos compartidos por todas las marcas.
+   Regla 60/30/10: fondo oscuro, papel crema y un acento que sólo marca descuentos y la acción principal.
+   Cada marca cambia sus colores desde marca.js. */
+:root{
+  --carbon:#1B1B1B; --panel:#2A2A2A; --linea:#3D3D3D;
+  --crema:#EDE4CF; --crema-2:#CFC4A9; --gris:#A39C8E; --tinta:#1A1A1A; --tinta-suave:#5E574A;
+  --acento:#DF6127; --acento-2:#9E3F15; --sobre-acento:#F4EEDD; --sobre-sello:#EDE4CF; --madera:#3B2718;
+  --sal:cubic-bezier(.23,1,.32,1);
+  --ruido:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  --ruido-papel:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .14 0 0 0 .34 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"Archivo",system-ui,sans-serif;font-size:18px;line-height:1.4;color:var(--crema);background:var(--carbon) var(--ruido);min-height:100vh;min-height:100dvh;text-align:center;display:flex;flex-direction:column;overflow-x:hidden}
+h1,h2,h3{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:600;line-height:1.08;letter-spacing:.005em}
+button,input{font:inherit;color:inherit}
+button{-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--crema);outline-offset:3px;border-radius:6px}
+[hidden]{display:none!important}
+.col{width:100%;max-width:430px;margin:0 auto;padding:24px 18px 36px}
+.firma{margin-top:auto;padding:14px 16px 18px;font-size:.82rem;color:var(--gris)}
+.firma a{color:inherit}
+
+/* Logo: manuscrito por defecto; "recto" para marcas de letra de imprenta */
+.logo{font-family:"Yellowtail",cursive;font-size:2.5rem;line-height:.82;color:var(--crema);display:inline-block;transform:rotate(-5deg);text-align:left}
+.logo span{display:block;padding:0 0 5px .75em;border-bottom:2px solid var(--crema)}
+[data-letra=recto] .logo{font-family:"Bebas Neue","Big Shoulders Display",sans-serif;font-size:3.1rem;line-height:.84;letter-spacing:.07em;transform:none;text-align:center}
+[data-letra=recto] .logo span{padding:5px 0 0;margin-top:4px;border-bottom:0;border-top:2px solid var(--acento);font-size:.4em;letter-spacing:.56em;text-indent:.56em;color:var(--acento)}
+.saludo{margin-top:16px;color:var(--gris);font-size:1.05rem}
+
+/* Botones */
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:58px;padding:14px 20px;border:0;border-radius:7px;background:var(--acento) var(--ruido);color:var(--sobre-acento);font-family:"Big Shoulders Display",sans-serif;font-weight:600;font-size:1.3rem;letter-spacing:.01em;text-decoration:none;cursor:pointer;box-shadow:0 4px 0 var(--acento-2);transition:transform 140ms var(--sal),box-shadow 140ms var(--sal)}
+.btn:active{transform:translateY(3px) scale(.985);box-shadow:0 1px 0 var(--acento-2)}
+.btn.linea{background:none;border:2px solid var(--crema-2);color:var(--crema);box-shadow:none;font-size:1.08rem;min-height:52px}
+.btn.linea:active{transform:scale(.97)}
+.btn.chico{width:auto;min-height:46px;font-size:1.02rem;padding:8px 18px}
+.enlace{display:inline-block;background:none;border:0;padding:10px 6px;color:var(--crema);font-size:1rem;text-decoration:underline;text-decoration-color:var(--acento);text-decoration-thickness:2px;text-underline-offset:5px;cursor:pointer}
+
+/* Formularios */
+label{display:block;font-weight:500;margin-bottom:7px}
+input[type=text],input[type=tel],input[type=search],input[type=password]{width:100%;min-height:54px;padding:12px 14px;border:2px solid var(--linea);border-radius:7px;background:var(--panel);text-align:center}
+input::placeholder{color:var(--gris)}
+.campo{margin-bottom:16px}
+.nota{font-size:.92rem;color:var(--gris)}
+
+/* ---------- Tarjeta del cliente ---------- */
+.escena{position:relative;margin:26px -18px 0;padding:6px 26px 54px}
+.escena::after{content:"";position:absolute;left:0;right:0;bottom:0;height:44%;z-index:0;
+  background:repeating-linear-gradient(90deg,rgba(0,0,0,.16) 0 2px,transparent 2px 110px),repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 9px),linear-gradient(rgba(255,255,255,.13),rgba(0,0,0,.2));
+  background-color:var(--madera);border-top:2px solid rgba(255,255,255,.2);box-shadow:0 14px 22px rgba(0,0,0,.5)}
+.papel{position:relative;z-index:1;transform:rotate(-2.5deg);border-radius:5px;padding:24px 18px 22px;color:var(--tinta);background:var(--crema) var(--ruido-papel);box-shadow:0 1px 0 #B9AE93,0 16px 26px rgba(0,0,0,.6)}
+.huecos{display:grid;grid-template-columns:repeat(5,1fr);gap:14px 9px}
+.hueco{position:relative;aspect-ratio:1;border-radius:50%;border:2px dashed rgba(26,26,26,.38);display:grid;place-items:center;font-family:"Big Shoulders Display",sans-serif;font-weight:500;font-size:1rem;color:rgba(26,26,26,.5)}
+.hueco.premio{border-color:var(--acento-2);color:var(--acento-2);font-weight:600;font-size:.86rem}
+.hueco.lleno{border-color:transparent}
+.sello{position:absolute;inset:-7%;width:114%;height:114%;color:var(--tinta);transform:rotate(var(--giro));mix-blend-mode:multiply;opacity:.9}
+.sello.hito{color:var(--acento);mix-blend-mode:normal;opacity:.96}
+.sello.nuevo{animation:estampar 300ms var(--sal) both}
+@keyframes estampar{from{transform:rotate(var(--giro)) scale(1.9);opacity:0}}
+
+.estado{margin:30px 0 22px}
+.estado h1{font-size:clamp(2rem,9.5vw,2.7rem)}
+.estado p{font-family:"Big Shoulders Display",sans-serif;font-weight:400;font-size:clamp(1.2rem,5.6vw,1.45rem);margin-top:4px}
+.estado em{font-style:normal;color:var(--acento);font-weight:600}
+.hitos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.hito-caja{background:var(--panel);border:2px solid transparent;border-radius:8px;padding:12px 6px 10px}
+.hito-caja b{display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:600;font-size:1.7rem;line-height:1;color:var(--crema)}
+.hito-caja small{display:block;margin-top:5px;font-size:.88rem;color:var(--gris)}
+.hito-caja.sigue{border-color:var(--acento)}
+.hito-caja.sigue b{color:var(--acento)}
+.hito-caja.usado b{color:var(--gris);text-decoration:line-through;text-decoration-thickness:2px}
+.cerca{margin-top:14px}
+
+/* Aviso tipo notificación del celular */
+.notif{position:fixed;top:10px;left:50%;z-index:60;width:min(94vw,400px);display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:#F6F1E3;color:var(--tinta);text-align:left;box-shadow:0 14px 34px rgba(0,0,0,.55);transform:translate(-50%,-150%);transition:transform 320ms var(--sal)}
+.notif.ver{transform:translate(-50%,0)}
+.notif i{flex:none;width:40px;height:40px;border-radius:10px;background:var(--acento);color:var(--sobre-acento);display:grid;place-items:center;font:600 1.3rem "Big Shoulders Display",sans-serif;font-style:normal}
+.notif b{display:block;font-weight:600;line-height:1.2}
+.notif span{display:block;font-size:.95rem;line-height:1.25;color:#4A443A}
+
+/* Hojas (diálogos) */
+dialog{border:0;padding:0;background:transparent;max-width:none;max-height:none;margin:auto;color:var(--tinta)}
+dialog::backdrop{background:rgba(0,0,0,.78)}
+dialog[open] .hoja{animation:entrar 220ms var(--sal)}
+@keyframes entrar{from{transform:scale(.96);opacity:0}}
+.hoja{width:min(92vw,370px);max-height:92vh;overflow:auto;border-radius:8px;padding:26px 20px 20px;text-align:center;background:var(--crema) var(--ruido-papel)}
+.hoja h2{font-size:1.7rem}
+.hoja p{color:#4A443A}
+.hoja .btn.linea{border-color:var(--tinta);color:var(--tinta)}
+.hoja .enlace{color:var(--tinta);text-decoration-color:var(--acento-2)}
+.hoja input[type=text],.hoja input[type=tel]{background:#F7F1E2;border-color:#B9AE93;color:var(--tinta)}
+.qr{width:200px;height:200px;margin:18px auto 10px;padding:10px;background:#fff;border-radius:6px;display:grid;place-items:center}
+.qr svg{width:100%;height:100%;display:block}
+.numero{font-family:"Big Shoulders Display",sans-serif;font-weight:600;font-size:2.4rem;letter-spacing:.14em;margin-bottom:16px}
+.pila{display:grid;gap:10px}
+.enlace-nfc{margin:14px 0;padding:10px;border:1.5px dashed #9C917A;border-radius:6px;font-size:.86rem;word-break:break-all;color:var(--tinta)!important}
+
+/* ---------- Panel del dueño: el libro del local ---------- */
+.barra{padding:22px 18px 6px}
+.barra .logo{font-size:2.1rem}
+[data-letra=recto] .barra .logo{font-size:2.6rem}
+.barra p{margin-top:14px;font-family:"Big Shoulders Display",sans-serif;font-size:1rem;letter-spacing:.24em;text-indent:.24em;text-transform:uppercase;color:var(--gris)}
+.panel{width:100%;max-width:1080px;margin:0 auto;padding:22px 16px 30px;display:grid;gap:26px}
+.lado{display:grid;gap:26px}
+
+/* Ticket del día */
+.ticket{position:relative;display:grid;grid-template-columns:repeat(3,1fr);margin:8px 0;padding:16px 4px 14px;color:var(--tinta);background:var(--crema) var(--ruido-papel)}
+.ticket::before,.ticket::after{content:"";position:absolute;left:0;right:0;height:8px;background:linear-gradient(135deg,var(--crema) 25%,transparent 25%) -8px 0/16px 16px,linear-gradient(225deg,var(--crema) 25%,transparent 25%) -8px 0/16px 16px}
+.ticket::after{top:100%}
+.ticket::before{bottom:100%;transform:scaleY(-1)}
+.ticket div{padding:2px 4px;border-left:1.5px dashed #A99E86}
+.ticket div:first-child{border-left:0}
+.ticket b{display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:600;font-size:clamp(2rem,8vw,2.6rem);line-height:1}
+.ticket div:last-child b{color:var(--acento-2)}
+.ticket span{display:block;margin-top:5px;font-size:.9rem;line-height:1.15;color:var(--tinta-suave)}
+
+/* Planilla de clientes */
+.planilla{color:var(--tinta);background:var(--crema) var(--ruido-papel);border-radius:4px;padding:24px 16px 8px;box-shadow:0 18px 30px rgba(0,0,0,.45)}
+.planilla h2{font-size:1.6rem}
+.planilla .fecha{font-size:.92rem;color:var(--tinta-suave);margin:4px 0 16px}
+.planilla input[type=search]{background:transparent;border:0;border-bottom:2px solid var(--tinta);border-radius:0;color:var(--tinta);min-height:48px}
+.planilla input::placeholder{color:#8B816C}
+.pestanas{display:flex;justify-content:center;flex-wrap:wrap;gap:2px 18px;margin:12px 0 4px}
+.pestana{background:none;border:0;border-bottom:3px solid transparent;padding:10px 2px 6px;min-height:44px;font-weight:500;font-size:1rem;color:var(--tinta-suave);cursor:pointer;transition:color 150ms ease}
+.pestana[aria-selected=true]{color:var(--tinta);border-bottom-color:var(--acento)}
+.renglones{list-style:none;padding:0}
+.renglon{width:100%;display:grid;grid-template-columns:1.25fr 1fr 1fr;align-items:center;gap:10px;padding:15px 4px;background:none;border:0;border-top:1px solid rgba(26,26,26,.22);color:inherit;cursor:pointer;transition:background-color 150ms ease}
+.renglon:active{background:rgba(26,26,26,.09)}
+@media (hover:hover) and (pointer:fine){.renglon:hover{background:rgba(26,26,26,.06)}}
+.renglon b{font-family:"Big Shoulders Display",sans-serif;font-weight:500;font-size:1.18rem;line-height:1.15}
+.marcas{display:inline-flex;justify-content:center;gap:3px}
+.marcas i{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--tinta)}
+.marcas i.on{background:var(--tinta)}
+.marcas i.meta{border-color:var(--acento-2)}
+.marcas i.meta.on{background:var(--acento);border-color:var(--acento)}
+.timbre{justify-self:center;display:inline-block;border:2px solid currentColor;border-radius:3px;padding:1px 8px;font-family:"Big Shoulders Display",sans-serif;font-weight:600;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--acento-2);transform:rotate(-3deg);white-space:nowrap}
+.timbre.quieto{color:var(--tinta-suave);border-style:dashed;transform:none}
+.vacio{padding:26px 10px;color:var(--tinta-suave);border-top:1px solid rgba(26,26,26,.22)}
+
+/* Movimientos */
+.movs h2{font-size:1.25rem;letter-spacing:.04em;margin-bottom:6px}
+.movs ul{list-style:none;padding:0}
+.movs li{padding:12px 0;border-top:1px solid var(--linea)}
+.movs b{display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:500;font-size:1.08rem}
+.movs span{font-size:.94rem;color:var(--gris)}
+.movs em{font-style:normal;color:var(--acento);font-weight:600}
+.acciones{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+
+/* Ficha */
+.puntos{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;margin:16px 0 10px}
+.puntos i{aspect-ratio:1;border-radius:50%;border:2px solid var(--tinta)}
+.puntos i.on{background:var(--tinta)}
+.puntos i.meta{border-color:var(--acento-2)}
+.puntos i.meta.on{background:var(--acento);border-color:var(--acento)}
+.descuento{margin:14px 0 4px;padding:10px;border-radius:6px;background:var(--acento);color:var(--sobre-acento)!important;font-family:"Big Shoulders Display",sans-serif;font-weight:600;font-size:1.25rem}
+.aviso{position:fixed;left:50%;bottom:20px;transform:translate(-50%,160%);background:var(--crema);color:var(--tinta);padding:13px 18px;border-radius:7px;font-weight:600;width:max-content;max-width:calc(100vw - 28px);transition:transform 260ms var(--sal);z-index:40;box-shadow:0 10px 26px rgba(0,0,0,.5)}
+.aviso.ver{transform:translate(-50%,0)}
+.mal{animation:temblor 240ms}
+@keyframes temblor{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+/* Sello por NFC */
+.nfc-sello{position:relative;width:170px;height:170px;margin:26px auto 4px;border-radius:50%;background:var(--crema) var(--ruido-papel)}
+.nfc-sello .sello{inset:8%;width:84%;height:84%}
+
+/* ---------- Página de ejemplo con las dos vistas ---------- */
+.muestra{width:100%;max-width:1000px;margin:0 auto;padding:34px 16px 30px}
+.muestra h1{font-size:clamp(1.8rem,5vw,2.8rem);margin:26px 0 8px}
+.muestra>p{color:var(--gris);font-size:1.08rem}
+.controles{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:22px}
+.vistas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px;justify-items:center;margin-top:30px}
+.vista{width:100%;display:flex;flex-direction:column;align-items:center}
+.vista h2{font-size:1.5rem;margin-bottom:16px}
+.vista h2 em{font-style:normal;color:var(--acento)}
+.celular{width:min(100%,380px);height:760px;border:11px solid #0A0A0A;border-radius:46px;overflow:hidden;background:var(--carbon);box-shadow:0 0 0 2px #3A3A3A,0 30px 60px rgba(0,0,0,.6)}
+.celular iframe{width:100%;height:100%;border:0;display:block}
+.selector{display:none;justify-content:center;gap:22px;margin-top:20px}
+.selector .pestana{color:var(--gris)}
+.selector .pestana[aria-selected=true]{color:var(--crema)}
+
+@media (min-width:960px){
+  .panel{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);align-items:start;gap:32px}
+  .lado{position:sticky;top:18px}
+}
+@media (max-width:959px){.lado{order:-1}.lado .movs{display:none}.movs-abajo{display:block}}
+@media (min-width:960px){.movs-abajo{display:none}}
+@media (max-width:560px){
+  .renglon{grid-template-columns:1fr;gap:7px;padding:16px 4px}
+  .planilla{padding:22px 12px 6px}
+}
+@media (max-width:820px){
+  .vistas{grid-template-columns:1fr;gap:0;margin-top:16px}
+  .selector{display:flex}
+  .vista h2{display:none}
+  .vista:not(.activa){display:none}
+  .celular{height:min(760px,76vh);border-width:9px;border-radius:38px}
+}
+@media (prefers-reduced-motion:reduce){
+  .sello.nuevo,dialog[open] .hoja,.mal{animation:none}
+  .notif,.aviso,.btn{transition-duration:1ms}
+}
+
+/* ---------- Tipografía: letras de cartel para los títulos, Archivo para leer ---------- */
+body{font-size:17px}
+h1,h2,h3{font-weight:800;text-transform:uppercase;letter-spacing:.012em;line-height:.96}
+.rotulo,.ticket span,.hito-caja small,.barra p,.planilla .fecha,.cuota .rotulo{font-family:"Archivo",sans-serif;font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.14em;line-height:1.3}
+.estado h1{font-size:clamp(2.7rem,13vw,3.6rem);text-shadow:.04em .045em 0 var(--acento-2)}
+.estado p{font-weight:700;font-size:clamp(1.35rem,6.2vw,1.7rem);text-transform:uppercase;letter-spacing:.03em;margin-top:8px}
+.estado em{font-weight:800}
+.btn{font-weight:800;font-size:1.5rem;text-transform:uppercase;letter-spacing:.045em}
+.btn.linea{font-size:1.18rem;font-weight:700}
+.btn.chico{font-size:1.08rem}
+.hueco{font-family:"Big Shoulders Display",sans-serif;font-weight:700;font-size:1.15rem}
+.hueco.premio{font-weight:800;font-size:1.02rem}
+.hito-caja b{font-weight:900;font-size:2.1rem}
+.ticket b{font-weight:900;font-size:clamp(2.4rem,9vw,3rem)}
+.planilla h2{font-size:2.1rem}
+.renglon b{font-weight:800;font-size:1.4rem;text-transform:uppercase;letter-spacing:.02em}
+.renglon b small{display:block;margin-top:3px;font-family:"Archivo",sans-serif;font-size:.64rem;font-weight:600;letter-spacing:.16em;color:var(--acento-2)}
+.timbre{font-weight:800;font-size:.95rem;letter-spacing:.06em}
+.movs h2{font-size:1.5rem}
+.movs b{font-weight:700;font-size:1.25rem;text-transform:uppercase;letter-spacing:.02em}
+.hoja h2{font-size:2.2rem}
+.numero{font-weight:900;font-size:3rem}
+.descuento{font-weight:800;font-size:1.4rem;text-transform:uppercase;letter-spacing:.03em}
+.notif i{font-weight:900;font-size:1.5rem}
+.muestra h1{font-size:clamp(2.2rem,6.4vw,3.6rem);text-shadow:.04em .045em 0 var(--acento-2)}
+.vista h2{font-size:1.7rem}
+.pestana{font-size:.95rem}
+
+/* ---------- Cuota mensual ---------- */
+.club{margin-top:14px;padding:22px 16px 18px;border-radius:10px;background:var(--panel);border:1.5px dashed var(--linea)}
+.club.socio{border-style:solid;border-color:var(--acento)}
+.club h2{font-size:2rem}
+.club p{margin-top:6px;color:var(--crema-2)}
+.club-precio{font-size:1rem}
+.club-precio b{font-family:"Big Shoulders Display",sans-serif;font-weight:900;font-size:2.9rem;line-height:1;color:var(--acento);margin-right:4px}
+.hoja .club-precio b{color:var(--acento-2)}
+.club .btn{margin-top:16px}
+.cuota{padding:20px 14px 6px;border-radius:8px;background:var(--panel)}
+.cuota h2{font-size:1.5rem}
+.cuota .monto b{display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:900;font-size:clamp(2.8rem,10vw,3.5rem);line-height:1.05;color:var(--acento)}
+.cuota .rotulo{color:var(--gris)}
+.cuota ul{list-style:none;padding:0;margin-top:14px}
+.cuota li{border-top:1px solid var(--linea)}
+.socio{width:100%;padding:11px 0;background:none;border:0;cursor:pointer;display:block}
+.socio b{display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:700;font-size:1.2rem;text-transform:uppercase;letter-spacing:.02em}
+.socio span{font-size:.9rem;color:var(--gris)}
+.socio em{font-style:normal;font-weight:600;color:var(--acento)}
+.prueba{margin-top:26px;padding:16px 14px;border:1.5px dashed var(--linea);border-radius:10px}
+.prueba .rotulo{color:var(--gris);margin-bottom:12px}
+
+/* ---------- Movimiento ---------- */
+@view-transition{navigation:auto}
+.entra{animation:entra 600ms var(--sal) both;animation-delay:calc(var(--i,0)*70ms)}
+@keyframes entra{from{opacity:0;transform:translateY(16px);filter:blur(8px)}}
+.cambia{animation:cambia 340ms var(--sal)}
+@keyframes cambia{from{opacity:0;transform:translateY(8px);filter:blur(6px)}}
+dialog::backdrop{animation:velo 240ms ease}
+@keyframes velo{from{opacity:0}}
+/* Brillo que barre el botón principal */
+.btn:not(.linea){position:relative;overflow:hidden}
+.btn:not(.linea)::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.3) 50%,transparent 64%);transform:translateX(-130%);pointer-events:none}
+.btn.brilla::after{animation:brillo 1100ms var(--sal) 1000ms both}
+@keyframes brillo{to{transform:translateX(130%)}}
+@media (hover:hover) and (pointer:fine){
+  .btn:not(.linea):hover::after{transform:translateX(130%);transition:transform 800ms var(--sal)}
+  .btn.linea{transition:transform 140ms var(--sal),background-color 200ms ease,color 200ms ease}
+  .btn.linea:hover{background:var(--crema);color:var(--tinta)}
+  .hoja .btn.linea:hover{background:var(--tinta);color:var(--crema)}
+  .socio:hover b{color:var(--acento)}
+}
+/* La tarjeta se inclina hacia el puntero */
+.escena{perspective:900px}
+.papel{transition:transform 420ms var(--sal);will-change:transform}
+/* Foco de luz que sigue al puntero */
+.foco{position:relative;overflow:hidden}
+.foco::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 320ms ease;background:radial-gradient(240px circle at var(--mx,50%) var(--my,0px),rgba(255,255,255,.1),transparent 70%)}
+@media (hover:hover) and (pointer:fine){.foco:hover::before{opacity:1}}
+/* Raya de la pestaña activa */
+.pestanas{position:relative}
+.planilla .pestana[aria-selected=true]{border-bottom-color:transparent}
+.tab-linea{position:absolute;left:0;top:0;height:3px;width:0;background:var(--acento);border-radius:2px;pointer-events:none;transition:transform 300ms var(--sal),width 300ms var(--sal)}
+.socio,.renglon,.pestana{transition:color 160ms ease,background-color 160ms ease}
+@media (prefers-reduced-motion:reduce){
+  .entra,.cambia,.btn.brilla::after,dialog::backdrop{animation:none}
+  .papel,.tab-linea{transition:none}
+}
+
+@media (max-width:959px){.cuota ul{display:none}.cuota{padding-bottom:18px}}
+
+/* Logo con corona (marcas que traen su propio dibujo) */
+.logo .corona{display:block;width:.8em;height:auto;margin:0 auto .1em;color:var(--crema)}
+
+</style>
+<style>
+/* Turnos de Off Basic: caja del turno en la tarjeta, selector en la hoja y agenda del panel. */
+
+/* ---------- Tarjeta del cliente ---------- */
+.turno-caja{margin-top:14px;padding:22px 16px 18px;border-radius:10px;background:var(--panel);border:1.5px dashed var(--linea)}
+.turno-caja.tiene{border-style:solid;border-color:var(--acento)}
+.turno-caja .rotulo{color:var(--gris)}
+.turno-caja h2{font-size:2.3rem;margin-top:6px}
+.turno-caja h2 em{font-style:normal;color:var(--acento)}
+.turno-caja p{margin-top:6px;color:var(--crema-2)}
+.turno-caja .btn{margin-top:16px}
+.turno-caja .fila{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 14px;margin-top:6px}
+.estado-turno{display:inline-block;margin-top:10px;padding:3px 10px;border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border:1.5px solid var(--crema-2);color:var(--crema-2)}
+.estado-turno.ok{border-color:var(--acento);color:var(--acento)}
+.turno-caja.recuerda{animation:recuerda 1.2s var(--sal) 2}
+@keyframes recuerda{40%{box-shadow:0 0 0 6px color-mix(in srgb,var(--acento) 35%,transparent)}}
+
+/* ---------- Selector (en una hoja de papel) ---------- */
+.hoja.ancha{width:min(94vw,440px);text-align:left;padding:24px 18px 18px}
+.hoja.ancha h2,.hoja.ancha>p{text-align:center}
+.paso{margin:18px 0 8px;font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--tinta-suave)!important}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{flex:1 1 auto;min-height:48px;padding:8px 12px;border:2px solid #B9AE93;border-radius:8px;background:#F7F1E2;color:var(--tinta);font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:1.12rem;text-transform:uppercase;letter-spacing:.03em;cursor:pointer;line-height:1.05;transition:background-color 150ms ease,color 150ms ease,border-color 150ms ease,transform 120ms var(--sal)}
+.chip small{display:block;margin-top:3px;font-family:"Archivo",sans-serif;font-weight:500;font-size:.72rem;letter-spacing:.04em;text-transform:none;color:var(--tinta-suave)}
+.chip.on{background:var(--tinta);border-color:var(--tinta);color:var(--crema)}
+.chip.on small{color:var(--crema-2)}
+.chip:active{transform:scale(.97)}
+.chip:disabled{opacity:.4;cursor:default;text-decoration:line-through}
+.dias{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(78px,1fr);gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.dias::-webkit-scrollbar{display:none}
+.horas{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.horas .chip{font-size:1.05rem;padding:8px 4px}
+.sin-lugar{padding:14px;border:1.5px dashed #9C917A;border-radius:8px;text-align:center}
+.sin-lugar p{margin-bottom:10px}
+.hoja .sin-lugar .btn.linea{width:100%}
+.resumen-turno{margin:18px 0 12px;padding:12px;border-radius:8px;background:rgba(18,18,20,.07);text-align:center;font-weight:600;color:var(--tinta)!important;min-height:48px}
+.politica{margin-top:10px;font-size:.88rem;text-align:center}
+.antes{margin-top:6px;font-size:.95rem}
+.antes s{text-decoration-thickness:2px}
+
+/* ---------- Agenda del panel ---------- */
+.agenda{grid-column:1/-1;color:var(--tinta);background:var(--crema) var(--ruido-papel);border-radius:4px;padding:24px 14px 16px;box-shadow:0 18px 30px rgba(0,0,0,.45)}
+.agenda h2{font-size:2.1rem}
+.agenda .cuenta{margin:4px 0 14px;font-size:.92rem;color:var(--tinta-suave)}
+.agenda .dias{margin:0 auto 16px;max-width:720px}
+.agenda .chip small{color:var(--tinta-suave)}
+.columnas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.columna h3{font-size:1.5rem;padding-bottom:8px;border-bottom:2px solid var(--tinta)}
+.franjas{list-style:none;padding:0}
+.franja{display:grid;grid-template-columns:46px 1fr;align-items:stretch;gap:6px;border-top:1px solid rgba(18,18,20,.14);min-height:40px}
+.franja>span{padding-top:9px;font-size:.8rem;font-weight:600;color:var(--tinta-suave);text-align:left}
+.bloque{margin:4px 0;padding:6px 8px;border-radius:6px;border:2px solid var(--tinta);background:transparent;color:var(--tinta);text-align:left;cursor:pointer;width:100%;font:inherit;line-height:1.15}
+.bloque b{display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:1.05rem;text-transform:uppercase;letter-spacing:.02em}
+.bloque small{display:block;font-size:.76rem;color:var(--tinta-suave)}
+.bloque.confirmado{background:rgba(18,18,20,.07)}
+.bloque.tarjeta b::after{content:" ★";color:var(--acento)}
+.bloque.atendido{border-color:rgba(18,18,20,.25);color:var(--tinta-suave)}
+.bloque.atendido b::before{content:"✓ ";color:var(--acento)}
+.bloque.ausente{border-style:dashed;border-color:var(--acento-2)}
+.bloque.ausente small{color:var(--acento-2);font-weight:600}
+.bloque.cancelado{border:2px dashed #9C917A;background:repeating-linear-gradient(135deg,transparent 0 8px,rgba(18,18,20,.04) 8px 16px)}
+.bloque.cancelado b{text-decoration:line-through;text-decoration-thickness:2px;color:var(--tinta-suave)}
+.bloque.cancelado em{display:inline-block;margin-top:5px;padding:2px 8px;border-radius:999px;background:var(--acento);color:var(--sobre-acento);font-style:normal;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.libre{margin:4px 0;padding:8px;font-size:.76rem;color:#8B816C;text-align:left;border-radius:6px;border:1.5px dashed transparent}
+.agenda .leyenda{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 16px;margin-top:14px;font-size:.8rem;color:var(--tinta-suave)}
+
+/* Lista de espera (al costado del panel) */
+.espera{padding:20px 14px 10px;border-radius:8px;background:var(--panel)}
+.espera h2{font-size:1.5rem}
+.espera .rotulo{color:var(--gris)}
+.espera ul{list-style:none;padding:0;margin-top:12px}
+.espera li{padding:11px 0;border-top:1px solid var(--linea)}
+.espera b{display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:700;font-size:1.2rem;text-transform:uppercase;letter-spacing:.02em}
+.espera span{font-size:.9rem;color:var(--gris)}
+.historial{list-style:none;padding:0;margin:12px 0 0;text-align:left}
+.historial li{padding:7px 0;border-top:1px solid rgba(18,18,20,.15);font-size:.9rem;color:#4A443A}
+
+@media (max-width:560px){
+  .columnas{gap:8px}
+  .franja{grid-template-columns:38px 1fr;gap:4px}
+  .bloque{padding:5px 6px}
+  .bloque b{font-size:.95rem}
+}
+@media (min-width:960px){.agenda{padding:26px 22px 18px}}
+@media (prefers-reduced-motion:reduce){.turno-caja.recuerda{animation:none}.chip{transition:none}}
+.btn:disabled{opacity:.42;cursor:default;box-shadow:none}
+.btn:disabled::after{display:none}
+.panel>*{min-width:0}
+.agenda .dias{max-width:100%}
+.libre.paso-ya{border:0;padding:6px 8px;color:transparent}
+@media (max-width:959px){.agenda{order:-2}}
+
+</style>
 </head>
 <body>
 <div id="carga" role="status" aria-label="Cargando Tu Barbería"><div class="poste"><i></i></div><b>TU BARBERÍA</b><span><i></i></span></div>
-<script>(function(){var t0=performance.now(),hecho;function fuera(){if(hecho)return;hecho=1;setTimeout(function(){var c=document.getElementById('carga');if(!c)return;c.classList.add('fuera');setTimeout(function(){c.remove()},320)},Math.max(0,600-(performance.now()-t0)))}document.addEventListener('DOMContentLoaded',fuera);setTimeout(fuera,2200)})();</script>
+<script>(function(){var t0=performance.now(),hecho;function fuera(){if(hecho)return;hecho=1;setTimeout(function(){var c=document.getElementById('carga');if(!c)return;c.classList.add('fuera');setTimeout(function(){c.remove()},320)},Math.max(0,600-(performance.now()-t0)))}addEventListener('load',function(){document.fonts.ready.then(fuera)});setTimeout(fuera,2500)})();</script>
 
 <div class="notif" id="notif" role="status"><i id="notif-inicial"></i><div><b id="notif-titulo"></b><span id="notif-texto"></span></div></div>
 
@@ -131,9 +517,545 @@
 </dialog>
 
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
-<script src="marca.js"></script>
-<script src="datos.js"></script>
-<script src="turnos.js"></script>
+<script>
+/* Todo lo que cambia de un negocio a otro está en este archivo. */
+window.MARCA = {
+  id: "tubarberia",
+  nombre: "Tu Barbería",
+  logo: ["Tu", "Barbería"],
+  logoEstilo: "recto",
+  // Logo de ejemplo (no tenemos el suyo): un poste de barbero acostado, "Tu" y "Barbería" debajo.
+  logoHtml: "<svg class=\"corona\" viewBox=\"0 0 60 34\" aria-hidden=\"true\"><defs><clipPath id=\"dp\"><rect x=\"7\" y=\"10\" width=\"46\" height=\"15\" rx=\"7.5\"/></clipPath></defs><g clip-path=\"url(#dp)\" stroke=\"currentColor\" stroke-width=\"4\"><path d=\"M0 30L18 4M10 30L28 4M20 30L38 4M30 30L48 4M40 30L58 4M50 30L68 4\"/></g><rect x=\"7\" y=\"10\" width=\"46\" height=\"15\" rx=\"7.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\"/><rect x=\"2\" y=\"7\" width=\"6\" height=\"21\" rx=\"2.5\" fill=\"currentColor\"/><rect x=\"52\" y=\"7\" width=\"6\" height=\"21\" rx=\"2.5\" fill=\"currentColor\"/></svg>Tu<span>Barbería</span>",
+  sellos: 10,
+  hitos: [{ en: 5, pct: 10 }, { en: 7, pct: 20 }, { en: 10, pct: 70 }],
+  whatsapp: "", // número del local con código de país, sin + ni espacios
+  pinDemo: "1234",
+  diasInactivo: 45,
+  horasEntreSellosNfc: 12,
+  // Cuota mensual. Poner null si el negocio no la ofrece.
+  membresia: { nombre: "Club de la casa", precio: 30000, detalle: "Cortes ilimitados de lunes a jueves" },
+  // Ubicación del local para el aviso por cercanía. Es de ejemplo: cargar la dirección real.
+  local: { lat: -31.4201, lng: -64.1888, radio: 150 },
+  // Turnos: precios, horarios y barberos son de ejemplo.
+  turnos: {
+    barberos: [{ id: "nico", nombre: "Barbero 1" }, { id: "fede", nombre: "Barbero 2" }],
+    servicios: [
+      { id: "corte", nombre: "Corte", min: 30, precio: 12000 },
+      { id: "corte-barba", nombre: "Corte y barba", min: 60, precio: 17000 },
+      { id: "barba", nombre: "Barba", min: 30, precio: 8000 },
+    ],
+    dias: [2, 3, 4, 5, 6],          // martes a sábado (0 = domingo)
+    desde: 10, hasta: 20, paso: 30, // de 10 a 20, turnos cada 30 minutos
+    cancelarHasta: 2,               // horas antes: hasta ahí se cancela o cambia sin problema
+    zona: "America/Argentina/Cordoba",
+  },
+  // Negro azulado, hueso y naranja de acento. Sobre el papel el naranja se oscurece.
+  tema: {
+    "--carbon": "#0B0E12", "--panel": "#141A20", "--linea": "#273039", "--gris": "#97A3AD",
+    "--crema": "#F0EDE4", "--crema-2": "#CBC6B8", "--tinta": "#11161B", "--tinta-suave": "#56606A",
+    "--acento": "#E8712F", "--acento-2": "#B34F17", "--sobre-acento": "#1A0A03", "--sobre-sello": "#1A0A03",
+    "--madera": "#1A2128", "--ruido-papel": "none",
+  },
+  css: ".papel,.hoja,.planilla,.ticket,.agenda{--acento:#B14A16;--acento-2:#8C3810;--sobre-acento:#FFFFFF}",
+  semilla: [
+    ["Tomás Agüero", [150, 122, 96, 70, 41, 30, 20, 3]],
+    ["Lautaro Paz", [228, 200, 171, 140, 112, 85, 60, 33, 9]],
+    ["Franco Medina", [95, 66, 38, 12]],
+    ["Joaquín Sosa", [120, 88, 61]],
+    ["Agustín Roldán", [210, 180, 150, 121, 93, 70]],
+    ["Ignacio Ruiz", [30, 5]],
+    ["Mateo Giménez", [260, 230, 200, 171, 140, 110, 82, 55, 30, 6]],
+    ["Santiago Vera", [14]],
+  ],
+};
+
+</script>
+<script>
+/* Tarjeta de fidelización: capa de datos compartida por todas las marcas.
+   La marca (nombre, descuentos, colores) viene de window.MARCA, definida en marca.js.
+   En la demo los datos viven en el navegador (localStorage). Para la versión real se
+   reemplazan leer() y guardar() por llamadas a un servidor; el resto no cambia. */
+(function () {
+  "use strict";
+
+  const CONFIG = Object.assign({
+    id: "demo", nombre: "Tu barbería", logo: ["Tu", "Barbería"], logoEstilo: "script",
+    sellos: 10, hitos: [{ en: 5, pct: 10 }, { en: 7, pct: 20 }, { en: 10, pct: 70 }],
+    whatsapp: "", pinDemo: "1234", diasInactivo: 45, horasEntreSellosNfc: 12,
+    membresia: { nombre: "Club", precio: 30000, detalle: "Cortes ilimitados de lunes a jueves" },
+    local: { lat: 0, lng: 0, radio: 150 }, tema: {},
+  }, window.MARCA || {});
+
+  const CLAVE = CONFIG.id + ".tarjetas.v4";
+  const DIA = 864e5;
+  const hace = (d) => new Date(Date.now() - d * DIA).toISOString();
+  const hitoEn = (n) => CONFIG.hitos.find((h) => h.en === n) || null;
+  let memoria = null;
+
+  function semilla() {
+    const base = CONFIG.semilla || [
+      ["Tomás Agüero", [150, 122, 96, 70, 41, 30, 20, 3]],
+      ["Lautaro Paz", [228, 200, 171, 140, 112, 85, 60, 33, 9]],
+      ["Franco Medina", [95, 66, 38, 12]],
+      ["Joaquín Sosa", [120, 88, 61]],
+      ["Bruno Ledesma", [210, 180, 150, 121, 93, 70]],
+      ["Ignacio Ruiz", [30, 5]],
+      ["Mateo Giménez", [260, 230, 200, 171, 140, 110, 82, 55, 30, 6]],
+      ["Santiago Vera", [14]],
+    ];
+    const clientes = base.map(([nombre, dias], i) => ({
+      codigo: String(101 + i).padStart(4, "0"),
+      nombre, tel: "", alta: hace(dias[0]), ciclo: 1, desde: 0,
+      visitas: dias.map((d, k) => ({ fecha: hace(d), descuento: hitoEn(k + 1) ? hitoEn(k + 1).pct : 0, origen: k % 3 ? "nfc" : "panel" })),
+    }));
+    // Socios de la cuota mensual: tres al día y uno con la cuota vencida.
+    [[0, 70, 18], [2, 41, 11], [6, 130, 24], [3, 100, -12]].forEach(([i, desde, hasta]) => {
+      clientes[i].socio = { desde: hace(desde), pagoHasta: hace(-hasta) };
+    });
+    return { clientes, sig: 101 + base.length };
+  }
+
+  function leer() {
+    if (memoria) return memoria;
+    try {
+      const crudo = localStorage.getItem(CLAVE);
+      if (crudo) return (memoria = JSON.parse(crudo));
+    } catch (e) { /* sin almacenamiento: seguimos en memoria */ }
+    memoria = semilla();
+    guardar(memoria);
+    return memoria;
+  }
+
+  function guardar(estado) {
+    memoria = estado;
+    try { localStorage.setItem(CLAVE, JSON.stringify(estado)); } catch (e) { /* idem */ }
+    window.dispatchEvent(new Event("tarjeta:cambio"));
+  }
+
+  // Otra pestaña cambió los datos: descartamos la copia en memoria.
+  window.addEventListener("storage", (e) => {
+    if (e.key === CLAVE || e.key === null) {
+      memoria = null;
+      window.dispatchEvent(new Event("tarjeta:cambio"));
+    }
+  });
+
+  const guardado = {
+    leer: (k) => { try { return localStorage.getItem(CONFIG.id + "." + k) || ""; } catch (e) { return ""; } },
+    poner: (k, v) => { try { localStorage.setItem(CONFIG.id + "." + k, v); } catch (e) { /* idem */ } },
+  };
+
+  const norm = (t) => String(t).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+  const clientes = () => leer().clientes;
+  const porCodigo = (codigo) => clientes().find((c) => c.codigo === String(codigo).padStart(4, "0")) || null;
+  const sellosDe = (c) => c.visitas.slice(c.desde);
+  const ultima = (c) => (c.visitas.length ? c.visitas[c.visitas.length - 1].fecha : c.alta);
+  const diasSin = (c) => Math.floor((Date.now() - new Date(ultima(c)).getTime()) / DIA);
+
+  // Con la tarjeta completa, el próximo corte abre una tarjeta nueva.
+  const sellosVigentes = (c) => { const n = sellosDe(c).length; return n >= CONFIG.sellos ? 0 : n; };
+  // Descuento que le toca al corte que viene (0 si no hay).
+  const descuentoAhora = (c) => { const h = hitoEn(sellosVigentes(c) + 1); return h ? h.pct : 0; };
+  // Próximo descuento y cuántos cortes faltan para llegar a él.
+  function proximo(c) {
+    const n = sellosVigentes(c);
+    const h = CONFIG.hitos.find((x) => x.en > n);
+    return { pct: h.pct, en: h.en, faltan: h.en - n };
+  }
+
+  function buscar(texto) {
+    const q = norm(texto);
+    if (!q) return clientes();
+    return clientes().filter((c) => norm(c.nombre).includes(q) || c.codigo.includes(q) || (c.tel && c.tel.includes(q)));
+  }
+
+  function cambiar(codigo, fn) {
+    const estado = leer();
+    const c = estado.clientes.find((x) => x.codigo === codigo);
+    if (!c) return { ok: false, motivo: "no-existe" };
+    const r = fn(c) || {};
+    if (r.ok !== false) guardar(estado);
+    return Object.assign({ ok: true, cliente: c }, r);
+  }
+
+  function crear({ nombre, tel, conSello }) {
+    const estado = leer();
+    const c = {
+      codigo: String(estado.sig).padStart(4, "0"),
+      nombre: String(nombre).trim().slice(0, 60),
+      tel: String(tel || "").replace(/\D/g, "").slice(0, 15),
+      alta: new Date().toISOString(), ciclo: 1, desde: 0, visitas: [],
+    };
+    if (conSello) c.visitas.push({ fecha: c.alta, descuento: 0, origen: "panel" });
+    estado.sig += 1;
+    estado.clientes.push(c);
+    guardar(estado);
+    return c;
+  }
+
+  // origen: "panel" (lo suma el dueño) o "nfc" (el cliente acercó su celular a la tarjeta NFC).
+  const sumar = (codigo, origen) => cambiar(codigo, (c) => {
+    if (origen === "nfc" && c.visitas.length) {
+      // Un solo sello por visita: evita que alguien sume varios acercando el celular de nuevo.
+      const horas = (Date.now() - new Date(ultima(c)).getTime()) / 36e5;
+      if (horas < CONFIG.horasEntreSellosNfc) return { ok: false, motivo: "hoy" };
+    }
+    if (sellosDe(c).length >= CONFIG.sellos) { c.desde = c.visitas.length; c.ciclo += 1; }
+    const numero = sellosDe(c).length + 1;
+    const h = hitoEn(numero);
+    c.visitas.push({ fecha: new Date().toISOString(), descuento: h ? h.pct : 0, origen: origen || "panel" });
+    return { numero, descuento: h ? h.pct : 0 };
+  });
+
+  const deshacer = (codigo) => cambiar(codigo, (c) => {
+    if (!c.visitas.length) return { ok: false, motivo: "vacia" };
+    c.visitas.pop();
+    // Si el sello quitado había abierto una tarjeta nueva, volvemos a la anterior.
+    if (c.ciclo > 1 && c.visitas.length === c.desde) { c.desde -= CONFIG.sellos; c.ciclo -= 1; }
+  });
+
+  function resumen() {
+    const hoy = new Date().toDateString();
+    const lista = clientes();
+    return {
+      hoy: lista.reduce((n, c) => n + c.visitas.filter((v) => new Date(v.fecha).toDateString() === hoy).length, 0),
+      activos: lista.filter((c) => c.visitas.length && diasSin(c) <= CONFIG.diasInactivo).length,
+      conDescuento: lista.filter((c) => descuentoAhora(c) > 0).length,
+      socios: lista.filter(alDia).length,
+      vencidas: lista.filter((c) => c.socio && !alDia(c)).length,
+      ingreso: lista.filter(alDia).length * (CONFIG.membresia ? CONFIG.membresia.precio : 0),
+    };
+  }
+
+  // Los últimos sellos de todo el local, del más nuevo al más viejo.
+  function movimientos(cuantos) {
+    const todos = [];
+    clientes().forEach((c) => c.visitas.forEach((v, i) => todos.push({
+      nombre: c.nombre, codigo: c.codigo, fecha: v.fecha, descuento: v.descuento, origen: v.origen || "panel",
+      numero: ((i % CONFIG.sellos) + 1),
+    })));
+    return todos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha)).slice(0, cuantos || 6);
+  }
+
+  /* Cuota mensual: quién es socio y hasta cuándo tiene paga la cuota. */
+  const alDia = (c) => !!c.socio && new Date(c.socio.pagoHasta).getTime() > Date.now();
+  const unMesDesde = (t) => new Date(t + 30 * DIA).toISOString();
+  const altaSocio = (codigo) => cambiar(codigo, (c) => {
+    const ahora = new Date().toISOString();
+    c.socio = { desde: ahora, pagoHasta: unMesDesde(Date.now()) };
+  });
+  const bajaSocio = (codigo) => cambiar(codigo, (c) => { delete c.socio; });
+  const cobrarCuota = (codigo) => cambiar(codigo, (c) => {
+    if (!c.socio) return { ok: false, motivo: "no-socio" };
+    c.socio.pagoHasta = unMesDesde(Math.max(Date.now(), new Date(c.socio.pagoHasta).getTime()));
+  });
+  const miles = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  const pesos = (n) => (CONFIG.moneda === "eur" ? miles(n) + " €" : "$" + Math.round(n).toLocaleString("es-AR"));
+
+  function reiniciar() {
+    memoria = null;
+    try { localStorage.removeItem(CLAVE); } catch (e) { /* idem */ }
+    leer();
+  }
+
+  // Distancia en metros entre un punto y el local.
+  function distanciaAlLocal(lat, lng) {
+    const rad = (g) => (g * Math.PI) / 180, R = 6371000, L = CONFIG.local;
+    const a = Math.sin(rad(lat - L.lat) / 2) ** 2 + Math.cos(rad(L.lat)) * Math.cos(rad(lat)) * Math.sin(rad(lng - L.lng) / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(a));
+  }
+
+  // Texto del aviso que recibe el cliente cuando pasa cerca.
+  function textoCerca(c) {
+    const d = descuentoAhora(c), p = proximo(c);
+    return d ? "Tu próximo corte tiene " + d + "% de descuento. " + (CONFIG.moneda === "eur" ? "¿Pasas hoy?" : "¿Pasás hoy?")
+             : "Te faltan " + p.faltan + " cortes para tu " + p.pct + "% de descuento.";
+  }
+
+  const dos = (n) => String(n).padStart(2, "0");
+  const haceCuanto = (dias) => (dias <= 0 ? "hoy" : dias === 1 ? "ayer" : "hace " + dias + " días");
+  function cuando(iso) {
+    const d = new Date(iso);
+    return d.toDateString() === new Date().toDateString()
+      ? "hoy " + dos(d.getHours()) + ":" + dos(d.getMinutes())
+      : dos(d.getDate()) + "/" + dos(d.getMonth() + 1);
+  }
+  const esc = (t) => String(t).replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+
+  // Viste la página con la marca: colores, logo y nombre.
+  function vestir() {
+    const raiz = document.documentElement;
+    Object.keys(CONFIG.tema).forEach((k) => raiz.style.setProperty(k, CONFIG.tema[k]));
+    raiz.dataset.letra = CONFIG.logoEstilo;
+    if (CONFIG.css) { const st = document.createElement("style"); st.textContent = CONFIG.css; document.head.appendChild(st); }
+    document.querySelectorAll("[data-logo]").forEach((el) => { el.innerHTML = CONFIG.logoHtml || (esc(CONFIG.logo[0]) + "<span>" + esc(CONFIG.logo[1]) + "</span>"); });
+    document.querySelectorAll("[data-marca]").forEach((el) => { el.textContent = CONFIG.nombre; });
+    document.title = document.title.replace("{marca}", CONFIG.nombre);
+    if (!document.getElementById("tarjeta-defs")) {
+      document.body.insertAdjacentHTML("afterbegin",
+        '<svg id="tarjeta-defs" width="0" height="0" aria-hidden="true" style="position:absolute"><defs>' +
+        '<clipPath id="t-palo"><rect x="41" y="28" width="18" height="44" rx="2"/></clipPath>' +
+        '<filter id="t-tinta" x="-10%" y="-10%" width="120%" height="120%">' +
+        '<feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="4" result="ruido"/>' +
+        '<feDisplacementMap in="SourceGraphic" in2="ruido" scale="2.2" result="borde"/>' +
+        '<feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="1" seed="9" result="grano"/>' +
+        '<feColorMatrix in="grano" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 2.1" result="mascara"/>' +
+        '<feComposite in="borde" in2="mascara" operator="in"/></filter></defs></svg>');
+    }
+  }
+
+  // Sello de goma con el poste de barbero. Los de descuento van llenos, en el color de acento.
+  function sello(indice, codigo, esHito, nuevo) {
+    const giro = ((Number(codigo) * 31 + indice * 17) % 23) - 11;
+    const trazo = esHito ? "var(--sobre-sello)" : "currentColor";
+    return '<svg class="sello' + (esHito ? " hito" : "") + (nuevo ? " nuevo" : "") + '" viewBox="0 0 100 100" style="--giro:' + giro + 'deg" aria-hidden="true">' +
+      '<g filter="url(#t-tinta)">' +
+      (esHito ? '<circle cx="50" cy="50" r="47" fill="currentColor"/>'
+              : '<circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="3.4"/>') +
+      (CONFIG.selloIcono ? CONFIG.selloIcono(trazo) : (
+      '<g fill="none" stroke="' + trazo + '" stroke-linecap="round">' +
+      '<rect x="41" y="28" width="18" height="44" rx="2" stroke-width="2.6"/>' +
+      '<g clip-path="url(#t-palo)" stroke-width="5"><path d="M34 40 66 28M34 53 66 41M34 66 66 54M34 79 66 67"/></g></g>' +
+      '<g fill="' + trazo + '"><rect x="37" y="21" width="26" height="6" rx="2"/><rect x="37" y="73" width="26" height="6" rx="2"/><circle cx="50" cy="17" r="3.6"/></g>') ) +
+      "</g></svg>";
+  }
+
+  window.TARJETA = {
+    CONFIG, guardado, clientes, porCodigo, buscar, sellosDe, sellosVigentes, descuentoAhora, proximo, hitoEn, ultima, diasSin,
+    crear, sumar, deshacer, alDia, altaSocio, bajaSocio, cobrarCuota, pesos, resumen, movimientos, reiniciar, distanciaAlLocal, textoCerca, haceCuanto, cuando, esc, vestir, sello,
+  };
+})();
+
+</script>
+<script>
+/* Turnos de Off Basic: pedir, confirmar, cancelar, reprogramar y lista de espera.
+   Usa la misma marca (window.MARCA.turnos) y la tarjeta de sellos (window.TARJETA): cuando el
+   barbero marca que el cliente llegó, se suma el sello solo. En la demo los datos viven en el
+   navegador; en la versión real leer() y guardar() pasan a un servidor. */
+(function () {
+  "use strict";
+  const T = window.TARJETA, K = T.CONFIG.turnos, CLAVE = T.CONFIG.id + ".turnos.v1", MIN = 6e4, DIA = 864e5;
+  const DIAS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+  const dos = (n) => String(n).padStart(2, "0");
+  const rnd = (n) => { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+  const servicio = (id) => K.servicios.find((s) => s.id === id) || K.servicios[0];
+  const barbero = (id) => K.barberos.find((b) => b.id === id) || K.barberos[0];
+  const ACTIVOS = ["reservado", "confirmado", "atendido", "ausente"];
+  let memoria = null;
+
+  /* Fechas */
+  const inicioDia = (d) => { const x = new Date(d); x.setHours(0, 0, 0, 0); return x; };
+  const clave = (d) => { const x = new Date(d); return x.getFullYear() + "-" + dos(x.getMonth() + 1) + "-" + dos(x.getDate()); };
+  const aFecha = (k) => { const [a, m, d] = k.split("-").map(Number); return new Date(a, m - 1, d); };
+  const abre = (d) => K.dias.includes(new Date(d).getDay());
+  function abiertos(n, desde) {
+    const out = []; let d = inicioDia(desde || Date.now());
+    for (let i = 0; out.length < n && i < 30; i++, d = new Date(d.getTime() + DIA)) if (abre(d)) out.push(clave(d));
+    return out;
+  }
+  const hora = (iso) => { const d = new Date(iso); return dos(d.getHours()) + ":" + dos(d.getMinutes()); };
+  const corto = (k) => { const d = aFecha(k); return DIAS[d.getDay()].slice(0, 3) + " " + d.getDate(); };
+  function cuandoDia(k) {
+    const hoy = clave(Date.now()), man = clave(Date.now() + DIA), d = aFecha(k);
+    return k === hoy ? "hoy" : k === man ? "mañana" : DIAS[d.getDay()] + " " + d.getDate() + "/" + (d.getMonth() + 1);
+  }
+  const fechaTurno = (t) => cuandoDia(clave(t.inicio)) + " · " + hora(t.inicio);
+  const conMayus = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+
+  /* Datos de ejemplo: una semana de agenda con un día lleno y una persona esperando lugar */
+  const OTROS = ["Martín Rey", "Lucas Ferro", "Gastón Vidal", "Ramiro Sosa", "Emi Torres", "Facu Ponce", "Leo Arce", "Nahuel Díaz", "Agus Molina", "Dante Cruz", "Pablo Ibarra", "Iván Luna"];
+  function semilla() {
+    const turnos = [], dias = abiertos(6), ahora = Date.now();
+    let id = 1;
+    const poner = (k, b, h, m, srv, quien, extra) => {
+      if (!K.barberos.some((x) => x.id === b)) b = K.barberos[b === "fede" ? K.barberos.length - 1 : 0].id;
+      const d = aFecha(k); d.setHours(h, m, 0, 0);
+      const t = Object.assign({ id: "t" + id++, codigo: quien.codigo || null, nombre: quien.nombre, barbero: b, servicio: srv, inicio: d.toISOString(), estado: "reservado", confirmado: false, creado: new Date(ahora - 3 * DIA).toISOString(), historial: [] }, extra || {});
+      if (!libre(turnos, t)) return null;
+      turnos.push(t); return t;
+    };
+    const cli = (cod) => { const c = T.porCodigo(cod); return { codigo: cod, nombre: c ? c.nombre : "Cliente" }; };
+    // Tomás (el cliente de la demo) tiene turno el próximo día abierto que no sea hoy.
+    const suDia = dias[0] === clave(ahora) ? dias[1] : dias[0];
+    poner(suDia, "nico", 18, 0, "corte-barba", cli("0101"));
+    // Joaquín canceló el suyo: el horario quedó libre.
+    poner(dias[0], "fede", 17, 0, "corte", cli("0104"), { estado: "cancelado", historial: [{ que: "cancelo", cuando: new Date(ahora - 5 * 36e5).toISOString(), quien: "cliente", horas: 5 }] });
+    // Franco lo pasó de las 11 a las 16.
+    poner(dias[0], "nico", 16, 0, "corte", cli("0103"), { confirmado: true, historial: [{ que: "reprogramo", cuando: new Date(ahora - DIA).toISOString(), de: "11:00" }] });
+    poner(dias[0], "nico", 12, 30, "corte-barba", cli("0108"), { confirmado: true });
+    poner(dias[1], "fede", 19, 0, "barba", cli("0102"), { confirmado: true });
+    // El sábado (o el último día abierto de la lista) está lleno.
+    const lleno = dias.find((k) => aFecha(k).getDay() === 6) || dias[dias.length - 1];
+    let n = 0;
+    dias.forEach((k, i) => K.barberos.forEach((b, j) => {
+      for (let h = K.desde * 60; h < K.hasta * 60; h += K.paso) {
+        const p = k === lleno ? 1 : .35 + i * .06, r = rnd(i * 97 + j * 31 + h);
+        if (r > p) continue;
+        const srv = r < .2 ? "corte-barba" : r < .3 ? "barba" : "corte";
+        poner(k, b.id, Math.floor(h / 60), h % 60, srv, { nombre: OTROS[n++ % OTROS.length] }, { confirmado: r < .5 });
+      }
+    }));
+    // Lo que ya pasó hoy quedó atendido; uno no vino.
+    let unoAusente = false;
+    turnos.forEach((t) => {
+      if (t.estado === "cancelado" || new Date(t.inicio).getTime() > ahora) return;
+      if (!unoAusente && t.barbero === "fede" && !t.codigo) { t.estado = "ausente"; unoAusente = true; } else t.estado = "atendido";
+    });
+    return { turnos, espera: [{ codigo: "0106", nombre: (T.porCodigo("0106") || {}).nombre || "Ignacio Ruiz", dia: lleno, desde: new Date(ahora - 2 * DIA).toISOString() }], sig: id };
+  }
+
+  function leer() {
+    if (memoria) return memoria;
+    try { const c = localStorage.getItem(CLAVE); if (c) return (memoria = JSON.parse(c)); } catch (e) { /* sin almacenamiento */ }
+    memoria = semilla(); guardar(memoria); return memoria;
+  }
+  function guardar(e) {
+    memoria = e;
+    try { localStorage.setItem(CLAVE, JSON.stringify(e)); } catch (x) { /* idem */ }
+    window.dispatchEvent(new Event("tarjeta:cambio"));
+  }
+  window.addEventListener("storage", (ev) => { if (ev.key === CLAVE || ev.key === null) { memoria = null; window.dispatchEvent(new Event("tarjeta:cambio")); } });
+  function reiniciar() { memoria = null; try { localStorage.removeItem(CLAVE); } catch (e) { /* idem */ } leer(); }
+
+  /* Disponibilidad */
+  const fin = (t) => new Date(t.inicio).getTime() + servicio(t.servicio).min * MIN;
+  function libre(lista, t, ignorar) {
+    const a = new Date(t.inicio).getTime(), b = fin(t);
+    return !lista.some((o) => o.id !== ignorar && o.barbero === t.barbero && ACTIVOS.includes(o.estado) && a < fin(o) && new Date(o.inicio).getTime() < b);
+  }
+  // Horarios libres de un día. barb = id o "cualquiera".
+  function horarios(k, barb, srv, ignorar) {
+    const lista = leer().turnos, out = [], ahora = Date.now() + 30 * MIN, dur = servicio(srv).min;
+    if (!abre(aFecha(k))) return out;
+    for (let m = K.desde * 60; m + dur <= K.hasta * 60; m += K.paso) {
+      const d = aFecha(k); d.setHours(Math.floor(m / 60), m % 60, 0, 0);
+      if (d.getTime() < ahora) continue;
+      const quienes = (barb === "cualquiera" ? K.barberos.map((b) => b.id) : [barb]).filter((b) => libre(lista, { inicio: d.toISOString(), barbero: b, servicio: srv }, ignorar));
+      if (quienes.length) out.push({ hora: hora(d), inicio: d.toISOString(), barbero: quienes[0] });
+    }
+    return out;
+  }
+
+  /* Acciones */
+  const buscar = (id) => leer().turnos.find((t) => t.id === id) || null;
+  const vigente = (t) => t.estado === "reservado" || t.estado === "confirmado";
+  function proximoDe(codigo) {
+    return leer().turnos.filter((t) => t.codigo === codigo && vigente(t) && fin(t) > Date.now()).sort((a, b) => new Date(a.inicio) - new Date(b.inicio))[0] || null;
+  }
+  const ultimoCanceladoDe = (codigo) => leer().turnos.filter((t) => t.codigo === codigo && t.estado === "cancelado").sort((a, b) => new Date(b.inicio) - new Date(a.inicio))[0] || null;
+  function reservar({ codigo, nombre, barbero: b, servicio: srv, inicio }) {
+    const e = leer(), t = { id: "t" + e.sig++, codigo: codigo || null, nombre, barbero: b, servicio: srv, inicio, estado: "reservado", confirmado: false, creado: new Date().toISOString(), historial: [] };
+    if (!libre(e.turnos, t)) return { ok: false, motivo: "ocupado" };
+    e.turnos.push(t);
+    e.espera = e.espera.filter((x) => !(x.codigo && x.codigo === codigo && x.dia === clave(inicio)));
+    guardar(e); return { ok: true, turno: t };
+  }
+  const horasAntes = (t) => (new Date(t.inicio).getTime() - Date.now()) / 36e5;
+  // Cancela y deja el horario libre. Devuelve quiénes esperaban lugar ese día.
+  function cancelar(id, quien) {
+    const e = leer(), t = e.turnos.find((x) => x.id === id);
+    if (!t || !vigente(t)) return { ok: false };
+    const h = Math.max(0, horasAntes(t));
+    t.estado = "cancelado"; t.historial.push({ que: "cancelo", cuando: new Date().toISOString(), quien: quien || "cliente", horas: Math.round(h * 10) / 10, tarde: h < K.cancelarHasta });
+    guardar(e);
+    return { ok: true, turno: t, tarde: h < K.cancelarHasta, espera: e.espera.filter((x) => x.dia === clave(t.inicio)) };
+  }
+  function reprogramar(id, inicio, barb) {
+    const e = leer(), t = e.turnos.find((x) => x.id === id);
+    if (!t || !vigente(t)) return { ok: false };
+    const nuevo = Object.assign({}, t, { inicio, barbero: barb || t.barbero });
+    if (!libre(e.turnos, nuevo, t.id)) return { ok: false, motivo: "ocupado" };
+    const de = fechaTurno(t), deBarb = t.barbero, lugar = { inicio: t.inicio, barbero: t.barbero, dia: clave(t.inicio) };
+    t.historial.push({ que: "reprogramo", cuando: new Date().toISOString(), de, deBarb, horas: Math.round(Math.max(0, horasAntes(t)) * 10) / 10 });
+    t.inicio = inicio; t.barbero = nuevo.barbero; t.confirmado = false; t.estado = "reservado";
+    guardar(e);
+    return { ok: true, turno: t, liberado: lugar, espera: e.espera.filter((x) => x.dia === lugar.dia) };
+  }
+  function confirmar(id) { const e = leer(), t = e.turnos.find((x) => x.id === id); if (!t) return { ok: false }; t.confirmado = true; guardar(e); return { ok: true, turno: t }; }
+  // El cliente llegó: se cierra el turno y se le suma el sello en la tarjeta.
+  function llego(id) {
+    const e = leer(), t = e.turnos.find((x) => x.id === id); if (!t) return { ok: false };
+    t.estado = "atendido"; guardar(e);
+    const s = t.codigo ? T.sumar(t.codigo, "panel") : null;
+    return { ok: true, turno: t, sello: s && s.ok ? s : null };
+  }
+  function noVino(id) { const e = leer(), t = e.turnos.find((x) => x.id === id); if (!t) return { ok: false }; t.estado = "ausente"; guardar(e); return { ok: true, turno: t }; }
+
+  /* Lista de espera */
+  function anotar(codigo, nombre, dia) {
+    const e = leer(); if (e.espera.some((x) => x.codigo === codigo && x.dia === dia)) return { ok: true, ya: true };
+    e.espera.push({ codigo, nombre, dia, desde: new Date().toISOString() }); guardar(e); return { ok: true };
+  }
+  function quitarEspera(codigo, dia) { const e = leer(); e.espera = e.espera.filter((x) => !(x.codigo === codigo && x.dia === dia)); guardar(e); }
+  const espera = () => leer().espera.slice().sort((a, b) => a.dia.localeCompare(b.dia));
+  const enEspera = (codigo) => leer().espera.filter((x) => x.codigo === codigo);
+
+  /* Lecturas para el panel */
+  const delDia = (k) => leer().turnos.filter((t) => clave(t.inicio) === k).sort((a, b) => new Date(a.inicio) - new Date(b.inicio));
+  function resumenDia(k) {
+    const l = delDia(k);
+    return {
+      turnos: l.filter((t) => t.estado !== "cancelado").length,
+      cancelados: l.filter((t) => t.estado === "cancelado").length,
+      ausentes: l.filter((t) => t.estado === "ausente").length,
+      libres: K.barberos.reduce((n, b) => n + horarios(k, b.id, "corte").length, 0),
+    };
+  }
+  const cancelacionesTarde = (codigo) => leer().turnos.filter((t) => t.codigo === codigo && t.historial.some((h) => h.que === "cancelo" && h.tarde)).length;
+  const ausencias = (codigo) => leer().turnos.filter((t) => t.codigo === codigo && t.estado === "ausente").length;
+
+  // Enlace para agregar el turno al calendario de Google.
+  function calendario(t) {
+    const s = servicio(t.servicio), f = (ms) => { const d = new Date(ms); return d.getFullYear() + dos(d.getMonth() + 1) + dos(d.getDate()) + "T" + dos(d.getHours()) + dos(d.getMinutes()) + "00"; };
+    return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent(s.nombre + " en " + T.CONFIG.nombre) +
+      "&dates=" + f(new Date(t.inicio).getTime()) + "/" + f(fin(t)) + "&details=" + encodeURIComponent("Con " + barbero(t.barbero).nombre + ". Para cambiarlo o cancelarlo, abrí tu tarjeta.") + "&ctz=" + encodeURIComponent(K.zona);
+  }
+
+  /* Selector de turno (servicio, barbero, día y horario), el mismo para el cliente y para el panel */
+  function selector(caja, o) {
+    const est = { srv: o.servicio || K.servicios[0].id, barb: o.barbero || "cualquiera", dia: null, slot: null };
+    const dias = abiertos(7);
+    const chip = (attr, val, on, txt, sub, apagado) => '<button type="button" class="chip' + (on ? " on" : "") + '" ' + attr + '="' + val + '"' + (apagado ? " disabled" : "") + ">" + txt + (sub ? "<small>" + sub + "</small>" : "") + "</button>";
+    function pintar() {
+      const conLugar = dias.filter((k) => horarios(k, est.barb, est.srv, o.ignorar).length);
+      if (!est.dia || !dias.includes(est.dia)) est.dia = conLugar[0] || dias[0];
+      const libres = horarios(est.dia, est.barb, est.srv, o.ignorar);
+      if (est.slot && !libres.some((s) => s.inicio === est.slot.inicio)) est.slot = null;
+      caja.innerHTML =
+        (o.sinServicio ? "" : '<p class="paso">Servicio</p><div class="chips">' + K.servicios.map((s) => chip("data-srv", s.id, s.id === est.srv, s.nombre, T.pesos(s.precio) + " · " + s.min + " min")).join("") + "</div>") +
+        (K.barberos.length > 1 ? '<p class="paso">Barbero</p><div class="chips">' + [{ id: "cualquiera", nombre: "El primero libre" }].concat(K.barberos).map((b) => chip("data-barb", b.id, b.id === est.barb, b.nombre)).join("") + "</div>" : "") +
+        '<p class="paso">Día</p><div class="dias">' + dias.map((k) => { const n = horarios(k, est.barb, est.srv, o.ignorar).length; return chip("data-dia", k, k === est.dia, corto(k), n ? n + " libres" : k === clave(Date.now()) ? "sin lugar" : "lleno"); }).join("") + "</div>" +
+        '<p class="paso">Horario</p>' +
+        (libres.length ? '<div class="horas">' + libres.map((s) => chip("data-slot", s.inicio, est.slot && est.slot.inicio === s.inicio, s.hora)).join("") + "</div>"
+          : '<div class="sin-lugar"><p>No quedan turnos el ' + cuandoDia(est.dia) + ".</p>" + (o.espera ? '<button type="button" class="btn linea chico" data-espera="' + est.dia + '">Avisarme si se libera uno</button>' : "") + "</div>");
+      o.cambio && o.cambio(resultado());
+    }
+    function resultado() {
+      if (!est.slot) return null;
+      return { servicio: est.srv, barbero: est.slot.barbero, inicio: est.slot.inicio, texto: conMayus(cuandoDia(est.dia)) + " · " + est.slot.hora + " · " + servicio(est.srv).nombre + " con " + barbero(est.slot.barbero).nombre };
+    }
+    caja.onclick = (ev) => {
+      const b = ev.target.closest("button"); if (!b || b.disabled) return;
+      if (b.dataset.srv) { est.srv = b.dataset.srv; est.slot = null; }
+      else if (b.dataset.barb) { est.barb = b.dataset.barb; est.slot = null; }
+      else if (b.dataset.dia) { est.dia = b.dataset.dia; est.slot = null; }
+      else if (b.dataset.slot) { const s = horarios(est.dia, est.barb, est.srv, o.ignorar).find((x) => x.inicio === b.dataset.slot); est.slot = s || null; }
+      else if (b.dataset.espera) { o.espera && o.espera(b.dataset.espera); return; }
+      else return;
+      pintar();
+    };
+    pintar();
+    return { resultado, repintar: pintar };
+  }
+
+  window.TURNOS = {
+    K, leer, reiniciar, abiertos, horarios, buscar, proximoDe, ultimoCanceladoDe, reservar, cancelar, reprogramar, confirmar, llego, noVino,
+    anotar, quitarEspera, espera, enEspera, delDia, resumenDia, cancelacionesTarde, ausencias, calendario, selector,
+    servicio, barbero, hora, clave, corto, cuandoDia, fechaTurno, conMayus, horasAntes, vigente, fin,
+  };
+})();
+
+</script>
 <script>
 (function () {
   "use strict";
