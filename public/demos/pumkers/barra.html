@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0D0D0D">
+<title>Pumker’s · Barra</title>
+<link rel="icon" type="image/png" href="/demos/pumkers/pumkers/favicon.png">
+<link rel="apple-touch-icon" href="/demos/pumkers/pumkers/apple-touch-icon.png">
+<link rel="manifest" href="/demos/pumkers/pumkers/manifest-barra.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="/demos/pumkers/css/base.css">
+<style>
+body{min-height:100dvh;overflow-x:hidden}
+.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 18px;background:var(--noche);border-bottom:1px solid var(--linea)}
+.top h1{font-family:var(--display);font-weight:900;font-size:1.7rem;text-transform:uppercase;line-height:1}
+.top select{background:var(--humo);border:1px solid var(--linea);border-radius:10px;height:40px;padding:0 10px;color:var(--ficha);font-weight:600}
+.met{display:flex;gap:18px;margin-left:auto;align-items:center}
+.met div{line-height:1.1}.met small{display:block;color:var(--gris);font-size:.75rem}.met b{font:800 1.5rem var(--display)}
+.top .boton{min-height:40px;padding:0 14px;font-size:.9rem}
+.buscar{display:flex;align-items:center;gap:8px;background:var(--humo);border:1px solid var(--linea);border-radius:10px;height:40px;padding:0 10px}
+.buscar input{background:none;border:0;width:110px;font:700 1.05rem var(--display);letter-spacing:.04em}
+.buscar input:focus{outline:none}
+
+.armar{display:flex;gap:8px;align-items:center;padding:12px 18px;overflow-x:auto;border-bottom:1px solid var(--linea);background:var(--humo)}
+.armar > span{color:var(--gris);font-size:.85rem;font-weight:600;white-space:nowrap;margin-right:4px}
+.armar .chip{display:flex;align-items:center;gap:8px;white-space:nowrap;background:var(--noche);border:1px solid var(--linea);border-radius:12px;padding:5px 12px 5px 6px}
+.armar .chip svg{width:24px;height:30px}
+.armar .chip b{font:800 1.4rem var(--display)}
+.armar .chip span{font-weight:600}
+
+.tablero{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:16px 18px 40px;align-items:start}
+.col h2{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.35rem;text-transform:uppercase;margin-bottom:10px}
+.col h2 i{font-style:normal;font-size:1rem;background:var(--humo-2);border-radius:8px;padding:2px 9px}
+.col .lista{display:grid;gap:10px}
+.comanda{--muesca:64px;padding:14px 16px 14px;box-shadow:0 10px 30px -18px #000}
+.comanda.nueva{animation:llega .9s ease-out}
+@keyframes llega{0%{transform:translateY(-14px) scale(1.02);filter:brightness(1.25)}100%{transform:none;filter:none}}
+.comanda .cab{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.comanda .t{font:900 3.2rem/.85 var(--display)}
+.comanda .quien{font-weight:700;font-size:.95rem;margin-top:4px}
+.reloj{font:600 .95rem var(--mono);padding:5px 9px;border-radius:8px;background:#DCEFE4;color:#0F5132;white-space:nowrap}
+.reloj.medio{background:#F2F2F2;color:#3D3D3D}
+.reloj.tarde{background:var(--cereza);color:#fff;animation:late 1.2s infinite}
+.comanda .troquel{margin:12px -4px}
+.comanda ul{list-style:none;display:grid;gap:4px}
+.comanda li{display:flex;gap:10px;align-items:center;font-weight:600;font-size:1.08rem}
+.comanda li b{font:800 1.5rem/1 var(--display);min-width:30px}
+.comanda li svg{width:22px;height:28px;flex:none}
+.comanda li.sug{color:#CFCFCF}
+.comanda .acc{display:flex;gap:8px;margin-top:12px}
+.comanda .acc .boton{flex:1;min-height:52px;font-size:1.05rem;box-shadow:none}
+.b-empezar{background:var(--tinta)!important}
+.b-listo{background:#fff!important;color:#0D0D0D!important;box-shadow:inset 0 0 0 2px #0D0D0D}
+.b-entregar{background:var(--cereza)!important}
+.b-atras{flex:none!important;width:52px;background:var(--ficha-2)!important;color:var(--tinta)!important;padding:0!important}
+.col.retirar .comanda{outline:3px solid var(--listo);outline-offset:-3px}
+.vacia{border:1.5px dashed var(--linea);border-radius:14px;padding:26px 16px;text-align:center;color:var(--gris);font-size:.92rem}
+
+/* PIN */
+.modal{position:fixed;inset:0;z-index:40;background:rgba(10,10,10,.75);display:grid;place-items:center;padding:16px}
+.modal[hidden]{display:none}
+.caja{width:min(400px,100%);background:var(--humo);border:1px solid var(--linea);border-radius:22px;padding:22px}
+.caja h3{font-family:var(--display);font-weight:900;font-size:2rem;text-transform:uppercase;line-height:1}
+.caja p{color:var(--gris);margin:6px 0 16px}
+.digitos{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.digitos span{height:64px;border-radius:12px;background:var(--noche);border:1.5px solid var(--linea);display:grid;place-items:center;font:900 2.4rem var(--display)}
+.digitos span.on{border-color:var(--uv)}
+.teclado{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.teclado button{height:58px;border-radius:12px;background:var(--humo-2);font:800 1.7rem var(--display)}
+.teclado button:active{background:var(--uv);color:var(--tinta)}
+.msg{min-height:22px;color:#FFC2CD;font-size:.9rem;margin-bottom:8px}
+
+/* Agotados */
+.agot{display:grid;gap:6px;max-height:60vh;overflow:auto;margin:10px 0 14px}
+.agot label{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;background:var(--noche);font-weight:600;cursor:pointer}
+.agot input{width:44px;height:26px;appearance:none;border-radius:13px;background:var(--cereza);position:relative;cursor:pointer;transition:background .15s}
+.agot input::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .15s}
+.agot input:checked{background:var(--listo)}.agot input:checked::after{transform:translateX(18px)}
+.agot small{color:var(--gris);font-weight:400}
+
+.login{min-height:100dvh;display:grid;place-items:center;padding:16px}
+@media (max-width:900px){.tablero{grid-template-columns:1fr}.met{margin-left:0;width:100%;justify-content:space-between}}
+</style>
+</head>
+<body>
+<div id="raiz"></div>
+<div class="modal" id="modal" hidden><div class="caja" id="caja"></div></div>
+<script src="demo.js"></script>
+<script src="/demos/pumkers/js/vasos.js"></script>
+<script src="/demos/pumkers/js/barra.js"></script>
+</body>
+</html>

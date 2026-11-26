@@ -1,0 +1,145 @@
+{
+ "fernet": {
+  "fotos": [
+   {
+    "titulo": "File:Fernet and Coke (Fernet con Coca).jpg",
+    "autor": "Will Shenton",
+    "licencia": "CC BY-SA 3.0",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Fernet_and_Coke_(Fernet_con_Coca).jpg"
+   }
+  ],
+  "cambios": "fondo recortado"
+ },
+ "gin-tonic": {
+  "fotos": [
+   {
+    "titulo": "File:Gin and tonic at La Famiglia.jpg",
+    "autor": "JIP",
+    "licencia": "CC BY-SA 4.0",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Gin_and_tonic_at_La_Famiglia.jpg"
+   }
+  ],
+  "cambios": "fondo recortado"
+ },
+ "aperol": {
+  "fotos": [
+   {
+    "titulo": "File:Aperol Spritz at Lasipiha.jpg",
+    "autor": "JIP",
+    "licencia": "CC BY-SA 4.0",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Aperol_Spritz_at_Lasipiha.jpg"
+   }
+  ],
+  "cambios": "fondo recortado"
+ },
+ "campari": {
+  "fotos": [
+   {
+    "titulo": "File:Campari Orange.jpg",
+    "autor": "eWikiLearner",
+    "licencia": "CC BY-SA 4.0",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Campari_Orange.jpg"
+   }
+  ],
+  "cambios": "fondo recortado"
+ },
+ "mojito": {
+  "fotos": [
+   {
+    "titulo": "File:Mojito Cocktail.jpg",
+    "autor": "Sunny windy soundy",
+    "licencia": "CC BY-SA 4.0",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Mojito_Cocktail.jpg"
+   }
+  ],
+  "cambios": "fondo recortado"
+ },
+ "cuba": {
+  "fotos": [
+   {
+    "titulo": "File:15-09-26-RalfR-WLC-0056.jpg",
+    "autor": "Ralf Roletschek",
+    "licencia": "CC BY-SA 3.0",
+    "pagina": "https://commons.wikimedia.org/wiki/File:15-09-26-RalfR-WLC-0056.jpg"
+   }
+  ],
+  "cambios": "fondo recortado"
+ },
+ "destornillador": {
+  "fotos": [
+   {
+    "titulo": "File:Screw Driver Cocktail.jpg",
+    "autor": "Lillottama",
+    "licencia": "CC BY-SA 4.0",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Screw_Driver_Cocktail.jpg"
+   }
+  ],
+  "cambios": "fondo recortado"
+ },
+ "negroni": {
+  "fotos": [
+   {
+    "titulo": "File:Negroni (cocktail) - transparent background.png",
+    "autor": "Matthias Friedlein (www.augustine-bar.de)",
+    "licencia": "CC BY-SA 4.0",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Negroni_(cocktail)_-_transparent_background.png"
+   }
+  ],
+  "cambios": "fondo recortado"
+ },
+ "ipa": {
+  "fotos": [
+   {
+    "titulo": "File:IPA in a pint glass.jpeg",
+    "autor": "User:misterkong",
+    "licencia": "CC BY-SA 3.0",
+    "pagina": "https://commons.wikimedia.org/wiki/File:IPA_in_a_pint_glass.jpeg"
+   }
+  ],
+  "cambios": "fondo recortado"
+ },
+ "tequila": {
+  "fotos": [
+   {
+    "titulo": "File:Scotch whisky in Aino Aalto glass.jpg",
+    "autor": "JIP",
+    "licencia": "CC BY-SA 4.0",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Scotch_whisky_in_Aino_Aalto_glass.jpg"
+   }
+  ],
+  "cambios": "fondo recortado"
+ },
+ "limonada": {
+  "fotos": [
+   {
+    "titulo": "File:Lemonade - 27682817724.jpg",
+    "autor": "HarshLight",
+    "licencia": "CC BY 2.0",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Lemonade_-_27682817724.jpg"
+   }
+  ],
+  "cambios": "fondo recortado"
+ },
+ "vino-tinto": {
+  "fotos": [
+   {
+    "titulo": "File:Fernetbranca.jpg",
+    "autor": "Didier Descouens",
+    "licencia": "CC BY-SA 4.0",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Fernetbranca.jpg"
+   }
+  ],
+  "cambios": "fondo recortado"
+ },
+ "mojito-virgen": {
+  "fotos": [
+   {
+    "titulo": "File:Mojito Cocktail.jpg",
+    "autor": "Sunny windy soundy",
+    "licencia": "CC BY-SA 4.0",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Mojito_Cocktail.jpg"
+   }
+  ],
+  "cambios": "fondo recortado"
+ }
+}
