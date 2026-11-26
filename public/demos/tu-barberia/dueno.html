@@ -100,47 +100,8 @@ button{cursor:pointer;background:none;border:0}
 .cifras .ojo b{color:var(--k-acc-txt)}
 .cifras .ojo span{color:var(--k-ink);font-weight:600}
 
-/* ---------- Hoy: días + agenda + columna de atención ---------- */
-.dias-ag{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
-.dias-ag::-webkit-scrollbar{display:none}
-.dias-ag button{flex:none;min-width:70px;padding:8px 12px 7px;border-radius:9px;text-align:center;border:1px solid var(--ink-12);background:rgba(255,255,255,.22);transition:background .15s,border-color .15s}
-.dias-ag button b{display:block;font:800 17px/1 var(--disp);text-transform:uppercase}
-.dias-ag button small{display:block;margin-top:3px;font-size:11.5px;color:var(--ink-55)}
-.dias-ag button:hover{border-color:var(--ink-55)}
-.dias-ag button.on{background:var(--k-ink);border-color:var(--k-ink);color:var(--k-paper)}
-.dias-ag button.on small{color:var(--pap-70)}
-
-.hoy-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:32px;align-items:start}
-.agenda{border-top:2px solid var(--k-ink)}
-.ag-cols{display:grid;grid-template-columns:repeat(var(--cols,2),minmax(0,1fr));gap:0 22px}
-.ag-col h3{font:800 18px/1 var(--disp);text-transform:uppercase;padding:14px 0 12px 58px;border-bottom:1px solid var(--ink-12)}
-.franjas{list-style:none}
-.franja{display:grid;grid-template-columns:52px minmax(0,1fr);gap:6px;border-bottom:1px solid var(--ink-07);min-height:42px}
-.franja>span{padding-top:12px;font-size:12.5px;font-weight:600;color:var(--ink-55);font-variant-numeric:tabular-nums}
-.franja>div{padding:5px 0;display:flex;flex-direction:column;gap:5px}
-.libre{height:100%;min-height:31px;display:flex;align-items:center;font-size:12.5px;color:rgba(26,23,20,.32)}
-.libre.paso-ya{visibility:hidden}
-.bloque{position:relative;display:block;width:100%;text-align:left;padding:8px 12px 8px 14px;border-radius:7px;background:rgba(255,255,255,.55);box-shadow:0 1px 0 rgba(26,23,20,.06),inset 0 0 0 1px var(--ink-07);transition:transform .12s,box-shadow .15s}
-.bloque::before{content:"";position:absolute;left:0;top:7px;bottom:7px;width:3px;border-radius:0 3px 3px 0;background:var(--k-ink)}
-.bloque:hover{transform:translateY(-1px);box-shadow:0 6px 14px -8px rgba(26,23,20,.35),inset 0 0 0 1px var(--ink-12)}
-.bloque b{display:block;font-weight:600;font-size:14px;line-height:1.2}
-.bloque small{display:block;margin-top:2px;font-size:12px;color:var(--ink-55)}
-.bloque.tarjeta b::after{content:" ★";color:var(--k-acc-txt);font-size:12px}
-.bloque.reservado::before{background:rgba(26,23,20,.3)}
-.bloque.atendido{background:transparent;box-shadow:inset 0 0 0 1px var(--ink-07)}
-.bloque.atendido::before{background:rgba(26,23,20,.18)}
-.bloque.atendido b{color:var(--ink-55)}
-.bloque.atendido b::before{content:"✓ ";color:var(--ink-55)}
-.bloque.ausente,.bloque.cancelado{background:transparent;box-shadow:inset 0 0 0 1.5px var(--k-acc)}
-.bloque.ausente::before,.bloque.cancelado::before{background:var(--k-acc)}
-.bloque.ausente small,.bloque.cancelado small{color:var(--k-acc-txt);font-weight:600}
-.bloque.cancelado b{text-decoration:line-through;text-decoration-thickness:1px;color:var(--ink-55)}
-.bloque em{display:inline-block;margin-top:6px;padding:3px 8px;border-radius:5px;background:var(--k-acc);color:var(--k-ink);font:700 11px/1.2 var(--txt);font-style:normal;letter-spacing:.02em}
-.leyenda{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--ink-55)}
-.leyenda i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
-
-.atencion{position:sticky;top:24px;display:flex;flex-direction:column;gap:22px}
 .caja{border-top:2px solid var(--k-ink)}
+.caja .lista{margin:0}
 .caja h2{display:flex;align-items:baseline;justify-content:space-between;font:800 19px/1 var(--disp);text-transform:uppercase;padding:13px 0 10px}
 .caja h2 small{font:600 12px/1 var(--txt);text-transform:none;color:var(--ink-55)}
 .caja.ojo h2 small{color:var(--k-acc-txt)}
@@ -154,6 +115,81 @@ button{cursor:pointer;background:none;border:0}
 .pill.suave{background:transparent;color:var(--k-acc-txt);box-shadow:inset 0 0 0 1.5px var(--k-acc)}
 .pill.gris{background:transparent;color:var(--ink-55);box-shadow:inset 0 0 0 1px var(--ink-12)}
 .vacio{padding:14px 0;font-size:13.5px;color:var(--ink-55)}
+/* ---------- Agenda: cabecera ---------- */
+.ag-cab{align-items:center;margin-bottom:18px}
+.ag-titulo{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.ag-titulo h1{font-size:40px}
+.fecha-nav{display:flex;align-items:center;gap:6px}
+.fecha-nav button{height:38px;min-width:38px;padding:0 12px;border-radius:9px;border:1px solid var(--ink-12);background:rgba(255,255,255,.42);font-weight:600;font-size:14px;transition:border-color .15s,background .15s}
+.fecha-nav button:hover{border-color:var(--ink-55)}
+.fecha-nav button[disabled]{opacity:.35;cursor:default;border-color:var(--ink-12)}
+.fecha-nav .flecha{font-size:18px;line-height:1;padding:0}
+.fecha-nav strong{margin-left:8px;font-weight:600;font-size:15.5px;white-space:nowrap}
+.ag-datos{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dato{text-decoration:none;display:inline-flex;align-items:baseline;gap:6px;height:38px;padding:0 13px;border-radius:9px;border:1px solid var(--ink-12);background:rgba(255,255,255,.3);font-size:13.5px;color:var(--ink-70);line-height:36px}
+.dato b{font:800 20px/1 var(--disp);color:var(--k-ink)}
+.dato.ojo{background:var(--k-acc);border-color:var(--k-acc);color:var(--k-ink);font-weight:600}
+.dato.ojo b{color:var(--k-ink)}
+
+/* ---------- Agenda: grilla de horas ---------- */
+.superficie{background:rgba(255,255,255,.4);border:1px solid var(--ink-12);border-radius:12px;box-shadow:0 1px 0 rgba(26,23,20,.04)}
+.hoy-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}
+.cal{overflow:hidden}
+.cal-cab{position:sticky;top:0;z-index:4;display:grid;grid-template-columns:64px repeat(var(--cols,2),minmax(0,1fr));background:var(--k-paper) var(--grano);border-bottom:1px solid var(--ink-12)}
+.cal-cab>div{display:flex;align-items:center;gap:10px;padding:12px 14px;border-left:1px solid var(--ink-12)}
+.cal-cab>div:first-child{border-left:0}
+.av{font-style:normal;width:34px;height:34px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--k-ink);color:var(--k-paper);font:800 15px/1 var(--disp);letter-spacing:.02em}
+.cal-cab b{display:block;font-weight:600;font-size:14.5px;line-height:1.15}
+.cal-cab span{display:block;font-size:12px;color:var(--ink-55)}
+.cal-cuerpo{position:relative;display:grid;grid-template-columns:64px repeat(var(--cols,2),minmax(0,1fr))}
+.horas-col{position:relative}
+.horas-col span{position:absolute;right:10px;transform:translateY(-50%);font-size:12px;font-weight:600;color:var(--ink-55);font-variant-numeric:tabular-nums;background:transparent}
+.horas-col span.primera{transform:translateY(4px)}
+.horas-col span.media{font-weight:500;color:rgba(26,23,20,.32);font-size:11px}
+.carril{position:relative;border-left:1px solid var(--ink-12);
+  background-image:linear-gradient(var(--ink-12),var(--ink-12)),repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--h30) - 1px),rgba(26,23,20,.07) calc(var(--h30) - 1px),rgba(26,23,20,.07) var(--h30));
+  background-size:100% 1px,100% 100%;background-repeat:no-repeat,repeat}
+.carril .linea-h{position:absolute;left:0;right:0;height:1px;background:var(--ink-12)}
+.carril .linea-m{position:absolute;left:0;right:0;border-top:1px dashed rgba(26,23,20,.09)}
+.pasado{position:absolute;left:0;right:0;top:0;background:repeating-linear-gradient(-45deg,rgba(26,23,20,.035) 0 6px,transparent 6px 12px);pointer-events:none}
+.ahora{position:absolute;left:58px;right:0;z-index:3;height:0;border-top:2px solid var(--k-acc);pointer-events:none}
+.ahora::before{content:"";position:absolute;left:-6px;top:-6px;width:10px;height:10px;border-radius:50%;background:var(--k-acc)}
+.ahora i{position:absolute;left:-58px;top:-10px;padding:2px 5px;border-radius:5px;background:var(--k-acc);color:var(--k-ink);font:700 11px/1.3 var(--txt);font-style:normal}
+.turno{position:absolute;left:6px;right:6px;z-index:2;display:flex;flex-direction:column;justify-content:flex-start;gap:1px;padding:6px 10px 6px 12px;border-radius:7px;text-align:left;overflow:hidden;
+  background:#FBF8F2;box-shadow:inset 0 0 0 1px var(--ink-12),0 1px 2px rgba(26,23,20,.06);transition:box-shadow .15s,transform .12s}
+.turno::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--k-ink)}
+.turno:hover{z-index:3;transform:translateY(-1px);box-shadow:inset 0 0 0 1px var(--ink-55),0 8px 18px -10px rgba(26,23,20,.45)}
+.turno b{font-weight:600;font-size:13.5px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.turno small{font-size:11.5px;color:var(--ink-55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.turno .est{font-weight:600;color:var(--ink-70)}
+.turno.tarjeta b::after{content:" ★";color:var(--k-acc-txt);font-size:11px}
+.turno.corto{flex-direction:row;align-items:center;gap:8px;padding-top:0;padding-bottom:0}
+.turno.corto small{flex:1 1 auto}
+.turno.reservado{background:repeating-linear-gradient(-45deg,rgba(251,248,242,.95) 0 7px,rgba(238,231,218,.95) 7px 14px)}
+.turno.reservado::before{background:rgba(26,23,20,.35)}
+.turno.atendido{background:rgba(255,255,255,.25);box-shadow:inset 0 0 0 1px var(--ink-07)}
+.turno.atendido::before{background:rgba(26,23,20,.2)}
+.turno.atendido b{color:var(--ink-55)}
+.turno.ausente,.turno.cancelado{background:rgba(255,255,255,.5);box-shadow:inset 0 0 0 1.5px var(--k-acc)}
+.turno.ausente::before,.turno.cancelado::before{background:var(--k-acc)}
+.turno.ausente .est,.turno.cancelado .est{color:var(--k-acc-txt)}
+.turno.cancelado b{text-decoration:line-through;text-decoration-thickness:1px;color:var(--ink-55)}
+.turno em{align-self:flex-start;margin-top:3px;padding:2px 7px;border-radius:5px;background:var(--k-acc);color:var(--k-ink);font:700 10.5px/1.3 var(--txt);font-style:normal}
+.leyenda{display:flex;gap:16px;flex-wrap:wrap;padding:12px 16px;border-top:1px solid var(--ink-12);font-size:12px;color:var(--ink-55)}
+.leyenda i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-2px}
+
+/* ---------- Columna de la derecha ---------- */
+.atencion{position:sticky;top:24px;display:flex;flex-direction:column;gap:16px}
+.caja.superficie{border-top:1px solid var(--ink-12);padding:0 16px 4px}
+.caja.superficie h2{padding:14px 0 10px;font-size:17px}
+.caja.superficie .lista li:first-child{border-top:1px solid var(--ink-12)}
+.prox{padding:16px;border-radius:12px;background:var(--k-ink) var(--grano-claro);color:var(--k-paper)}
+.prox p{font-size:12px;color:var(--pap-70)}
+.prox .h{display:flex;align-items:baseline;gap:10px;margin-top:6px}
+.prox .h b{font:800 34px/1 var(--disp)}
+.prox .h span{font-size:13px;font-weight:600;color:var(--k-acc)}
+.prox .q{margin-top:8px;font-weight:600;font-size:15px}
+.prox .s{font-size:13px;color:var(--pap-70)}
 
 /* ---------- Clientes ---------- */
 .barra-cli{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
@@ -166,12 +202,13 @@ button{cursor:pointer;background:none;border:0}
 .pestana{flex:none;height:34px;padding:0 13px;border-radius:7px;font-weight:500;font-size:13.5px;color:var(--ink-70);transition:background .15s}
 .pestana b{font-weight:600;margin-left:4px;color:var(--ink-55)}
 .pestana[aria-selected="true"]{background:var(--k-paper);color:var(--k-ink);box-shadow:0 1px 2px rgba(26,23,20,.15)}
-.tabla{border-top:2px solid var(--k-ink)}
+.tabla{background:rgba(255,255,255,.4);border:1px solid var(--ink-12);border-radius:12px;overflow:hidden}
 .tabla .enc,.renglon{display:grid;grid-template-columns:minmax(150px,1.3fr) minmax(170px,1fr) 120px 170px;gap:16px;align-items:center}
-.tabla .enc{padding:10px 4px;font-size:12px;color:var(--ink-55);border-bottom:1px solid var(--ink-12)}
+.tabla .enc{padding:11px 18px;background:rgba(26,23,20,.03);font-size:12px;color:var(--ink-55);border-bottom:1px solid var(--ink-12)}
 .renglones{list-style:none}
-.renglones li{border-bottom:1px solid var(--ink-07)}
-.renglon{width:100%;padding:13px 4px;text-align:left;transition:background .12s}
+.renglones li{border-bottom:1px solid var(--ink-07)}.renglones li:last-child{border-bottom:0}
+.renglones .vacio{padding:18px}
+.renglon{width:100%;padding:13px 18px;text-align:left;transition:background .12s}
 .renglon:hover{background:rgba(255,255,255,.35)}
 .renglon b{font-weight:600;font-size:14.5px}
 .renglon b small{display:block;margin-top:1px;font-size:12px;font-weight:500;color:var(--ink-55)}
@@ -249,7 +286,7 @@ dialog::backdrop{background:rgba(26,23,20,.55);backdrop-filter:blur(2px)}
 /* ---------- Pantallas medianas y celular ---------- */
 @media (max-width:1180px){
   .hoy-grid{grid-template-columns:1fr}
-  .atencion{position:static;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .atencion{position:static;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
   .tabla .enc,.renglon{grid-template-columns:minmax(140px,1.3fr) minmax(160px,1fr) 150px}
   .tabla .enc .c3,.renglon .cuando{display:none}
 }
@@ -267,7 +304,9 @@ dialog::backdrop{background:rgba(26,23,20,.55);backdrop-filter:blur(2px)}
   .nav .n:not(.ojo){display:none}
   .principal{padding:22px 16px 110px}
   .cabeza{margin-bottom:18px}.cabeza h1{font-size:36px}
-  .cifras b{font-size:34px}.cifras div{padding:12px 10px}.cifras span{font-size:12px}
+  .ag-titulo{gap:12px}.ag-titulo h1{font-size:34px}
+  .fecha-nav strong{flex-basis:100%;margin:6px 0 0}.fecha-nav{flex-wrap:wrap}
+  .ag-datos{width:100%}.dato{height:34px;line-height:32px;padding:0 10px;font-size:12.5px}.dato b{font-size:18px}
   .atencion{grid-template-columns:1fr}
   .club-grid,.sellos-grid{grid-template-columns:1fr;gap:26px}
   .ingreso .num{font-size:58px}
@@ -277,11 +316,11 @@ dialog::backdrop{background:rgba(26,23,20,.55);backdrop-filter:blur(2px)}
   .renglon .estado{grid-column:2;grid-row:1/3;align-self:center}
 }
 @media (max-width:520px){
-  .ag-cols{gap:0 10px}
-  .ag-col h3{padding-left:46px;font-size:15px}
-  .franja{grid-template-columns:40px minmax(0,1fr)}
-  .bloque{padding:7px 8px 7px 11px}
-  .bloque b{font-size:13px}
+  .cal-cab,.cal-cuerpo{grid-template-columns:46px repeat(var(--cols,2),minmax(0,1fr))}
+  .cal-cab>div{padding:10px 8px;gap:7px}.cal-cab span{display:none}.av{width:28px;height:28px;font-size:13px}
+  .horas-col span{right:6px;font-size:11px}.horas-col span.media{display:none}
+  .ahora{left:40px}.ahora i{left:-42px;font-size:10px}
+  .turno{left:3px;right:3px;padding:5px 6px 5px 9px}.turno b{font-size:12.5px}.turno small{font-size:10.5px}
   .marcas i{width:9px;height:9px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -326,19 +365,23 @@ dialog::backdrop{background:rgba(26,23,20,.55);backdrop-filter:blur(2px)}
   <main class="principal">
     <!-- Agenda -->
     <section class="vista" id="v-hoy" aria-labelledby="t-hoy">
-      <header class="cabeza">
-        <div><h1 id="t-hoy">Agenda</h1><p class="sub" id="agenda-cuenta"></p></div>
-        <div class="dias-ag" id="agenda-dias" role="tablist" aria-label="Día"></div>
+      <header class="cabeza ag-cab">
+        <div class="ag-titulo">
+          <h1 id="t-hoy">Agenda</h1>
+          <div class="fecha-nav"><button type="button" class="flecha" id="ag-prev" aria-label="Día anterior">‹</button><button type="button" id="ag-hoy">Hoy</button><button type="button" class="flecha" id="ag-sig" aria-label="Día siguiente">›</button><strong id="agenda-fecha"></strong></div>
+        </div>
+        <div class="ag-datos" id="cifras" aria-label="Resumen del día"></div>
       </header>
-      <div class="cifras" id="cifras" aria-label="Resumen del día"></div>
       <div class="hoy-grid">
-        <div class="agenda">
-          <div class="ag-cols" id="agenda-cols"></div>
-          <p class="leyenda"><span><i style="background:var(--k-ink)"></i>Confirmado</span><span><i style="background:rgba(26,23,20,.3)"></i>Sin confirmar</span><span><i style="background:var(--k-acc)"></i>Canceló o no vino</span><span>★ tiene tarjeta</span></p>
+        <div class="cal superficie">
+          <div class="cal-cab" id="cal-cab"></div>
+          <div class="cal-cuerpo" id="agenda-cols"></div>
+          <p class="leyenda"><span><i style="background:#FBF8F2;box-shadow:inset 4px 0 0 var(--k-ink),inset 0 0 0 1px var(--ink-12)"></i>Confirmado</span><span><i style="background:repeating-linear-gradient(-45deg,#FBF8F2 0 3px,#E6DFD2 3px 6px);box-shadow:inset 4px 0 0 rgba(26,23,20,.35)"></i>Sin confirmar</span><span><i style="box-shadow:inset 0 0 0 1px var(--ink-12)"></i>Ya vino</span><span><i style="box-shadow:inset 0 0 0 1.5px var(--k-acc)"></i>No vino o canceló</span><span>★ tiene tarjeta de sellos</span></p>
         </div>
         <aside class="atencion">
-          <section class="caja ojo" id="descuentos" aria-label="Le toca descuento"></section>
-          <section class="caja" id="espera" aria-label="Lista de espera"></section>
+          <section class="prox" id="ahora" aria-label="Próximo turno"></section>
+          <section class="caja superficie ojo" id="descuentos" aria-label="Le toca descuento"></section>
+          <section class="caja superficie" id="espera" aria-label="Lista de espera"></section>
         </aside>
       </div>
     </section>
@@ -352,7 +395,7 @@ dialog::backdrop{background:rgba(26,23,20,.55);backdrop-filter:blur(2px)}
       </div>
       <div class="tabla">
         <div class="enc"><span>Cliente</span><span>Tarjeta</span><span class="c3">Último corte</span><span style="text-align:right">Estado</span></div>
-        <ul class="renglones" id="clientes"></ul>
+        <ul class="renglones" id="cli-lista"></ul>
       </div>
     </section>
 
@@ -366,7 +409,7 @@ dialog::backdrop{background:rgba(26,23,20,.55);backdrop-filter:blur(2px)}
     <section class="vista" id="v-sellos" aria-labelledby="t-sellos">
       <header class="cabeza"><div><h1 id="t-sellos">Sellos</h1><p class="sub">Los últimos que se sumaron en el local.</p></div></header>
       <div class="sellos-grid">
-        <div class="caja"><h2>Últimos sellos</h2><ul class="lista" id="movs"></ul></div>
+        <div class="caja superficie"><h2>Últimos sellos</h2><ul class="lista" id="movs"></ul></div>
         <div class="nfc"><h3>Tarjeta NFC del mostrador</h3><p>El cliente acerca el celular y el sello se suma solo. Cada sello queda acá.</p><button class="btn oscuro" type="button" id="abrir-nfc-2">Ver el enlace de la tarjeta</button></div>
       </div>
     </section>
@@ -1024,6 +1067,7 @@ window.MARCA = {
     const r = T.resumen(), todos = T.clientes();
     const conDesc = todos.filter((c) => T.descuentoAhora(c) > 0);
     $("#n-clientes").textContent = todos.length;
+    $("#fecha").textContent = todos.length + " clientes con tarjeta de sellos · " + todos.filter(dormido).length + " dejaron de venir";
     $("#n-club").textContent = r.vencidas || r.socios;
     $("#n-club").className = "n" + (r.vencidas ? " ojo" : "");
     $("#n-club").title = r.vencidas ? r.vencidas + " cuota vencida" : "";
@@ -1033,7 +1077,7 @@ window.MARCA = {
     $("#pestanas").innerHTML = Object.keys(filtros).map((k) =>
       '<button class="pestana" role="tab" type="button" data-filtro="' + k + '" aria-selected="' + (k === filtro) + '">' + filtros[k].nombre + "<b>" + base.filter(filtros[k].fn).length + "</b></button>").join("");
     const lista = base.filter(filtros[filtro].fn).sort((a, b) => filtro === "dormidos" ? T.diasSin(b) - T.diasSin(a) : new Date(T.ultima(b)) - new Date(T.ultima(a)));
-    $("#clientes").innerHTML = lista.length
+    $("#cli-lista").innerHTML = lista.length
       ? lista.map((c) => { const n = T.sellosDe(c).length;
           return '<li><button class="renglon" type="button" data-codigo="' + c.codigo + '"><b>' + e(c.nombre) +
             (c.socio ? "<small" + (T.alDia(c) ? ">Socio del club" : ' class="mal">Cuota vencida') + "</small>" : "<small>Tarjeta " + c.codigo + "</small>") + "</b>" +
@@ -1069,35 +1113,58 @@ window.MARCA = {
   const ESTADO = { reservado: "sin confirmar", confirmado: "confirmado", atendido: "vino", ausente: "no vino", cancelado: "canceló" };
   const estadoDe = (t) => (t.estado === "reservado" && t.confirmado ? "confirmado" : t.estado);
   const esperaDia = (k) => TU.espera().filter((x) => x.dia === k);
+  const PXM = 1.5; // píxeles por minuto: media hora = 45 px
+  const minDe = (iso) => { const d = new Date(iso); return d.getHours() * 60 + d.getMinutes(); };
+  const fechaLarga = (k) => { const s = new Date(k + "T12:00:00").toLocaleDateString("es-AR", { weekday: "long", day: "numeric", month: "long" }); return s.charAt(0).toUpperCase() + s.slice(1); };
+  const iniciales = (n) => n.split(/\s+/).map((x) => /\d/.test(x) ? x : x[0]).join("").slice(0, 2).toUpperCase();
   function pintarAgenda(nDesc) {
-    const r = TU.resumenDia(diaAg), esHoy = diaAg === TU.clave(Date.now());
-    $("#agenda-cuenta").textContent = TU.conMayus(TU.cuandoDia(diaAg)) + (r.cancelados ? " · " + r.cancelados + " cancelado" + (r.cancelados === 1 ? "" : "s") : "") + (r.ausentes ? " · " + r.ausentes + " no vino" : "");
+    const r = TU.resumenDia(diaAg), hoyK = TU.clave(Date.now()), esHoy = diaAg === hoyK, i = DIAS_AG.indexOf(diaAg);
+    $("#agenda-fecha").textContent = (esHoy ? "Hoy, " : TU.cuandoDia(diaAg) === "mañana" ? "Mañana, " : "") + fechaLarga(diaAg).replace(/^./, (c) => esHoy || TU.cuandoDia(diaAg) === "mañana" ? c.toLowerCase() : c);
+    $("#ag-prev").disabled = i <= 0; $("#ag-sig").disabled = i >= DIAS_AG.length - 1; $("#ag-hoy").disabled = diaAg === DIAS_AG[0];
     $("#n-hoy").textContent = TU.resumenDia(DIAS_AG[0]).turnos;
-    const cifra = (k, n, rotulo, ojo) => '<div' + (ojo ? ' class="ojo"' : "") + '><b data-k="' + k + '" data-fin="' + n + '">' + n + "</b><span>" + rotulo + "</span></div>";
-    $("#cifras").innerHTML = cifra("turnos", r.turnos, "turnos " + (esHoy ? "hoy" : "ese día")) + cifra("libres", r.libres, "horarios libres") + cifra("desc", nDesc, "descuentos para aplicar", nDesc > 0);
-    $("#agenda-dias").innerHTML = DIAS_AG.map((k) => { const n = TU.delDia(k).filter((t) => t.estado !== "cancelado").length;
-      return '<button type="button" role="tab" aria-selected="' + (k === diaAg) + '" class="' + (k === diaAg ? "on" : "") + '" data-dia="' + k + '"><b>' + TU.corto(k) + "</b><small>" + n + " turnos</small></button>"; }).join("");
-    const lista = TU.delDia(diaAg), esp = esperaDia(diaAg).length;
-    $("#agenda-cols").style.setProperty("--cols", KT.barberos.length);
-    $("#agenda-cols").innerHTML = KT.barberos.map((b) => {
-      const suyos = lista.filter((t) => t.barbero === b.id); let filas = "";
-      for (let m = KT.desde * 60; m < KT.hasta * 60; m += KT.paso) {
-        const hh = String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
-        const aca = suyos.filter((t) => TU.hora(t.inicio) === hh);
-        const enHora = (t) => { const d = new Date(t.inicio); d.setHours(Math.floor(m / 60), m % 60, 0, 0); return d.getTime(); };
-        const tapado = suyos.some((t) => t.estado !== "cancelado" && TU.hora(t.inicio) < hh && enHora(t) < TU.fin(t));
-        if (tapado && !aca.length) continue;
-        const bloques = aca.map((t) => { const est = estadoDe(t), s = TU.servicio(t.servicio), rep = t.historial.some((h) => h.que === "reprogramo"), canc = t.historial.find((h) => h.que === "cancelo");
-          return '<button type="button" class="bloque ' + est + (t.codigo ? " tarjeta" : "") + '" data-turno="' + t.id + '"><b>' + e(t.nombre) + "</b><small>" + e(s.nombre) + " · " +
-            (est === "cancelado" ? "canceló con " + Math.round(canc ? canc.horas : 0) + " h de aviso" : ESTADO[est]) + (rep && est !== "cancelado" ? " · reprogramado" : "") + "</small>" +
-            (est === "cancelado" && !lista.some((o) => o !== t && o.barbero === t.barbero && o.estado !== "cancelado" && TU.hora(o.inicio) === hh) ? "<em>" + (esp ? "Avisar a la lista de espera (" + esp + ")" : "Horario libre") + "</em>" : "") + "</button>"; }).join("");
-        const paso = esHoy && (new Date().getHours() * 60 + new Date().getMinutes()) > m;
-        filas += '<li class="franja"><span>' + hh + "</span><div>" + (bloques || '<div class="libre' + (paso ? " paso-ya" : "") + '">libre</div>') + "</div></li>";
-      }
-      return '<div class="ag-col"><h3>' + e(b.nombre) + '</h3><ul class="franjas">' + filas + "</ul></div>";
+    $("#cifras").innerHTML = '<span class="dato"><b>' + r.turnos + "</b>turnos</span>" + '<span class="dato"><b>' + r.libres + "</b>horarios libres</span>" +
+      (r.ausentes || r.cancelados ? '<span class="dato"><b>' + (r.ausentes + r.cancelados) + "</b>" + (r.ausentes ? "no vino" : "canceló") + "</span>" : "") +
+      (nDesc ? '<a class="dato ojo" href="#clientes" data-ir-desc="1"><b>' + nDesc + "</b>descuentos para aplicar</a>" : "");
+    const lista = TU.delDia(diaAg), esp = esperaDia(diaAg).length, ini = KT.desde * 60, finD = KT.hasta * 60, alto = (finD - ini) * PXM;
+    const cols = KT.barberos.length; $("#cal-cab").style.setProperty("--cols", cols); $("#agenda-cols").style.setProperty("--cols", cols);
+    $("#cal-cab").innerHTML = "<div></div>" + KT.barberos.map((b) => { const n = lista.filter((t) => t.barbero === b.id && t.estado !== "cancelado").length;
+      return '<div><i class="av">' + e(iniciales(b.nombre)) + "</i><div><b>" + e(b.nombre) + "</b><span>" + n + " turno" + (n === 1 ? "" : "s") + "</span></div></div>"; }).join("");
+    let horas = "", lineas = "";
+    for (let m = ini; m <= finD; m += 30) { const y = (m - ini) * PXM, hh = String(Math.floor(m / 60)).padStart(2, "0") + ":" + (m % 60 ? "30" : "00");
+      if (m < finD) horas += '<span class="' + (m % 60 ? "media" : "") + (m === ini ? " primera" : "") + '" style="top:' + y + 'px">' + hh + "</span>";
+      if (m > ini && m < finD) lineas += m % 60 ? '<i class="linea-m" style="top:' + y + 'px"></i>' : '<i class="linea-h" style="top:' + y + 'px"></i>'; }
+    const ahoraM = new Date().getHours() * 60 + new Date().getMinutes();
+    const pasado = esHoy ? Math.max(0, Math.min(alto, (ahoraM - ini) * PXM)) : (diaAg < hoyK ? alto : 0);
+    const carriles = KT.barberos.map((b) => {
+      const suyos = lista.filter((t) => t.barbero === b.id);
+      const bloques = suyos.map((t) => {
+        const est = estadoDe(t), s = TU.servicio(t.servicio), a = minDe(t.inicio), dur = (TU.fin(t) - new Date(t.inicio).getTime()) / 60000;
+        if (est === "cancelado" && suyos.some((o) => o !== t && o.estado !== "cancelado" && minDe(o.inicio) < a + dur && minDe(o.inicio) + (TU.fin(o) - new Date(o.inicio).getTime()) / 60000 > a)) return "";
+        const canc = t.historial.find((h) => h.que === "cancelo"), rep = t.historial.some((h) => h.que === "reprogramo"), h = dur * PXM - 3, corto = h < 50;
+        const txtEst = est === "cancelado" ? "Canceló con " + Math.round(canc ? canc.horas : 0) + " h de aviso" : TU.conMayus(ESTADO[est]) + (rep ? " · reprogramado" : "");
+        const libre = est === "cancelado" ? "<em>" + (esp ? "Avisar a la lista de espera" : "Horario libre") + "</em>" : "";
+        return '<button type="button" class="turno ' + est + (t.codigo ? " tarjeta" : "") + (corto ? " corto" : "") + '" data-turno="' + t.id + '" style="top:' + ((a - ini) * PXM + 1.5) + "px;height:" + h + 'px" title="' + e(t.nombre + " · " + TU.hora(t.inicio) + " · " + s.nombre + " · " + txtEst) + '">' +
+          "<b>" + e(t.nombre) + "</b>" + (corto ? "<small>" + TU.hora(t.inicio) + " · " + '<span class="est">' + txtEst + "</span></small>" :
+            "<small>" + TU.hora(t.inicio) + " – " + TU.hora(TU.fin(t)) + " · " + e(s.nombre) + '</small><small class="est">' + txtEst + "</small>" + libre) + "</button>";
+      }).join("");
+      return '<div class="carril" style="height:' + alto + 'px;--h30:' + 30 * PXM + 'px">' + (pasado ? '<div class="pasado" style="height:' + pasado + 'px"></div>' : "") + lineas + bloques + "</div>";
     }).join("");
+    const ahora = esHoy && ahoraM >= ini && ahoraM <= finD ? '<div class="ahora" style="top:' + (ahoraM - ini) * PXM + 'px"><i>' + TU.hora(new Date()) + "</i></div>" : "";
+    $("#agenda-cols").innerHTML = '<div class="horas-col" style="height:' + alto + 'px">' + horas + "</div>" + carriles + ahora;
+
+    /* Próximo turno (sólo hoy) */
+    const prox = esHoy ? lista.filter((t) => TU.vigente(t) && new Date(t.inicio).getTime() > Date.now() - 10 * 60000).sort((a, b) => new Date(a.inicio) - new Date(b.inicio))[0] : null;
+    const caja = $("#ahora"); caja.hidden = !esHoy;
+    if (esHoy) caja.innerHTML = prox ? (() => { const falta = Math.round((new Date(prox.inicio).getTime() - Date.now()) / 60000);
+        return '<p>Próximo turno</p><div class="h"><b>' + TU.hora(prox.inicio) + "</b><span>" + (falta <= 0 ? "ahora" : falta < 60 ? "en " + falta + " min" : "en " + Math.floor(falta / 60) + " h " + (falta % 60 ? falta % 60 + " min" : "")) + '</span></div><p class="q">' + e(prox.nombre) + '</p><p class="s">' + e(TU.servicio(prox.servicio).nombre) + " con " + e(TU.barbero(prox.barbero).nombre) + "</p>"; })()
+      : '<p>Próximo turno</p><p class="q">No quedan turnos hoy</p>';
   }
-  $("#agenda-dias").addEventListener("click", (ev) => { const b = ev.target.closest("[data-dia]"); if (b) { diaAg = b.dataset.dia; pintar(); } });
+  function moverDia(d) { const i = DIAS_AG.indexOf(diaAg) + d; if (i >= 0 && i < DIAS_AG.length) { diaAg = DIAS_AG[i]; pintar(); } }
+  $("#ag-prev").addEventListener("click", () => moverDia(-1));
+  $("#ag-sig").addEventListener("click", () => moverDia(1));
+  $("#ag-hoy").addEventListener("click", () => { diaAg = DIAS_AG[0]; pintar(); });
+  $("#cifras").addEventListener("click", (ev) => { if (ev.target.closest("[data-ir-desc]")) filtro = "descuento"; });
+  addEventListener("keydown", (ev) => { if (!$("#v-hoy").classList.contains("on") || document.querySelector("dialog[open]") || /input|textarea/i.test(document.activeElement.tagName)) return; if (ev.key === "ArrowLeft") moverDia(-1); if (ev.key === "ArrowRight") moverDia(1); });
   $("#agenda-cols").addEventListener("click", (ev) => { const b = ev.target.closest("[data-turno]"); if (b) { turnoSel = b.dataset.turno; pintar(); } });
 
   function pintarEspera() {
@@ -1181,7 +1248,7 @@ window.MARCA = {
     const socios = T.clientes().filter((c) => c.socio).sort((a, b) => (T.alDia(a) - T.alDia(b)) || new Date(a.socio.pagoHasta) - new Date(b.socio.pagoHasta));
     caja.innerHTML = '<div class="ingreso"><p>Entra fijo por mes</p><b class="num" data-k="ingreso" data-pesos="1" data-fin="' + r.ingreso + '">' + T.pesos(r.ingreso) + "</b><p>antes de abrir la puerta</p>" +
       '<div class="det"><div><b>' + r.socios + "</b><span>socios al día</span></div><div><b" + (r.vencidas ? ' style="color:var(--k-acc)"' : "") + ">" + r.vencidas + "</b><span>cuotas vencidas</span></div></div></div>" +
-      '<div class="caja"><h2>Socios<small>' + socios.length + '</small></h2><ul class="lista">' +
+      '<div class="caja superficie"><h2>Socios<small>' + socios.length + '</small></h2><ul class="lista">' +
       (socios.length ? socios.map((c) => '<li><button class="fila" type="button" data-codigo="' + c.codigo + '"><div><b>' + e(c.nombre) + "</b><span>" +
         (T.alDia(c) ? "Próximo cobro " + T.cuando(c.socio.pagoHasta) : "Hay que cobrarle la cuota") + "</span></div>" + (T.alDia(c) ? "" : '<span class="pill">Vencida</span>') + "</button></li>").join("")
         : '<li class="vacio">Todavía no hay socios.</li>') + "</ul></div>";
