@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Panel | {marca}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Bebas+Neue&family=Big+Shoulders+Display:wght@600;700;800;900&family=Yellowtail&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../app.css">
+</head>
+<body>
+
+<!-- Ingreso -->
+<section class="col" id="pin" style="padding-top:12vh">
+  <div class="logo" data-logo></div>
+  <form id="form-pin" style="margin-top:38px">
+    <div class="campo">
+      <label for="pin-valor">PIN del local</label>
+      <input id="pin-valor" type="password" inputmode="numeric" maxlength="4" autocomplete="off" required style="font-size:1.7rem;letter-spacing:.5em;padding-left:.5em">
+    </div>
+    <button class="btn" type="submit">Entrar</button>
+    <p class="nota" style="margin-top:16px">PIN de esta demo: <span id="pin-pista"></span></p>
+  </form>
+</section>
+
+<!-- Panel -->
+<div id="app" hidden>
+  <header class="barra entra">
+    <div class="logo" data-logo></div>
+    <p>Panel</p>
+  </header>
+
+  <main class="panel">
+    <section class="planilla entra" style="--i:1" aria-labelledby="titulo-planilla">
+      <h2 id="titulo-planilla">Libro de clientes</h2>
+      <p class="fecha" id="fecha"></p>
+      <label for="buscar" class="nota" style="color:var(--tinta-suave)">Nombre o número de tarjeta</label>
+      <input id="buscar" type="search" placeholder="Tomás o 0101" autocomplete="off">
+      <div class="pestanas" role="tablist" id="pestanas"></div>
+      <ul class="renglones" id="clientes"></ul>
+    </section>
+
+    <aside class="lado">
+      <div class="ticket entra" style="--i:2" id="cifras" aria-label="Resumen de hoy"></div>
+      <section class="cuota foco entra" style="--i:3" id="cuota" aria-label="Cuota mensual"></section>
+      <section class="movs entra" style="--i:4" aria-label="Últimos sellos"><h2>Últimos sellos</h2><ul id="movs-lado"></ul></section>
+    </aside>
+
+    <section class="movs movs-abajo" aria-label="Últimos sellos"><h2>Últimos sellos</h2><ul id="movs-abajo"></ul></section>
+
+    <div style="grid-column:1/-1">
+      <div class="acciones">
+        <button class="btn chico" type="button" id="abrir-nuevo">Nuevo cliente</button>
+        <button class="btn linea chico" type="button" id="abrir-nfc">Tarjeta NFC del mostrador</button>
+      </div>
+      <button class="enlace nota" type="button" id="reiniciar" style="margin-top:12px">Volver a los datos de ejemplo</button>
+    </div>
+  </main>
+</div>
+
+<p class="firma">Hecho por <a href="https://www.mybdigitals.com" target="_blank" rel="noopener">MYB Digitals</a></p>
+
+<dialog id="hoja-ficha" aria-live="polite"><div class="hoja" id="ficha"></div></dialog>
+
+<dialog id="hoja-nuevo" aria-labelledby="titulo-nuevo">
+  <div class="hoja">
+    <h2 id="titulo-nuevo">Nuevo cliente</h2>
+    <form id="form-nuevo" style="margin-top:16px">
+      <div class="campo">
+        <label for="n-nombre">Nombre</label>
+        <input id="n-nombre" type="text" maxlength="60" required>
+      </div>
+      <div class="campo">
+        <label for="n-tel">Celular (opcional)</label>
+        <input id="n-tel" type="tel" inputmode="tel" maxlength="20">
+      </div>
+      <label style="display:flex;gap:10px;align-items:center;justify-content:center;margin-bottom:18px">
+        <input type="checkbox" id="n-sello" checked style="width:22px;height:22px"> Sumar el sello de hoy
+      </label>
+      <div class="pila">
+        <button class="btn" type="submit">Crear tarjeta</button>
+        <button class="btn linea" type="button" id="cerrar-nuevo">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<dialog id="hoja-nfc" aria-labelledby="titulo-nfc">
+  <div class="hoja">
+    <h2 id="titulo-nfc">Sello por NFC</h2>
+    <p style="margin-top:8px">El cliente acerca su celular a la tarjeta del mostrador y el sello se suma solo. Queda registrado acá.</p>
+    <p class="enlace-nfc" id="enlace-nfc"></p>
+    <p class="nota" style="color:var(--tinta-suave);margin-bottom:16px">Este es el enlace que se graba en la tarjeta NFC.</p>
+    <div class="pila">
+      <button class="btn" type="button" id="copiar-nfc">Copiar enlace</button>
+      <button class="btn linea" type="button" id="cerrar-nfc">Cerrar</button>
+    </div>
+  </div>
+</dialog>
+
+<div class="aviso" id="aviso" role="status"></div>
+
+<script src="marca.js"></script>
+<script src="datos.js"></script>
+<script>
+(function () {
+  "use strict";
+  const T = window.TARJETA, K = T.CONFIG, $ = (s) => document.querySelector(s), e = T.esc;
+  const url = new URLSearchParams(location.search);
+  const sesion = { get: () => { try { return sessionStorage.getItem(K.id + ".pin") === "1"; } catch (x) { return false; } },
+                   set: () => { try { sessionStorage.setItem(K.id + ".pin", "1"); } catch (x) {} } };
+  let filtro = "todos", texto = "", elegido = url.get("c") || "", primera = true;
+  const hojaFicha = $("#hoja-ficha");
+
+  T.vestir();
+  $("#fecha").textContent = new Date().toLocaleDateString("es-AR", { weekday: "long", day: "numeric", month: "long" });
+
+  /* Ingreso */
+  $("#pin-pista").textContent = K.pinDemo;
+  function entrar() { $("#pin").hidden = true; $("#app").hidden = false; pintar(); }
+  $("#form-pin").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const campo = $("#pin-valor");
+    if (campo.value === K.pinDemo) { sesion.set(); entrar(); return; }
+    campo.value = "";
+    const f = $("#form-pin");
+    f.classList.remove("mal"); void f.offsetWidth; f.classList.add("mal");
+    campo.focus();
+  });
+
+  /* Avisos */
+  let reloj;
+  function avisar(mensaje) {
+    const a = $("#aviso");
+    a.textContent = mensaje;
+    a.classList.add("ver");
+    clearTimeout(reloj);
+    reloj = setTimeout(() => a.classList.remove("ver"), 3200);
+  }
+
+  const dormido = (c) => T.diasSin(c) > K.diasInactivo;
+  const filtros = {
+    todos: { nombre: "Todos", fn: () => true },
+    descuento: { nombre: "Con descuento", fn: (c) => T.descuentoAhora(c) > 0 },
+    dormidos: { nombre: "No vienen", fn: dormido },
+    socios: { nombre: "Socios", fn: (c) => !!c.socio },
+  };
+  function timbre(c) {
+    const d = T.descuentoAhora(c);
+    // En la lista de los que no vienen importa más cuánto hace que el descuento.
+    if (d && filtro !== "dormidos") return '<span class="timbre">Le toca −' + d + "%</span>";
+    if (dormido(c)) return '<span class="timbre quieto">' + T.diasSin(c) + " días sin venir</span>";
+    return '<span class="nota" style="color:var(--tinta-suave)">' + (c.visitas.length ? T.haceCuanto(T.diasSin(c)) : "sin cafés") + "</span>";
+  }
+  function marcas(n) {
+    let h = "";
+    for (let i = 0; i < K.sellos; i++) h += '<i class="' + (T.hitoEn(i + 1) ? "meta " : "") + (i < n ? "on" : "") + '"></i>';
+    return h;
+  }
+  function mensajePara(c) {
+    const n = c.nombre.split(" ")[0], d = T.descuentoAhora(c), p = T.proximo(c);
+    if (d) return "Hola " + n + ", tu próximo café en " + K.nombre + " tiene " + d + "% de descuento. ¿Pasás hoy?";
+    const falta = "Te faltan " + p.faltan + " cafés para tu " + p.pct + "% de descuento.";
+    if (dormido(c)) return "Hola " + n + ", hace rato que no te vemos por " + K.nombre + ". " + falta + " ¿Pasás esta semana?";
+    return "Hola " + n + ". " + falta + " ¿Pasás hoy por " + K.nombre + "?";
+  }
+
+  function pintar() {
+    if ($("#app").hidden) return;
+    const r = T.resumen();
+    const cifra = (k, n, rotulo) => '<div><b data-k="' + k + '" data-fin="' + n + '">' + n + "</b><span>" + rotulo + "</span></div>";
+    $("#cifras").innerHTML = cifra("hoy", r.hoy, "sellos<br>de hoy") + cifra("socios", r.socios, "socios<br>al día") + cifra("desc", r.conDescuento, "descuentos<br>por aplicar");
+    pintarCuota(r);
+    contar();
+
+    const base = T.buscar(texto);
+    $("#pestanas").innerHTML = Object.keys(filtros).map((k) =>
+      '<button class="pestana" role="tab" type="button" data-filtro="' + k + '" aria-selected="' + (k === filtro) + '">' +
+      filtros[k].nombre + " (" + base.filter(filtros[k].fn).length + ")</button>").join("") + '<i class="tab-linea" aria-hidden="true"></i>';
+    moverLinea();
+
+    const lista = base.filter(filtros[filtro].fn).sort((a, b) =>
+      filtro === "dormidos" ? T.diasSin(b) - T.diasSin(a) : new Date(T.ultima(b)) - new Date(T.ultima(a)));
+    $("#clientes").innerHTML = lista.length
+      ? lista.map((c, idx) => { const n = T.sellosDe(c).length;
+          return '<li' + (primera ? ' class="entra" style="--i:' + (idx * 0.6 + 3) + '"' : "") + '><button class="renglon" type="button" data-codigo="' + c.codigo + '"><b>' + e(c.nombre) + (c.socio ? "<small>" + (T.alDia(c) ? "socio" : "cuota vencida") + "</small>" : "") + "</b>" +
+            '<span class="marcas" role="img" aria-label="' + n + " de " + K.sellos + ' sellos">' + marcas(n) + "</span>" + timbre(c) + "</button></li>"; }).join("")
+      : '<li class="vacio">No hay clientes con ese criterio.</li>';
+
+    const movs = T.movimientos(6).map((m) =>
+      "<li><b>" + e(m.nombre) + "</b><span>Sello " + m.numero + " · " + (m.origen === "nfc" ? "por NFC" : "desde el panel") + " · " + T.cuando(m.fecha) +
+      (m.descuento ? " · <em>−" + m.descuento + "%</em>" : "") + "</span></li>").join("");
+    $("#movs-lado").innerHTML = movs;
+    $("#movs-abajo").innerHTML = movs;
+    pintarFicha();
+    primera = false;
+  }
+
+  /* Cuota mensual: cuánto entra fijo por mes y quiénes son socios. */
+  function pintarCuota(r) {
+    const M = K.membresia, caja = $("#cuota");
+    if (!M) { caja.hidden = true; return; }
+    const socios = T.clientes().filter((c) => c.socio).sort((a, b) => new Date(a.socio.pagoHasta) - new Date(b.socio.pagoHasta));
+    caja.innerHTML = "<h2>" + e(M.nombre) + '</h2><p class="monto"><b data-k="ingreso" data-pesos="1" data-fin="' + r.ingreso + '">' + T.pesos(r.ingreso) + "</b></p>" +
+      '<p class="rotulo">fijos por mes · ' + T.pesos(M.precio) + " por socio</p><ul>" +
+      (socios.length ? socios.map((c) => '<li><button class="socio" type="button" data-codigo="' + c.codigo + '"><b>' + e(c.nombre) + "</b><span>" +
+        (T.alDia(c) ? "Próximo cobro " + T.cuando(c.socio.pagoHasta) : "<em>Cuota vencida</em>") + "</span></button></li>").join("")
+        : '<li class="nota" style="padding:14px 0">Todavía no hay socios.</li>') + "</ul>";
+  }
+
+  // Los números suben desde el valor anterior en vez de saltar.
+  const previo = {};
+  function contar() {
+    const quieto = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.querySelectorAll("[data-k]").forEach((el) => {
+      const k = el.dataset.k, fin = Number(el.dataset.fin), ini = previo[k] === undefined ? 0 : previo[k];
+      const fmt = (v) => (el.dataset.pesos ? T.pesos(v) : String(v));
+      previo[k] = fin;
+      if (ini === fin || quieto) { el.textContent = fmt(fin); return; }
+      const t0 = performance.now(), dur = 560;
+      (function paso(t) {
+        const p = Math.min(1, Math.max(0, (t - t0) / dur)), q = 1 - Math.pow(1 - p, 4);
+        el.textContent = fmt(Math.round(ini + (fin - ini) * q));
+        if (p < 1 && el.isConnected) requestAnimationFrame(paso);
+      })(t0);
+      setTimeout(() => { if (el.isConnected) el.textContent = fmt(fin); }, dur + 90);
+    });
+  }
+
+  // La raya de la pestaña activa se desliza de una a otra.
+  let rayaPrevia = null;
+  function moverLinea() {
+    const caja = $("#pestanas"), activa = caja.querySelector('[aria-selected="true"]'), raya = caja.querySelector(".tab-linea");
+    if (!activa || !raya) return;
+    const fin = { x: activa.offsetLeft, y: activa.offsetTop + activa.offsetHeight - 3, w: activa.offsetWidth };
+    const ubicar = (p) => { raya.style.width = p.w + "px"; raya.style.transform = "translate(" + p.x + "px," + p.y + "px)"; };
+    if (rayaPrevia) { raya.style.transition = "none"; ubicar(rayaPrevia); void raya.offsetWidth; raya.style.transition = ""; }
+    ubicar(fin);
+    rayaPrevia = fin;
+  }
+  window.addEventListener("resize", () => { rayaPrevia = null; moverLinea(); });
+
+  function pintarFicha() {
+    const c = elegido ? T.porCodigo(elegido) : null;
+    if (!c) { if (hojaFicha.open) hojaFicha.close(); return; }
+    const n = T.sellosDe(c).length, d = T.descuentoAhora(c);
+    $("#ficha").innerHTML =
+      "<h2>" + e(c.nombre) + "</h2>" +
+      "<p>N.º " + c.codigo + " · " + n + " de " + K.sellos + " sellos</p>" +
+      '<div class="puntos" role="img" aria-label="' + n + " de " + K.sellos + ' sellos">' + marcas(n) + "</div>" +
+      "<p>" + (c.visitas.length ? "Último café " + T.haceCuanto(T.diasSin(c)) : "Todavía sin cafés") + "</p>" +
+      (c.socio ? (T.alDia(c) ? '<p class="rotulo" style="margin-top:8px;color:var(--acento-2)">Socio · próximo cobro ' + T.cuando(c.socio.pagoHasta) + "</p>" : '<p style="margin-top:14px"><span class="timbre">Cuota vencida</span></p>') : "") +
+      (d ? '<p class="descuento">Este café tiene ' + d + "% de descuento</p>" : "") +
+      '<div class="pila" style="margin-top:16px">' +
+      '<button class="btn" type="button" data-accion="sumar">Sumar sello</button>' +
+      '<button class="btn linea" type="button" data-accion="cerrar">Listo</button></div>' +
+      '<div style="margin-top:8px">' +
+      '<a class="enlace" href="https://wa.me/' + (c.tel || "") + "?text=" + encodeURIComponent(mensajePara(c)) + '" target="_blank" rel="noopener">Escribirle</a>' +
+      '<a class="enlace" href="index.html?c=' + c.codigo + '" target="_blank" rel="noopener">Ver su tarjeta</a>' +
+      (c.visitas.length ? '<button class="enlace" type="button" data-accion="deshacer">Deshacer</button>' : "") +
+      (K.membresia ? '<button class="enlace" type="button" data-accion="' + (!c.socio ? 'socio">Hacerlo socio' : T.alDia(c) ? 'baja">Baja del club' : 'cobrar">Registrar pago') + "</button>" : "") + "</div>";
+    if (!hojaFicha.open) hojaFicha.showModal();
+  }
+
+  /* Acciones */
+  $("#ficha").addEventListener("click", (ev) => {
+    const boton = ev.target.closest("[data-accion]");
+    if (!boton) return;
+    const accion = boton.dataset.accion, c = T.porCodigo(elegido);
+    if (accion === "cerrar" || !c) { elegido = ""; pintar(); return; }
+    const nombre = c.nombre.split(" ")[0];
+    if (accion === "sumar") {
+      const r = T.sumar(c.codigo, "panel");
+      avisar(r.descuento ? "Sello " + r.numero + " para " + nombre + ": " + r.descuento + "% de descuento aplicado."
+                         : "Sello " + r.numero + " de " + K.sellos + " para " + nombre + ".");
+    } else if (accion === "deshacer") {
+      if (T.deshacer(c.codigo).ok) avisar("Se quitó el último sello de " + nombre + ".");
+    } else if (accion === "socio") {
+      if (T.altaSocio(c.codigo).ok) avisar(nombre + " ya es socio de " + K.membresia.nombre + ".");
+    } else if (accion === "baja") {
+      if (confirm("¿Dar de baja a " + c.nombre + " de " + K.membresia.nombre + "?") && T.bajaSocio(c.codigo).ok) avisar(nombre + " dejó de ser socio.");
+    } else if (accion === "cobrar") {
+      if (T.cobrarCuota(c.codigo).ok) avisar("Cuota de " + nombre + " registrada.");
+    }
+  });
+  hojaFicha.addEventListener("close", () => { if (elegido) { elegido = ""; pintar(); } });
+  hojaFicha.addEventListener("click", (ev) => { if (ev.target === hojaFicha) hojaFicha.close(); });
+  $("#clientes").addEventListener("click", (ev) => {
+    const fila = ev.target.closest("[data-codigo]");
+    if (fila) { elegido = fila.dataset.codigo; pintar(); }
+  });
+  $("#cuota").addEventListener("click", (ev) => {
+    const fila = ev.target.closest("[data-codigo]");
+    if (fila) { elegido = fila.dataset.codigo; pintar(); }
+  });
+  $("#pestanas").addEventListener("click", (ev) => {
+    const p = ev.target.closest("[data-filtro]");
+    if (p) { filtro = p.dataset.filtro; pintar(); }
+  });
+  $("#buscar").addEventListener("input", (ev) => { texto = ev.target.value; pintar(); });
+
+  /* Nuevo cliente */
+  const hojaNuevo = $("#hoja-nuevo");
+  $("#abrir-nuevo").addEventListener("click", () => { $("#form-nuevo").reset(); hojaNuevo.showModal(); $("#n-nombre").focus(); });
+  $("#cerrar-nuevo").addEventListener("click", () => hojaNuevo.close());
+  $("#form-nuevo").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const nombre = $("#n-nombre").value.trim();
+    if (!nombre) return;
+    const c = T.crear({ nombre, tel: $("#n-tel").value, conSello: $("#n-sello").checked });
+    hojaNuevo.close();
+    filtro = "todos"; texto = ""; $("#buscar").value = ""; elegido = c.codigo;
+    pintar();
+    avisar("Tarjeta N.º " + c.codigo + " creada para " + c.nombre.split(" ")[0] + ".");
+  });
+
+  /* Tarjeta NFC del mostrador */
+  const hojaNfc = $("#hoja-nfc"), enlaceNfc = new URL("sello.html", location.href).href;
+  $("#abrir-nfc").addEventListener("click", () => { $("#enlace-nfc").textContent = enlaceNfc; hojaNfc.showModal(); });
+  $("#cerrar-nfc").addEventListener("click", () => hojaNfc.close());
+  $("#copiar-nfc").addEventListener("click", () => {
+    const listo = () => avisar("Enlace copiado.");
+    if (navigator.clipboard) navigator.clipboard.writeText(enlaceNfc).then(listo, () => avisar("No se pudo copiar: seleccionalo a mano."));
+    else avisar("Seleccioná el enlace y copialo a mano.");
+  });
+
+  $("#reiniciar").addEventListener("click", () => {
+    if (!confirm("¿Borrar los cambios y volver a los datos de ejemplo?")) return;
+    T.reiniciar(); elegido = ""; pintar(); avisar("Datos de ejemplo restaurados.");
+  });
+
+  window.addEventListener("tarjeta:cambio", pintar);
+  // En la página de ejemplo se entra sin PIN, para mostrar el panel de una.
+  if (sesion.get() || url.get("demo") === "1") entrar();
+})();
+</script>
+</body>
+</html>
