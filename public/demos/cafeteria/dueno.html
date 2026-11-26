@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F4F1EC">
+<title>Café Barrio · Panel</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231F1A16'/%3E%3Ctext x='16' y='22' font-family='Georgia' font-style='italic' font-weight='700' font-size='15' fill='white' text-anchor='middle'%3ECB%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..700;1,9..144,500..700&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--fondo:#F4F1EC;--papel:#FFFDF8;--tinta:#1F1A16;--gris:#8B8277;--gris2:#B8AFA3;--linea:#E4DCCF;--barra:#CFC6B8;--terra:#2F5D46;--terra-suave:#E1EBE3;--verde:#5B7A35;--oro:#E0A93B;--serif:"Fraunces",Georgia,serif;--sans:"Geist",system-ui,sans-serif;--lado:232px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{min-height:100dvh;background:var(--fondo);color:var(--tinta);font-family:var(--sans);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer;touch-action:manipulation}
+.ic{display:block;flex:none}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+nav.lado{position:fixed;inset:0 auto 0 0;width:var(--lado);display:flex;flex-direction:column;gap:4px;padding:26px 14px;background:var(--tinta);color:#EDE6DA}
+nav.lado .marca{padding:0 12px 26px}
+nav.lado .marca b{display:block;font:italic 600 24px var(--serif)}
+nav.lado .marca small{font-size:10px;font-weight:600;letter-spacing:.22em;color:#9C9286;text-transform:uppercase}
+nav.lado button{display:flex;align-items:center;gap:12px;height:44px;padding:0 12px;border-radius:8px;font-size:15px;font-weight:500;color:#BDB3A6;text-align:left}
+nav.lado button.on{background:rgba(255,255,255,.08);color:#fff}
+nav.lado button .pt{margin-left:auto;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--terra);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center}
+nav.lado .pie{margin-top:auto;padding:0 12px;font-size:12px;color:#7E766B;line-height:1.5}
+nav.lado .pie a{color:#BDB3A6}
+main{margin-left:var(--lado);padding:30px clamp(18px,3.5vw,44px) 60px;max-width:calc(1180px + var(--lado))}
+h1{font:600 clamp(26px,3vw,32px)/1.1 var(--serif)}
+.sub{margin-top:6px;color:var(--gris);font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:26px;border-top:1.5px solid var(--linea);border-bottom:1.5px solid var(--linea)}
+.kpi{padding:18px 18px 18px 0}
+.kpi+.kpi{padding-left:18px;border-left:1.5px solid var(--linea)}
+.kpi span{display:block;font-size:13px;color:var(--gris)}
+.kpi b{display:block;margin-top:6px;font:600 clamp(26px,2.6vw,32px)/1 var(--serif)}
+.kpi em{display:block;margin-top:6px;font-style:normal;font-size:12px;color:var(--verde);font-weight:600}
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:34px}
+h2{font:600 19px var(--serif);margin-bottom:14px}
+.sup{background:var(--papel);border:1.5px solid var(--linea);border-radius:12px;padding:18px 20px}
+.barras .f{margin-bottom:14px}
+.barras .f div{display:flex;justify-content:space-between;font-size:14px;color:#4a443d;margin-bottom:6px}
+.barras .f div b{font-weight:600;color:var(--tinta)}
+.barras .f i{display:block;height:10px;border-radius:2px;background:var(--linea);overflow:hidden}
+.barras .f i s{display:block;height:100%;background:var(--barra);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.barras .f:first-child i s{background:var(--terra)}
+.cols{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;align-items:end;height:190px;padding-top:10px}
+.cols .c{display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end}
+.cols .c i{width:100%;max-width:44px;background:var(--barra);border-radius:3px 3px 0 0}
+.cols .c.hoy i{background:var(--terra)}
+.cols .c span{font-size:12px;font-weight:600;color:var(--gris)}
+.cols .c.hoy span{color:var(--terra)}
+.vivo .fila{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1.5px solid var(--linea);font-size:14px}
+.vivo .fila:last-child{border-bottom:0}
+.vivo .fila b{min-width:66px;font-weight:700}
+.vivo .fila span{flex:1;min-width:0;color:#4a443d}
+.vivo .fila .est{flex:none;font-size:12px;font-weight:600;padding:4px 10px;border-radius:12px;background:var(--linea);color:#4a443d}
+.vivo .est.a{background:var(--terra-suave);color:var(--terra)}
+.vivo .est.ok{background:#E8EEDD;color:var(--verde)}
+.vacio{color:var(--gris);font-size:14px;padding:6px 0}
+table{width:100%;border-collapse:collapse;margin-top:22px}
+th{font-size:12px;font-weight:600;color:var(--gris);text-align:left;padding:10px 12px 10px 0;border-bottom:1.5px solid var(--linea)}
+td{padding:12px 12px 12px 0;border-bottom:1.5px solid var(--linea);font-size:15px;vertical-align:middle}
+td.plato{display:flex;align-items:center;gap:12px}
+td.plato img,td.plato .sin{width:44px;height:44px;border-radius:8px;object-fit:cover;flex:none;background:var(--linea)}
+td.plato b{font:600 16px var(--serif)}
+td .cat{display:block;font-size:12px;color:var(--gris)}
+.sw{position:relative;width:46px;height:28px;border-radius:14px;background:var(--gris2);transition:background .2s;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .2s}
+.sw[aria-checked=true]{background:var(--verde)}
+.sw[aria-checked=true]::after{transform:translateX(18px)}
+.est-rec{display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:18px;border:1.5px solid var(--linea);font-size:13px;font-weight:600;color:var(--gris);white-space:nowrap}
+.est-rec[aria-checked=true]{border-color:var(--terra);background:var(--terra);color:#fff}
+.est-rec[aria-checked=true] svg{fill:#fff}
+.tag-ag{font-size:12px;font-weight:600;color:var(--terra)}
+.promo{display:grid;gap:12px;margin-top:8px}
+.promo textarea{width:100%;min-height:84px;padding:12px 14px;border:1.5px solid var(--linea);border-radius:10px;background:var(--papel);font-size:15px;resize:vertical}
+.promo .linea{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.promo select{height:44px;padding:0 12px;border:1.5px solid var(--linea);border-radius:10px;background:var(--papel);font-size:15px}
+.btn{height:44px;padding:0 20px;border-radius:10px;background:var(--terra);color:#fff;font-weight:600;font-size:15px}
+.btn.ok{background:var(--verde)}
+.prog{font-size:14px;color:var(--gris)}
+.estr{display:inline-flex;gap:2px;color:var(--oro)}
+.estr svg{fill:var(--oro)}
+.res{padding:16px 0;border-bottom:1.5px solid var(--linea)}
+.res header{display:flex;gap:12px;align-items:center;font-size:13px;color:var(--gris)}
+.res p{margin-top:6px;font-size:15px;line-height:1.45}
+.priv{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--terra);background:var(--terra-suave);padding:3px 8px;border-radius:10px}
+.dist .f{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--gris);margin-bottom:8px}
+.dist .f i{flex:1;height:8px;border-radius:2px;background:var(--linea);overflow:hidden}
+.dist .f i s{display:block;height:100%;background:var(--oro)}
+.oculto{display:none!important}
+@media (max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}.kpi:nth-child(3){padding-left:0;border-left:0}.kpi:nth-child(n+3){border-top:1.5px solid var(--linea)}}
+@media (max-width:860px){.dos{grid-template-columns:1fr}}
+@media (max-width:760px){
+  nav.lado{inset:auto 0 0 0;width:auto;flex-direction:row;justify-content:space-around;padding:6px 6px calc(6px + env(safe-area-inset-bottom));gap:0;z-index:10}
+  nav.lado .marca,nav.lado .pie{display:none}
+  nav.lado button{flex-direction:column;gap:3px;height:auto;padding:8px 4px;font-size:11px;flex:1;position:relative}
+  nav.lado button .pt{position:absolute;top:2px;left:calc(50% + 6px);margin:0;min-width:18px;height:18px;font-size:10px}
+  main{margin-left:0;padding:calc(20px + env(safe-area-inset-top)) 16px calc(100px + env(safe-area-inset-bottom))}
+  .ocultable{display:none}
+  td,th{padding-right:8px}
+}
+</style>
+</head>
+<body>
+<nav class="lado" id="nav"></nav>
+<main id="vista"></main>
+<script type="module">
+import { CATS, CARTA, porId, pesos, esc, leer, guardar, alCambiar, hace, ic, foto, TXT_LLAMADO } from './datos.js';
+const $ = s => document.querySelector(s);
+let vista = (location.hash || '#resumen').slice(1);
+const SECC = [['resumen', 'Resumen', 'grafico'], ['carta', 'Carta', 'lista'], ['clientes', 'Clientes', 'personas'], ['resenas', 'Reseñas', 'estrella']];
+function nav() { const s = leer(), priv = s.resenas.filter(r => !r.publica).length;
+  $('#nav').innerHTML = `<div class="marca"><b>Café Barrio</b><small>Panel del dueño</small></div>${SECC.map(([id, n, i]) => `<button data-v="${id}" class="${vista === id ? 'on' : ''}">${ic(i, 20)}${n}${id === 'resenas' && priv ? `<span class="pt">${priv}</span>` : ''}</button>`).join('')}<p class="pie">Datos de ejemplo.<br><a href="./" target="_blank">Abrir la carta</a> · <a href="cocina.html" target="_blank">Barra</a></p>`; }
+$('#nav').onclick = e => { const b = e.target.closest('[data-v]'); if (!b) return; vista = b.dataset.v; history.replaceState(null, '', '#' + vista); pintar(); scrollTo(0, 0); };
+
+const BASE = { desayuno: 612, 'cafe-leche': 540, medialuna: 1480, criollo: 655, cortado: 301, te: 222, 'medialuna-grasa': 410, merienda: 188 };
+const CLIENTES_EJ = [['Martina R.', 6, 5, 2], ['Diego F.', 4, 4, 5], ['Sofía L.', 9, 3, 1], ['Pablo G.', 2, 2, 9], ['Carla M.', 5, 5, 3], ['Nicolás V.', 3, 3, 12], ['Valentina A.', 7, 1, 4]];
+const RESENAS_EJ = [[5, 'Las medialunas de manteca, de las mejores del barrio. Pedí desde la mesa y llegó en un toque.', 2], [5, 'El café con leche bien caliente como lo pedí en la nota. Volvemos seguro.', 6], [4, 'Muy rico el desayuno. El martes con la promo estuvo bárbaro.', 19], [5, 'Pedí más azúcar desde el celular y me lo trajeron enseguida.', 33]];
+
+function resumen(s) { const vivos = s.pedidos.filter(p => p.estado === 'cocina' || p.estado === 'listo'), ll = s.llamados.filter(l => !l.atendido);
+  const cuenta = {}; for (const p of s.pedidos) for (const i of p.items) cuenta[i.id] = (cuenta[i.id] || 0) + i.cant;
+  const top = Object.entries(BASE).map(([id, n]) => [id, n + (cuenta[id] || 0)]).sort((a, b) => b[1] - a[1]).slice(0, 5), max = top[0][1];
+  const ped = 1284 + s.pedidos.length, cli = 312 + s.clientes.length, res = [...RESENAS_EJ.map(r => r[0]), 5, 5, 4, 5, 5, 4, 5, ...s.resenas.map(r => r.estrellas)], prom = res.reduce((a, b) => a + b, 0) / res.length;
+  const dias = ['L', 'M', 'X', 'J', 'V', 'S', 'D'], vals = [.3, .22, .45, .55, .92, 1, .6], hoy = (new Date().getDay() + 6) % 7;
+  return `<h1>Esta semana</h1><p class="sub">Lo que pasó en el salón y lo que está pasando ahora.</p>
+  <div class="kpis"><div class="kpi"><span>Pedidos por la carta</span><b>${ped.toLocaleString('es-AR')}</b><em>+18 % que la semana pasada</em></div><div class="kpi"><span>Ticket promedio</span><b>${pesos(6300)}</b><em>+11 % con las medialunas sugeridas</em></div><div class="kpi"><span>Clientes en tu lista</span><b>${cli}</b><em>+${41 + s.clientes.length} nuevos</em></div><div class="kpi"><span>Reseña promedio</span><b>${prom.toFixed(1).replace('.', ',')} ★</b><em>${res.length + 140} reseñas en Google</em></div></div>
+  <div class="dos"><section><h2>Ahora en el salón</h2><div class="sup vivo">${ll.map(l => `<div class="fila"><b>Mesa ${esc(l.mesa)}</b><span>${TXT_LLAMADO[l.tipo] || 'Llama al mozo'} · ${hace(l.ts)}</span><span class="est a">Esperando</span></div>`).join('')}${vivos.map(p => `<div class="fila"><b>Mesa ${esc(p.mesa)}</b><span>${p.items.map(i => `${i.cant} ${esc(i.nombre)}`).join(' · ')}</span><span class="est ${p.estado === 'listo' ? 'ok' : ''}">${p.estado === 'listo' ? 'Salió' : 'En la barra'}</span></div>`).join('')}${!ll.length && !vivos.length ? `<p class="vacio">Sin pedidos abiertos. Pedí algo desde la <a href="./" target="_blank" style="color:var(--terra)">carta</a> y aparece acá al instante.</p>` : ''}</div>
+  <h2 style="margin-top:30px">Lo más pedido</h2><div class="barras">${top.map(([id, n]) => `<div class="f"><div><span>${porId(id).nombre}</span><b>${n}</b></div><i><s style="width:${n / max * 100}%"></s></i></div>`).join('')}</div></section>
+  <section><h2>Mesas ocupadas por día</h2><div class="cols">${dias.map((d, i) => `<div class="c ${i === hoy ? 'hoy' : ''}"><i style="height:${vals[i] * 100}%"></i><span>${d}</span></div>`).join('')}</div>
+  <p class="sub" style="margin-top:14px">Martes y lunes son los días flojos. Una promo para tu lista los martes llena mesas sin bajar el precio el fin de semana.</p>
+  <button class="btn" style="margin-top:16px" data-v2="clientes">Armar la promo del martes</button></section></div>`; }
+
+function carta(s) { return `<h1>Carta</h1><p class="sub">Lo que cambies acá lo ven las mesas al instante: si algo se termina, aparece como “Hoy no hay”.</p>
+  ${CATS.map(([c, n]) => `<h2 style="margin-top:30px">${n}</h2><table><tbody>${CARTA.filter(p => p.cat === c && !p.oculto).map(p => `<tr><td class="plato">${p.foto ? `<img src="${foto(p.foto)}" alt="">` : '<span class="sin"></span>'}<span><b>${p.nombre}</b><span class="cat">${pesos(p.precio)}${s.agotados[p.id] ? ' · <span class="tag-ag">Agotado</span>' : ''}</span></span></td>
+  <td style="width:1%">${p.foto ? `<button class="est-rec" role="radio" data-rec="${p.id}" aria-checked="${s.recomendado === p.id}">${ic('estrella', 15)}<span class="ocultable">${s.recomendado === p.id ? 'Recomendado hoy' : 'Recomendar'}</span></button>` : ''}</td>
+  <td style="width:1%"><button class="sw" role="switch" data-ag="${p.id}" aria-checked="${!s.agotados[p.id]}" aria-label="Disponible"></button></td></tr>`).join('')}</tbody></table>`).join('')}`; }
+
+function clientes(s) { const reales = s.clientes.map(c => [c.nombre, c.visitas || 1, c.sellos || 1, 0, c.promos, c.ts]); const todos = [...reales, ...CLIENTES_EJ.map(c => [...c.slice(0, 3), c[3], true])];
+  const pr = s.promos[s.promos.length - 1];
+  return `<h1>Clientes</h1><p class="sub">Los que dejaron sus datos en la mesa. ${312 + s.clientes.length} en tu lista, ${268 + s.clientes.filter(c => c.promos).length} aceptan promos.</p>
+  <section class="sup" style="margin-top:24px"><h2>Mandar una promo</h2><div class="promo"><textarea id="pTxt" maxlength="240">Los martes en Café Barrio: desayuno clásico al 20 % mostrando este mensaje. Te esperamos.</textarea>
+  <div class="linea"><select id="pDia"><option>Lunes a las 18</option><option>Martes a las 11</option><option>Viernes a las 12</option></select><button class="btn ${pr ? 'ok' : ''}" id="pProg">${pr ? 'Programada' : 'Programar'}</button><span class="prog">${pr ? `Sale ${esc(pr.dia.toLowerCase())} a ${pr.n} clientes por WhatsApp` : `Le llega a ${268 + s.clientes.filter(c => c.promos).length} clientes por WhatsApp`}</span></div></div></section>
+  <table><thead><tr><th>Cliente</th><th>Visitas</th><th>Sellos</th><th class="ocultable">Última vez</th><th class="ocultable">Promos</th></tr></thead><tbody>${todos.map(([n, v, se, d, pro, ts]) => `<tr><td><b style="font-weight:600">${esc(n)}</b>${ts ? ' <span class="priv" style="color:var(--verde);background:#E8EEDD">NUEVO</span>' : ''}</td><td>${v}</td><td>${se} de 6${se >= 5 ? ' <span class="tag-ag">· le toca café</span>' : ''}</td><td class="ocultable">${ts ? 'hoy' : `hace ${d} días`}</td><td class="ocultable">${pro ? 'Sí' : 'No'}</td></tr>`).join('')}</tbody></table>`; }
+
+function resenas(s) { const todas = [...s.resenas.map(r => [r.estrellas, r.texto, 0, r.publica]), ...RESENAS_EJ.map(r => [r[0], r[1], r[2], true])]; const dist = [5, 4, 3, 2, 1].map(e => [e, todas.filter(r => r[0] === e).length + ({ 5: 98, 4: 31, 3: 8, 2: 3, 1: 2 })[e]]); const tot = dist.reduce((a, d) => a + d[1], 0);
+  return `<h1>Reseñas</h1><p class="sub">Las de 4 y 5 estrellas van a Google. Las de 3 o menos te llegan sólo a vos, para que lo arregles antes de que se publique.</p>
+  <div class="dos" style="grid-template-columns:minmax(0,320px) 1fr"><section class="dist sup"><b style="font:600 44px var(--serif)">${(dist.reduce((a, d) => a + d[0] * d[1], 0) / tot).toFixed(1).replace('.', ',')}</b><p class="sub" style="margin:0 0 14px">${tot} reseñas</p>${dist.map(([e, n]) => `<div class="f">${e} ★<i><s style="width:${n / tot * 100}%"></s></i>${n}</div>`).join('')}</section>
+  <section>${todas.map(([e, t, d, pub]) => `<div class="res"><header><span class="estr">${Array.from({ length: e }, () => ic('estrella', 15)).join('')}</span>${pub ? '' : '<span class="priv">PRIVADA · SÓLO LA VES VOS</span>'}<span>${d ? `hace ${d} días` : 'recién'}</span></header>${t ? `<p>${esc(t)}</p>` : '<p class="sub">Sin comentario.</p>'}</div>`).join('')}</section></div>`; }
+
+function pintar() { const s = leer(); nav(); $('#vista').innerHTML = ({ resumen, carta, clientes, resenas }[vista] || resumen)(s); }
+$('#vista').onclick = e => { const t = e.target.closest('button'); if (!t) return;
+  if (t.dataset.v2) { vista = t.dataset.v2; history.replaceState(null, '', '#' + vista); pintar(); scrollTo(0, 0); }
+  if (t.dataset.rec) guardar(s => s.recomendado = t.dataset.rec);
+  if (t.dataset.ag) guardar(s => { if (s.agotados[t.dataset.ag]) delete s.agotados[t.dataset.ag]; else s.agotados[t.dataset.ag] = true; });
+  if (t.id === 'pProg') guardar(s => { if (s.promos.length) s.promos = []; else s.promos.push({ texto: $('#pTxt').value, dia: $('#pDia').value, n: 268 + s.clientes.filter(c => c.promos).length, ts: Date.now() }); });
+  pintar(); };
+addEventListener('hashchange', () => { vista = location.hash.slice(1) || 'resumen'; pintar(); });
+alCambiar(pintar); pintar(); setInterval(() => { if (vista === 'resumen') pintar(); }, 15000);
+</script>
+</body>
+</html>

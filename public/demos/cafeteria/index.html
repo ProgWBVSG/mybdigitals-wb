@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<base href="/demos/cafeteria/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F6F1E8">
+<title>Café Barrio · Carta</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232F5D46'/%3E%3Ctext x='16' y='22' font-family='Georgia' font-style='italic' font-weight='700' font-size='15' fill='white' text-anchor='middle'%3ECB%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..700;1,9..144,500..700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preload" as="image" href="fotos/desayuno-ancha.webp" fetchpriority="high">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="bienv" id="bienv" hidden>
+  <div class="hora" id="bHora">21:14</div>
+  <div class="dia" id="bDia"></div>
+  <button class="noti" id="bNoti"><span class="logo">CB</span><span><b>Café Barrio</b><span id="bMesa">Abrir la carta · Mesa 7</span></span><time>ahora</time></button>
+  <div class="ondas"><svg class="ic" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 8a8 8 0 0 1 0 8M9.5 6a12 12 0 0 1 0 12M13 4a16 16 0 0 1 0 16"/></svg>Tocá el aviso para abrir la carta</div>
+</div>
+
+<div class="app">
+  <header class="cab">
+    <span class="mesa" id="mesa">MESA 7</span>
+    <div class="marca"><b>Café Barrio</b><small>Cafetería · panadería propia</small></div>
+    <button class="campana" id="btnCampana" aria-label="Llamar al mozo o pedir la cuenta"></button>
+  </header>
+  <nav class="tabs" id="tabs" aria-label="Secciones de la carta"></nav>
+  <div id="estado"></div>
+  <main class="carta" id="carta"></main>
+</div>
+
+<div class="barra" id="barra"></div>
+<section class="capa ficha" id="ficha" aria-modal="true" role="dialog"></section>
+<section class="capa visor" id="visor" aria-modal="true" role="dialog"></section>
+<section class="capa" id="cuenta" aria-modal="true" role="dialog"></section>
+<section class="capa" id="gracias" aria-modal="true" role="dialog"></section>
+<div class="velo" id="velo"></div>
+<section class="hoja" id="hoja" role="dialog" aria-modal="true"></section>
+<div class="aviso" id="aviso" role="status"></div>
+<div class="ar-ui" id="arUI" hidden>
+  <div class="ar-top"><button class="ar-x" data-ar-cerrar aria-label="Cerrar la cámara"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><b data-ar-titulo></b></div>
+  <p class="ar-estado" data-ar-estado data-tipo="buscar">Buscando la mesa…</p>
+  <div class="ar-abajo"><p class="ar-pista" data-ar-pista></p><div class="ar-btns"><button class="ar-sec" data-ar-mover hidden>Mover</button><button class="ar-sec" data-ar-girar hidden>Girar</button><button class="btn" data-ar-agregar>Agregar</button></div></div>
+</div>
+<script type="module" src="cliente.js"></script>
+</body>
+</html>
