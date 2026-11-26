@@ -34,12 +34,6 @@ window.addEventListener('popstate', () => { const el = pila[pila.length - 1]; if
 $('#velo').onclick = () => cerrar($('#hoja'));
 const hojaAbierta = t => $('#hoja').classList.contains('ve') && $('#hoja').dataset.tipo === t;
 
-/* ---------- bienvenida: como si acercaras el celular a la mesa ---------- */
-(function bienvenida() { const b = $('#bienv'); const d = new Date(); $('#bHora').textContent = d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false });
-  $('#bDia').textContent = d.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' }); $('#bMesa').textContent = `Abrir la carta · Mesa ${MESA}`;
-  let visto = false; try { visto = sessionStorage.getItem('laesquina-bienv') === '1'; } catch {} if (visto || qs.has('directo')) return;
-  b.hidden = false; const entrar = () => { b.classList.add('fuera'); try { sessionStorage.setItem('laesquina-bienv', '1'); } catch {} setTimeout(() => b.hidden = true, 600); };
-  b.addEventListener('click', entrar); })();
 
 /* ---------- carta ---------- */
 $('#mesa').textContent = `MESA ${MESA}`; $('#btnCampana').innerHTML = ic('campana', 24); $('#btnCampana').onclick = () => hojaRapidos();
